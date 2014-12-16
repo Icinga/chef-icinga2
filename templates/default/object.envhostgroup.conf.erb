@@ -7,9 +7,15 @@
  * Chef Environment HostGroup Objects.
 */
 
+# default environment hostgroup object for env nodes
+object HostGroup <%= @environment.inspect -%> {
+  display_name = <%= @environment.inspect %>
+  assign where <%= @environment.inspect -%> in host.vars.hostgroups
+}
+
 <% @groups.sort.map do |group|%>
 object HostGroup <%= (@environment + '-' + group).inspect -%> {
-  display_name = <%= (@environment.capitalize + ' ' + group.capitalize).inspect %>
+  display_name = <%= (@environment + ' ' + group).inspect %>
   assign where <%= (@environment + '-' + group).inspect -%> in host.vars.hostgroups
 }
 
