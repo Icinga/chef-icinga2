@@ -1,0 +1,31 @@
+AllCops:
+  Exclude:
+    - Rakefile
+    - Berksfile
+    - Vagrantfile
+    - Thorfile
+    - Gemfile
+AlignParameters:
+  Enabled: true
+Encoding:
+  Enabled: false
+HashSyntax:
+  Enabled: false
+LineLength:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 75
+BracesAroundHashParameters:
+  Enabled: true
+CyclomaticComplexity:
+  Enabled: false
+GuardClause:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Max: 50
+ClassLength:
+  Enabled: false
+MethodLength:
+  Enabled: false
+AbcSize:
+  Enabled: false
