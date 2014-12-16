@@ -21,7 +21,7 @@ object Host <%= node_hash['fqdn'].inspect %> {
   address = <%= node_hash['address'].inspect %>
   <%- end -%>
   <%- if node_hash['address6'] -%>
-  address6 = <%= node_hash['address6'].inspect -%>
+  address6 = <%= node_hash['address6'].inspect %>
   <%- end -%>
   <%- if node_hash['custom_vars']['hostgroups'] && !node_hash['custom_vars']['hostgroups'].empty? -%>
   groups = <%= node_hash['custom_vars']['hostgroups'].inspect %>
