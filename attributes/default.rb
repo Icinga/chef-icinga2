@@ -71,3 +71,8 @@ default['icinga2']['admin_user'] = 'icingaadmin'
 default['icinga2']['user'] = 'icinga'
 default['icinga2']['group'] = 'icinga'
 default['icinga2']['cmdgroup'] = 'icingacmd'
+
+# ulimit
+default['icinga2']['limits']['memlock']    = 'unlimited'
+default['icinga2']['limits']['nofile']     = 48_000
+default['icinga2']['limits']['nproc']      = 'unlimited'
