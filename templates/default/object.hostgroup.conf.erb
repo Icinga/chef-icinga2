@@ -19,6 +19,7 @@ object HostGroup <%= object.inspect -%> {
   <%- options['assign_where'].each do |a|-%>
   assign where <%= a %>
   <% end -%>
+  <% end -%>
   <% if options['ignore_where'] -%>
   <% options['ignore_where'].each do |i| -%>
   ignore where <%= i %>
