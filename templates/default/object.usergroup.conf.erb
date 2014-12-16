@@ -1,0 +1,23 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * UserGroup Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+object UserGroup <%= object.inspect -%> {
+  <% if options['display_name'] -%>
+  display_name = <%= options['display_name'].inspect %>
+  <% end -%>
+  <% if options['groups'] -%>
+  groups = <%= options['groups'].inspect %>
+  <% end -%>
+  <% if options['zone'] -%>
+  zone = <%= options['zone'].inspect %>
+  <% end -%>
+}
+
+<% end -%>

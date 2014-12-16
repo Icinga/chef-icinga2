@@ -1,0 +1,30 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * ServiceGroup Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+object ServiceGroup <%= object.inspect -%> {
+  <% if options['display_name'] -%>
+  display_name = <%= options['display_name'].inspect %>
+  <% end -%>
+  <% if options['groups'] -%>
+  groups = <%= options['groups'].inspect %>
+  <% end -%>
+  <% if options['assign_where'] -%>
+  <%- options['assign_where'].each do |a|-%>
+  assign where <%= a %>
+  <% end -%>
+  <% end -%>
+  <% if options['ignore_where'] -%>
+  <% options['ignore_where'].each do |i| -%>
+  ignore where <%= i %>
+  <% end -%>
+  <% end -%>
+}
+
+<% end -%>

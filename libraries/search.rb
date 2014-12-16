@@ -154,6 +154,8 @@ module Icinga2
           node_hash['custom_vars']['hostgroups'].push node_hash['chef_environment'] + '-' + node_hash[application_attribute]
         end
         node_hash['custom_vars']['hostgroups'].uniq!
+        # need to verify whether we need hostgroups for node
+        # node_hash['hostgroups'] = node_hash['custom_vars']['hostgroups']
 
         nodes[node_hash['fqdn']] = node_hash
       end

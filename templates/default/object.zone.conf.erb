@@ -1,0 +1,20 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * Zone Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+object Zone <%= object.inspect -%> {
+  <% if options['endpoints'] -%>
+  endpoints = <%= options['endpoints'].inspect %>
+  <% end -%>
+  <% if options['parent'] -%>
+  parent <%= options['parent'].inspect %>
+  <% end -%>
+}
+
+<% end -%>

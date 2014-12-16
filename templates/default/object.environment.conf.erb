@@ -1,0 +1,93 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * Chef Environment Host Objects.
+*/
+
+<% @hosts.sort.map do |_node_fqdn, node_hash| -%>
+object Host <%= node_hash['fqdn'].inspect %> {
+  <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
+  <%- if @import -%>
+  <%#- Otherwise, include the parameter: -%>
+  import <%= @import.inspect %>
+  <%- end -%>
+  <%- if node_hash['hostname'] -%>
+  display_name = <%= node_hash['hostname'].inspect %>
+  <%- end -%>
+  <%- if node_hash['address'] -%>
+  address = <%= node_hash['address'].inspect %>
+  <%- end -%>
+  <%- if node_hash['address6'] -%>
+  address6 = <%= node_hash['address6'].inspect -%>
+  <%- end -%>
+  <%- if node_hash['custom_vars']['hostgroups'] && !node_hash['custom_vars']['hostgroups'].empty? -%>
+  groups = <%= node_hash['custom_vars']['hostgroups'].inspect %>
+  <%- end -%>
+  <%- unless node_hash['custom_vars'].empty? -%>
+  <%- node_hash['custom_vars'].each_pair do |key, value| -%>
+  vars.<%= key %> = <%= value.inspect %>
+  <%- end -%>
+  <%- end -%>
+  <%- if @check_command -%>
+  check_command = <%= @check_command.inspect %>
+  <%- end -%>
+  <%- if @max_check_attempts -%>
+  max_check_attempts = <%= @max_check_attempts.inspect %>
+  <%- end -%>
+  <%- if @check_period -%>
+  check_period = <%= @check_period.inspect %>
+  <%- end -%>
+  <%- if @check_interval -%>
+  check_interval = <%= @check_interval %>
+  <%- end -%>
+  <%- if @retry_interval -%>
+  retry_interval = <%= @retry_interval %>
+  <%- end -%>
+  <%- if @enable_notifications -%>
+  enable_notifications = <%= @enable_notifications.inspect %>
+  <%- end -%>
+  <%- if @enable_active_checks -%>
+  enable_active_checks = <%= @enable_active_checks.inspect %>
+  <%- end -%>
+  <%- if @enable_passive_checks -%>
+  enable_passive_checks = <%= @enable_passive_checks.inspect %>
+  <%- end -%>
+  <%- if @enable_event_handler -%>
+  enable_event_handler = <%= @enable_event_handler.inspect %>
+  <%- end -%>
+  <%- if @enable_flapping -%>
+  enable_flapping = <%= @enable_flapping.inspect %>
+  <%- end -%>
+  <%- if @enable_perfdata -%>
+  enable_perfdata = <%= @enable_perfdata.inspect %>
+  <%- end -%>
+  <%- if @event_command -%>
+  event_command = <%= @event_command.inspect %>
+  <%- end -%>
+  <%- if @flapping_threshold -%>
+  flapping_threshold = <%= @flapping_threshold.inspect %>
+  <%- end -%>
+  <%- if @volatile -%>
+  volatile = <%= @volatile.inspect %>
+  <%- end -%>
+  <%- if @notes -%>
+  notes = <%= @notes.inspect %>
+  <%- end -%>
+  <%- if @notes_url -%>
+  notes_url = <%= @notes_url.inspect %>
+  <%- end -%>
+  <%- if @action_url -%>
+  action_url = <%= @action_url.inspect %>
+  <%- end -%>
+  <%- if @icon_image -%>
+  icon_image = <%= @icon_image.inspect %>
+  <%- end -%>
+  <%- if @icon_image_alt -%>
+  icon_image_alt = <%= @icon_image_alt.inspect %>
+  <%- end -%>
+}
+
+<%- end -%>

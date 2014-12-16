@@ -1,0 +1,50 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * NotificationCommand Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+object NotificationCommand <%= object.inspect -%> {
+  <% if options['import'] -%>
+  import <%= options['import'].inspect %>
+  <% end -%>
+  <% if options['command'] -%>
+  command = [
+  <% options['command'].each do |cmd| -%>
+    <%= cmd  %>
+  <% end -%>
+  ]
+  <% end -%>
+  <% if options['env'] -%>
+  env = {
+  <% options['env'].each do |var, value| -%>
+  <% if var && value -%>
+    <%= var -%> = <%= value.inspect %>
+  <% end -%>
+  <% end -%>
+  }
+  <% end -%>
+
+  <% if options['timeout'] -%>
+  timeout = <%= options['timeout'].inspect %>
+  <% end -%>
+  <% if options['zone'] -%>
+  zone = <%= options['zone'].inspect %>
+  <% end -%>
+  <% if options['arguments'] -%>
+  arguments = <%= options['arguments'].inspect %>
+  <% end -%>
+  <% if options['custom_vars'] -%>
+  <% options['custom_vars'].each do |var, value| -%>
+  <% if var && value -%>
+  vars.<%= var -%> = <%= value.inspect %>
+  <% end -%>
+  <% end -%>
+  <% end -%>
+}
+
+<% end -%>

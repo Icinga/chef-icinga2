@@ -1,0 +1,44 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * DownTime Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+<%= options['object_class'] -%> ScheduledDowntime <%= object.inspect -%> {
+  <% if options['host_name'] -%>
+  host_name = <%= options['host_name'].inspect %>
+  <% end -%>
+  <% if options['service_name'] -%>
+  service_name = <%= options['service_name'].inspect %>
+  <% end -%>
+  <% if options['author'] -%>
+  author = <%= options['author'].inspect %>
+  <% end -%>
+  <% if options['comment'] -%>
+  comment = <%= options['comment'].inspect %>
+  <% end -%>
+  <% if options['fixed'] -%>
+  fixed = <%= options['fixed'].inspect %>
+  <% end -%>
+  <% if options['duration'] -%>
+  duration = <%= options['duration'].inspect %>
+  <% end -%>
+  <% if options['zone'] -%>
+  zone = <%= options['zone'].inspect %>
+  <% end -%>
+  <% if options['ranges'] -%>
+  ranges = {
+  <% options['ranges'].each do |day, time| -%>
+  <% if day && time -%>
+    <%= day -%> = <%= time.inspect %>
+  <% end -%>
+  <% end -%>
+  }
+  <% end -%>
+}
+
+<% end -%>

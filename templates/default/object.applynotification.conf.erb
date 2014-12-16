@@ -1,0 +1,57 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * Apply Notification to Host/Service Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+apply Notification <%= object.inspect -%> to <%= options['object_type'] -%> {
+  <%- if options['import'] -%>
+  import <%= options['import'].inspect %>
+  <%- end -%>
+  <%- if options['command'] -%>
+  command = <%= options['command'].inspect %>
+  <%- end -%>
+  <%- if options['users'] -%>
+  users = <%= options['users'].inspect %>
+  <%- end -%>
+  <%- if options['user_groups'] -%>
+  user_groups = <%= options['user_groups'].inspect %>
+  <%- end -%>
+  <%- if options['interval'] -%>
+  interval = <%= options['interval'].inspect %>
+  <%- end -%>
+  <% if options['period'] -%>
+  period = <%= options['period'].inspect %>
+  <% end -%>
+  <% if options['types'] && !options['types'].empty? -%>
+  types = [ <%= options['types'].join(', ') -%> ]
+  <% end -%>
+  <% if options['states'] && !options['states'].empty? -%>
+  states = [ <%= options['states'].join(', ') -%> ]
+  <% end -%>
+  <%- if options['times'] && !options['times'].empty? -%>
+  times = {
+  <% options['times'].each do |var, value| %>
+    <% if var && value -%>
+    <%= var %> = <%= value.inspect %>
+    <%- end -%>
+  <%- end -%>
+  }
+  <%- end -%>
+  <% if options['assign_where'] -%>
+  <%- options['assign_where'].each do |a|-%>
+  assign where <%= a %>
+  <% end -%>
+  <% end -%>
+  <% if options['ignore_where'] -%>
+  <% options['ignore_where'].each do |i| -%>
+  ignore where <%= i %>
+  <% end -%>
+  <% end -%>
+}
+
+<% end -%>

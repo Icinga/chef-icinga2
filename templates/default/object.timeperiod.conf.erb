@@ -1,0 +1,32 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * TimePeriod Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+<%= options['object_class'] -%> TimePeriod <%= object.inspect -%> {
+  <% if options['import'] -%>
+  import <%= options['import'].inspect %>
+  <% end -%>
+  <% if options['display_name'] -%>
+  display_name = <%= options['display_name'].inspect %>
+  <% end -%>
+  <% if options['zone'] -%>
+  zone = <%= options['zone'].inspect %>
+  <% end -%>
+  <% if options['ranges'] -%>
+  ranges = {
+  <% options['ranges'].each do |day, time| -%>
+  <% if day && time -%>
+    <%= day -%> = <%= time.inspect %>
+  <% end -%>
+  <% end -%>
+  }
+  <% end -%>
+}
+
+<% end -%>

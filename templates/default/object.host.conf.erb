@@ -1,0 +1,99 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * Chef Environment Host Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+<%= options['object_class'] -%> Host <%= object.inspect -%> {
+  <%- if options['import'] -%>
+  import <%= options['import'].inspect %>
+  <%- end -%>
+  <%- if options['display_name'] -%>
+  display_name = <%= options['display_name'].inspect %>
+  <%- end -%>
+  <%- if options['address'] -%>
+  address = <%= options['address'].inspect %>
+  <%- end -%>
+  <%- if options['address6'] -%>
+  address6 = "<%= options['address6'].inspect %>
+  <%- end -%>
+  <%- if options['groups'] && !options['groups'].empty? -%>
+  groups = <%= options['groups'].inspect %>
+  <%- end -%>
+  <%- if options['check_command'] -%>
+  check_command = <%= options['check_command'].inspect %>
+  <%- end -%>
+  <%- if options['max_check_attempts'] -%>
+  max_check_attempts = <%= options['max_check_attempts'].inspect %>
+  <%- end -%>
+  <%- if options['check_period'] -%>
+  check_period = <%= options['check_period'] %>
+  <%- end -%>
+  <%- if options['check_interval'] -%>
+  check_interval = <%= options['check_interval'] %>
+  <%- end -%>
+  <%- if options['retry_interval'] -%>
+  retry_interval = <%= options['retry_interval'] %>
+  <%- end -%>
+  <%- if options['enable_notifications'] -%>
+  enable_notifications = <%= options['enable_notifications'].inspect %>
+  <%- end -%>
+  <%- if options['enable_active_checks'] -%>
+  enable_active_checks = <%= options['enable_active_checks'].inspect %>
+  <%- end -%>
+  <%- if options['enable_passive_checks'] -%>
+  enable_passive_checks = <%= options['enable_passive_checks'].inspect %>
+  <%- end -%>
+  <%- if options['enable_event_handler'] -%>
+  enable_event_handler = <%= options['enable_event_handler'].inspect %>
+  <%- end -%>
+  <%- if options['enable_flapping'] -%>
+  enable_flapping = <%= options['enable_flapping'].inspect %>
+  <%- end -%>
+  <%- if options['enable_perfdata'] -%>
+  enable_perfdata = <%= options['enable_perfdata'].inspect %>
+  <%- end -%>
+  <%- if options['event_command'] -%>
+  event_command = <%= options['event_command'].inspect %>
+  <%- end -%>
+  <%- if options['flapping_threshold'] -%>
+  flapping_threshold = <%= options['flapping_threshold'].inspect %>
+  <%- end -%>
+  <%- if options['volatile'] -%>
+  volatile = <%= options['volatile'].inspect %>
+  <%- end -%>
+  <%- if options['zone'] -%>
+  zone = <%= options['zone'].inspect %>
+  <%- end -%>
+  <%- if options['command_endpoint'] -%>
+  command_endpoint = <%= options['command_endpoint'].inspect %>
+  <%- end -%>
+  <%- if options['notes'] -%>
+  notes = <%= options['notes'].inspect %>
+  <%- end -%>
+  <%- if options['notes_url'] -%>
+  notes_url = <%= options['notes_url'].inspect %>
+  <%- end -%>
+  <%- if options['action_url'] -%>
+  action_url = <%= options['action_url'].inspect %>
+  <%- end -%>
+  <%- if options['icon_image'] -%>
+  icon_image = <%= options['icon_image'].inspect %>
+  <%- end -%>
+  <%- if options['icon_image_alt'] -%>
+  icon_image_alt = <%= options['icon_image_alt'].inspect %>
+  <%- end -%>
+  <% if options['custom_vars'] -%>
+  <% options['custom_vars'].each do |var, value| -%>
+  <% if var && value -%>
+  vars.<%= var -%> = <%= value.inspect %>
+  <% end -%>
+  <% end -%>
+  <% end -%>
+}
+
+<%- end -%>

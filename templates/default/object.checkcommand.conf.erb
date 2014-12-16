@@ -1,0 +1,66 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * CheckCommand Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+object CheckCommand <%= object.inspect -%> {
+  <% if options['import'] -%>
+  import <%= options['import'].inspect %>
+  <% end -%>
+  <% if options['command'] -%>
+  <% if options['command'].is_a?(String) -%>
+  command = <%= options['command'] %>
+  <% elsif !options['command'].empty? -%>
+  command = [
+  <% options['command'].each do |cmd| -%>
+    <%= cmd  %>
+  <% end -%>
+  ]
+  <% end -%>
+  <% end -%>
+  <% if options['env'] && !options['env'].empty? -%>
+  env = {
+  <% options['env'].each do |var, value| -%>
+  <% if value -%>
+    <%= var -%> = <%= value.inspect %>
+  <% end -%>
+  <% end -%>
+  }
+  <% end -%>
+  <% if options['timeout'] -%>
+  timeout = <%= options['timeout'].inspect %>
+  <% end -%>
+  <% if options['arguments'] && !options['arguments'].empty? -%>
+  arguments = {
+    <% options['arguments'].each do |var, value| -%>
+    <% if value.is_a?(String) -%>
+    <%= var.inspect -%> = <%= value.inspect %>
+    <% else -%>
+    <%= var.inspect -%> = {
+      <% value.each do |ovar, ovalue| -%>
+        <%= ovar -%> = <%= ovalue.inspect %>
+      <% end -%>
+    }
+    <% end -%>
+    <% end -%>
+  }
+  <% end -%>
+
+  <% if options['zone'] -%>
+  zone = <%= options['zone'].inspect %>
+  <% end -%>
+  <% if options['custom_vars'] -%>
+  <% options['custom_vars'].each do |var, value| -%>
+  <% if var && value -%>
+  vars.<%= var -%> = <%= value.inspect %>
+  <% end -%>
+  <% end -%>
+  <% end -%>
+}
+
+<% end -%>

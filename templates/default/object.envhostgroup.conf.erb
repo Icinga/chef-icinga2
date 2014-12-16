@@ -1,0 +1,16 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * Chef Environment HostGroup Objects.
+*/
+
+<% @groups.sort.map do |group|%>
+object HostGroup <%= (@environment + '-' + group).inspect -%> {
+  display_name = <%= (@environment.capitalize + ' ' + group.capitalize).inspect %>
+  assign where <%= (@environment + '-' + group).inspect -%> in host.vars.hostgroups
+}
+
+<% end -%>

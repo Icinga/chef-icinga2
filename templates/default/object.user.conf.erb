@@ -1,0 +1,51 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * User Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+<%= options['object_class'] -%> User <%= object.inspect -%> {
+  <% if options['import'] -%>
+  import <%= options['import'].inspect %>
+  <% end -%>
+  <% if options['display_name'] -%>
+  display_name = <%= options['display_name'].inspect %>
+  <% end -%>
+  <% if options['enable_notifications'] -%>
+  enable_notifications = <%= options['enable_notifications'].inspect %>
+  <% end -%>
+  <% if options['groups'] -%>
+  groups = <%= options['groups'].inspect %>
+  <% end -%>
+  <% if options['email'] -%>
+  email = <%= options['email'].inspect %>
+  <% end -%>
+  <% if options['zone'] -%>
+  zone = <%= options['zone'].inspect %>
+  <% end -%>
+  <% if options['pager'] -%>
+  pager = <%= options['pager'].inspect %>
+  <% end -%>
+  <% if options['period'] -%>
+  period = <%= options['period'].inspect %>
+  <% end -%>
+  <% if options['states'] && !options['states'].empty? -%>
+  states = [ <%= options['states'].join(', ') -%> ]
+  <% end -%>
+  <% if options['types'] && !options['types'].empty? -%>
+  types = [ <%= options['types'].join(', ') -%> ]
+  <% end -%>
+  <% if options['custom_vars'] -%>
+  <% options['custom_vars'].each do |var, value| -%>
+  <% if var && value -%>
+  vars.<%= var -%> = <%= value.inspect %>
+  <% end -%>
+  <% end -%>
+  <% end -%>
+}
+
+<% end -%>
