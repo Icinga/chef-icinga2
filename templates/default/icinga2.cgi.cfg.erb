@@ -1,0 +1,15 @@
+#
+# This file is managed by Chef.
+# Do NOT modify this file directly.
+#
+# Icinga 2 Classic UI configuration
+#
+# requires icinga-gui package
+# check http://docs.icinga.org for option details
+# http://docs.icinga.org/latest/en/sample-cgi.html
+
+<% @options.each do |option, value| -%>
+<% if !value.nil? -%>
+<%= option -%>=<%= value %>
+<% end -%>
+<% end -%>

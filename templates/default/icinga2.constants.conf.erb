@@ -1,0 +1,16 @@
+/**
+# This file is managed by Chef.
+# Do NOT modify this file directly.
+*/
+
+/**
+ * This file defines global constants which can be used in
+ * the other configuration files.
+ */
+
+<% @options.each do |option, value| -%>
+<% unless value.nil? -%>
+const <%= option -%> = "<%= value %>"
+<% end -%>
+<% end -%>
+

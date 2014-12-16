@@ -1,0 +1,118 @@
+####
+# Icinga Web Apache configuration
+# Supports 2.2 and 2.4
+#
+# Copyright (C) 2009-2014 Icinga Development Team (http://www.icinga.org)
+###
+
+# Matching for module stylesheet and images
+AliasMatch "^/icinga-web/modules/([A-Za-z0-9]+)/resources/styles/([A-Za-z0-9]+\.css)$" "/usr/share/icinga-web/app/modules/$1/pub/styles/$2"
+AliasMatch "^/icinga-web/modules/([A-Za-z0-9]+)/resources/images/([A-Za-z_\-0-9]+\.(?:png|gif|jpg))$" "/usr/share/icinga-web/app/modules/$1/pub/images/$2"
+
+# Matching for Icinga Web and the ext3 framework
+Alias /icinga-web/js/ext3/ /usr/share/icinga-web/lib/ext3/
+Alias /icinga-web/ /usr/share/icinga-web/pub/
+RedirectMatch "^/icinga-web$" /icinga-web/
+
+# Access to where the styles are located
+<DirectoryMatch "^/usr/share/icinga-web/app/modules/\w+/pub/styles/">
+    Options -Indexes -MultiViews
+    <IfModule mod_authz_core.c>
+        # Apache 2.4
+        <RequireAll>
+            Require all granted
+        </RequireAll>
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        # Apache 2.2
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</DirectoryMatch>
+
+# Access to where the images are located
+<DirectoryMatch "^/usr/share/icinga-web/app/modules/\w+/pub/images/">
+    Options -Indexes -MultiViews
+    <IfModule mod_authz_core.c>
+        # Apache 2.4
+        <RequireAll>
+            Require all granted
+        </RequireAll>
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        # Apache 2.2
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</DirectoryMatch>
+
+# Access to the ext3 library
+<Directory "/usr/share/icinga-web/lib/ext3/">
+    Options -Indexes -MultiViews
+    <IfModule mod_authz_core.c>
+        # Apache 2.4
+        <RequireAll>
+            Require all granted
+        </RequireAll>
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        # Apache 2.2
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</Directory>
+
+# Access to the public web folder of Icinga Web
+<Directory "/usr/share/icinga-web/pub/">
+    DirectoryIndex index.php
+    Options -MultiViews -Indexes +FollowSymLinks
+    <IfModule mod_authz_core.c>
+        # Apache 2.4
+        <RequireAll>
+            Require all granted
+        </RequireAll>
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        # Apache 2.2
+        Order allow,deny
+        Allow from all
+    </IfModule>
+
+    RewriteEngine On
+    # /icinga-web is base for all rewrite rules
+    RewriteBase /icinga-web
+
+    # If the requested URL does not exist (it's likely an agavi route),
+    # pass it as path info to index.php, the Agavi dispatch script.
+    RewriteRule ^$ index.php?/ [QSA,L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ".*" index.php?/$0 [QSA,L]
+
+    <IfModule mod_deflate.c>
+        # Insert filter
+        SetOutputFilter DEFLATE
+
+        # Netscape 4.x has some problems...
+        BrowserMatch ^Mozilla/4 gzip-only-text/html
+
+        # Netscape 4.06-4.08 have some more problems
+        BrowserMatch ^Mozilla/4\.0[678] no-gzip
+
+        # MSIE masquerades as Netscape, but it is fine
+        BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+        # Don't compress images
+        SetEnvIfNoCase Request_URI \
+        \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+
+        # Make sure proxies don't deliver the wrong content
+        <IfModule mod_headers.c>
+            Header append Vary User-Agent env=!dont-vary
+        </IfModule>
+    </IfModule>
+
+    <IfDefine APACHE2>
+        AcceptPathInfo On
+    </IfDefine>
+</Directory>
+

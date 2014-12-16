@@ -1,0 +1,15 @@
+#
+# This file is managed by Chef.
+# Do NOT modify this file directly.
+#
+DAEMON=/usr/sbin/icinga2
+ICINGA2_CONFIG_FILE=<%= @conf_dir -%>/icinga2.conf
+ICINGA2_RUN_DIR=/var/run
+ICINGA2_STATE_DIR=/var
+ICINGA2_PID_FILE=$ICINGA2_RUN_DIR/icinga2/icinga2.pid
+ICINGA2_ERROR_LOG=<%= @log_dir -%>/error.log
+ICINGA2_STARTUP_LOG=<%= @log_dir -%>/startup.log
+ICINGA2_LOG=<%= @log_dir -%>/icinga2.log
+ICINGA2_USER=<%= @user %>
+ICINGA2_GROUP=<%= @group %>
+ICINGA2_COMMAND_GROUP=<%= @cmdgroup %>

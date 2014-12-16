@@ -1,0 +1,86 @@
+#!/bin/sh
+#
+# This file is managed by Chef.
+# Do NOT modify this file directly.
+#
+#  Created 2000-01-03 by jaclu@grm.se
+#
+# nrpe          This shell script takes care of starting and stopping
+#               nrpe.
+#
+# chkconfig: - 80 30
+# description: nrpe is a daemon for a remote nagios server, \
+#              running nagios plugins on this host.
+# processname: nrpe
+# config: /etc/nagios/nrpe.cfg
+
+
+# Source function library
+if [ -f /etc/rc.d/init.d/functions ]; then
+. /etc/rc.d/init.d/functions
+elif [ -f /etc/init.d/functions ]; then
+. /etc/init.d/functions
+elif [ -f /etc/rc.d/functions ]; then
+. /etc/rc.d/functions
+fi
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Read configuration (environment etc.) for nrpe and plugins
+if [ -f /etc/sysconfig/nrpe ]; then
+    . /etc/sysconfig/nrpe
+fi
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+
+NrpeBin=/usr/sbin/nrpe
+NrpeCfg=<%= @conf_file %>
+LockFile=/var/lock/subsys/nrpe
+
+RETVAL=0
+
+# See how we were called.
+case "$1" in
+  start)
+  # Start daemons.
+  echo -n "Starting nrpe: "
+  daemon $NrpeBin -c $NrpeCfg -d $NRPE_SSL_OPT
+  RETVAL=$?
+  echo
+  [ $RETVAL = 0 ] && touch $LockFile
+  ;;
+  stop)
+  # Stop daemons.
+  echo -n "Shutting down nrpe: "
+  killproc nrpe
+  RETVAL=$?
+  echo
+  [ $RETVAL = 0 ] && rm -f $LockFile
+  ;;
+  restart)
+  $0 stop
+  $0 start
+  ;;
+  reload)
+  echo -n "Reloading nrpe"
+  killproc nrpe -HUP
+  RETVAL=$?
+  echo
+  ;;
+  condrestart|try-restart)
+  status nrpe >/dev/null 2>&1 || exit 0
+  $0 stop
+  $0 start
+  ;;
+  status)
+  status nrpe
+  RETVAL=$?
+  ;;
+  *)
+  echo "Usage: nrpe {start|stop|restart|reload|condrestart|status}"
+  RETVAL=2
+esac
+
+exit $RETVAL
