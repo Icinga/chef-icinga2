@@ -5,11 +5,12 @@ icinga2 Cookbook
 
 This is a [Chef] cookbook to manage [Icinga2].
 
->> **WARNING**: This cookbook is still in Testing phase.
+>> **WARNING**: This cookbook is in Development phase and few objects
+LWRP may not be available.
 
 >> Once fully tested, this WARNING will be removed.
 
-Currently it supports only Icinga2 Configuration with Icinga Classic UI, more
+More
 features and attributes will be added over time, **feel free to contribute**
 what you find missing!
 
@@ -39,6 +40,30 @@ Icinga Web or Icinga2 Web support will be added once other functionality is full
 ## Supported Icinga2 Cluster Deployment
 
 Currently this cookbook does **NOT** support icinga2 Cluster deployment.
+
+
+## Server Setup
+
+To setup icinga2 server on a node, add recipe `icinga2::server`.
+
+Use `icinga2_environment` LWRP to create `Host` objects and `HostGroup` objects for an entire
+chef environment.
+
+## Client Setup
+
+To setup nrpe client, add recipe `icinga2::client`.
+
+Use `icinga2_nrpe` LWRP to create nrpe plugins commands.
+
+
+## LWRP Examples
+
+Different LWRP usage examples are added to `examples` directory.
+
+To configure icinga2 server, check `examples/icinga2_server` directory.
+
+To configure nrpe client, check `examples/icinga2_client` directory.
+
 
 
 ## Recipes
@@ -115,14 +140,6 @@ Few of LWRP attributes which are required to create an icinga2 Object are not de
 Same LWRP resource can be used to create icinga2 Object and icinga2 Template as well.
 
 
-## LWRP Examples
-
-Different LWRP usage examples are added to `examples` directory.
-
-To configure icinga2 server, check `examples/icinga2_server` directory.
-
-To configure nrpe client, check `examples/icinga2_client` directory.
-
 
 ## LWRP icinga2_environment
 
@@ -131,100 +148,97 @@ To configure nrpe client, check `examples/icinga2_client` directory.
 
 ## LWRP icinga2_applydependency
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_applynotification
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_applyservice
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_checkcommand
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_downtime
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_envhostgroup
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_eventcommand
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_host
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_hostgroup
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_notification
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_notificationcommand
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_nrpe
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_service
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_servicegroup
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_timeperiod
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_user
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_usergroup
 
- Info not yet added.
+ To be added.
 
 
 ## LWRP icinga2_zone
 
- Info not yet added.
-
-
-
+ To be added.
 
 
 ## Cookbook Advanced Attributes
 
-* `default['icinga2']['disable_default_conf']` (default: `true`): disable icinga2 `conf.d` default configuration
+* `default['icinga2']['disable_default_conf']` (default: `false`): disable icinga2 `conf.d` default configuration and use LWRP to manage icinga2 objects / templates
 
 * `default['icinga2']['add_cloud_custom_vars']` (default: `true`): add cloud node attributes, limited cloud provider support is available
 
