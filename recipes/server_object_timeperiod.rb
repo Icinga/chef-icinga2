@@ -18,6 +18,7 @@
 #
 
 icinga2_timeperiod '24x7' do
+  import 'legacy-timeperiod'
   display_name 'Icinga 2 24x7 TimePeriod'
   ranges 'monday' => '00:00-24:00',
          'tuesday' => '00:00-24:00',
@@ -29,6 +30,7 @@ icinga2_timeperiod '24x7' do
 end
 
 icinga2_timeperiod '9to5' do
+  import 'legacy-timeperiod'
   display_name 'Icinga 2 9to5 TimePeriod'
   ranges 'monday'  => '09:00-17:00',
          'tuesday'   => '09:00-17:00',
@@ -38,5 +40,6 @@ icinga2_timeperiod '9to5' do
 end
 
 icinga2_timeperiod 'never' do
+  import 'legacy-timeperiod'
   display_name 'Icinga 2 never TimePeriod'
 end
