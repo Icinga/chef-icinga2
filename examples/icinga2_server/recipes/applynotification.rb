@@ -22,7 +22,7 @@ icinga2_applynotification 'alerts' do
   object_type 'Service'
   import 'mail-service-notification'
   command 'mail-service-notification'
-  groups ['alerts']
+  user_groups ['alerts']
   assign_where %w(host.address)
 end
 
@@ -30,6 +30,6 @@ icinga2_applynotification 'alerts' do
   object_type 'Host'
   import 'mail-host-notification'
   command 'mail-host-notification'
-  groups ['alerts']
+  user_groups ['alerts']
   assign_where %w(host.address)
 end
