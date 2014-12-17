@@ -111,14 +111,22 @@ template ::File.join(node['icinga2']['conf_dir'], 'zones.conf') do
   notifies :reload, 'service[icinga2]', :delayed
 end
 
-# icinga2 templates file
-template ::File.join(node['icinga2']['objects_dir'], 'templates.conf') do
-  source 'icinga2.templates.conf.erb'
+# mail-service-notification command
+template ::File.join(node['icinga2']['scripts_dir'], 'mail-service-notification.sh') do
+  cookbook node['icinga2']['cookbook']
+  source 'mail-service-notification.sh.erb'
   owner node['icinga2']['user']
   group node['icinga2']['group']
   mode 0644
-  notifies :reload, 'service[icinga2]', :delayed
-  action :nothing
+end
+
+# mail-host-notification command
+template ::File.join(node['icinga2']['scripts_dir'], 'mail-host-notification.sh') do
+  cookbook node['icinga2']['cookbook']
+  source 'mail-host-notification.sh.erb'
+  owner node['icinga2']['user']
+  group node['icinga2']['group']
+  mode 0644
 end
 
 user_ulimit node['icinga2']['user'] do
