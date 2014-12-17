@@ -17,11 +17,12 @@ default['icinga2']['client']['service_name'] = value_for_platform_family(
   'rhel' => 'nrpe'
 )
 
-default['icinga2']['client']['conf_dir'] = value_for_platform_family(
-  'debian' => '/etc/nrpe',
-  'rhel' => '/etc/nagios'
+default['icinga2']['client']['pid_dir'] = value_for_platform_family(
+  'debian' => '/var/run/nagios',
+  'rhel' => '/var/run'
 )
 
+default['icinga2']['client']['conf_dir'] = '/etc/nagios'
 default['icinga2']['client']['conf_file'] = ::File.join(node['icinga2']['client']['conf_dir'], 'nrpe.cfg')
 
 default['icinga2']['client']['nrpe']['allow_arguments'] = 0

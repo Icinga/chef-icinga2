@@ -47,6 +47,7 @@ template node['icinga2']['client']['conf_file'] do
   cookbook node['icinga2']['client']['cookbook']
   source node['icinga2']['client']['template']
   variables(:service_name => node['icinga2']['client']['service_name'],
+            :pid_dir => node['icinga2']['client']['pid_dir'],
             :port => node['icinga2']['client']['port'],
             :user => node['icinga2']['client']['user'],
             :group => node['icinga2']['client']['group'],

@@ -16,7 +16,7 @@
 
 log_facility=daemon
 
-pid_file=/var/run/<%= @service_name -%>.pid
+pid_file=<%= @pid_dir -%>/nrpe.pid
 
 server_port=<%= @port %>
 
