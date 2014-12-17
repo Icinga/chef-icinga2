@@ -93,7 +93,7 @@ def create_objects
 end
 
 def create_hostgroups(env_resources)
-  env_hostgroups = [new_resource.environment]
+  env_hostgroups = []
 
   # environment hostgroups
   env_hostgroups += env_resources['clusters'] if new_resource.enable_cluster_hostgroup
