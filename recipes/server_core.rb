@@ -25,7 +25,6 @@
  node['icinga2']['objects_dir'],
  node['icinga2']['features_enabled_dir'],
  node['icinga2']['features_available_dir'],
- node['icinga2']['run_dir'],
  node['icinga2']['custom_plugins_dir']
 ].each do |d|
   directory d do
@@ -36,6 +35,7 @@
 end
 
 [node['icinga2']['log_dir'],
+ node['icinga2']['run_dir'],
  ::File.join(node['icinga2']['log_dir'], 'compat'),
  ::File.join(node['icinga2']['log_dir'], 'compat', 'archives'),
  node['icinga2']['cache_dir']

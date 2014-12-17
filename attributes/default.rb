@@ -1,6 +1,7 @@
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/getting-started#getting-started
 
 default['icinga2']['version'] = '2.2.1-1'
+default['icinga2']['cookbook'] = 'icinga2'
 default['icinga2']['conf_dir'] = '/etc/icinga2'
 default['icinga2']['conf_d_dir'] = ::File.join(node['icinga2']['conf_dir'], 'conf.d')
 default['icinga2']['pki_dir'] = ::File.join(node['icinga2']['conf_dir'], 'pki')
