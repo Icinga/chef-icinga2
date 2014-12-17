@@ -199,6 +199,10 @@ module Icinga2
       # add default chef attributes
       node_hash['custom_vars']['platform'] = node_hash['platform']
       node_hash['custom_vars']['platform_version'] = node_hash['platform_version']
+      node_hash['custom_vars']['cpu'] = node['cpu']['total']
+      if node['memory']['total']
+        node_hash['custom_vars']['memory'] = (node['memory']['total'].gsub(/\D/, '').to_i / 1024).to_s + 'MB'
+      end
       node_hash['custom_vars']['environment'] = node_hash['chef_environment']
       node_hash['custom_vars']['run_list'] = node_hash['run_list'].to_s
 
