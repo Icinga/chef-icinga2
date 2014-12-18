@@ -3,6 +3,11 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.2.1
+-----
+
+- Virender Khatri - removed files under development for chef supermarket
+
 0.2.0
 -----
 
