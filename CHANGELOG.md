@@ -3,6 +3,27 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.3.0
+-----
+
+- Virender Khatri - allowing node custom_vars hostgroups Array declaration
+
+- Virender Khatri - corrected check_interval chec_period resource attribute type
+
+- Virender Khatri - renamed downtime lwrp to scheduleddowntime
+
+- Virender Khatri - added applistener lwrp
+
+- Virender Khatri - added endpoint lwrp
+
+- Virender Khatri - added gelfwrite lwrp
+
+- Virender Khatri - corrected lwrp attributes types
+
+- Virender Khatri - corrected icinga2 objects boolean attribute, nil value attribute will be ignored
+
+- Virender Khatri - fixed mail notification scripts permissions
+
 0.2.1
 -----
 
