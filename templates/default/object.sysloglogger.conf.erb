@@ -1,0 +1,14 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * SyslogLogger Object.
+*/
+
+object ExternalCommandListener <%= object.inspect -%> {
+  <% if options['SyslogLogger'] -%>
+  SyslogLogger = <%= options['SyslogLogger'].inspect %>
+  <% end -%>
+}
