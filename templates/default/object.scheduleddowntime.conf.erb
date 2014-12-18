@@ -4,7 +4,7 @@
 */
 
 /**
- * DownTime Objects.
+ * ScheduledDowntime Objects.
 */
 
 <% @objects.sort.map do |object, options|%>
@@ -21,7 +21,7 @@
   <% if options['comment'] -%>
   comment = <%= options['comment'].inspect %>
   <% end -%>
-  <% if options['fixed'] -%>
+  <% unless options['fixed'].nil? -%>
   fixed = <%= options['fixed'].inspect %>
   <% end -%>
   <% if options['duration'] -%>

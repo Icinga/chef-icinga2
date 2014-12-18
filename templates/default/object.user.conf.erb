@@ -15,7 +15,7 @@
   <% if options['display_name'] -%>
   display_name = <%= options['display_name'].inspect %>
   <% end -%>
-  <% if options['enable_notifications'] -%>
+  <% unless options['enable_notifications'].nil? -%>
   enable_notifications = <%= options['enable_notifications'].inspect %>
   <% end -%>
   <% if options['groups'] -%>

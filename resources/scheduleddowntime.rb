@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Resource:: downtime
+# Resource:: scheduleddowntime
 #
 # Copyright 2014, Virender Khatri
 #
@@ -25,7 +25,7 @@ attribute :host_name,     :kind_of => String, :default => nil
 attribute :service_name,  :kind_of => String, :default => nil
 attribute :author,        :kind_of => String, :required => true, :default => nil
 attribute :comment,       :kind_of => String, :required => true, :default => nil
-attribute :fixed,         :kind_of => [TrueClass, FalseClass], :default => true
+attribute :fixed,         :kind_of => [TrueClass, FalseClass], :default => nil
 attribute :duration,      :kind_of => String, :default => nil
 attribute :zone,          :kind_of => String, :default => nil
 attribute :ranges,        :kind_of => Hash, :default => nil

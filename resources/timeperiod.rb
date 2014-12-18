@@ -22,7 +22,7 @@ actions :create, :delete
 default_action :create
 
 attribute :display_name,  :kind_of => String, :default => nil
-attribute :import,        :kind_of => String, :default => nil
+attribute :import,        :kind_of => String, :default => nil # default value could be set to 'legacy-timeperiod'
 attribute :zone,          :kind_of => String, :default => nil
 attribute :ranges,        :kind_of => Hash,   :default => {}
 attribute :template,      :kind_of => [TrueClass, FalseClass], :default => false

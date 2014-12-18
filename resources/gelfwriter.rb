@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Resource:: notificationcommand
+# Resource:: gelfwriter
 #
 # Copyright 2014, Virender Khatri
 #
@@ -21,10 +21,7 @@ actions :create, :delete
 
 default_action :create
 
-attribute :import,      :kind_of => String, :default => 'plugin-notification-command'
-attribute :command,     :kind_of => [String, Array], :required => true, :default => nil
-attribute :env,         :kind_of => Hash, :default => nil
-attribute :timeout,     :kind_of => Integer, :default => nil
-attribute :zone,        :kind_of => String, :default => nil
-attribute :arguments,   :kind_of => Hash, :default => nil
-attribute :custom_vars, :kind_of => Hash, :default => nil
+attribute :library,  :kind_of => String, :default => 'perfdata'
+attribute :host,  :required => true, :kind_of => String, :default => nil
+attribute :port,  :required => true, :kind_of => [String, Integer], :default => nil
+attribute :source,  :kind_of => String, :default => nil

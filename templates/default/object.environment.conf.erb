@@ -46,22 +46,22 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <%- if @retry_interval -%>
   retry_interval = <%= @retry_interval %>
   <%- end -%>
-  <%- if @enable_notifications -%>
+  <%- unless @enable_notifications.nil? -%>
   enable_notifications = <%= @enable_notifications.inspect %>
   <%- end -%>
-  <%- if @enable_active_checks -%>
+  <%- unless @enable_active_checks.nil? -%>
   enable_active_checks = <%= @enable_active_checks.inspect %>
   <%- end -%>
-  <%- if @enable_passive_checks -%>
+  <%- unless @enable_passive_checks.nil? -%>
   enable_passive_checks = <%= @enable_passive_checks.inspect %>
   <%- end -%>
-  <%- if @enable_event_handler -%>
+  <%- unless @enable_event_handler.nil? -%>
   enable_event_handler = <%= @enable_event_handler.inspect %>
   <%- end -%>
-  <%- if @enable_flapping -%>
+  <%- unless @enable_flapping.nil? -%>
   enable_flapping = <%= @enable_flapping.inspect %>
   <%- end -%>
-  <%- if @enable_perfdata -%>
+  <%- unless @enable_perfdata.nil? -%>
   enable_perfdata = <%= @enable_perfdata.inspect %>
   <%- end -%>
   <%- if @event_command -%>
@@ -70,7 +70,7 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <%- if @flapping_threshold -%>
   flapping_threshold = <%= @flapping_threshold.inspect %>
   <%- end -%>
-  <%- if @volatile -%>
+  <%- unless @volatile.nil? -%>
   volatile = <%= @volatile.inspect %>
   <%- end -%>
   <%- if @notes -%>

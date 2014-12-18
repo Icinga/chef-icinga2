@@ -28,7 +28,7 @@ attribute :address6,  :kind_of => String, :default => nil
 attribute :groups,        :kind_of => Array, :default => nil
 attribute :check_command, :kind_of => String, :default => nil
 attribute :max_check_attempts,  :kind_of => Integer, :default => nil
-attribute :check_period,  :kind_of => [String, Integer], :default => nil
+attribute :check_period,  :kind_of => String, :default => nil
 attribute :check_interval,      :kind_of => [String, Integer], :default => nil
 attribute :retry_interval,      :kind_of => [String, Integer], :default => nil
 attribute :enable_notifications,  :kind_of => [TrueClass, FalseClass], :default => nil

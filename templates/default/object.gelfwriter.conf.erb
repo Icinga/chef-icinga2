@@ -1,0 +1,22 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * GelfWriter Object.
+*/
+
+library <%= options['library'].inspect %>
+
+object GelfWriter <%= object.inspect -%> {
+  <% if options['host'] -%>
+  host = <%= options['host'].inspect %>
+  <% end -%>
+  <% if options['port'] -%>
+  port = <%= options['port'].inspect %>
+  <% end -%>
+  <% if options['source'] -%>
+  source  = <%= options['source'].inspect %>
+  <% end -%>
+}

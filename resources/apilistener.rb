@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Resource:: notificationcommand
+# Resource:: apilistener
 #
 # Copyright 2014, Virender Khatri
 #
@@ -21,10 +21,11 @@ actions :create, :delete
 
 default_action :create
 
-attribute :import,      :kind_of => String, :default => 'plugin-notification-command'
-attribute :command,     :kind_of => [String, Array], :required => true, :default => nil
-attribute :env,         :kind_of => Hash, :default => nil
-attribute :timeout,     :kind_of => Integer, :default => nil
-attribute :zone,        :kind_of => String, :default => nil
-attribute :arguments,   :kind_of => Hash, :default => nil
-attribute :custom_vars, :kind_of => Hash, :default => nil
+attribute :cert_path,       :required => true, :kind_of => String, :default => nil
+attribute :key_path,        :required => true, :kind_of => String, :default => nil
+attribute :ca_path,         :required => true, :kind_of => String, :default => nil
+attribute :crl_path,        :kind_of => String, :default => nil
+attribute :bind_host,       :kind_of => String, :default => nil
+attribute :bind_port,       :kind_of => String, :default => nil
+attribute :accept_config,   :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :accept_commands, :kind_of => [TrueClass, FalseClass], :default => nil

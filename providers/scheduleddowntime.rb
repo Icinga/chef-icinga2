@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Provider:: downtime
+# Provider:: scheduleddowntime
 #
 # Copyright 2014, Virender Khatri
 #
@@ -34,7 +34,7 @@ protected
 # collect object defined resources
 def object_resources
   run_context.resource_collection.select do |resource|
-    resource.is_a?(Chef::Resource::Icinga2Downtime)
+    resource.is_a?(Chef::Resource::Icinga2Scheduleddowntime)
   end
 end
 

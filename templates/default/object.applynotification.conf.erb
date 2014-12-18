@@ -22,7 +22,7 @@ apply Notification <%= object.inspect -%> to <%= options['object_type'] -%> {
   user_groups = <%= options['user_groups'].inspect %>
   <%- end -%>
   <%- if options['interval'] -%>
-  interval = <%= options['interval'].inspect %>
+  interval = <%= options['interval'] %>
   <%- end -%>
   <% if options['period'] -%>
   period = <%= options['period'].inspect %>

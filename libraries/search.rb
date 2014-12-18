@@ -135,7 +135,15 @@ module Icinga2
         roles += node_hash['roles']
         recipes += node_hash['recipes']
 
-        node_hash['custom_vars']['hostgroups'] = [node_hash['chef_environment']]
+        if node_hash['custom_vars'].key?('hostgroups')
+          if node_hash['custom_vars']['hostgroups'].is_a?(Array)
+            node_hash['custom_vars']['hostgroups'].push node_hash['chef_environment']
+          else
+            fail "node 'hostgroups' must be defined as an Array of HostGroup name (node['icinga2']['client']['custom_vars']['hostgroups'])"
+          end
+        else
+          node_hash['custom_vars']['hostgroups'] = [node_hash['chef_environment']]
+        end
 
         # collect nodes cluster
         if variable_check(node_hash[cluster_attribute]) && enable_cluster_hostgroup

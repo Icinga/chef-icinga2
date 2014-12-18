@@ -1,0 +1,23 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * Endpoint Object.
+*/
+
+<% @objects.sort.map do |object, options|%>
+object Endpoint <%= object.inspect -%> {
+  <% if options['host'] -%>
+  host = <%= options['host'].inspect %>
+  <% end -%>
+  <% if options['port'] -%>
+  port = <%= options['port'].inspect %>
+  <% end -%>
+  <% if options['log_duration'] -%>
+  log_duration = <%= options['log_duration'].inspect %>
+  <% end -%>
+}
+
+<% end -%>

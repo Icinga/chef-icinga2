@@ -1,0 +1,38 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * ApiListener Object.
+*/
+
+<% @objects.sort.map do |object, options|%>
+object ApiListener <%= object.inspect -%> {
+  <% if options['cert_path'] -%>
+  cert_path = <%= options['cert_path'].inspect %>
+  <% end -%>
+  <% if options['key_path'] -%>
+  key_path = <%= options['key_path'].inspect %>
+  <% end -%>
+  <% if options['ca_path'] -%>
+  ca_path = <%= options['ca_path'].inspect %>
+  <% end -%>
+  <% if options['crl_path'] -%>
+  crl_path = <%= options['crl_path'].inspect %>
+  <% end -%>
+  <% if options['bind_host'] -%>
+  bind_host = <%= options['bind_host'].inspect %>
+  <% end -%>
+  <% if options['bind_port'] -%>
+  bind_port = <%= options['bind_port'].inspect %>
+  <% end -%>
+  <% unless options['accept_config'].nil? -%>
+  accept_config = <%= options['accept_config'].inspect %>
+  <% end -%>
+  <% unless options['accept_commands'].nil? -%>
+  accept_commands = <%= options['accept_commands'].inspect %>
+  <% end -%>
+}
+
+<% end -%>

@@ -49,7 +49,7 @@ attribute :env_filter_node_vars,      :kind_of => Hash, :default => {}
 # environment host default attributes
 attribute :import,    :kind_of => String, :default => nil
 attribute :max_check_attempts,  :kind_of => Integer, :default => nil
-attribute :check_period,    :kind_of => [String, Integer], :default => nil
+attribute :check_period,    :kind_of => String, :default => nil
 attribute :check_interval,  :kind_of => [String, Integer], :default => nil
 attribute :retry_interval,  :kind_of => [String, Integer], :default => nil
 attribute :enable_notifications,  :kind_of => String, :default => nil
