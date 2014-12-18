@@ -3,10 +3,33 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.2.0
+-----
+
+- Virender Khatri - added node cpu and memory to custom vars by default
+
+- Virender Khatri - fixed permission issue on /var/run/icinga2
+
+- Virender Khatri - fixed nrpe config for ubuntu
+
+- Virender Khatri - added templates for mail notification scripts
+
+- Virender Khatri - added externalcommandlistener lwrp
+
+- Virender Khatri - added graphitewriter lwrp
+
+- Virender Khatri - added idomysqlconnection lwrp
+
+- Virender Khatri - added idopgsqlconnection lwrp
+
+- Virender Khatri - added sysloglogger lwrp
+
+- Virender Khatri - renamed client recipe to client_nrpe in favor of icinga2 agent
+
 0.1.5
 -----
 
-- Virender Khatri - Initial release of icinga2
+- Virender Khatri - initial release of icinga2
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

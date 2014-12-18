@@ -51,7 +51,9 @@ chef environment.
 
 ## Client Setup
 
-To setup nrpe client, add recipe `icinga2::client`.
+Currently this cookbook only supports NRPE Client. Icinga2 agent support will be added soon.
+
+To setup nrpe client, add recipe `icinga2::client_nrpe`.
 
 Use `icinga2_nrpe` LWRP to create nrpe plugins commands.
 
@@ -76,11 +78,11 @@ To configure nrpe client, check `examples/icinga2_client` directory.
 
 - `icinga2::server_install`   		- install icinga2 core/web/classic ui server packages
 
-- `icinga2::server_core`   			- configures icinga2 core directories and files
+- `icinga2::server_core`   			- configures icinga2 core
 
 - `icinga2::server_classic_ui`   		- configures icinga2 classic ui
 
-- `icinga2::server_features`   		- manages Icinga2 client NRPE Setup, wrapper recipe for other client recipes
+- `icinga2::server_features`   		- enable/disable Icinga2 features
 
 - `icinga2::server_objects`   		- manages icinga2 default objects/templates objects if `node['icinga2']['disable_default_conf']` is set
 
@@ -98,7 +100,7 @@ To configure nrpe client, check `examples/icinga2_client` directory.
 
 - `icinga2::server_object_usergroup`   	- creates icinga2 default UserGroup objects
 
-- `icinga2::client`   		- install and configures nrpe client
+- `icinga2::client_nrpe`   		- install and configures nrpe client
 
 
 ## Attributes
