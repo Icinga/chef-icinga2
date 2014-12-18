@@ -117,7 +117,7 @@ template ::File.join(node['icinga2']['scripts_dir'], 'mail-service-notification.
   source 'mail-service-notification.sh.erb'
   owner node['icinga2']['user']
   group node['icinga2']['group']
-  mode 0644
+  mode 0755
 end
 
 # mail-host-notification command
@@ -126,7 +126,7 @@ template ::File.join(node['icinga2']['scripts_dir'], 'mail-host-notification.sh'
   source 'mail-host-notification.sh.erb'
   owner node['icinga2']['user']
   group node['icinga2']['group']
-  mode 0644
+  mode 0755
 end
 
 user_ulimit node['icinga2']['user'] do
