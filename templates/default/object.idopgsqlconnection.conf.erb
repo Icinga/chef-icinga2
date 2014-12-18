@@ -1,0 +1,55 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * IdoPgSqlConnection Object.
+*/
+
+library <%= options['library'].inspect %>
+
+object IdoPgSqlConnection <%= object.inspect -%> {
+  <% if options['host'] -%>
+  host = <%= options['host'].inspect %>
+  <% end -%>
+  <% if options['port'] -%>
+  port = <%= options['port'].inspect %>
+  <% end -%>
+  <% if options['user'] -%>
+  user = <%= options['user'].inspect %>
+  <% end -%>
+  <% if options['password'] -%>
+  password = <%= options['password'].inspect %>
+  <% end -%>
+  <% if options['database'] -%>
+  database = <%= options['database'].inspect %>
+  <% end -%>
+  <% if options['table_prefix'] -%>
+  table_prefix = <%= options['table_prefix'].inspect %>
+  <% end -%>
+  <% if options['instance_name'] -%>
+  instance_name = <%= options['instance_name'].inspect %>
+  <% end -%>
+  <% if options['instance_description'] -%>
+  instance_description = <%= options['instance_description'].inspect %>
+  <% end -%>
+  <% if options.key?('enable_ha') && !options['enable_ha'].nil? -%>
+  enable_ha = <%= options['enable_ha'].inspect %>
+  <% end -%>
+  <% if options['failover_timeout'] -%>
+  failover_timeout = <%= options['failover_timeout'].inspect %>
+  <% end -%>
+  <% if options['cleanup'] -%>
+  cleanup = {
+  <% options['cleanup'].each do |var, value| -%>
+  <% if var && value -%>
+    <%= var -%> = <%= value %>
+  <% end -%>
+  <% end -%>
+  }
+  <% end -%>
+  <% if options['categories'] && !options['categories'].empty?-%>
+  categories = [<%= options['categories'].join(' | ') %>]
+  <% end -%>
+}
