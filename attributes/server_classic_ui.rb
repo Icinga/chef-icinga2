@@ -1,5 +1,5 @@
 
-default['icinga2']['classic_ui']['version'] = '2.2.1-1'
+default['icinga2']['classic_ui']['version'] = '2.2.2-1'
 default['icinga2']['classic_ui']['gui_version'] = '1.12.0-0'
 default['icinga2']['classic_ui']['web_root'] = '/usr/share/icinga'
 default['icinga2']['classic_ui']['home_dir'] = '/etc/icinga'
