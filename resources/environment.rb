@@ -43,23 +43,29 @@ attribute :server_region,       :kind_of => String, :default => nil
 
 # UserGroups to notify
 attribute :env_notification_user_groups,  :kind_of => Array, :default => []
-attribute :add_cloud_custom_vars,     :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['add_cloud_custom_vars']
-attribute :env_filter_node_vars,      :kind_of => Hash, :default => {}
+attribute :add_cloud_custom_vars,         :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['add_cloud_custom_vars']
+attribute :env_filter_node_vars,          :kind_of => Hash, :default => {}
 
 # environment host default attributes
-attribute :import,    :kind_of => String, :default => nil
+attribute :import,              :kind_of => String, :default => nil
+attribute :check_command,       :kind_of => String, :default => nil
 attribute :max_check_attempts,  :kind_of => Integer, :default => nil
 attribute :check_period,    :kind_of => String, :default => nil
 attribute :check_interval,  :kind_of => [String, Integer], :default => nil
 attribute :retry_interval,  :kind_of => [String, Integer], :default => nil
-attribute :enable_notifications,  :kind_of => String, :default => nil
-attribute :enable_active_checks,  :kind_of => String, :default => nil
-attribute :enable_passive_checks, :kind_of => String, :default => nil
-attribute :enable_event_handler,  :kind_of => String, :default => nil
-attribute :enable_flapping,   :kind_of => String, :default => nil
-attribute :enable_perfdata,   :kind_of => String, :default => nil
-attribute :event_command,     :kind_of => String, :default => nil
-attribute :flapping_threshold,  :kind_of => String, :default => nil
-attribute :volatile,          :kind_of => String, :default => nil
-attribute :command_endpoint,  :kind_of => String, :default => nil
-attribute :check_command,     :kind_of => String, :default => nil
+attribute :enable_notifications,  :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :enable_active_checks,  :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :enable_passive_checks, :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :enable_event_handler,  :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :enable_flapping,       :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :enable_perfdata,       :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :event_command,         :kind_of => String, :default => nil
+attribute :flapping_threshold,    :kind_of => String, :default => nil
+attribute :volatile,              :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :command_endpoint,      :kind_of => String, :default => nil
+attribute :notes,           :kind_of => String, :default => nil
+attribute :notes_url,       :kind_of => String, :default => nil
+attribute :action_url,      :kind_of => String, :default => nil
+attribute :icon_image,      :kind_of => String, :default => nil
+attribute :icon_image_alt,  :kind_of => String, :default => nil
+attribute :custom_vars,     :kind_of => Hash, :default => nil

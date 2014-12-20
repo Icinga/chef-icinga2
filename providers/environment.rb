@@ -86,7 +86,13 @@ def create_objects
               :event_command => new_resource.event_command,
               :flapping_threshold => new_resource.flapping_threshold,
               :volatile => new_resource.volatile,
-              :command_endpoint => new_resource.command_endpoint)
+              :command_endpoint => new_resource.command_endpoint,
+              :notes => new_resource.notes,
+              :notes_url => new_resource.notes_url,
+              :action_url => new_resource.action_url,
+              :icon_image => new_resource.icon_image,
+              :icon_image_alt => new_resource.icon_image_alt,
+              :custom_vars => new_resource.custom_vars)
     notifies :reload, 'service[icinga2]', :delayed
   end
   return true if hosts_template.updated? || create_hostgroups(env_resources)

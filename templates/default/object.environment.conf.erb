@@ -9,9 +9,7 @@
 
 <% @hosts.sort.map do |_node_fqdn, node_hash| -%>
 object Host <%= node_hash['fqdn'].inspect %> {
-  <%#- If any of the @ parameters are undefined, don't print anything for them: -%>
   <%- if @import -%>
-  <%#- Otherwise, include the parameter: -%>
   import <%= @import.inspect %>
   <%- end -%>
   <%- if node_hash['hostname'] -%>
@@ -25,11 +23,6 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <%- end -%>
   <%- if node_hash['custom_vars']['hostgroups'] && !node_hash['custom_vars']['hostgroups'].empty? -%>
   groups = <%= node_hash['custom_vars']['hostgroups'].inspect %>
-  <%- end -%>
-  <%- unless node_hash['custom_vars'].empty? -%>
-  <%- node_hash['custom_vars'].each_pair do |key, value| -%>
-  vars.<%= key %> = <%= value.inspect %>
-  <%- end -%>
   <%- end -%>
   <%- if @check_command -%>
   check_command = <%= @check_command.inspect %>
@@ -73,6 +66,9 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <%- unless @volatile.nil? -%>
   volatile = <%= @volatile.inspect %>
   <%- end -%>
+  <%- if @command_endpoint -%>
+  command_endpoint = <%= @command_endpoint.inspect %>
+  <%- end -%>
   <%- if @notes -%>
   notes = <%= @notes.inspect %>
   <%- end -%>
@@ -88,6 +84,13 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <%- if @icon_image_alt -%>
   icon_image_alt = <%= @icon_image_alt.inspect %>
   <%- end -%>
+  <% if node_hash['custom_vars'] -%>
+  <% node_hash['custom_vars'].each do |var, value| -%>
+  <% if var && value -%>
+  vars.<%= var -%> = <%= value.inspect %>
+  <% end -%>
+  <% end -%>
+  <% end -%>
 }
 
 <%- end -%>
