@@ -98,7 +98,7 @@ template ::File.join(node['icinga2']['conf_dir'], 'constants.conf') do
   owner node['icinga2']['user']
   group node['icinga2']['group']
   mode 0644
-  variables(:options => node['icinga2']['server']['constants'])
+  variables(:options => node['icinga2']['constants'])
   notifies :reload, 'service[icinga2]', :delayed
 end
 
