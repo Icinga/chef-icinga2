@@ -17,26 +17,31 @@
 # limitations under the License.
 #
 
-node['icinga2']['server']['db']['type']
+fail "#{node['icinga2']['ido']['type']} is not a valid sql db type, supported sql db types are mysql, pgsql" if node['icinga2']['ido']['type'] && !%w(mysql pgsql).include?(node['icinga2']['ido']['type'])
 
-schema_file = node['icinga2']['server']['db']["#{node['icinga2']['server']['db']['type']}_schema"]
-fail "#{node['icinga2']['server']['db']['type']} is not a valid sql db type, supported sql db types are mysql, pgsql" unless %w(mysql pgsql).include?(ode['icinga2']['server']['db']['type'])
-
-execute "icinga2_ido_#{node['icinga2']['server']['db']['type']}_schema" do
-  cwd '/tmp'
-  case node['icinga2']['server']['db']['type']
-  when 'mysql'
-    command "mysql -u #{node['icinga2']['server']['db']['db_user']} -p#{node['icinga2']['server']['db']['db_password']} -h #{node['icinga2']['server']['db']['db_host']} #{node['icinga2']['server']['db']['db_name']} < #{schema_file} && touch /etc/icinga2/icinga2_ido_#{node['icinga2']['server']['db']['type']}_schema_loaded"
-  when 'pgsql'
-    command "su - postgres -c 'export PGPASSWORD='\\''#{node['icinga2']['server']['db']['db_password']}'\\'' && psql -U #{node['icinga2']['server']['db']['db_user']} -h #{node['icinga2']['server']['db']['db_host']} -d #{node['icinga2']['server']['db']['db_name']} < #{schema_file}' && unset PGPASSWORD && /etc/icinga2/icinga2_ido_#{node['icinga2']['server']['db']['type']}_schema_loaded"
-  end
-  creates "/etc/icinga2/icinga2_ido_#{node['icinga2']['server']['db']['type']}_schema_loaded"
-  notifies :reload, 'service[icinga2]', :delayed
+# create steps to configure db
+template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_ido_mysql") do
+  owner node['icinga2']['user']
+  group node['icinga2']['group']
+  source 'configure_icinga2_ido_mysql.erb'
+  mode 0600
+  variables(:db_host => node['icinga2']['ido']['db_host'],
+            :db_name => node['icinga2']['ido']['db_name'],
+            :db_user => node['icinga2']['ido']['db_user'],
+            :db_password => node['icinga2']['ido']['db_password'],
+            :schema_file => '/usr/share/icinga2-ido-mysql/schema/mysql.sql'
+           )
 end
 
-execute "icinga2_ido_#{node['icinga2']['server']['db']['type']}_enable" do
-  cwd '/tmp'
-  command "'/usr/sbin/icinga2-enable-feature ido-#{node['icinga2']['server']['db']['type']} && touch /etc/icinga2/icinga2_ido_#{node['icinga2']['server']['db']['type']}_enabled"
-  creates "/etc/icinga2/icinga2_ido_#{node['icinga2']['server']['db']['type']}_enabled"
-  notifies :reload, 'service[icinga2]', :delayed
+template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_ido_pgsql") do
+  owner node['icinga2']['user']
+  group node['icinga2']['group']
+  source 'configure_icinga2_ido_pgsql.erb'
+  mode 0600
+  variables(:db_host => node['icinga2']['ido']['db_host'],
+            :db_name => node['icinga2']['ido']['db_name'],
+            :db_user => node['icinga2']['ido']['db_user'],
+            :db_password => node['icinga2']['ido']['db_password'],
+            :schema_file => '/usr/share/icinga2-ido-mysql/schema/pgsql.sql'
+           )
 end

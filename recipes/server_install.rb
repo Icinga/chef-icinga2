@@ -30,8 +30,7 @@ when 'ubuntu'
     action node['icinga2']['apt']['action']
   end
 
-  os_packages = %w(php5 php5-fpm build-essential libgd2-xpm-dev libjpeg62 libjpeg62-dev libpng12-0 libpng12-dev)
-  _icinga2_packages = %w(icinga2 icinga-web icinga-classicui)
+  os_packages = %w(g++ php5 php5-cli php5-fpm build-essential libgd2-xpm-dev libjpeg62 libjpeg62-dev libpng12-0 libpng12-dev libapache2-mod-php5 rrdtool librrds-perl)
 when 'rhel'
   # yum repository configuration
   yum_repository 'icinga2' do
@@ -44,8 +43,7 @@ when 'rhel'
     action node['icinga2']['yum']['action']
   end
 
-  os_packages = %w(gcc glibc glibc-common mailx php php-devel gd gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd php-fpm)
-  _icinga2_packages = %w(icinga2 icinga2-classicui-config icinga-gui icinga-web icinga-web-mysql icinga2-ido-mysql)
+  os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo php-soap php-ldap php-mysql rrdtool perl-Time-HiRes perl-rrdtool)
 end
 
 # dependencies
@@ -60,7 +58,7 @@ icinga2_package_version = value_for_platform(
 )
 
 # install icinga2 core packages
-%w(icinga2 icinga2-ido-mysql).each do |p|
+['icinga2', "icinga2-ido-#{node['icinga2']['ido']['type']}"].each do |p|
   package p do
     version node['icinga2']['version'] + icinga2_package_version if node['platform_family'] == 'rhel'
   end
@@ -74,7 +72,7 @@ package 'icinga-gui' do
   version node['icinga2']['classic_ui']['gui_version'] + icinga2_package_version if node['platform_family'] == 'rhel'
 end
 
-%w(icinga-web icinga-web-mysql).each do |p|
+['icinga-web', "icinga-web-#{node['icinga2']['ido']['type']}"].each do |p|
   package p do
     version node['icinga2']['web']['version'] + icinga2_package_version if node['platform_family'] == 'rhel'
   end

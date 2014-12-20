@@ -1,0 +1,11 @@
+## Steps to setup mysql db for Icinga2 Web
+
+# create db
+# createdb <%= @db_name -%>;
+
+# create db user(update icinga2 ip address if mysql is not running locally)
+
+# db user grants(update icinga2 ip address if mysql is not running locally)
+
+# create icinga2 db schema
+# su - postgres -c 'export PGPASSWORD='\\''<%= @db_password -%>'\\'' && psql -U <%= @db_user -%> -h <%= @db_host -%> -d <%= @db_name -%> < <%= @db_password -%>' && unset PGPASSWORD
