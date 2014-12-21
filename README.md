@@ -3,15 +3,14 @@ icinga2 Cookbook
 
 [![Build Status](https://travis-ci.org/vkhatri/chef-icinga2.svg?branch=master)](https://travis-ci.org/vkhatri/chef-icinga2)
 
-This is a [Chef] cookbook to manage [Icinga2].
+This is a [Chef] cookbook to manage [Icinga2] using LWRP.
 
 >> **WARNING**: This cookbook is in Development phase and few objects
 LWRP may not be available.
 
 >> Once fully tested, this WARNING will be removed.
 
-More
-features and attributes will be added over time, **feel free to contribute**
+More features and attributes will be added over time, **feel free to contribute**
 what you find missing!
 
 
@@ -51,11 +50,8 @@ chef environment.
 
 ## Client Setup
 
-Currently this cookbook only supports NRPE Client. Icinga2 agent support will be added soon.
-
-To setup nrpe client, add recipe `icinga2::client_nrpe`.
-
-Use `icinga2_nrpe` LWRP to create nrpe plugins commands.
+NRPE Client recipe has been removed from this cookbook. Icinga2 Agent management will be
+added soon.
 
 
 ## LWRP Examples
@@ -63,9 +59,6 @@ Use `icinga2_nrpe` LWRP to create nrpe plugins commands.
 Different LWRP usage examples are added to `examples` directory.
 
 To configure icinga2 server, check `examples/icinga2_server` directory.
-
-To configure nrpe client, check `examples/icinga2_client` directory.
-
 
 
 ## Recipes
@@ -100,8 +93,6 @@ To configure nrpe client, check `examples/icinga2_client` directory.
 
 - `icinga2::server_object_usergroup`   	- creates icinga2 default UserGroup objects
 
-- `icinga2::client_nrpe`   		- install and configures nrpe client
-
 
 ## Attributes
 
@@ -114,8 +105,6 @@ To configure nrpe client, check `examples/icinga2_client` directory.
 - `icinga2::server_constants`	- icinga2 server constants parameters file
 
 - `icinga2::server_objects`		- icinga2 objects default attributes file
-
-- `icinga2::client`				- nrpe client defailt attributes file
 
 
 ## icinga2 LWRP Resources
@@ -199,11 +188,6 @@ Same LWRP resource can be used to create icinga2 Object and icinga2 Template as 
 
 
 ## LWRP icinga2_notificationcommand
-
- To be added.
-
-
-## LWRP icinga2_nrpe
 
  To be added.
 

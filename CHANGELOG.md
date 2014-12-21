@@ -3,6 +3,27 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.3.x
+-----
+
+- Virender Khatri - removed nrpe client recipe
+
+- Virender Khatri -
+
+- Virender Khatri -
+
+- Virender Khatri -
+
+- Virender Khatri -
+
+- Virender Khatri -
+
+- Virender Khatri -
+
+- Virender Khatri -
+
+- Virender Khatri -
+
 0.3.0
 -----
 
