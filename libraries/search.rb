@@ -95,7 +95,7 @@ module Icinga2
         end
 
         # skip node if set not to monitor
-        if node['icinga2_off']
+        if node['monitoring_off'] == true
           Chef::Log.warn("#{node_hash['name']} is set to turn off the monitoring, node ignored")
           next
         end
