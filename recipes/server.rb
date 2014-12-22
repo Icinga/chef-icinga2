@@ -41,7 +41,7 @@ include_recipe 'icinga2::server_web2' if node['icinga2']['web2']['enable']
 include_recipe 'icinga2::server_pnp' if node['icinga2']['pnp']
 
 # objects
-include_recipe 'icinga2::server_objects' if node['icinga2']['disable_default_conf']
+include_recipe 'icinga2::server_objects' if node['icinga2']['disable_conf_d']
 
 service 'icinga2' do
   service_name node['icinga2']['service_name']

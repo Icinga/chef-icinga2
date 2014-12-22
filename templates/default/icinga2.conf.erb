@@ -52,7 +52,7 @@ include_recursive "repository.d"
  * the preferred way is to create separate directories and files in the conf.d
  * directory. Each of these files must have the file extension ".conf".
  */
-<% if node['icinga2']['disable_default_conf'] -%>
+<% if node['icinga2']['disable_conf_d'] -%>
 /**
 include_recursive "conf.d"
 */

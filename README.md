@@ -77,7 +77,7 @@ To configure icinga2 server, check `examples/icinga2_server` directory.
 
 - `icinga2::server_features`   		- enable/disable Icinga2 features
 
-- `icinga2::server_objects`   		- manages icinga2 default objects/templates objects if `node['icinga2']['disable_default_conf']` is set
+- `icinga2::server_objects`   		- manages icinga2 default objects/templates objects if `node['icinga2']['disable_conf_d']` is set
 
 - `icinga2::server_object_host`   	- creates icinga2 default Host objects / tempaltes
 
@@ -105,6 +105,21 @@ To configure icinga2 server, check `examples/icinga2_server` directory.
 - `icinga2::server_constants`	- icinga2 server constants parameters file
 
 - `icinga2::server_objects`		- icinga2 objects default attributes file
+
+
+## Icinga2 Host Custom Vars
+
+**environment LWRP Host Vars**
+
+Environment LWRP resources sets Host custom vars for each node via node `Hash` attribute -
+`node['icinga2']['client']['custom_vars']`. All defined `vars` will be added to `Host` object
+
+These attributes will be added to respective node
+
+
+**host LWRP Host Vars**
+
+
 
 
 ## icinga2 LWRP Resources
@@ -224,7 +239,7 @@ Same LWRP resource can be used to create icinga2 Object and icinga2 Template as 
 
 ## Cookbook Advanced Attributes
 
-* `default['icinga2']['disable_default_conf']` (default: `false`): disable icinga2 `conf.d` default configuration and use LWRP to manage icinga2 objects / templates
+* `default['icinga2']['disable_conf_d']` (default: `false`): disable icinga2 `conf.d` default configuration and use LWRP to manage icinga2 objects / templates
 
 * `default['icinga2']['add_cloud_custom_vars']` (default: `true`): add cloud node attributes, limited cloud provider support is available
 
