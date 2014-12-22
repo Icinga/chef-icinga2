@@ -32,7 +32,13 @@ include_recipe 'icinga2::server_install'
 include_recipe 'icinga2::server_core'
 
 # icinga2 classic ui
-include_recipe 'icinga2::server_classic_ui'
+include_recipe 'icinga2::server_classic_ui' if node['icinga2']['classic_ui']['enable']
+
+# icinga2 ido for web
+include_recipe 'icinga2::server_web2' if node['icinga2']['web2']['enable']
+
+# icinga2 pnp support
+include_recipe 'icinga2::server_pnp' if node['icinga2']['pnp']
 
 # objects
 include_recipe 'icinga2::server_objects' if node['icinga2']['disable_default_conf']

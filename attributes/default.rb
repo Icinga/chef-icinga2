@@ -8,6 +8,8 @@ default['icinga2']['pki_dir'] = ::File.join(node['icinga2']['conf_dir'], 'pki')
 default['icinga2']['scripts_dir'] = ::File.join(node['icinga2']['conf_dir'], 'scripts')
 default['icinga2']['zones_dir'] = ::File.join(node['icinga2']['conf_dir'], 'zones.d')
 
+default['icinga2']['pnp'] = false
+
 # avoid conflicts
 default['icinga2']['disable_default_conf'] = false
 default['icinga2']['add_cloud_custom_vars'] = true

@@ -1,11 +1,16 @@
-## Steps to setup mysql db for Icinga2 Web
+## Steps to setup mysql db for Icinga Web2
 
-# create db
-# createdb <%= @db_name -%>;
+# https://wiki.icinga.org/display/howtos/Setting+up+Icinga+with+IDOUtils+on+RHEL
 
-# create db user(update icinga2 ip address if mysql is not running locally)
+$ psql template1
+psql>  create database <%= @db_name -%>;
 
-# db user grants(update icinga2 ip address if mysql is not running locally)
+$ createlang plpgsql <%= @db_name -%>
 
-# create icinga2 db schema
-# su - postgres -c 'export PGPASSWORD='\\''<%= @db_password -%>'\\'' && psql -U <%= @db_user -%> -h <%= @db_host -%> -d <%= @db_name -%> < <%= @db_password -%>' && unset PGPASSWORD
+psql> create role <%= @db_user -%>;
+
+psql> alter role <%= @db_user -%> login;
+
+psql> grant all on database <%= @db_name -%> to <%= @db_user -%>;
+
+$ psql -U <%= @db_user -%> -d <%= @db_name -%> < <%= @schema -%>

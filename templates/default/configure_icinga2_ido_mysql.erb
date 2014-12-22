@@ -1,15 +1,11 @@
-## Steps to setup mysql db for Icinga2 Web
+## Steps to setup mysql db for Icinga Web2
 
-# create db
-# CREATE DATABASE <%= @db_name -%>;
+$ mysql -u root -p -h <%= @db_host -%> -P <%= @db_port -%>
 
-# create db user
-# GRANT USAGE ON <%= @db_name -%>.* TO '<%= @db_user -%>'@'%' IDENTIFIED BY '<%= @db_password -%>' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0;
+mysql> CREATE DATABASE <%= @db_name -%>;
 
-# db user grants (update icinga2 ip address if db is not running locally)
-# GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE, VIEW, INDEX, EXECUTE ON <%= @db_name -%>.* TO '<%= @db_user -%>'@'%';
-# FLUSH PRIVILEGES;
+mysql> GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON <%= @db_name -%>.* TO '<%= @db_user -%>'@'%' IDENTIFIED BY '<%= @db_password -%>';
 
-# create icinga2 db schema
-# mysql -u <%= @db_user -%> -p<%= @db_password -%> -h <%= @db_host -%> -P <%= @db_port -%> <%= @db_name -%> < <%= @schema_file -%>
+mysql> FLUSH PRIVILEGES;
 
+$ mysql -u root -p -h <%= @db_host -%> -P <%= @db_port -%> <%= @db_name -%> < <%= @schema_file -%>

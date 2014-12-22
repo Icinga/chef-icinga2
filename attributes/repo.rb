@@ -26,3 +26,9 @@ default['icinga2']['apt']['components'] = %w(main)
 default['icinga2']['apt']['deb_src'] = true
 default['icinga2']['apt']['repo_key'] = 'http://packages.icinga.org/icinga.key'
 default['icinga2']['apt']['action'] = :add
+
+default['icinga2']['icinga2_version_suffix'] = value_for_platform(
+  %w(centos redhat fedora) => { 'default' => ".el#{node['platform_version']}" },
+  'amazon' => { 'default' => '.el6' },
+  'ubuntu' => { 'default' => '' }
+)

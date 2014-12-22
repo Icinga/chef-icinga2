@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Recipe:: server_object_service
+# Recipe:: server_pnp
 #
 # Copyright 2014, Virender Khatri
 #
@@ -17,9 +17,8 @@
 # limitations under the License.
 #
 
-icinga2_service 'generic-service' do
-  template true
-  max_check_attempts node['icinga2']['server']['object']['host']['max_check_attempts']
-  check_interval node['icinga2']['server']['object']['host']['check_interval']
-  retry_interval node['icinga2']['server']['object']['host']['retry_interval']
-end
+node.set['pnp4nagios']['user'] = node['icinga2']['user']
+node.set['pnp4nagios']['group'] = node['icinga2']['cmdgroup']
+node.set['pnp4nagios']['nagios_base'] = '/icinga/cgi-bin'
+
+include_recipe 'pnp4nagios::default'

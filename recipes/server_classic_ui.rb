@@ -17,17 +17,31 @@
 # limitations under the License.
 #
 
+classic_ui_packages = value_for_platform_family(
+  'debian' => %w(icinga2-classicui),
+  'rhel' => %w(icinga2-classicui-config icinga-gui)
+)
+
+case node['platform_family']
+when 'debian'
+  package 'icinga2-classicui' do
+    # version node['icinga2']['classic_ui']['version']
+  end
+when 'rhel'
+  package 'icinga2-classicui-config' do
+    version node['icinga2']['classic_ui']['version'] + node['icinga2']['icinga2_version_suffix']
+  end
+
+  package 'icinga-gui' do
+    version node['icinga2']['classic_ui']['gui_version'] + node['icinga2']['icinga2_version_suffix']
+  end
+end
+
 directory node['icinga2']['classic_ui']['log_dir'] do
   owner 'root'
   group 'root'
   mode 0755
 end
-
-# directory node['icinga2']['classic_ui']['cgi_log_dir'] do
-#  owner node['icinga2']['user']
-#  group node['icinga2']['cmdgroup']
-#  mode 0766 #  drwxrwsr-x 2 icinga icingacmd 4096 Nov 23 06:40 /var/log/icinga/gui
-# end
 
 template ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'cgi.cfg') do
   source 'icinga2.cgi.cfg.erb'

@@ -17,10 +17,15 @@
 # limitations under the License.
 #
 
+# Note: this cookbook does not setup or initialize DB.
+# However, it tries to provide steps to initialize one.
+# Checkout configure_icinga2_db steps document under
+# scripts folder.
+
 fail "#{node['icinga2']['ido']['type']} is not a valid sql db type, supported sql db types are mysql, pgsql" if node['icinga2']['ido']['type'] && !%w(mysql pgsql).include?(node['icinga2']['ido']['type'])
 
 # create steps to configure db
-template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_ido_mysql") do
+template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_db_mysql") do
   owner node['icinga2']['user']
   group node['icinga2']['group']
   source 'configure_icinga2_ido_mysql.erb'
@@ -29,11 +34,11 @@ template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_ido_mysq
             :db_name => node['icinga2']['ido']['db_name'],
             :db_user => node['icinga2']['ido']['db_user'],
             :db_password => node['icinga2']['ido']['db_password'],
-            :schema_file => '/usr/share/icinga2-ido-mysql/schema/mysql.sql'
+            :schema_file => node['icinga2']['ido']['mysql_schema']
            )
 end
 
-template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_ido_pgsql") do
+template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_db_pgsql") do
   owner node['icinga2']['user']
   group node['icinga2']['group']
   source 'configure_icinga2_ido_pgsql.erb'
@@ -42,6 +47,6 @@ template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_ido_pgsq
             :db_name => node['icinga2']['ido']['db_name'],
             :db_user => node['icinga2']['ido']['db_user'],
             :db_password => node['icinga2']['ido']['db_password'],
-            :schema_file => '/usr/share/icinga2-ido-mysql/schema/pgsql.sql'
+            :schema_file => node['icinga2']['ido']['pgsql_schema']
            )
 end
