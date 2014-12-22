@@ -60,8 +60,7 @@ def create_objects
                                       :limit_region => new_resource.limit_region,
                                       :server_region => server_region,
                                       :search_pattern => search_pattern,
-                                      :add_cloud_custom_vars => new_resource.add_cloud_custom_vars,
-                                      :env_notification_user_groups => new_resource.env_notification_user_groups).environment_resources
+                                      :add_cloud_custom_vars => new_resource.add_cloud_custom_vars).environment_resources
 
   hosts_template = template ::File.join(node['icinga2']['objects_dir'], "host_#{new_resource.environment}.conf") do
     source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"

@@ -41,8 +41,6 @@ attribute :env_custom_vars,     :kind_of => Hash, :default => []
 attribute :limit_region,        :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['limit_region']
 attribute :server_region,       :kind_of => String, :default => nil
 
-# UserGroups to notify
-attribute :env_notification_user_groups,  :kind_of => Array, :default => []
 attribute :add_cloud_custom_vars,         :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['add_cloud_custom_vars']
 attribute :env_filter_node_vars,          :kind_of => Hash, :default => {}
 

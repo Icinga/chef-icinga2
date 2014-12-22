@@ -25,5 +25,4 @@ icinga2_environment 'AWSDefaultEnvHosts' do
   enable_application_hostgroup true
   cluster_attribute 'cluster' # update this with your node cluster attribute, e.g. node['cluster_name']
   application_attribute 'application' # udpate this with your node application attribute, e.g. node['application']
-  env_notification_user_groups %w(icingaadmins)
 end

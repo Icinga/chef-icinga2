@@ -33,7 +33,7 @@ module Icinga2
                   :enable_application_hostgroup, :application_attribute, :ignore_node_error,
                   :ignore_resolv_error, :exclude_recipes, :exclude_roles, :env_custom_vars,
                   :limit_region, :server_region, :search_pattern, :use_fqdn_resolv,
-                  :add_cloud_custom_vars, :env_notification_user_groups,
+                  :add_cloud_custom_vars,
                   :env_filter_node_vars, :failover_fqdn_address
 
     def initialize(options = {})
@@ -53,7 +53,6 @@ module Icinga2
       @search_pattern = options[:search_pattern]
       @use_fqdn_resolv = options[:use_fqdn_resolv]
       @add_cloud_custom_vars = options[:add_cloud_custom_vars]
-      @env_notification_user_groups = options[:env_notification_user_groups]
       @env_filter_node_vars = options[:env_filter_node_vars]
       @failover_fqdn_address = options[:failover_fqdn_address]
     end
@@ -249,14 +248,6 @@ module Icinga2
       # add node custom vars from environment lwrp
       env_custom_vars.each do |k, v|
         node_hash['custom_vars'][k] = v if variable_check(k)
-      end
-
-      # add node notification user groups from environment lwrp resource and node attribute
-      if node_hash['custom_vars']['notification_user_groups']
-        fail "node attribute node['icinga2'['client']['custom_vars']['notification_user_groups'] must be an Array" unless node['icinga2']['client']['custom_vars']['notification_user_groups'].is_a?(Array)
-        node_hash['custom_vars']['notification_user_groups'] += env_notification_user_groups
-      elsif env_notification_user_groups
-        node_hash['custom_vars']['notification_user_groups'] = env_notification_user_groups
       end
 
       node_hash
