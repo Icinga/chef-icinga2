@@ -5,10 +5,7 @@ icinga2 Cookbook
 
 This is a [Chef] cookbook to manage [Icinga2] using LWRP.
 
->> **WARNING**: This cookbook is in Development phase and few objects
-LWRP may not be available.
-
->> Once fully tested, this WARNING will be removed.
+>> **WARNING** Cookbook has been tested for existing functionality, however this WARNING is added to notify users that this cookbook is still in development phase and few functionalities are yet to be added.
 
 More features and attributes will be added over time, **feel free to contribute**
 what you find missing!
@@ -19,79 +16,37 @@ what you find missing!
 https://github.com/vkhatri/chef-icinga2
 
 
-## Supported Icinga Version
-
-This cookbook is being developed for Icinga2 - v2.2.1 primarily on Amazon Platform (EPEL Release 6 Package).
-
-
-## Supported Icinga2 Install Types
-
-Currently Icinga2 installation is supported **ONLY** via Repository Packages.
-
-
-## Supported Icinga2 Web / UI
-
-Currently this cookbook configures **ONLY** `Icinga Clasic UI`.
-
-Icinga Web or Icinga2 Web support will be added once other functionality is fully tested.
-
-
-## Supported Icinga2 Cluster Deployment
-
-Currently this cookbook does **NOT** support icinga2 Cluster deployment.
-
-
-## Server Setup
-
-To setup icinga2 server on a node, add recipe `icinga2::server`.
-
-Use `icinga2_environment` LWRP to create `Host` objects and `HostGroup` objects for an entire
-chef environment.
-
-## Client Setup
-
-NRPE Client recipe has been removed from this cookbook. Icinga2 Agent management will be
-added soon.
-
-
-## LWRP Examples
-
-Different LWRP usage examples are added to `examples` directory.
-
-To configure icinga2 server, check `examples/icinga2_server` directory.
-
-
 ## Recipes
 
 - `icinga2::default`     	- does not do anything, used for LWRP usage
 
-- `icinga2::server`  		- manages Icinga2 server setup, wrapper recipe for other server recipes
+- `icinga2::server`  		- install & configure icinga2 server with default incinga Objects
 
-- `icinga2::server_apache`		- manages apache and icinga2 vhost using `apache2` cookbook
+- `icinga2::server_apache`		- manages apache and icinga2 classic ui / web / web2 vhost using `apache2` cookbook
 
-- `icinga2::server_install`   		- install icinga2 core/web/classic ui server packages
+- `icinga2::server_install`   		- install icinga2 core/ido server packages
 
-- `icinga2::server_core`   			- configures icinga2 core
+- `icinga2::server_core`   			- configures icinga2 core configuration files & directories
+
+- `icinga2::server_features`   		- enable/disable icinga2 features
 
 - `icinga2::server_classic_ui`   		- configures icinga2 classic ui
 
-- `icinga2::server_features`   		- enable/disable Icinga2 features
+- `icinga2::server_ido`   		- configures icinga2 ido db
 
-- `icinga2::server_objects`   		- manages icinga2 default objects/templates objects if `node['icinga2']['disable_conf_d']` is set
+- `icinga2::server_objects`   		- manages icinga2 default objects/templates objects if `node['icinga2']['disable_conf_d']` is set in which case `conf.d` objects config is not included in `icinga2.conf` and objects are created using LWRP
 
-- `icinga2::server_object_host`   	- creates icinga2 default Host objects / tempaltes
+- `icinga2::server_object_host`   	- creates icinga2 `generic-host` `Host` template
 
-- `icinga2::server_object_notificationcommand`   - creates icinga2 default NotificationCommand objects
+- `icinga2::server_object_notificationcommand`   - creates icinga2 default `NotificationCommand` objects
 
-- `icinga2::server_object_service`   		- creates icinga2 default Service objects / templates
+- `icinga2::server_object_service`   		- creates icinga2 default`generic-service` `Service`  templates
 
-- `icinga2::server_object_servicegroup`   	- creates icinga2 default ServiceGroup objects
+- `icinga2::server_object_timeperiod`   	- creates icinga2 default `TimePeriod` objects
 
-- `icinga2::server_object_timeperiod`   	- creates icinga2 default TimePeriod objects / templates
+- `icinga2::server_object_user`   			- creates icinga2 `generic-user` `User` template and `icingaadmin` `User` object
 
-- `icinga2::server_object_user`   			- creates icinga2 default User objects / templates
-
-- `icinga2::server_object_usergroup`   	- creates icinga2 default UserGroup objects
+- `icinga2::server_object_usergroup`   	- creates icinga2 `icingaadmins` `UserGroup` object
 
 
 ## Attributes
@@ -106,18 +61,177 @@ To configure icinga2 server, check `examples/icinga2_server` directory.
 
 - `icinga2::server_objects`		- icinga2 objects default attributes file
 
+- `icinga2::server_ido`		- icinga2 ido db default attributes file
+
+- `icinga2::server_web2`		- icinga2 web2 ui default attributes file
+
+
+
+## Supported Icinga Version
+
+This cookbook is being developed for Icinga2 - v2.2.x primarily on Amazon Platform (EPEL Release 6 Package).
+
+
+## Supported Icinga2 Install Types
+
+Currently Icinga2 installation is supported **ONLY** via Repository Packages.
+
+
+## Icinga2 Server Setup
+
+To setup icinga2 server on a node, add recipe `icinga2::server` which will install necessary packages and configuration files.
+
+
+
+## Icinga2 Classic UI
+
+Icinga2 Classic UI is enabled by default and set as default UI.
+
+However, Classic UI can be disabled by attribute `node['icinga2']['classic_ui']['enable']`.
+
+
+**How to add users for icinga2 Classic UI**
+
+Icinga2 Classic UI users is controlled by node Hash attribute `node['icinga2']['classic_ui']['users']`. This attribute accepts a `Hash` of `username => htpasswd(passwd)`, so that password is not available in plain text.
+
+By default `icingaadmin` user is added with password `icingaadmin`:
+
+	default['icinga2']['classic_ui']['users'] = {
+	  'icingaadmin' => '$apr1$MZtKRLAy$AV9OiJ.V/mI9g30bHn9ol1'
+	}
+
+This can be overrided in wrapper cookbook or role or environment.
+
+To add more users for icigna2 Classic UI auth, add new users to Hash attribute in the same wasy `icingaadmin` user is added
+
+	default['icinga2']['classic_ui']['users']['user_name'] = '$apr1$MZtKRLAy$AV9OiJ.V/mI9g30bHn9ol1'
+
+**Icinga2 Classic UI Authorization**
+
+
+Icigna2 Classic UI User authorization is managed by below node Arrary attributes:
+
+	node['icinga2']['classic_ui']['authorized_for_system_information']
+	node['icinga2']['classic_ui']['authorized_for_configuration_information']
+	node['icinga2']['classic_ui']['authorized_for_full_command_resolution']
+	node['icinga2']['classic_ui']['authorized_for_system_commands']
+	node['icinga2']['classic_ui']['authorized_for_all_services']
+	node['icinga2']['classic_ui']['authorized_for_all_hosts']
+	node['icinga2']['classic_ui']['authorized_for_all_service_commands']
+	node['icinga2']['classic_ui']['authorized_for_all_host_commands']
+
+By simply adding users to above attributes will provide necessary access to the UI.
+
+
+
+**How to add a guest user**
+
+To add a guest user without any admin privileges, first add a `guest` user (with password `guest`)
+
+	default['icinga2']['classic_ui']['users']['guest'] = '$apr1$cA/eVUgT$aIoWUPwV5uONJoYslb7lg0'
+
+Then authorize `guest` user to view `Host/Service` status
+
+	node['icinga2']['classic_ui']['authorized_for_all_services'] = %w(icingaadmin guest)
+	node['icinga2']['classic_ui']['authorized_for_all_hosts'] = %w(icingaadmin guest)
+
+
+
+**How to add an admin user**
+
+To make a user `admin`, add the user to below node attributes:
+
+	node['icinga2']['classic_ui']['authorized_for_system_information']
+	node['icinga2']['classic_ui']['authorized_for_configuration_information']
+	node['icinga2']['classic_ui']['authorized_for_full_command_resolution']
+	node['icinga2']['classic_ui']['authorized_for_system_commands']
+	node['icinga2']['classic_ui']['authorized_for_all_services']
+	node['icinga2']['classic_ui']['authorized_for_all_hosts']
+	node['icinga2']['classic_ui']['authorized_for_all_service_commands']
+	node['icinga2']['classic_ui']['authorized_for_all_host_commands']
+
+
+
+## Icinga Web2
+
+Though icingaweb2 is currently in development phase, this cookbook is intended to use
+icingaweb2 and recipe is in progress.
+
+
+
+## Icinga2 Cluster Deployment
+
+Currently this cookbook does **NOT** contain any information to setup icinga2 Cluster.
+
+
+
+## Icinga2 Monitor a Chef Environment Nodes
+
+This cookbook does not only provide management of Icinga2 server & objects, it also provides
+automation around Chef environment.
+
+Using LWRP `environment` a whole environment nodes can be added to `Host` objects with environment wide `Host` object parameters.
+
+There are certain functionalities added to LWRP `environment`, like:
+
+- define icinga2 `Host` parameters for an entire environment
+
+- auto create `HostGroup` object for an entire chef environment
+
+- auto create `HostGroup` object for node's `application` attribute to group nodes for an entire chef environment `application` type
+
+- auto create `HostGroup` object for node's `cluster` attribute to group nodes for a chef environment `cluster`
+
+- auto add chef node Cloud attributes as `Host` custom `vars`, currently only AWS EC2 attributes are supported, but is easy to extend the suport to other cloud providers
+
+- auto create `HostGroup` list for a chef environment node
+
+- limit a chef environment spreaded across multiple regions to icinga2 server region, e.g. in multi region ec2 production environment, one would want to setup an icinga2 server in region `us-east-1` just to monitor `us-east-1` nodes, but not the production nodes of other regions, like `ap-southeast-1`
+
+- allow chef node to determine `host.address` from `node['fqdn']` DNS resolution instead of `node['ipaddress']` and either ignore chef node if failed to resolve DNS or fallback to use `node['ipaddress']` as `host.address`
+
+- exclude a node by `run_list` role, not yet tested
+
+- exclude a node by `run_list` role, not yet tested
+
+- filter chef node if match certain node attributes
+
+- override an environment and use an entire different `search_pattern`, this feature extends LWRP `environment` functionality to select nodes by a user given search pattern
+
+
+Simply create a LWRP resource for a chef environment, to start monitoring all nodes in that environment. More details are added to examples.
+
 
 ## Icinga2 Host Custom Vars
 
 **environment LWRP Host Vars**
 
-Environment LWRP resources sets Host custom vars for each node via node `Hash` attribute -
-`node['icinga2']['client']['custom_vars']`. All defined `vars` will be added to `Host` object
-
-These attributes will be added to respective node
+LWRP `environment` resources sets Host custom vars for each node via node `Hash` attribute -
+`node['icinga2']['client']['custom_vars']`. All defined `vars` will be added to `Host` object.
 
 
 **host LWRP Host Vars**
+
+When using `icinga2_host` LWRP, node custom vars will not be added automatically. There will be no search performed as the `Host` object could be different than a chef `Node`.
+
+To add `Host` custom vars, use Hash attribute `custom_vars`.
+
+A resource attribute will be added to `icinga2_host` LWRP to perform a search to fetch custom vars defined for a node, so that manual addition is not required.
+
+
+
+## Client Setup
+
+NRPE Client recipe has been removed from this cookbook.
+
+Icinga2 Agent management will be added soon.
+
+
+## LWRP Examples
+
+Different LWRP usage examples are added to `examples` directory.
+
+To configure icinga2 server, check `examples/icinga2_server` directory. More exaamples will be added here upon further testing.
 
 
 
@@ -126,30 +240,39 @@ These attributes will be added to respective node
 
 Currently icinga2 cookbook supports below Objects LWRP Resources:
 
+- icinga2_apilistener
+- icinga2_applynotification
+- icinga2_applyservice
 - icinga2_checkcommand
-- icinga2_downtime
+- icinga2_endpoint
+- icinga2_envhostgroup
 - icinga2_environment
 - icinga2_eventcommand
+- icinga2_externalcommandlistener
+- icinga2_gelfwriter
+- icinga2_graphitewriter
 - icinga2_host
 - icinga2_hostgroup
 - icinga2_notification
 - icinga2_notificationcommand
+- icinga2_scheduleddowntime
 - icinga2_service
 - icinga2_servicegroup
+- icinga2_sysloglogger
 - icinga2_timeperiod
 - icinga2_user
 - icinga2_usergroup
 - icinga2_zone
 
-Few of LWRP attributes which are required to create an icinga2 Object are not declared required in LWRP in favor of creating icinga2 Object template.
+Few of LWRP attributes which are required to create an icinga2 Object are not declared `:required => true` in LWRP in favour of creating icinga2 Object template.
 
-Same LWRP resource can be used to create icinga2 Object and icinga2 Template as well.
+Same LWRP resource used to create icinga2 `Object`, can also be used to create icinga2 `Template` as well.
 
 
 
 ## LWRP icinga2_environment
 
-`icinga2_environment` creates `Host` and `HostGroup` objects for a `chef_environment`.
+ To be added.
 
 
 ## LWRP icinga2_applydependency
@@ -278,7 +401,7 @@ Same LWRP resource can be used to create icinga2 Object and icinga2 Template as 
 
 ## Cookbook Core Attributes
 
-* `default['icinga2']['version']` (default: `2.2.1-1`): icinga2 version
+* `default['icinga2']['version']` (default: `2.2.2-1`): icinga2 version
 
 * `default['icinga2']['conf_dir']` (default: `/etc/icinga2`): icinga2 configuration location
 
@@ -422,7 +545,7 @@ Same LWRP resource can be used to create icinga2 Object and icinga2 Template as 
 
 ## Cookbook Classic UI CGI Core Attributes
 
-* `default['icinga2']['classic_ui']['version']` (default: `2.2.1-1`): icinga2 classic-ui package version
+* `default['icinga2']['classic_ui']['version']` (default: `2.2.2-1`): icinga2 classic-ui package version
 
 * `default['icinga2']['classic_ui']['gui_version']` (default: `1.12.0-0`): icinga2 gui package version
 

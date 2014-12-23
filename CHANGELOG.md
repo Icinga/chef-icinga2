@@ -3,26 +3,32 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
-0.3.x
+0.4.2
 -----
 
 - Virender Khatri - removed nrpe client recipe
 
-- Virender Khatri -
+- Virender Khatri - replaced icingaweb recipe from cookbook with icingaweb2
 
-- Virender Khatri -
+- Virender Khatri - refactored recipes for packages
 
-- Virender Khatri -
+- Virender Khatri - prepping for pnp4nagios support, added recipe `icinga2::server_pnp`
 
-- Virender Khatri -
+- Virender Khatri - disabled icingaweb2 by default
 
-- Virender Khatri -
+- Virender Khatri - enable icinga2 classic ui by default
 
-- Virender Khatri -
+- Virender Khatri - disabled pnp integration by defatul
 
-- Virender Khatri -
+- Virender Khatri - renamed `conf.d` disable attribute to `disable_conf_d`
 
-- Virender Khatri -
+- Virender Khatri - added `icinga2_features` recipe to manage icinga2 features
+
+- Virender Khatri - removed `environment` lwrp attribute `env_notification_user_groups`
+
+- Virender Khatri - bump icinga2 version to v2.2.2-1
+
+- Virender Khatri - preparing for `ubuntu` platform testing
 
 0.3.0
 -----
