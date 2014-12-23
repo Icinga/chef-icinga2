@@ -10,7 +10,7 @@ depends 'apt'
 depends 'yum', '~> 3.0'
 depends 'apache2'
 depends 'ulimit'
-depends 'pnp4nagios'
+# depends 'pnp4nagios'
 
 %w(redhat centos amazon).each do |os|
   supports os

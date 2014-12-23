@@ -25,7 +25,7 @@
 fail "#{node['icinga2']['ido']['type']} is not a valid sql db type, supported sql db types are mysql, pgsql" if node['icinga2']['ido']['type'] && !%w(mysql pgsql).include?(node['icinga2']['ido']['type'])
 
 # create steps to configure db
-template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_db_mysql") do
+template ::File.join(node['icinga2']['scripts_dir'], 'configure_icinga2_db_mysql') do
   owner node['icinga2']['user']
   group node['icinga2']['group']
   source 'configure_icinga2_ido_mysql.erb'
@@ -38,15 +38,13 @@ template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_db_mysql
            )
 end
 
-template ::File.join(node['icinga2']['scripts_dir'], "configure_icinga2_db_pgsql") do
+template ::File.join(node['icinga2']['scripts_dir'], 'configure_icinga2_db_pgsql') do
   owner node['icinga2']['user']
   group node['icinga2']['group']
   source 'configure_icinga2_ido_pgsql.erb'
   mode 0600
-  variables(:db_host => node['icinga2']['ido']['db_host'],
-            :db_name => node['icinga2']['ido']['db_name'],
+  variables(:db_name => node['icinga2']['ido']['db_name'],
             :db_user => node['icinga2']['ido']['db_user'],
-            :db_password => node['icinga2']['ido']['db_password'],
             :schema_file => node['icinga2']['ido']['pgsql_schema']
            )
 end

@@ -13,4 +13,4 @@ psql> alter role <%= @db_user -%> login;
 
 psql> grant all on database <%= @db_name -%> to <%= @db_user -%>;
 
-$ psql -U <%= @db_user -%> -d <%= @db_name -%> < <%= @schema -%>
+$ psql -U <%= @db_user -%> -d <%= @db_name -%> < <%= @schema_file -%>

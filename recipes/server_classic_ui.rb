@@ -17,11 +17,6 @@
 # limitations under the License.
 #
 
-classic_ui_packages = value_for_platform_family(
-  'debian' => %w(icinga2-classicui),
-  'rhel' => %w(icinga2-classicui-config icinga-gui)
-)
-
 case node['platform_family']
 when 'debian'
   package 'icinga2-classicui' do
