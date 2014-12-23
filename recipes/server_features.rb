@@ -26,6 +26,7 @@ node['icinga2']['enable_features'].sort.uniq.each do |f|
   end
 end
 
+# disable all featues not defined to enable
 (node['icinga2']['features'].sort.uniq - node['icinga2']['enable_features'].sort.uniq).each do |f|
   execute "disable_feature_#{f}" do
     command "/usr/sbin/icinga2 feature disable #{f}"
