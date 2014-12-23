@@ -40,7 +40,7 @@ default['icinga2']['databag'] = 'icinga2'
 default['icinga2']['install_nagios_plugins'] = true
 
 default['icinga2']['features'] = %w(api checker command compatlog debuglog gelf graphite icingastatus ido-mysql ido-pgsql livestatus mainlog notification perfdata statusdata syslog)
-default['icinga2']['enable_features'] = %w(checker command compatlog mainlog notification statusdata perfdata)
+default['icinga2']['enable_features'] = %w(checker command mainlog notification statusdata perfdata)
 
 default['icinga2']['run_dir'] = '/var/run/icinga2'
 default['icinga2']['run_cmd_dir'] = ::File.join(node['icinga2']['run_dir'], 'cmd')
