@@ -13,7 +13,7 @@ object Zone <%= object.inspect -%> {
   endpoints = <%= options['endpoints'].inspect %>
   <% end -%>
   <% if options['parent'] -%>
-  parent <%= options['parent'].inspect %>
+  parent = <%= options['parent'].inspect %>
   <% end -%>
 }
 
