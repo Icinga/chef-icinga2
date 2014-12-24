@@ -102,15 +102,6 @@ template ::File.join(node['icinga2']['conf_dir'], 'constants.conf') do
   notifies :reload, 'service[icinga2]', :delayed
 end
 
-# icinga2 zonesconfig file
-template ::File.join(node['icinga2']['conf_dir'], 'zones.conf') do
-  source 'icinga2.zones.conf.erb'
-  owner node['icinga2']['user']
-  group node['icinga2']['group']
-  mode 0644
-  notifies :reload, 'service[icinga2]', :delayed
-end
-
 # mail-service-notification command
 template ::File.join(node['icinga2']['scripts_dir'], 'mail-service-notification.sh') do
   cookbook node['icinga2']['cookbook']
