@@ -50,6 +50,7 @@ def objects
                                        'crl_path' => resource.send('crl_path'),
                                        'bind_host' => resource.send('bind_host'),
                                        'bind_port' => resource.send('bind_port'),
+                                       'ticket_salt' => resource.send('ticket_salt'),
                                        'accept_config' => resource.send('accept_config'),
                                        'accept_commands' => resource.send('accept_commands')
     }

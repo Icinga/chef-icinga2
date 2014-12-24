@@ -10,16 +10,16 @@
 <% @objects.sort.map do |object, options|%>
 object ApiListener <%= object.inspect -%> {
   <% if options['cert_path'] -%>
-  cert_path = <%= options['cert_path'].inspect %>
+  cert_path = <%= options['cert_path'] %>
   <% end -%>
   <% if options['key_path'] -%>
-  key_path = <%= options['key_path'].inspect %>
+  key_path = <%= options['key_path'] %>
   <% end -%>
   <% if options['ca_path'] -%>
-  ca_path = <%= options['ca_path'].inspect %>
+  ca_path = <%= options['ca_path'] %>
   <% end -%>
   <% if options['crl_path'] -%>
-  crl_path = <%= options['crl_path'].inspect %>
+  crl_path = <%= options['crl_path'] %>
   <% end -%>
   <% if options['bind_host'] -%>
   bind_host = <%= options['bind_host'].inspect %>
@@ -32,6 +32,13 @@ object ApiListener <%= object.inspect -%> {
   <% end -%>
   <% unless options['accept_commands'].nil? -%>
   accept_commands = <%= options['accept_commands'].inspect %>
+  <% end -%>
+  <% unless options['ticket_salt'].nil? -%>
+  <% if options['ticket_salt'] == 'TicketSalt' -%>
+  ticket_salt = TicketSalt
+  <% else -%>
+  ticket_salt = <%= options['ticket_salt'] %>
+  <% end -%>
   <% end -%>
 }
 
