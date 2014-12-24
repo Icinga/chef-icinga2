@@ -5,7 +5,7 @@ icinga2 Cookbook
 
 This is a [Chef] cookbook to manage [Icinga2] using LWRP.
 
->> **WARNING** Cookbook has been tested for existing functionality, however this WARNING is added to notify users that this cookbook is still in development phase and few functionalities are yet to be added.
+>> **WARNING** Cookbook has been tested for existing functionality. However, this WARNING is added to notify users that this cookbook is still in development phase and few functionalities are yet to be added.
 
 More features and attributes will be added over time, **feel free to contribute**
 what you find missing!
@@ -365,6 +365,8 @@ Same LWRP resource used to create icinga2 `Object`, can also be used to create i
 * `default['icinga2']['disable_conf_d']` (default: `false`): disable icinga2 `conf.d` default configuration and use LWRP to manage icinga2 objects / templates
 
 * `default['icinga2']['add_cloud_custom_vars']` (default: `true`): add cloud node attributes, limited cloud provider support is available
+
+* `default['icinga2']['enable_features_recipe']` (default: `false`): manage icinga2 features via node attribute `node['icinga2']['enable_features']`
 
 * `default['icinga2']['features_enabled_dir']` (default: `/etc/icinga2/features-enabled`): icinga2 enabled features location
 
