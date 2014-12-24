@@ -45,8 +45,19 @@ include_recipe 'icinga2::server_objects' if node['icinga2']['disable_conf_d']
 
 include_recipe 'icinga2::server_features'
 
+execute 'icinga2_configcheck' do
+  command '/usr/sbin/icinga2 daemon -c /etc/icinga2/icinga2.conf -C'
+  action :nothing
+end
+
 service 'icinga2' do
   service_name node['icinga2']['service_name']
   supports :status => true, :reload => true, :restart => true
-  action [:enable, :start]
+  action [:enable]
+end
+
+ruby_block 'delayed_icinga2_service_start' do
+  block do
+  end
+  notifies :start, 'service[icinga2]', :delayed
 end
