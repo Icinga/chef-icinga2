@@ -85,6 +85,7 @@ def create_objects
               :event_command => new_resource.event_command,
               :flapping_threshold => new_resource.flapping_threshold,
               :volatile => new_resource.volatile,
+              :zone => new_resource.zone,
               :command_endpoint => new_resource.command_endpoint,
               :notes => new_resource.notes,
               :notes_url => new_resource.notes_url,

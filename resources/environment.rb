@@ -60,6 +60,7 @@ attribute :enable_perfdata,       :kind_of => [TrueClass, FalseClass], :default 
 attribute :event_command,         :kind_of => String, :default => nil
 attribute :flapping_threshold,    :kind_of => String, :default => nil
 attribute :volatile,              :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :zone,                  :kind_of => String, :default => nil
 attribute :command_endpoint,      :kind_of => String, :default => nil
 attribute :notes,           :kind_of => String, :default => nil
 attribute :notes_url,       :kind_of => String, :default => nil
