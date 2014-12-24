@@ -22,7 +22,9 @@ include "constants.conf"
  * The zones.conf defines zones for a cluster setup.
  * Not required for single instance setups.
  */
-include "zones.conf"
+// disabled in favor of LWRP resources. use endpoint and
+// zone LWRP to create objects instead.
+// include "zones.conf"
 
 /**
  * The Icinga Template Library (ITL) provides a number of useful templates

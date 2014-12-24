@@ -21,6 +21,6 @@ actions :create, :delete
 
 default_action :create
 
-attribute :host,  :required => true, :required => true, :kind_of => String, :default => nil
+attribute :host,  :kind_of => String, :default => nil
 attribute :port,  :kind_of => Integer, :default => nil
 attribute :log_duration,  :kind_of => String, :default => nil
