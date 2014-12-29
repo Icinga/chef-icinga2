@@ -17,8 +17,9 @@
 # limitations under the License.
 #
 
-# node.set['pnp4nagios']['user'] = node['icinga2']['user']
-# node.set['pnp4nagios']['group'] = node['icinga2']['cmdgroup']
-# node.set['pnp4nagios']['nagios_base'] = '/icinga/cgi-bin'
+node.set['pnp4nagios']['user'] = node['icinga2']['user']
+node.set['pnp4nagios']['group'] = node['icinga2']['cmdgroup']
+node.set['pnp4nagios']['nagios_base'] = '/icinga/cgi-bin'
+node.set['pnp4nagios']['spool_dir'] = node['icinga2']['perfdata_dir']
 
-# include_recipe 'pnp4nagios::default'
+include_recipe 'pnp4nagios::default'
