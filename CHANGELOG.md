@@ -3,6 +3,28 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.5.0
+-----
+
+- Virender Khatri - added lwrp for icinga2 feature
+
+- Virender Khatri - removed default features
+
+- Virender Khatri - added default `NodeName` constant
+
+- Virender Khatri - removed zones.conf in favor of LWRP `zone`
+
+- Virender Khatri - delaying icinga2 service start in favor of LWRP resources objects
+
+- Virender Khatri - added missing zone Object to various environment / host LWRPs
+
+- Virender Khatri - corrected LWRP endpoint
+
+- Virender Khatri - added support for pnp4nagios
+
+- Virender Khatri - updated README documentation
+
+
 0.4.2
 -----
 

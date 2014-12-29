@@ -3,9 +3,8 @@ icinga2 Cookbook
 
 [![Build Status](https://travis-ci.org/vkhatri/chef-icinga2.svg?branch=master)](https://travis-ci.org/vkhatri/chef-icinga2)
 
-This is a [Chef] cookbook to manage [Icinga2] using LWRP.
+This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
->> **WARNING** Cookbook has been tested for existing functionality. However, this WARNING is added to notify users that this cookbook is still in development phase and few functionalities are yet to be added.
 
 More features and attributes will be added over time, **feel free to contribute**
 what you find missing!
@@ -32,7 +31,7 @@ https://github.com/vkhatri/chef-icinga2
 
 - `icinga2::server_classic_ui`   		- configures icinga2 classic ui
 
-- `icinga2::server_ido`   		- configures icinga2 ido db
+- `icinga2::server_pnp`   		- configures pnp4nagios for icinga2
 
 - `icinga2::server_objects`   		- manages icinga2 default objects/templates objects if `node['icinga2']['disable_conf_d']` is set in which case `conf.d` objects config is not included in `icinga2.conf` and objects are created using LWRP
 
@@ -154,15 +153,12 @@ To make a user `admin`, add the user to below node attributes:
 
 ## Icinga Web2
 
-Though icingaweb2 is currently in development phase, this cookbook is intended to use
-icingaweb2 and recipe is in progress.
-
+Icingaweb2 recipe setup is work in progress.
 
 
 ## Icinga2 Cluster Deployment
 
-Currently this cookbook does **NOT** contain any information to setup icinga2 Cluster.
-
+Icinga2 Distributes / HA cluster setup examples will be added soon.
 
 
 ## Icinga2 Monitor a Chef Environment Nodes
@@ -220,11 +216,20 @@ A resource attribute will be added to `icinga2_host` LWRP to perform a search to
 
 
 
-## Client Setup
+## Icing2 with PNP4Nagios
+
+Recipe `icinga2::server_pnp` setup and configures `PNP4Nagios` with `rrdcached` daemon.
+
+Simply add recipe `icinga2::server_pnp` to icinga2 server `run_list` to install `PNP4Nagios`.
+
+
+
+## Client
 
 NRPE Client recipe has been removed from this cookbook.
 
 Icinga2 Agent management will be added soon.
+
 
 
 ## LWRP Examples
@@ -249,6 +254,7 @@ Currently icinga2 cookbook supports below Objects LWRP Resources:
 - icinga2_environment
 - icinga2_eventcommand
 - icinga2_externalcommandlistener
+- icinga2_feature
 - icinga2_gelfwriter
 - icinga2_graphitewriter
 - icinga2_host
@@ -300,12 +306,32 @@ Same LWRP resource used to create icinga2 `Object`, can also be used to create i
  To be added.
 
 
+## LWRP icinga2_endpoint
+
+ To be added.
+
+
 ## LWRP icinga2_envhostgroup
 
  To be added.
 
 
+## LWRP icinga2_evironment
+
+ To be added.
+
+
 ## LWRP icinga2_eventcommand
+
+ To be added.
+
+
+## LWRP icinga2_externalcommandlistener
+
+ To be added.
+
+
+## LWRP icinga2_feature
 
  To be added.
 
@@ -720,6 +746,7 @@ Same LWRP resource used to create icinga2 `Object`, can also be used to create i
 * `apache2` cookbook
 * `yum` cookbook
 * `apt` cookbook
+* `pnp4nagios` cookbook
 
 
 ## Contributing
