@@ -91,8 +91,7 @@ def create_objects
               :notes_url => new_resource.notes_url,
               :action_url => new_resource.action_url,
               :icon_image => new_resource.icon_image,
-              :icon_image_alt => new_resource.icon_image_alt,
-              :custom_vars => new_resource.custom_vars)
+              :icon_image_alt => new_resource.icon_image_alt)
     notifies :reload, 'service[icinga2]', :delayed
   end
   return true if hosts_template.updated? || create_hostgroups(env_resources)

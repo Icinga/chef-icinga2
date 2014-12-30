@@ -67,4 +67,3 @@ attribute :notes_url,       :kind_of => String, :default => nil
 attribute :action_url,      :kind_of => String, :default => nil
 attribute :icon_image,      :kind_of => String, :default => nil
 attribute :icon_image_alt,  :kind_of => String, :default => nil
-attribute :custom_vars,     :kind_of => Hash, :default => nil
