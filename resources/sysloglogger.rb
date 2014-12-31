@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Resource:: resources/sysloglogger
+# Resource:: sysloglogger
 #
 # Copyright 2014, Virender Khatri
 #

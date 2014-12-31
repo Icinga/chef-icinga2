@@ -7,8 +7,8 @@
  * SyslogLogger Object.
 */
 
-object ExternalCommandListener <%= object.inspect -%> {
-  <% if options['SyslogLogger'] -%>
-  SyslogLogger = <%= options['SyslogLogger'].inspect %>
+object SyslogLogger <%= object.inspect -%> {
+  <% if options['severity'] -%>
+  severity = <%= options['severity'].inspect %>
   <% end -%>
 }
