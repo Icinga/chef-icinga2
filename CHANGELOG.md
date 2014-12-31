@@ -3,6 +3,17 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.5.4
+-----
+
+- Virender Khatri - added pnp4nagios ssi symlink for node graph preview
+
+- Virender Khatri - fixed library for mount disks host custom vars
+
+- Virender Khatri - fixed LWRP sysloglogger
+
+- Virender Khatri - added LWRP doc
+
 0.5.0
 -----
 
