@@ -1,0 +1,34 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * PerfdataWriter Object.
+*/
+
+library <%= @library.inspect %>
+
+object PerfdataWriter <%= @object.inspect -%> {
+  <% if @host_perfdata_path -%>
+  host_perfdata_path = <%= @host_perfdata_path.inspect %>
+  <% end -%>
+  <% if @service_perfdata_path -%>
+  service_perfdata_path = <%= @service_perfdata_path.inspect %>
+  <% end -%>
+  <% if @host_temp_path -%>
+  host_temp_path = <%= @host_temp_path.inspect %>
+  <% end -%>
+  <% if @service_temp_path -%>
+  service_temp_path = <%= @service_temp_path.inspect %>
+  <% end -%>
+  <% if @host_format_template -%>
+  host_format_template = <%= @host_format_template.inspect %>
+  <% end -%>
+  <% if @service_format_template -%>
+  service_format_template = <%= @service_format_template.inspect %>
+  <% end -%>
+  <% if @rotation_interval -%>
+  rotation_interval = <%= @rotation_interval.inspect %>
+  <% end -%>
+}
