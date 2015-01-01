@@ -39,7 +39,7 @@ def object_template
     owner node['icinga2']['user']
     group node['icinga2']['group']
     mode 0640
-    variables(:severity => new_resource.name)
+    variables(:object => new_resource.name, :severity => new_resource.severity)
     notifies :reload, 'service[icinga2]', :delayed
   end
   ot.updated?
