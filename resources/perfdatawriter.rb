@@ -28,4 +28,4 @@ attribute :host_temp_path,          :kind_of => String, :default => nil
 attribute :service_temp_path,       :kind_of => String, :default => nil
 attribute :host_format_template,    :kind_of => String, :default => nil
 attribute :service_format_template, :kind_of => String, :default => nil
-attribute :rotation_interval,       :kind_of => [String, Interval], :regex => /^\d+[smhd]$/, :default => nil
+attribute :rotation_interval,       :kind_of => [String, Integer], :regex => /^\d+[smhd]$/, :default => nil
