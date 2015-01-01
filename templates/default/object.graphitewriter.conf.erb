@@ -7,19 +7,19 @@
  * GraphiteWriter Object.
 */
 
-library <%= options['library'].inspect %>
+library <%= @library.inspect %>
 
-object GraphiteWriter <%= object.inspect -%> {
-  <% if options['host'] -%>
-  host = <%= options['host'].inspect %>
+object GraphiteWriter <%= @object.inspect -%> {
+  <% if @host -%>
+  host = <%= @host.inspect %>
   <% end -%>
-  <% if options['port'] -%>
-  port = <%= options['port'].inspect %>
+  <% if @port -%>
+  port = <%= @port.inspect %>
   <% end -%>
-  <% if options['host_name_template'] -%>
-  host_name_template = <%= options['host_name_template'].inspect %>
+  <% if @host_name_template -%>
+  host_name_template = <%= @host_name_template.inspect %>
   <% end -%>
-  <% if options['service_name_template'] -%>
-  service_name_template = <%= options['service_name_template'].inspect %>
+  <% if @service_name_template -%>
+  service_name_template = <%= @service_name_template.inspect %>
   <% end -%>
 }
