@@ -7,49 +7,49 @@
  * IdoMySqlConnection Object.
 */
 
-library <%= options['library'].inspect %>
+library <%= @library.inspect %>
 
-object IdoMySqlConnection <%= object.inspect -%> {
-  <% if options['host'] -%>
-  host = <%= options['host'].inspect %>
+object IdoMySqlConnection <%= @object.inspect -%> {
+  <% if @host -%>
+  host = <%= @host.inspect %>
   <% end -%>
-  <% if options['port'] -%>
-  port = <%= options['port'].inspect %>
+  <% if @port -%>
+  port = <%= @port.inspect %>
   <% end -%>
-  <% if options['user'] -%>
-  user = <%= options['user'].inspect %>
+  <% if @user -%>
+  user = <%= @user.inspect %>
   <% end -%>
-  <% if options['password'] -%>
-  password = <%= options['password'].inspect %>
+  <% if @password -%>
+  password = <%= @password.inspect %>
   <% end -%>
-  <% if options['database'] -%>
-  database = <%= options['database'].inspect %>
+  <% if @database -%>
+  database = <%= @database.inspect %>
   <% end -%>
-  <% if options['table_prefix'] -%>
-  table_prefix = <%= options['table_prefix'].inspect %>
+  <% if @table_prefix -%>
+  table_prefix = <%= @table_prefix.inspect %>
   <% end -%>
-  <% if options['instance_name'] -%>
-  instance_name = <%= options['instance_name'].inspect %>
+  <% if @instance_name -%>
+  instance_name = <%= @instance_name.inspect %>
   <% end -%>
-  <% if options['instance_description'] -%>
-  instance_description = <%= options['instance_description'].inspect %>
+  <% if @instance_description -%>
+  instance_description = <%= @instance_description.inspect %>
   <% end -%>
-  <% if options.key?('enable_ha') && !options['enable_ha'].nil? -%>
-  enable_ha = <%= options['enable_ha'].inspect %>
+  <% unless @enable_ha.nil? -%>
+  enable_ha = <%= @enable_ha.inspect %>
   <% end -%>
-  <% if options['failover_timeout'] -%>
-  failover_timeout = <%= options['failover_timeout'].inspect %>
+  <% if @failover_timeout -%>
+  failover_timeout = <%= @failover_timeout.inspect %>
   <% end -%>
-  <% if options['cleanup'] -%>
+  <% if @cleanup -%>
   cleanup = {
-  <% options['cleanup'].each do |var, value| -%>
+  <% @cleanup.each do |var, value| -%>
   <% if var && value -%>
     <%= var -%> = <%= value %>
   <% end -%>
   <% end -%>
   }
   <% end -%>
-  <% if options['categories'] && !options['categories'].empty?-%>
-  categories = [<%= options['categories'].join(' | ') %>]
+  <% if @categories && !@categories.empty?-%>
+  categories = [<%= @categories.join(' | ') %>]
   <% end -%>
 }
