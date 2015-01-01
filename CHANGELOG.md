@@ -3,6 +3,24 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.6.1
+-----
+
+- Virender Khatri - added travis
+
+- Virender Khatri - added user_defined_objects conf directory
+
+- Virender Khatri - added LWRP resource regex check for interval attributes
+
+- Virender Khatri - fixed LWRP template for gelfwriter graphitewriter  idomysqlconnection
+                    idopgsqlconnection sysloglogger sysloglogger
+
+- Virender Khatri - added LWRP compatlogger livestatuslistener perfdatawriter
+                    statusdatawriter checkercomponent checkresultreader filelogger
+                    notificationcomponent
+
+- Virender Khatri - updated README doc
+
 0.5.4
 -----
 
