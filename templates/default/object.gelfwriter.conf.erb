@@ -7,16 +7,16 @@
  * GelfWriter Object.
 */
 
-library <%= options['library'].inspect %>
+library <%= @library.inspect %>
 
-object GelfWriter <%= object.inspect -%> {
-  <% if options['host'] -%>
-  host = <%= options['host'].inspect %>
+object GelfWriter <%= @object.inspect -%> {
+  <% if @host -%>
+  host = <%= @host.inspect %>
   <% end -%>
-  <% if options['port'] -%>
-  port = <%= options['port'].inspect %>
+  <% if @port -%>
+  port = <%= @port.inspect %>
   <% end -%>
-  <% if options['source'] -%>
-  source  = <%= options['source'].inspect %>
+  <% if @source -%>
+  source  = <%= @source.inspect %>
   <% end -%>
 }
