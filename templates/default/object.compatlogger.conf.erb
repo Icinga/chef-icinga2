@@ -1,0 +1,19 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * CompatLogger Object.
+*/
+
+library <%= @library.inspect %>
+
+object CompatLogger <%= @object.inspect -%> {
+  <% if @log_dir -%>
+  log_dir = <%= @log_dir.inspect %>
+  <% end -%>
+  <% if @rotation_method-%>
+  rotation_method = <%= @rotation_method.inspect %>
+  <% end -%>
+}
