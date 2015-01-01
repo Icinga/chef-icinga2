@@ -1,0 +1,15 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * FileLogger Object.
+*/
+
+object FileLogger <%= @object.inspect -%> {
+  <% if @severity -%>
+  severity = <%= @severity.inspect %>
+  <% end -%>
+  path = <%= @path.inspect %>
+}
