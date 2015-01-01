@@ -1,0 +1,16 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * CheckResultReader Object.
+*/
+
+library <%= @library.inspect %>
+
+object CheckResultReader <%= @object.inspect -%> {
+  <% if @spool_dir -%>
+  spool_dir = <%= @spool_dir.inspect %>
+  <% end -%>
+}
