@@ -1,0 +1,16 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * NotificationComponent Object.
+*/
+
+library <%= @library.inspect %>
+
+object NotificationComponent <%= @object.inspect -%> {
+  <% unless @enable_ha.nil? -%>
+  enable_ha = <%= @enable_ha.inspect %>
+  <% end -%>
+}
