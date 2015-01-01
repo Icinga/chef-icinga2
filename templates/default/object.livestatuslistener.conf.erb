@@ -1,0 +1,28 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * LiveStatusListener Object.
+*/
+
+library <%= @library.inspect %>
+
+object LiveStatusListener <%= @object.inspect -%> {
+  <% if @socket_type -%>
+  socket_type = <%= @socket_type.inspect %>
+  <% end -%>
+  <% if @bind_host-%>
+  bind_host = <%= @bind_host.inspect %>
+  <% end -%>
+  <% if @bind_port -%>
+  bind_port = <%= @bind_port.inspect %>
+  <% end -%>
+  <% if @socket_path -%>
+  socket_path = <%= @socket_path.inspect %>
+  <% end -%>
+  <% if @compat_log_path -%>
+  compat_log_path = <%= @compat_log_path.inspect %>
+  <% end -%>
+}
