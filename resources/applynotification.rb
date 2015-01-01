@@ -25,8 +25,8 @@ attribute :object_type,   :required => true, :kind_of => String, :default => nil
 attribute :import,        :kind_of => String, :default => nil
 attribute :command,       :kind_of => String, :default => nil
 attribute :users,         :kind_of => Array, :default => nil
-attribute :user_groups,        :kind_of => Array, :default => nil
-attribute :interval,      :kind_of => [String, Integer], :default => nil
+attribute :user_groups,   :kind_of => Array, :default => nil
+attribute :interval,      :kind_of => [String, Integer], :regex => /^\d+[smhd]$/, :default => nil
 attribute :period,        :kind_of => String, :default => nil
 attribute :types,         :kind_of => Array, :default => nil
 attribute :states,        :kind_of => Array, :default => nil

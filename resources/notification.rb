@@ -28,7 +28,7 @@ attribute :users,         :kind_of => Array, :default => nil
 attribute :user_groups,   :kind_of => Array, :default => nil
 attribute :times,       :kind_of => Hash, :default => nil
 attribute :command,     :kind_of => String, :default => nil
-attribute :interval,      :kind_of => [String, Integer], :default => nil
+attribute :interval,      :kind_of => [String, Integer], :regex => /^\d+[smhd]$/, :default => nil
 attribute :period,        :kind_of => String, :default => nil
 attribute :zone,          :kind_of => String, :default => nil
 attribute :types,         :kind_of => Array, :default => nil
