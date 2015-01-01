@@ -1,0 +1,22 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * StatusDataWriter Object.
+*/
+
+library <%= @library.inspect %>
+
+object StatusDataWriter <%= @object.inspect -%> {
+  <% if @status_path -%>
+  status_path = <%= @status_path.inspect %>
+  <% end -%>
+  <% if @objects_path -%>
+  objects_path = <%= @objects_path.inspect %>
+  <% end -%>
+  <% if @update_interval -%>
+  update_interval = <%= @update_interval.inspect %>
+  <% end -%>
+}
