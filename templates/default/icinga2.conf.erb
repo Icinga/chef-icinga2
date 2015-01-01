@@ -55,13 +55,14 @@ include_recursive "repository.d"
  * directory. Each of these files must have the file extension ".conf".
  */
 <% if node['icinga2']['disable_conf_d'] -%>
-/**
-include_recursive "conf.d"
-*/
+// include_recursive "conf.d"
 <% else -%>
 include_recursive "conf.d"
 <% end -%>
-/**
- * All Objects definitions conf files are stored under "objects.d/"
- */
+
+// All Objects definitions conf files are stored under "objects.d/"
 include_recursive "<%= node['icinga2']['objects_d'] -%>"
+
+// User defined Objects / Configuration
+include_recursive "<%= node['icinga2']['user_defined_objects_d'] -%>"
+

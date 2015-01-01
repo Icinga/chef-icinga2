@@ -23,6 +23,7 @@
  node['icinga2']['scripts_dir'],
  node['icinga2']['zones_dir'],
  node['icinga2']['objects_dir'],
+ node['icinga2']['user_defined_objects_dir'],
  node['icinga2']['features_enabled_dir'],
  node['icinga2']['features_available_dir'],
  node['icinga2']['custom_plugins_dir']

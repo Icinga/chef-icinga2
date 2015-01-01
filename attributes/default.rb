@@ -18,6 +18,10 @@ default['icinga2']['add_cloud_custom_vars'] = true
 default['icinga2']['objects_d'] = 'objects.d'
 default['icinga2']['objects_dir'] = ::File.join(node['icinga2']['conf_dir'], node['icinga2']['objects_d'])
 
+# user defined icing2 object / configuration
+default['icinga2']['user_defined_objects_d'] = 'user_defined_objects'
+default['icinga2']['user_defined_objects_dir'] = ::File.join(node['icinga2']['conf_dir'], node['icinga2']['user_defined_objects_d'])
+
 default['icinga2']['features_enabled_dir'] = ::File.join(node['icinga2']['conf_dir'], 'features-enabled')
 default['icinga2']['features_available_dir'] = ::File.join(node['icinga2']['conf_dir'], 'features-available')
 
