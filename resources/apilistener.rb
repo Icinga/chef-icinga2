@@ -25,8 +25,8 @@ attribute :cert_path,       :required => true, :kind_of => String, :default => n
 attribute :key_path,        :required => true, :kind_of => String, :default => nil
 attribute :ca_path,         :required => true, :kind_of => String, :default => nil
 attribute :crl_path,        :kind_of => String, :default => nil
-attribute :bind_host,       :required => true, :kind_of => String, :default => nil
-attribute :bind_port,       :required => true, :kind_of => String, :default => nil
+attribute :bind_host,       :kind_of => String, :default => nil
+attribute :bind_port,       :kind_of => String, :default => nil
 attribute :ticket_salt,     :kind_of => String, :default => 'TicketSalt'
 attribute :accept_config,   :kind_of => [TrueClass, FalseClass], :default => nil
 attribute :accept_commands, :kind_of => [TrueClass, FalseClass], :default => nil
