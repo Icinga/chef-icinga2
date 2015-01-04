@@ -62,7 +62,8 @@ def create_objects
                                       :search_pattern => search_pattern,
                                       :add_cloud_custom_vars => new_resource.add_cloud_custom_vars).environment_resources
 
-  hosts_template = template ::File.join(node['icinga2']['objects_dir'], "host_#{new_resource.environment}.conf") do
+  template_file_name = new_resource.zone ? "host_#{new_resource.environment}_#{new_resource.zone}.conf" : "host_#{new_resource.environment}.conf"
+  hosts_template = template ::File.join(node['icinga2']['objects_dir'], template_file_name) do
     source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
     cookbook 'icinga2'
     owner node['icinga2']['user']
