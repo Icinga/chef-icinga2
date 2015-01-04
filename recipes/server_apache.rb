@@ -33,13 +33,15 @@ template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-classic-u
   notifies :reload, 'service[apache2]', :delayed
 end
 
-template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-web.conf') do
-  source 'apache.vhost.icinga2_web.erb'
+template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-web2.conf') do
+  source 'apache.vhost.icinga2_web2.erb'
   owner node['apache2']['user']
   group node['apache2']['group']
   notifies :reload, 'service[apache2]', :delayed
-  # variables(:web_root => node['icinga2']['web']['web_root'])
+  variables(:web_root => node['icinga2']['web2']['web_root'],
+            :web_uri => node['icinga2']['web2']['web_uri'],
+            :conf_dir => node['icinga2']['web2']['conf_dir'])
 end
 
 apache_config 'icinga2-classic-ui'
-apache_config 'icinga2-web'
+apache_config 'icinga2-web2'
