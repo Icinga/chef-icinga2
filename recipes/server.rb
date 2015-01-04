@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe 'icinga2::server_os_packages'
+
 # setup apache and icinga2 vhost
 case node['icinga2']['web_engine']
 when 'apache'
@@ -28,13 +30,16 @@ end
 # install icinga2 packages
 include_recipe 'icinga2::server_install'
 
-# configure icinga2 server
+# configure icinga2 core files / directories
 include_recipe 'icinga2::server_core'
 
 # icinga2 classic ui
 include_recipe 'icinga2::server_classic_ui' if node['icinga2']['classic_ui']['enable']
 
-# icinga2 ido for web
+# icinga2 ido
+include_recipe 'icinga2::server_ido_schema'
+
+# icingweb2
 include_recipe 'icinga2::server_web2' if node['icinga2']['web2']['enable']
 
 # icinga2 pnp support
