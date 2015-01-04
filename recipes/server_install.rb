@@ -29,8 +29,6 @@ when 'ubuntu'
     deb_src node['icinga2']['apt']['deb_src']
     action node['icinga2']['apt']['action']
   end
-
-  os_packages = %w(g++ php5 php5-cli php5-fpm build-essential libgd2-xpm-dev libjpeg62 libjpeg62-dev libpng12-0 libpng12-dev libapache2-mod-php5)
 when 'rhel'
   # yum repository configuration
   yum_repository 'icinga2' do
@@ -42,13 +40,6 @@ when 'rhel'
     enabled node['icinga2']['yum']['enabled']
     action node['icinga2']['yum']['action']
   end
-
-  os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo php-soap php-ldap php-mysql)
-end
-
-# dependencies
-os_packages.each do |p|
-  package p
 end
 
 icinga2_package_version = value_for_platform(
