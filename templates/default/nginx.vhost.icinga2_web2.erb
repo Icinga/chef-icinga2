@@ -1,0 +1,14 @@
+location ~ ^<%= @web_uri -%>/index\.php(.*)$ {
+  # fastcgi_pass 127.0.0.1:9000;
+  fastcgi_pass unix:/var/run/php5-fpm.sock;
+  fastcgi_index index.php;
+  include fastcgi_params;
+  fastcgi_param SCRIPT_FILENAME <%= @web_root -%>/public/index.php;
+  fastcgi_param ICINGAWEB_CONFIGDIR <%= @conf_dir -%>;
+}
+
+location ~ ^/icingaweb2(.+)? {
+alias <%= @web_root -%>/public;
+  index index.php;
+  try_files $1 $uri $uri/ <%= @web_uri -%>/index.php$is_args$args;
+}
