@@ -3,6 +3,21 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.6.8
+-----
+
+- Virender Khatri - fixed ido schema upload recipe
+
+- Virender Khatri - added icingaweb2 apache nginx vhost
+
+- Virender Khatri - created different recipe for os packages install
+
+- Virender Khatri - added icingaweb2 setup and configuration
+
+- Virender Khatri - added icingaweb2 setup token attribute
+
+- Virender Khatri - fixed LWRP apilistener
+
 0.6.1
 -----
 

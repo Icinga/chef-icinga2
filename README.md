@@ -23,13 +23,19 @@ https://github.com/vkhatri/chef-icinga2
 
 - `icinga2::server_apache`		- manages apache and icinga2 classic ui / web / web2 vhost using `apache2` cookbook
 
+- `icinga2::server_os_packages`   		- install os packages for icinga2
+
 - `icinga2::server_install`   		- install icinga2 core/ido server packages
 
 - `icinga2::server_core`   			- configures icinga2 core configuration files & directories
 
 - `icinga2::server_features`   		- enable/disable icinga2 features
 
+- `icinga2::server_ido_schema`   		- load icinga2 ido db schema
+
 - `icinga2::server_classic_ui`   		- configures icinga2 classic ui
+
+- `icinga2::server_web2`   		- configures icingaweb2
 
 - `icinga2::server_pnp`   		- configures pnp4nagios for icinga2
 
@@ -173,15 +179,37 @@ To make a user `admin`, add the user to below node attributes:
 	node['icinga2']['classic_ui']['authorized_for_all_host_commands']
 
 
-## Icinga Web2
+## Icinga2 Server IDO Schema Load
 
-Icingaweb2 recipe setup is work in progress.
+Icinga2 IDO setup & feature is disabled by default. It can be enabled by configuring node attribute `node['icinga2']['ido']['load_schema']`.
 
+Recipe `icinga::server_ido_schema` only create DB schema, it does not create database or user or grants etc.
+
+IDO schema files are stored by default under directory `/usr/share/icinga2-ido-mysql` and `/usr/share/icinga2-ido-pgsql`.
+
+Icinga2 IDO type is configurable by node attribute `node['icinga2']['ido']['type']`, which can be configured to `mysql` or `pgsql`.
+
+>> ido pgsql schema upload is not fully tested, please open an issue if encounter any problem.
+
+
+## Icinga Web2 Setup
+
+Icingaweb2 is not enabled by default. It can be enabled by configuring node attribute `node['icinga2']['web2']['enable']`.
+
+Icingaweb2 can also be enabled by including recipe `icinga2::server_web2` to node `run_list`.
+
+Recipe `icinga::server_web2` configures below items.
+
+- create config directory `/etc/icingaweb2`
+- create token file `/etc/icingaweb2/setup.token`
+- create log directory `/var/log/icingaweb2`
+
+Rest of the configuration can be completed by berowsing icingaweb2 Web UI `http://server/icingaweb`.
 
 
 ## Icinga2 Cluster Deployment
 
-Icinga2 Distributes / HA cluster setup examples will be added soon.
+Icinga2 Distributed / HA cluster setup examples will be added soon.
 
 
 
@@ -314,9 +342,42 @@ Currently icinga2 cookbook supports below Objects LWRP Resources:
 - icinga2_usergroup
 - icinga2_zone
 
-Few of LWRP attributes which are required to create an icinga2 Object are not declared `:required => true` in LWRP in favour of creating icinga2 Object template.
+- icinga2_livestatuslistener
+- icinga2_statusdatawriter
+- icinga2_compatlogger
+- icinga2_checkresultreader
+- icinga2_checkercomponent
+- icinga2_notificationcomponent
+- icinga2_filelogger
+- icinga2_perfdatawriter
 
-Same LWRP resource used to create icinga2 `Object`, can also be used to create icinga2 `Template` as well.
+
+Note:
+
+* Few of LWRP attributes which are required to create an icinga2 Object are not declared `:required => true` in LWRP in favour of creating icinga2 Object template.
+
+* Same LWRP resource used to create icinga2 `Object`, can also be used to create icinga2 `Template` as well.
+
+* Few of LWRP resource attributes which refers to icinga2 `constants` or can refer to `constants` are treated as literal `String`. It means they will not be transformed into ruby `String` by LWRP while creating configutation file.
+
+e.g.
+
+Below attribute definition generate correct syntax for `ApiListener` LWRP attribute `cert_path`:
+
+	    cert_path 'SysConf + "/icinga2/pki/" + NodeName + ".crt"'
+
+	    will transform to:
+
+    	cert_path SysConf + "/icinga2/pki/" + NodeName + ".crt"
+
+
+While below attribute definition generate incorrect syntax:
+
+		cert_path 'SysConf + /icinga2/pki/ + NodeName + .crt'
+
+		will transform to
+
+    	cert_path SysConf + /icinga2/pki/ + NodeName + .crt
 
 
 ## icinga2 LWRP Resources Generated Object/Template File
@@ -358,15 +419,18 @@ e.g.
 All LWRP generated icinga2 object/template/apply conf files are kept in a single directory and managed separately.
 
 
-## Default icinga2 /etc/icinga2/{conf.d,*.conf}
+## Default icinga2 /etc/icinga2/{conf.d,zones.conf}
 
 
-As this cookbook supplies all necessary LWRP for icinga2 feature, object, template etc. it is a good practice and safe to say to use LWRP instead of managing configuration `/etc/icinga2/conf.d` or other `/etc/icinga2/*.conf` file.
+As this cookbook supplies almost all necessary LWRP for icinga2 feature, object, template etc. it is a good practice and safe to say to use LWRP instead of managing configuration `/etc/icinga2/conf.d` or `/etc/icinga2/zones.conf` default configuration files.
 
-Default configuration varies from environment to environment and hence LWRP does not manage default configuration.
+Note: Default configuration files managed by cookbook:
 
-Note: Default configuration file are not managed by this cookbook, apart from listed below:
+* /etc/icinga2/constants.conf
+* /etc/icinga2/icinga2.conf
+* /etc/icinga2/init.conf
 
+`icinga2.conf` no longer includes `zones.conf` in favor of LWRP.
 
 
 ## LWRP icinga2_environment
@@ -1339,6 +1403,45 @@ Above LWRP resource will create an icinga `ApiListener` object.
  To be added.
 
 
+## LWRP icinga2_livestatuslistener
+
+ To be added.
+
+
+## LWRP icinga2_statusdatawriter
+
+ To be added.
+
+
+## LWRP icinga2_compatlogger
+
+ To be added.
+
+
+## LWRP icinga2_checkresultreader
+
+ To be added.
+
+
+## LWRP icinga2_checkercomponent
+
+ To be added.
+
+
+## LWRP icinga2_notificationcomponent
+
+ To be added.
+
+
+## LWRP icinga2_filelogger
+
+ To be added.
+
+## LWRP icinga2_perfdatawriter
+
+ To be added.
+
+
 
 ## Cookbook Advanced Attributes
 
@@ -1415,6 +1518,8 @@ Above LWRP resource will create an icinga `ApiListener` object.
 
 * `default['icinga2']['cache_dir']` (default: `/var/cache/icinga2`): icinga2 cache directory location
 
+* `default['icinga2']['perfdata_dir']` (default: `/var/spool/icinga2/perfdata`): icinga2 perfdata directory location
+
 * `default['icinga2']['service_name']` (default: `icinga2'`): icinga2 process name*
 
 * `default['icinga2']['service_config_file']` (default: `/etc/default/icinga2`): icinga2 * process configuration file
@@ -1428,6 +1533,12 @@ Above LWRP resource will create an icinga `ApiListener` object.
 * `default['icinga2']['user']` (default: `icinga`): icinga2 user
 
 * `default['icinga2']['group']` (default: `icinga`): icinga2 user group
+
+* `default['icinga2']['cmdgroup']` (default: `icingacmd`): icinga2 cmd user group
+
+* `default['icinga2']['user_defined_objects_d']` (default: `user_defined_objects`): icinga2 conf directory name for user defined objects
+
+* `default['icinga2']['user_defined_objects_dir']` (default: `/etc/icinga2/user_defined_objects`): icinga2 conf directory for user defined objects
 
 * `default['icinga2']['cmdgroup']` (default: `icingacmd`): icinga2 cmd user group
 
@@ -1481,6 +1592,37 @@ Above LWRP resource will create an icinga `ApiListener` object.
 * `default['icinga2']['server']['object']['host']['zone_attribute']` (default: `icinga2_zone`)
 
 
+
+## Cookbook Icinga2 IDO Attributes
+
+ * `default[:icinga2][:ido][:type]` (default: `mysql`): icinga2 ido type, valid are `mysql pgsql`
+
+ * `default[:icinga2][:ido][:load_schema]` (default: `false`): whether to load db schema
+
+ * `default[:icinga2][:ido][:db_host]` (default: `localhost`): Icinga2 ido db host
+
+ * `default[:icinga2][:ido][:db_name]` (default: `icinga`): Icinga2 ido db name
+
+ * `default[:icinga2][:ido][:db_user]` (default: `icinga`): Icinga2 ido db user
+
+ * `default[:icinga2][:ido][:db_password]` (default: `icinga`): Icinga2 ido db password
+
+
+## Cookbook Icingaweb2 Attributes
+
+ * `default[:icinga2][:web2][:enable]` (default: `false`): whether to setup icingaweb2
+
+ * `default[:icinga2][:web2][:source_url]` (default: `git://git.icinga.org/icingaweb2.git`):
+
+ * `default[:icinga2][:web2][:version]` (default: `master`): icingaweb2 git checkout version / branch / tag etc.
+
+ * `default[:icinga2][:web2][:web_root]` (default: `/usr/share/icingaweb2`): icingaweb2 web root location
+
+ * `default[:icinga2][:web2][:web_uri]` (default: `/icingaweb`): icingweb2 web uri
+
+ * `default[:icinga2][:web2][:conf_dir]` (default: `/etc/icingaweb2`): icingaweb2 config directory
+
+ * `default[:icinga2][:web2][:log_dir]` (default: `/var/log/icingaweb2`): icingaweb2 log directory
 
 
 ## Cookbook Ulimit Attributes
