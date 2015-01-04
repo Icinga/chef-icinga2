@@ -19,13 +19,19 @@
 
 directory node['icinga2']['web2']['conf_dir'] do
   owner node[node['icinga2']['web_engine']]['user']
-  group node[node['icinga2']['web_engine']]['cmdgroup']
+  group node[node['icinga2']['web_engine']]['group']
   mode '02770'
+end
+
+directory node['icinga2']['web2']['web_root'] do
+  owner node[node['icinga2']['web_engine']]['user']
+  group node[node['icinga2']['web_engine']]['group']
+  mode '0775'
 end
 
 directory node['icinga2']['web2']['log_dir'] do
   owner node[node['icinga2']['web_engine']]['user']
-  group node[node['icinga2']['web_engine']]['cmdgroup']
+  group node[node['icinga2']['web_engine']]['group']
   mode '0665'
 end
 
@@ -38,7 +44,7 @@ end
 file ::File.join(node['icinga2']['web2']['conf_dir'], 'setup.token') do
   content node['icinga2']['web2']['setup_token']
   owner node[node['icinga2']['web_engine']]['user']
-  group node[node['icinga2']['web_engine']]['cmdgroup']
+  group node[node['icinga2']['web_engine']]['group']
   mode 0660
 end
 
@@ -46,5 +52,5 @@ git node['icinga2']['web2']['web_root'] do
   repository node['icinga2']['web2']['source_url']
   revision node['icinga2']['web2']['version']
   user node[node['icinga2']['web_engine']]['user']
-  group node[node['icinga2']['web_engine']]['cmdgroup']
+  group node[node['icinga2']['web_engine']]['group']
 end
