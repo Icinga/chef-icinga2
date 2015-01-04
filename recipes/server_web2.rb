@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Recipe:: server_web
+# Recipe:: server_web2
 #
 # Copyright 2014, Virender Khatri
 #
@@ -17,6 +17,34 @@
 # limitations under the License.
 #
 
-include_recipe 'icinga2::server_ido'
+directory node['icinga2']['web2']['conf_dir'] do
+  owner node[node['icinga2']['web_engine']]['user']
+  group node[node['icinga2']['web_engine']]['cmdgroup']
+  mode '02770'
+end
 
-# icingaweb2 configur steps here
+directory node['icinga2']['web2']['log_dir'] do
+  owner node[node['icinga2']['web_engine']]['user']
+  group node[node['icinga2']['web_engine']]['cmdgroup']
+  mode '0665'
+end
+
+# setup token
+unless node['icinga2']['web2'].key?('setup_token')
+  require 'securerandom'
+  node.set['icinga2']['web2']['setup_token'] = SecureRandom.base64(12)
+end
+
+file ::File.join(node['icinga2']['web2']['conf_dir'], 'setup.token') do
+  content node['icinga2']['web2']['setup_token']
+  owner node[node['icinga2']['web_engine']]['user']
+  group node[node['icinga2']['web_engine']]['cmdgroup']
+  mode 0660
+end
+
+git node['icinga2']['web2']['web_root'] do
+  repository node['icinga2']['web2']['source_url']
+  revision node['icinga2']['web2']['version']
+  user node[node['icinga2']['web_engine']]['user']
+  group node[node['icinga2']['web_engine']]['cmdgroup']
+end
