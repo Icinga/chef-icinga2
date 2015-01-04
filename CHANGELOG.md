@@ -3,6 +3,11 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.7.0
+-----
+
+- Virender Khatri - added multiple zone support for LWRP environment
+
 0.6.8
 -----
 

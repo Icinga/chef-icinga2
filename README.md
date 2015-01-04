@@ -15,11 +15,28 @@ what you find missing!
 https://github.com/vkhatri/chef-icinga2
 
 
+## Major Changes
+
+###v0.7.0
+
+* LWRP `environment` now generates different conf file with zone name if resource attribute `zone` is defined
+
+  **file name:**
+
+  file name without zone: `host_#{*environment*}.conf`
+
+  file name with zone: `host_#{environment*}_#{*zone*}.conf`
+
+  >> Note: Cookbook version prior to v0.7.0 users must delete
+    configuration file `host_#{*environment*}.conf` manually
+  	if zone is defined.
+
+
 ## Recipes
 
 - `icinga2::default`     	- does not do anything, used for LWRP usage
 
-- `icinga2::server`  		- install & configure icinga2 server with default incinga Objects
+- `icinga2::server`  		- install & configure icinga2 server with default icinga Objects
 
 - `icinga2::server_apache`		- manages apache and icinga2 classic ui / web / web2 vhost using `apache2` cookbook
 
@@ -98,7 +115,7 @@ For PNP4Nagios cookbook `pnp4nagios` is used and for RRDTool cookbook `rrdtool` 
 
 ## Icinga2 Agent Client
 
-NRPE Client recipe was removed from this cookbook in favor of `nrpe` cookbook.
+NRPE Client recipe was removed from this cookbook in favour of `nrpe` cookbook.
 
 Icinga2 Agent setup will be added soon.
 
@@ -158,7 +175,7 @@ To add a guest user without any admin privileges, first add a `guest` user (with
 
 	default['icinga2']['classic_ui']['users']['guest'] = '$apr1$cA/eVUgT$aIoWUPwV5uONJoYslb7lg0'
 
-Then authorize `guest` user to view `Host/Service` status
+Then authorise `guest` user to view `Host/Service` status
 
 	node['icinga2']['classic_ui']['authorized_for_all_services'] = %w(icingaadmin guest)
 	node['icinga2']['classic_ui']['authorized_for_all_hosts'] = %w(icingaadmin guest)
@@ -204,7 +221,7 @@ Recipe `icinga::server_web2` configures below items.
 - create token file `/etc/icingaweb2/setup.token`
 - create log directory `/var/log/icingaweb2`
 
-Rest of the configuration can be completed by berowsing icingaweb2 Web UI `http://server/icingaweb`.
+Rest of the configuration can be completed by browsing icingaweb2 Web UI `http://server/icingaweb`.
 
 
 ## Icinga2 Cluster Deployment
@@ -230,7 +247,7 @@ There are certain functionalities added to LWRP `environment`, like:
 
 - auto create `HostGroup` object for node's `cluster` attribute to group nodes for a chef environment `cluster`
 
-- auto add chef node Cloud attributes as `Host` custom `vars`, currently only AWS EC2 attributes are supported, but is easy to extend the suport to other cloud providers
+- auto add chef node Cloud attributes as `Host` custom `vars`, currently only AWS EC2 attributes are supported, but is easy to extend the support to other cloud providers
 
 - auto create `HostGroup` list for a chef environment node
 
@@ -246,7 +263,7 @@ There are certain functionalities added to LWRP `environment`, like:
 
 - override an environment and use an entire different `search_pattern`, this feature extends LWRP `environment` functionality to select nodes by a user given search pattern
 
-- `Host` object attribute `disply_name` is set to chef node hostname
+- `Host` object attribute `display_name` is set to chef node hostname
 
 
 Simply create a LWRP resource for a chef environment, to start monitoring all nodes in that environment. More details can be found in examples.
@@ -291,7 +308,7 @@ To configure icinga2 server, check `examples/icinga2_server` directory. More exa
 
 **ignore where (icinga) == ignore_where (LWRP)**
 
-`assign where` statements are defined as a LWRP resource `Array` attribute -`assign_where`. Each aray element is treated as a different `assign where` statement and LWRP creates a separate statement.
+`assign where` statements are defined as a LWRP resource `Array` attribute -`assign_where`. Each array element is treated as a different `assign where` statement and LWRP creates a separate statement.
 
 e.g.
 
@@ -307,7 +324,7 @@ Above LWRP resource will be applied to an `Object` as shown below:
 	assign where host.vars.application == "redis"
 
 
-Similarly, `ignore where` statements are configured using LWRP resoruce `Array` attribute `ignore_where`.
+Similarly, `ignore where` statements are configured using LWRP resource `Array` attribute `ignore_where`.
 
 
 
@@ -358,7 +375,7 @@ Note:
 
 * Same LWRP resource used to create icinga2 `Object`, can also be used to create icinga2 `Template` as well.
 
-* Few of LWRP resource attributes which refers to icinga2 `constants` or can refer to `constants` are treated as literal `String`. It means they will not be transformed into ruby `String` by LWRP while creating configutation file.
+* Few of LWRP resource attributes which refers to icinga2 `constants` or can refer to `constants` are treated as literal `String`. It means they will not be transformed into ruby `String` by LWRP while creating configuration file.
 
 e.g.
 
@@ -430,15 +447,24 @@ Note: Default configuration files managed by cookbook:
 * /etc/icinga2/icinga2.conf
 * /etc/icinga2/init.conf
 
-`icinga2.conf` no longer includes `zones.conf` in favor of LWRP.
+`icinga2.conf` no longer includes `zones.conf` in favour of LWRP.
 
 
 ## LWRP icinga2_environment
 
 As mentioned in a section above, instead of creating `Host` objects for each chef node, using LWRP `environment` `Host` objects can easily be created for all chef nodes for a chef environment.
 
-LWRP resource attributes are common for all the `Host`. It may be required to define or override attribute for few specific `Host` objects, but it is not yet incorporated or forseen any usage at this point which might change over time.
+LWRP resource attributes are common for all the `Host`. It may be required to define or override attribute for few specific `Host` objects, but it is not yet incorporated or foreseen any usage at this point which might change over time.
 
+**LWRP generated config file**
+
+There are two files generated by LWRP `environment`:
+
+1. if zone is not defined - `host_#{*environment*}.conf`
+
+2. if zone is defined: `host_#{environment*}_#{*zone*}.conf`
+
+>> Note: Cookbook version prior to v0.7.0 might require to manually delete configuration file `host_#{*environment*}.conf` if zone is defined.
 
 **LWRP example**
 
@@ -468,7 +494,7 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 - *environment* (required)		- chef environment name
 - *search_pattern* (optional)	- chef search pattern for given environment
 - *cluster_attribute* (optional)	-  chef node cluster attribute to create hostgroup and `Host` vars
-- *application_attribute* (optional) - chef noder application attribute to create hostgroup and `Host` vars
+- *application_attribute* (optional) - chef node application attribute to create hostgroup and `Host` vars
 - *enable_cluster_hostgroup* (optional)	- whether to create `HostGroup` objects for chef node cluster's
 - *enable_application_hostgroup* (optional)	- whether to create `HostGroup` objects for chef node application's
 - *enable_role_hostgroup* (optional)	- whether to create `HostGroup` objects for chef node run_list role
@@ -478,9 +504,9 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 - *ignore_node_error* (optional)	- whether to ignore node if failed to determine `node[]'chef_environment']` or `node['fqdn']` or `node['hostname']`
 <del>- *exclude_recipes* (optional)	- exclude chef node if `run_list` matches recipe, not yet tested </del>
 <del>- *exclude_roles* (optional)	- exclude chef node if `run_list` matches role, not yet tested </del>
-- *env_custom_vars* (optional)	- add `Host` obect custom vars to all chef node
+- *env_custom_vars* (optional)	- add `Host` object custom vars to all chef node
 - *limit_region* (optional)	- whether to limit chef node to chef server region, currently tested for Amazon EC2, e.g. a icinga2 server located in region `us-east-1` will only collect nodes located in `us-east-`` region
-- *server_region* (optional)	- icinga2 server region can be overriden if cloud provider is not supported by the cookbook using this attribute
+- *server_region* (optional)	- icinga2 server region can be overridden if cloud provider is not supported by the cookbook using this attribute
 - *add_cloud_custom_vars* (optional)	- whether to add cloud attributes, currently supports amazon ec2, e.g. instance id, vpc subnet etc.
 - *env_filter_node_vars* (optional)	- filter or match chef nodes for a given `Hash` attribute values
 - *import* (optional)	- icinga `Host` object import template attribute
