@@ -53,7 +53,7 @@ object EventCommand <%= object.inspect -%> {
   <% end -%>
 
   <% if options['custom_vars'] -%>
-  <% options['custom_vars'].each do |var, value| -%>
+  <% Hash[options['custom_vars'].sort].each do |var, value| -%>
   <% if var && value -%>
   vars.<%= var -%> = <%= value.inspect %>
   <% end -%>

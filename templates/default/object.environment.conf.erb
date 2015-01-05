@@ -88,7 +88,7 @@ object Host <%= node_hash['fqdn'].inspect %> {
   icon_image_alt = <%= @icon_image_alt.inspect %>
   <%- end -%>
   <% if node_hash['custom_vars'] -%>
-  <% node_hash['custom_vars'].each do |var, value| -%>
+  <% Hash[node_hash['custom_vars'].sort].each do |var, value| -%>
   <% if var && value -%>
   vars.<%= var -%> = <%= value.inspect %>
   <% end -%>
