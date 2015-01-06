@@ -31,5 +31,4 @@ icinga2_user 'icingaadmin' do
   display_name 'Icinga 2 Admin'
   groups %w(icingaadmins)
   email 'root@localhost'
-  custom_vars :type => 'Icinga 2 Administrator', :team => 'Icinga'
 end
