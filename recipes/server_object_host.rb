@@ -19,8 +19,8 @@
 
 icinga2_host 'generic-host' do
   template true
-  max_check_attempts 5
-  check_interval '1m'
-  retry_interval '30s'
-  check_command 'hostalive'
+  max_check_attempts node['icinga2']['server']['object']['host']['max_check_attempts']
+  check_interval node['icinga2']['server']['object']['host']['check_interval']
+  retry_interval node['icinga2']['server']['object']['host']['retry_interval']
+  check_command node['icinga2']['server']['object']['host']['check_command']
 end
