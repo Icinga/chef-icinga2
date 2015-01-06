@@ -1424,49 +1424,203 @@ Above LWRP resource will create an icinga `ApiListener` object.
 - *accept_commands* (optional)	- icinga `ApiListener` attribute `accept_commands`
 
 
-## LWRP icinga2_applydependency
-
- To be added.
-
-
 ## LWRP icinga2_livestatuslistener
 
- To be added.
+LWRP `livestatuslistener` creates an icinga `LiveStatusListener` object.
+
+
+**LWRP LiveStatusListener example**
+
+	icinga2_livestatuslistener 'livestatuslistener' do
+	  socket_type 'socket type'
+	  socket_path 'socket path'
+	  bind_host 'host address'
+	  bind_port 'host port'
+	  compat_log_path 'log path'
+	end
+
+Above LWRP resource will create an icinga `LiveStatusListener` object.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *socket_type* (optional)	- icinga `LiveStatusListener` attribute `socket_type`
+- *socket_path* (optional)	- icinga `LiveStatusListener` attribute `socket_path`
+- *bind_host* (optional)	- icinga `LiveStatusListener` attribute `bind_host`
+- *bind_port* (optional)	- icinga `LiveStatusListener` attribute `bind_port`
+- *compat_log_path* (optional)	- icinga `LiveStatusListener` attribute `compat_log_path`
+
 
 
 ## LWRP icinga2_statusdatawriter
 
- To be added.
+LWRP `statusdatawriter` creates an icinga `StatusDataWriter` object.
+
+
+**LWRP StatusDataWriter example**
+
+	icinga2_statusdatawriter 'statusdatawriter' do
+	  status_path 'status path'
+	  objects_path 'objects path'
+	  update_interval 'update interval'
+	end
+
+Above LWRP resource will create an icinga `StatusDataWriter` object.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *library* (optional)	- default compat, icinga `StatusDataWriter` Object `library`
+- *status_path* (optional)	- icinga `StatusDataWriter` attribute `status_path`
+- *objects_path* (optional)	- icinga `StatusDataWriter` attribute `objects_path`
+- *update_interval* (optional)	- icinga `StatusDataWriter` attribute `update_interval`
+
 
 
 ## LWRP icinga2_compatlogger
 
- To be added.
+LWRP `compatlogger` creates an icinga `CompatLogger` object.
+
+
+**LWRP CompatLogger example**
+
+	icinga2_compatlogger 'compatlogger' do
+	  log_dir 'log dir'
+	  rotation_method 'rotation method'
+	end
+
+Above LWRP resource will create an icinga `CompatLogger` object.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *library* (optional)	- default compat, icinga `CompatLogger` Object `library`
+- *log_dir* (optional)	- icinga `CompatLogger` attribute `log_dir`
+- *rotation_method* (optional)	- icinga `CompatLogger` attribute `rotation_method`
+
 
 
 ## LWRP icinga2_checkresultreader
 
- To be added.
+LWRP `checkresultreader` creates an icinga `CheckResultReader` object.
+
+
+**LWRP CheckResultReader example**
+
+	icinga2_checkresultreader 'checkresultreader' do
+	  spool_dir 'spool dir'
+	end
+
+Above LWRP resource will create an icinga `CheckResultReader` object.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *library* (optional)	- default compat, icinga `CheckResultReader` Object `library`
+- *spool_dir* (optional)	- icinga `CheckResultReader` attribute `spool_dir`
+
 
 
 ## LWRP icinga2_checkercomponent
 
- To be added.
+LWRP `checkercomponent` creates an icinga `CheckerComponent` object.
+
+
+**LWRP CheckerComponent example**
+
+	icinga2_checkercomponent 'checkercomponent'
+
+
+Above LWRP resource will create an icinga `CheckerComponent` object.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *library* (optional)	- default checker, icinga `CheckerComponent` Object `library`
+
 
 
 ## LWRP icinga2_notificationcomponent
 
- To be added.
+LWRP `notificationcomponent` creates an icinga `NotificationComponent` object.
+
+
+**LWRP CheckerComponent example**
+
+	icinga2_notificationcomponent 'notificationcomponent' do
+	end
+
+
+Above LWRP resource will create an icinga `NotificationComponent` object.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *library* (optional)	- default notification, icinga `NotificationComponent` Object `library`
+- *enable_ha* (optional)	- default checker, icinga `NotificationComponent` attribute `enable_ha`
 
 
 ## LWRP icinga2_filelogger
 
- To be added.
+LWRP `filelogger` creates an icinga `FileLogger` object.
+
+
+**LWRP CheckerComponent example**
+
+	icinga2_filelogger 'filelogger' do
+	end
+
+
+Above LWRP resource will create an icinga `FileLogger` object.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *path* (optional)	- default checker, icinga `FileLogger` attribute `path`
+- *severity* (optional)	- icinga `FileLogger` attribute `severity`
+
 
 ## LWRP icinga2_perfdatawriter
 
- To be added.
+LWRP `perfdatawriter` creates an icinga `PerfdataWriter` object.
 
+
+**LWRP PerfdataWriter example**
+
+	icinga2_perfdatawriter 'perfdatawriter' do
+	  host_perfdata_path 'host perfdata path'
+	  service_perfdata_path 'service perfdata path'
+	  host_format_template 'host perfdata format'	  service_format_template 'service perfdata format'
+	  rotation_interval 'rotation interval'
+	end
+
+Above LWRP resource will create an icinga `PerfdataWriter` object.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *library* (optional)	- default perfdata, icinga `PerfdataWriter` Object `library`
+- *host_perfdata_path* (optional)	- default checker, icinga `PerfdataWriter` attribute  `host_perfdata_path`
+- *service_perfdata_path* (optional)	- default checker, icinga `PerfdataWriter` attribute  `service_perfdata_path`
+- *host_temp_path* (optional)	- icinga `PerfdataWriter` attribute `host_temp_path`
+- *service_temp_path* (optional)	- icinga `PerfdataWriter` attribute `service_temp_path`
+- *host_format_template* (optional)	- icinga `PerfdataWriter` attribute `host_format_template`
+- *service_format_template* (optional)	- icinga `PerfdataWriter` attribute `service_format_template`
+- *rotation_interval* (optional)	- icinga `PerfdataWriter` attribute `rotation_interval`
+
+
+
+## LWRP icinga2_applydependency
+
+ To be added.
 
 
 ## Cookbook Advanced Attributes
@@ -1571,12 +1725,13 @@ Above LWRP resource will create an icinga `ApiListener` object.
 
 ## Cookbook Icinga2 Constants Attributes
 
+* `default['icinga2']['server']['constants']['NodeName']` (default: `node['fqdn']`): icinga2 NodeName constant
 
 * `default['icinga2']['server']['constants']['PluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
 
 * `default['icinga2']['server']['constants']['ManubulonPluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
 
-* `default['icinga2']['server']['constants']['TicketSalt']` (default: `ch2ng3m3`): icinga2 default TicketSalt key
+* `default['icinga2']['server']['constants']['TicketSalt']` (default: `ed25aed394c4bf7d236b347bb67df466`): icinga2 default TicketSalt key
 
 
 ## Cookbook Icinga2 Host Object default Attributes
