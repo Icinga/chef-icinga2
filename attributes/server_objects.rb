@@ -16,4 +16,3 @@ default['icinga2']['server']['object']['host']['volatile'] = nil
 default['icinga2']['server']['object']['host']['check_command'] = 'hostalive'
 default['icinga2']['server']['object']['host']['zone'] = nil
 default['icinga2']['server']['object']['host']['command_endpoint'] = nil
-default['icinga2']['server']['object']['host']['zone_attribute'] = 'icinga2_zone' # user needs to set this attribute

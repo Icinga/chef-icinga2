@@ -1770,9 +1770,6 @@ Above LWRP resource will create an icinga `PerfdataWriter` object.
 
 * `default['icinga2']['server']['object']['host']['command_endpoint']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['zone_attribute']` (default: `icinga2_zone`)
-
-
 
 ## Cookbook Icinga2 IDO Attributes
 
