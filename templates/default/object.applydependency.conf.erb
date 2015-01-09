@@ -1,0 +1,48 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * apply Dependency Objects.
+*/
+
+<% @objects.sort.map do |object, options|%>
+apply Dependency <%= object.inspect -%> <%= options['object_relation'] -%> <%= options['object_type'] -%> {
+  <% if options['parent_host_name'] -%>
+  parent_host_name =  <%= options['parent_host_name'].inspect %>
+  <% end -%>
+  <% if options['child_host_name'] -%>
+  child_host_name = <%= options['child_host_name'].inspect %>
+  <% end -%>
+  <% if options['parent_service_name'] -%>
+  parent_service_name = <%= options['parent_service_name'].inspect %>
+  <% end -%>
+  <% if options['child_service_name'] -%>
+  child_service_name = <%= options['child_service_name'].inspect %>
+  <% end -%>
+  <% unless options['disable_checks'].nil? -%>
+  disable_checks = <%= options['disable_checks'].inspect %>
+  <% end -%>
+  <% unless options['disable_notifications'].nil? -%>
+  disable_notifications = <%= options['disable_notifications'].inspect %>
+  <% end -%>
+  <% if options['period'] -%>
+  period = <%= options['period'].inspect %>
+  <% end -%>
+  <% if options['states'] && !options['states'].empty? -%>
+  states = [ <%= options['states'].join(', ') -%> ]
+  <% end -%>
+  <% if options['assign_where'] -%>
+  <% options['assign_where'].each do |a|-%>
+  assign where <%= a %>
+  <% end -%>
+  <% end -%>
+  <% if options['ignore_where'] -%>
+  <% options['ignore_where'].each do |i| -%>
+  ignore where <%= i %>
+  <% end -%>
+  <% end -%>
+}
+
+<% end -%>
