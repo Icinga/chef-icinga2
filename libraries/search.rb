@@ -195,7 +195,7 @@ module Icinga2
       node_hash['platform'] = node['platform']
       node_hash['platform_version'] = node['platform_version']
       node_hash['tags'] = node['tags']
-      node_hash['disks'] = node['filesystem'].map { |d, o| d if d.to_s =~ /^\/dev/ && o['fs_type'] != 'swap' && o.key?('mount') }.compact
+      node_hash['disks'] = node['filesystem'].map { |d, o| d if d.to_s =~ /^\/dev/ && o['fs_type'] != 'swap' && o.key?('mount') }.compact if node['filesystem']
 
       node_hash['custom_vars'] = node_custom_vars(node['icinga2'])
       # chef client last run
@@ -208,10 +208,10 @@ module Icinga2
       # add default chef attributes
       node_hash['custom_vars']['platform'] = node_hash['platform']
       node_hash['custom_vars']['platform_version'] = node_hash['platform_version']
-      node_hash['custom_vars']['cpu'] = node['cpu']['total']
-      if node['memory']['total']
-        node_hash['custom_vars']['memory'] = (node['memory']['total'].gsub(/\D/, '').to_i / 1024).to_s + 'MB'
-      end
+      # if failed to fetch cpu info, set it to 0
+      node_hash['custom_vars']['cpu'] = !node['cpu'].nil? ? node['cpu']['total'] : 0
+      # if failed to fetch memory info, set it to 0MB
+      node_hash['custom_vars']['memory'] = !node['memory'].nil? && !node['memory']['total'].nil? ? (node['memory']['total'].gsub(/\D/, '').to_i / 1024).to_s + 'MB' : '0MB'
       node_hash['custom_vars']['environment'] = node_hash['chef_environment']
       node_hash['custom_vars']['run_list'] = node_hash['run_list'].to_s
 
