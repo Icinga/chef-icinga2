@@ -1620,7 +1620,51 @@ Above LWRP resource will create an icinga `PerfdataWriter` object.
 
 ## LWRP icinga2_applydependency
 
- To be added.
+LWRP `applydependency` creates an icinga `apply Dependency` object for `Host` and `Service`.
+
+
+**LWRP apply Dependency Service Object example**
+
+	icinga2_applydependency 'applydependencyto….' do
+	  object_type 'Service'
+	  assign_where ['host.address && host.vars.environment == "development"']
+	  ignore_where ['host.vars.monitoring_disabled == true']
+	end
+
+
+
+Above LWRP resource will apply `Dependency` to all `Service` objects for provided `assign where` statements and ignore for specified `ignore where` statements.
+
+**LWRP apply Notification Host Object example**
+
+	icinga2_applynotification 'hostnotification' do
+	  object_type 'Host'
+	  command 'mail-host-notification'
+	  users %w(user)
+	  interval '1h'
+	  assign_where ['host.address && host.vars.environment == "development"']
+	  ignore_where ['host.vars.monitoring_disabled == true']
+	end
+
+
+Above LWRP resource will apply `Notification` to all `Host` objects for provided `assign_where` statements and ignore for specified `ignore_where` statements.
+
+
+**LWRP Options**
+
+- *object_type* (required)	- apply Notification to `Host` or `Service`, valid values are: Host Service
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *import* (optional)	- icinga `Notification` attribute `import`
+- *users* (optional)	- icinga `Notification` attribute `users`
+- *user_groups* (optional)	- icinga `Notification` attribute `user_groups`
+- *times* (optional)	- icinga `Notification` attribute `times`
+- *command* (optional)	- icinga `Notification` attribute `command`
+- *interval* (optional)	- icinga `Notification` attribute `interval`
+- *period* (optional)	- icinga `Notification` attribute `period`
+- *types* (optional)	- icinga `Notification` attribute `types`
+- *states* (optional)	- icinga `Notification` attribute `states`
+- *assign_where* (optional)	- icinga `assign where` statements
+- *ignore_where* (optional)	- icinga `ignore where` statements
 
 
 ## Cookbook Advanced Attributes
