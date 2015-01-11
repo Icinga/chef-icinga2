@@ -12,7 +12,7 @@ what you find missing!
 
 ## Repository
 
-https://github.com/vkhatri/chef-icinga2
+https://github.com/icinga/chef-icinga2
 
 
 ## Major Changes
@@ -23,13 +23,13 @@ https://github.com/vkhatri/chef-icinga2
 
   **file name:**
 
-  file name without zone: `host_#{*environment*}.conf`
+  file name without zone: `host_#{environment}.conf`
 
-  file name with zone: `host_#{environment*}_#{*zone*}.conf`
+  file name with zone: `host_#{environment}_#{zone}.conf`
 
   >> Note: Cookbook version prior to v0.7.0 users must delete
-    configuration file `host_#{*environment*}.conf` manually
-  	if zone is defined.
+    configuration file `host_#{environment}.conf` manually if
+    `zone` attribute is defined.
 
 
 ## Recipes
@@ -324,7 +324,7 @@ Above LWRP resource will be applied to an `Object` as shown below:
 	assign where host.vars.application == "redis"
 
 
-Similarly, `ignore where` statements are configured using LWRP resource `Array` attribute `ignore_where`.
+Similarly, `ignore where` statements are created using LWRP resource `Array` attribute `ignore_where`.
 
 
 
@@ -358,7 +358,6 @@ Currently icinga2 cookbook supports below Objects LWRP Resources:
 - icinga2_user
 - icinga2_usergroup
 - icinga2_zone
-
 - icinga2_livestatuslistener
 - icinga2_statusdatawriter
 - icinga2_compatlogger
@@ -1597,7 +1596,8 @@ LWRP `perfdatawriter` creates an icinga `PerfdataWriter` object.
 	icinga2_perfdatawriter 'perfdatawriter' do
 	  host_perfdata_path 'host perfdata path'
 	  service_perfdata_path 'service perfdata path'
-	  host_format_template 'host perfdata format'	  service_format_template 'service perfdata format'
+	  host_format_template 'host perfdata format'
+	  service_format_template 'service perfdata format'
 	  rotation_interval 'rotation interval'
 	end
 

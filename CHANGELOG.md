@@ -3,6 +3,23 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.7.6
+-----
+
+- Virender Khatri - LWRP resource custom vars are not sorted
+
+- Virender Khatri - updated generic-host template to use node attributes
+
+- Virender Khatri - cleaned up LWRP for unused attributes
+
+- Virender Khatri - added LWRP applydependency
+
+- Virender Khatri - fixed error for missing node attribute in library
+
+- Virender Khatri - fixed LWRP applyservice template for True/False Class attributes
+
+- Virender Khatri - updated README
+
 0.7.0
 -----
 
