@@ -36,22 +36,22 @@ apply Service <%= options['object_name'].inspect -%> {
   <%- if options['retry_interval'] -%>
   retry_interval = <%= options['retry_interval'] %>
   <%- end -%>
-  <%- if options['enable_notifications'] -%>
+  <%- unless options['enable_notifications'].nil? -%>
   enable_notifications = <%= options['enable_notifications'].inspect %>
   <%- end -%>
-  <%- if options['enable_active_checks'] -%>
+  <%- unless options['enable_active_checks'].nil? -%>
   enable_active_checks = <%= options['enable_active_checks'].inspect %>
   <%- end -%>
-  <%- if options['enable_passive_checks'] -%>
+  <%- unless options['enable_passive_checks'].nil? -%>
   enable_passive_checks = <%= options['enable_passive_checks'].inspect %>
   <%- end -%>
-  <%- if options['enable_event_handler'] -%>
+  <%- unless options['enable_event_handler'].nil? -%>
   enable_event_handler = <%= options['enable_event_handler'].inspect %>
   <%- end -%>
-  <%- if options['enable_flapping'] -%>
+  <%- unless options['enable_flapping'].nil? -%>
   enable_flapping = <%= options['enable_flapping'].inspect %>
   <%- end -%>
-  <%- if options['enable_perfdata'] -%>
+  <%- unless options['enable_perfdata'].nil? -%>
   enable_perfdata = <%= options['enable_perfdata'].inspect %>
   <%- end -%>
   <%- if options['event_command'] -%>
@@ -60,7 +60,7 @@ apply Service <%= options['object_name'].inspect -%> {
   <%- if options['flapping_threshold'] -%>
   flapping_threshold = <%= options['flapping_threshold'].inspect %>
   <%- end -%>
-  <%- if options['volatile'] -%>
+  <%- unless options['volatile'].nil? -%>
   volatile = <%= options['volatile'].inspect %>
   <%- end -%>
   <%- if options['zone'] -%>
