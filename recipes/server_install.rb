@@ -18,7 +18,7 @@
 #
 
 case node['platform_family']
-when 'ubuntu'
+when 'debian'
   # apt repository configuration
   apt_repository 'icinga2' do
     uri node['icinga2']['apt']['uri']
