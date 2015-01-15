@@ -57,9 +57,7 @@ icinga2_package_version = value_for_platform(
 case node['platform_family']
 when 'debian'
   %w(icinga2 icinga2-ido-mysql icinga2-ido-pgsql).each do |p|
-    package p do
-      version node['icinga2']['version']
-    end
+    package p
   end
 when 'rhel'
   %w(icinga2 icinga2-ido-mysql icinga2-ido-pgsql).each do |p|
