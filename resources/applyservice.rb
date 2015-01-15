@@ -21,7 +21,6 @@ actions :create, :delete
 
 default_action :create
 
-attribute :object_name,   :kind_of => String, :default => nil
 attribute :display_name,   :kind_of => String, :default => nil
 attribute :import,        :kind_of => String, :default => nil
 attribute :host_name,     :kind_of => String, :default => nil

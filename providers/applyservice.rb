@@ -45,7 +45,6 @@ def objects
     next if resource.action != :create || icinga2_objects.key?(resource.name)
     icinga2_objects[resource.name] = {}
     icinga2_objects[resource.name] = { 'import' => resource.send('import'),
-                                       'object_name' => resource.send('object_name'),
                                        'display_name' => resource.send('display_name'),
                                        'host_name' => resource.send('host_name'),
                                        'groups' => resource.send('groups'),
