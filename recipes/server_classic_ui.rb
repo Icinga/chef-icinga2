@@ -20,7 +20,7 @@
 case node['platform_family']
 when 'debian'
   package 'icinga2-classicui' do
-    # version node['icinga2']['classic_ui']['version']
+    version node['icinga2']['classic_ui']['version'] + node['icinga2']['icinga2_version_suffix']
   end
 when 'rhel'
   package 'icinga2-classicui-config' do

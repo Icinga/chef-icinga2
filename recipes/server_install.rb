@@ -42,29 +42,9 @@ when 'rhel'
   end
 end
 
-icinga2_package_version = value_for_platform(
-  %w(centos redhat fedora) => { 'default' => ".el#{node['platform_version']}" },
-  'amazon' => { 'default' => '.el6' },
-  'ubuntu' => { 'default' => '' }
-)
-
 # install icinga2 core packages and ido
-
-# Need to revisit below condition,
-# might not require to differentiate for different
-# platform family
-
-case node['platform_family']
-when 'debian'
-  %w(icinga2 icinga2-ido-mysql icinga2-ido-pgsql).each do |p|
-    package p do
-      version node['icinga2']['version']
-    end
-  end
-when 'rhel'
-  %w(icinga2 icinga2-ido-mysql icinga2-ido-pgsql).each do |p|
-    package p do
-      version node['icinga2']['version'] + icinga2_package_version
-    end
+%w(icinga2 icinga2-ido-mysql icinga2-ido-pgsql).each do |p|
+  package p do
+    version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix']
   end
 end
