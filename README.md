@@ -1,7 +1,7 @@
 icinga2 Cookbook
 ==================
 
-[![Build Status](https://travis-ci.org/vkhatri/chef-icinga2.svg?branch=master)](https://travis-ci.org/vkhatri/chef-icinga2)
+[![Build Status](https://travis-ci.org/vkhatri/chef-icinga2.svg?branch=master)](https://travis-ci.org/icinga/chef-icinga2)
 
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
@@ -30,6 +30,16 @@ https://github.com/icinga/chef-icinga2
   >> Note: Cookbook version prior to v0.7.0 users must delete
     configuration file `host_#{environment}.conf` manually if
     `zone` attribute is defined.
+
+
+## Cookbook Dependencies
+
+* `ulimit` cookbook
+* `apache2` cookbook
+* `yum` cookbook
+* `apt` cookbook
+* `pnp4nagios` cookbook
+
 
 
 ## Recipes
@@ -145,16 +155,16 @@ By default `icingaadmin` user is added with password `icingaadmin`:
 	  'icingaadmin' => '$apr1$MZtKRLAy$AV9OiJ.V/mI9g30bHn9ol1'
 	}
 
-This can be overrided in wrapper cookbook or role or environment.
+Override it if required in wrapper cookbook or role or environment.
 
-To add more users for icigna2 Classic UI auth, add new users to Hash attribute in the same wasy `icingaadmin` user is added
+To add more users for icinga2 Classic UI auth, add new users to Hash attribute in the same way `icingaadmin` user is added
 
 	default['icinga2']['classic_ui']['users']['user_name'] = '$apr1$MZtKRLAy$AV9OiJ.V/mI9g30bHn9ol1'
 
 **Icinga2 Classic UI Authorization**
 
 
-Icigna2 Classic UI User authorization is managed by below node Arrary attributes:
+Icinga2 Classic UI User authorization is managed by below node Array attributes:
 
 	node['icinga2']['classic_ui']['authorized_for_system_information']
 	node['icinga2']['classic_ui']['authorized_for_configuration_information']
@@ -423,7 +433,7 @@ e.g.
 	LWRP `icinga2_service` object resources will create icinga2
 	`Service` objects conf file - /etc/icinga2/objects.d/service.conf
 
-	LWRP `icinga2_service` tempalte resources will create icinga2
+	LWRP `icinga2_service` template resources will create icinga2
 	`Service` templates conf file - /etc/icinga2/objects.d/service_template.conf
 
 	LWRP `icinga2_applyservice` resources will create icinga2
@@ -490,47 +500,47 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 
 
 - *action* (optional)			- default :create, options: :create, :delete, :reload
-- *environment* (required)		- chef environment name
-- *search_pattern* (optional)	- chef search pattern for given environment
-- *cluster_attribute* (optional)	-  chef node cluster attribute to create hostgroup and `Host` vars
-- *application_attribute* (optional) - chef node application attribute to create hostgroup and `Host` vars
-- *enable_cluster_hostgroup* (optional)	- whether to create `HostGroup` objects for chef node cluster's
-- *enable_application_hostgroup* (optional)	- whether to create `HostGroup` objects for chef node application's
-- *enable_role_hostgroup* (optional)	- whether to create `HostGroup` objects for chef node run_list role
-- *use_fqdn_resolv* (optional)	- whether to use DNS FQDN resolved address for `Host` object attribute `address`
-- *failover_fqdn_address* (optional)	- whether to use chef node attribute `node['ipaddress']` if failed to resolve node FQDN
-- *ignore_resolv_error* (optional)	- whether to ignore node FQDN resolve error
-- *ignore_node_error* (optional)	- whether to ignore node if failed to determine `node[]'chef_environment']` or `node['fqdn']` or `node['hostname']`
-<del>- *exclude_recipes* (optional)	- exclude chef node if `run_list` matches recipe, not yet tested </del>
-<del>- *exclude_roles* (optional)	- exclude chef node if `run_list` matches role, not yet tested </del>
-- *env_custom_vars* (optional)	- add `Host` object custom vars to all chef node
-- *limit_region* (optional)	- whether to limit chef node to chef server region, currently tested for Amazon EC2, e.g. a icinga2 server located in region `us-east-1` will only collect nodes located in `us-east-`` region
-- *server_region* (optional)	- icinga2 server region can be overridden if cloud provider is not supported by the cookbook using this attribute
-- *add_cloud_custom_vars* (optional)	- whether to add cloud attributes, currently supports amazon ec2, e.g. instance id, vpc subnet etc.
-- *env_filter_node_vars* (optional)	- filter or match chef nodes for a given `Hash` attribute values
-- *import* (optional)	- icinga `Host` object import template attribute
-- *check_command* (optional)	- icinga `Host` object attribute `check_command`
-- *max_check_attempts* (optional)	- icinga `Host` object attribute `max_check_attempts`
-- *check_period* (optional)	- icinga `Host` object attribute `check_period`
-- *check_interval* (optional)	- icinga `Host` object attribute `check_interval`
-- *retry_interval* (optional)	- icinga `Host` object attribute `retry_interval`
-- *enable_notifications* (optional)	- icinga `Host` object attribute `enable_notifications`
-- *enable_active_checks* (optional)	- icinga `Host` object attribute `enable_active_checks`
-- *enable_passive_checks* (optional)	- icinga `Host` object attribute `enable_passive_checks`
-- *enable_passive_checks* (optional)	- icinga `Host` object attribute `enable_passive_checks`
-- *enable_event_handler* (optional)	- icinga `Host` object attribute `enable_event_handler`
-- *enable_flapping* (optional)	- icinga `Host` object attribute `enable_flapping`
-- *enable_perfdata* (optional)	- icinga `Host` object attribute `enable_perfdata`
-- *event_command* (optional)	- icinga `Host` object attribute `event_command`
-- *flapping_threshold* (optional)	- icinga `Host` object attribute `flapping_threshold`
-- *volatile* (optional)	- icinga `Host` object attribute `volatile`
-- *zone* (optional)	- icinga `Host` object attribute `zone`
-- *command_endpoint* (optional)	- icinga `Host` object attribute `command_endpoint`
-- *notes* (optional)	- icinga `Host` object attribute `notes`
-- *notes_url* (optional)	- icinga `Host` object attribute `notes_url`
-- *action_url* (optional)	- icinga `Host` object attribute `action_url`
-- *icon_image* (optional)	- icinga `Host` object attribute `icon_image`
-- *icon_image_alt* (optional)	- icinga `Host` object attribute `icon_image_alt`
+- *environment* (required, String)		- chef environment name
+- *search_pattern* (optional, String)	- chef search pattern for given environment
+- *cluster_attribute* (optional, String)	-  chef node cluster attribute to create hostgroup and `Host` vars
+- *application_attribute* (optional, String) - chef node application attribute to create hostgroup and `Host` vars
+- *enable_cluster_hostgroup* (optional, TrueClass/FalseClass)	- whether to create `HostGroup` objects for chef node cluster's
+- *enable_application_hostgroup* (optional, TrueClass/FalseClass)	- whether to create `HostGroup` objects for chef node application's
+- *enable_role_hostgroup* (optional, TrueClass/FalseClass)	- whether to create `HostGroup` objects for chef node run_list role
+- *use_fqdn_resolv* (optional, TrueClass/FalseClass)	- whether to use DNS FQDN resolved address for `Host` object attribute `address`
+- *failover_fqdn_address* (optional, TrueClass/FalseClass)	- whether to use chef node attribute `node['ipaddress']` if failed to resolve node FQDN
+- *ignore_resolv_error* (optional, TrueClass/FalseClass)	- whether to ignore node FQDN resolve error
+- *ignore_node_error* (optional, TrueClass/FalseClass)	- whether to ignore node if failed to determine `node[]'chef_environment']` or `node['fqdn']` or `node['hostname']`
+<del>- *exclude_recipes* (optional, Array)	- exclude chef node if `run_list` matches recipe, not yet tested </del>
+<del>- *exclude_roles* (optional, Array)	- exclude chef node if `run_list` matches role, not yet tested </del>
+- *env_custom_vars* (optional, Hash)	- add `Host` object custom vars to all chef node
+- *limit_region* (optional, TrueClass/FalseClass)	- whether to limit chef node to chef server region, currently tested for Amazon EC2, e.g. a icinga2 server located in region `us-east-1` will only collect nodes located in `us-east-`` region
+- *server_region* (optional, String)	- icinga2 server region can be overridden if cloud provider is not supported by the cookbook using this attribute
+- *add_cloud_custom_vars* (optional, TrueClass/FalseClass)	- whether to add cloud attributes, currently supports amazon ec2, e.g. instance id, vpc subnet etc.
+- *env_filter_node_vars* (optional, Hash)	- filter or match chef nodes for a given `Hash` attribute values
+- *import* (optional, String)	- icinga `Host` object import template attribute
+- *check_command* (optional, String)	- icinga `Host` object attribute `check_command`
+- *max_check_attempts* (optional, Integer)	- icinga `Host` object attribute `max_check_attempts`
+- *check_period* (optional, String)	- icinga `Host` object attribute `check_period`
+- *check_interval* (optional, String/Integer)	- icinga `Host` object attribute `check_interval`
+- *retry_interval* (optional, Integer)	- icinga `Host` object attribute `retry_interval`
+- *enable_notifications* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_notifications`
+- *enable_active_checks* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_active_checks`
+- *enable_passive_checks* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_passive_checks`
+- *enable_passive_checks* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_passive_checks`
+- *enable_event_handler* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_event_handler`
+- *enable_flapping* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_flapping`
+- *enable_perfdata* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_perfdata`
+- *event_command* (optional, String)	- icinga `Host` object attribute `event_command`
+- *flapping_threshold* (optional, String)	- icinga `Host` object attribute `flapping_threshold`
+- *volatile* (optional, , TrueClass/FalseClass)	- icinga `Host` object attribute `volatile`
+- *zone* (optional, String)	- icinga `Host` object attribute `zone`
+- *command_endpoint* (optional, String)	- icinga `Host` object attribute `command_endpoint`
+- *notes* (optional, String)	- icinga `Host` object attribute `notes`
+- *notes_url* (optional, String)	- icinga `Host` object attribute `notes_url`
+- *action_url* (optional, String)	- icinga `Host` object attribute `action_url`
+- *icon_image* (optional, String)	- icinga `Host` object attribute `icon_image`
+- *icon_image_alt* (optional, String)	- icinga `Host` object attribute `icon_image_alt`
 
 
 Note: Few of LWRP resource attributes has default value, please check LWRP resource until information is added here.
@@ -540,7 +550,7 @@ Note: Few of LWRP resource attributes has default value, please check LWRP resou
 
 LWRP `envhostgroup` creates an icinga `Hostgroup` object for LWRP `environment` host groups.
 
-An `environment` host groups are evaluated at compile time, hence it conflicts with LWRP `hostgroup` resources. To avoid the conflict, LWRP `envhostgroup` resources are created in a separate object file for an environemnt.
+An `environment` host groups are evaluated at compile time, hence it conflicts with LWRP `hostgroup` resources. To avoid the conflict, LWRP `envhostgroup` resources are created in a separate object file for an environment.
 
 
 **LWRP Environment HostGroup example**
@@ -556,10 +566,10 @@ Above LWRP resource will create `HostGroup` for a chef environment.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *environment* (name_attribute)	- chef environment name
-- *groups* (optional)	- host group names
+- *environment* (name_attribute, String)	- chef environment name
+- *groups* (optional, Array)	- host group names
 
-Note: This LWRP resoruce is only meant for LWRP `environment` and not to be used for custom resources.
+Note: This LWRP resource is only meant for LWRP `environment` and not to be used for custom resources.
 
 ## LWRP icinga2_host
 
@@ -597,35 +607,35 @@ Above LWRP resource will create an icinga `Host` template - `generic-host`.
 
 
 - *action* (optional)			- default :create, options: :create, :delete, :reload
-- *display_name* (optional)	- icinga `Host` object import template attribute
-- *import* (optional)	- icinga `Host` object import template attribute
-- *address* (optional)	- icinga `Host` object import template attribute
-- *address6* (optional)	- icinga `Host` object import template attribute
-- *groups* (optional)	- icinga `Host` object import template attribute
-- *check_command* (optional)	- icinga `Host` object attribute `check_command`
-- *max_check_attempts* (optional)	- icinga `Host` object attribute `max_check_attempts`
-- *check_period* (optional)	- icinga `Host` object attribute `check_period`
-- *check_interval* (optional)	- icinga `Host` object attribute `check_interval`
-- *retry_interval* (optional)	- icinga `Host` object attribute `retry_interval`
-- *enable_notifications* (optional)	- icinga `Host` object attribute `enable_notifications`
-- *enable_active_checks* (optional)	- icinga `Host` object attribute `enable_active_checks`
-- *enable_passive_checks* (optional)	- icinga `Host` object attribute `enable_passive_checks`
-- *enable_passive_checks* (optional)	- icinga `Host` object attribute `enable_passive_checks`
-- *enable_event_handler* (optional)	- icinga `Host` object attribute `enable_event_handler`
-- *enable_flapping* (optional)	- icinga `Host` object attribute `enable_flapping`
-- *enable_perfdata* (optional)	- icinga `Host` object attribute `enable_perfdata`
-- *event_command* (optional)	- icinga `Host` object attribute `event_command`
-- *flapping_threshold* (optional)	- icinga `Host` object attribute `flapping_threshold`
-- *volatile* (optional)	- icinga `Host` object attribute `volatile`
-- *zone* (optional)	- icinga `Host` object attribute `zone`
-- *command_endpoint* (optional)	- icinga `Host` object attribute `command_endpoint`
-- *notes* (optional)	- icinga `Host` object attribute `notes`
-- *notes_url* (optional)	- icinga `Host` object attribute `notes_url`
-- *action_url* (optional)	- icinga `Host` object attribute `action_url`
-- *icon_image* (optional)	- icinga `Host` object attribute `icon_image`
-- *icon_image_alt* (optional)	- icinga `Host` object attribute `icon_image_alt`
-- *custom_vars* (optional)	- icinga `Host` object attribute `vars`
-- *tempalte* (optional)	- whether to create a `Host` template
+- *display_name* (optional, String)	- icinga `Host` object import template attribute
+- *import* (optional, String)	- icinga `Host` object import template attribute
+- *address* (optional, String)	- icinga `Host` object import template attribute
+- *address6* (optional, String)	- icinga `Host` object import template attribute
+- *groups* (optional, Array)	- icinga `Host` object import template attribute
+- *check_command* (optional, String)	- icinga `Host` object attribute `check_command`
+- *max_check_attempts* (optional, Integer)	- icinga `Host` object attribute `max_check_attempts`
+- *check_period* (optional, String)	- icinga `Host` object attribute `check_period`
+- *check_interval* (optional, String/Integer)	- icinga `Host` object attribute `check_interval`
+- *retry_interval* (optional, String/Integer)	- icinga `Host` object attribute `retry_interval`
+- *enable_notifications* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_notifications`
+- *enable_active_checks* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_active_checks`
+- *enable_passive_checks* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_passive_checks`
+- *enable_passive_checks* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_passive_checks`
+- *enable_event_handler* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_event_handler`
+- *enable_flapping* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_flapping`
+- *enable_perfdata* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_perfdata`
+- *event_command* (optional, String)	- icinga `Host` object attribute `event_command`
+- *flapping_threshold* (optional, String)	- icinga `Host` object attribute `flapping_threshold`
+- *volatile* (optional, , TrueClass/FalseClass)	- icinga `Host` object attribute `volatile`
+- *zone* (optional, String)	- icinga `Host` object attribute `zone`
+- *command_endpoint* (optional, String)	- icinga `Host` object attribute `command_endpoint`
+- *notes* (optional, String)	- icinga `Host` object attribute `notes`
+- *notes_url* (optional, String)	- icinga `Host` object attribute `notes_url`
+- *action_url* (optional, String)	- icinga `Host` object attribute `action_url`
+- *icon_image* (optional, String)	- icinga `Host` object attribute `icon_image`
+- *icon_image_alt* (optional, String)	- icinga `Host` object attribute `icon_image_alt`
+- *custom_vars* (optional, String)	- icinga `Host` object attribute `vars`
+- *tempalte* (optional, String)	- whether to create a `Host` template
 
 
 ## LWRP icinga2_hostgroup
@@ -648,10 +658,10 @@ Above LWRP resource will create an icinga `HostGroup` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *display_name* (optional)	- icinga `HostGroup` attribute `display_name`
-- *groups* (optional)	- icinga `HostGroup` attribute `groups`
-- *assign_where* (optional)	 - an array of `assign where` statements
-- *ignore_where* (optional)	 - an array of `ignore where` statements
+- *display_name* (optional, String)	- icinga `HostGroup` attribute `display_name`
+- *groups* (optional, Array)	- icinga `HostGroup` attribute `groups`
+- *assign_where* (optional, Array)	 - an array of `assign where` statements
+- *ignore_where* (optional, Array)	 - an array of `ignore where` statements
 
 
 ## LWRP icinga2_service
@@ -698,25 +708,25 @@ Above LWRP resource will create an icinga `Service` template object for a `gener
 - *check_period* (optional)	- icinga `Service` object attribute `check_period`
 - *check_interval* (optional)	- icinga `Service` object attribute `check_interval`
 - *retry_interval* (optional)	- icinga `Service` object attribute `retry_interval`
-- *enable_notifications* (optional)	- icinga `Service` object attribute `enable_notifications`
-- *enable_active_checks* (optional)	- icinga `Service` object attribute `enable_active_checks`
-- *enable_passive_checks* (optional)	- icinga `Service` object attribute `enable_passive_checks`
-- *enable_passive_checks* (optional)	- icinga `Service` object attribute `enable_passive_checks`
-- *enable_event_handler* (optional)	- icinga `Service` object attribute `enable_event_handler`
-- *enable_flapping* (optional)	- icinga `Service` object attribute `enable_flapping`
+- *enable_notifications* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_notifications`
+- *enable_active_checks* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_active_checks`
+- *enable_passive_checks* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_passive_checks`
+- *enable_passive_checks* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_passive_checks`
+- *enable_event_handler* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_event_handler`
+- *enable_flapping* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_flapping`
 - *enable_perfdata* (optional)	- icinga `Service` object attribute `enable_perfdata`
-- *event_command* (optional)	- icinga `Service` object attribute `event_command`
-- *flapping_threshold* (optional)	- icinga `Service` object attribute `flapping_threshold`
-- *volatile* (optional)	- icinga `Service` object attribute `volatile`
-- *zone* (optional)	- icinga `Service` object attribute `zone`
-- *command_endpoint* (optional)	- icinga `Service` object attribute `command_endpoint`
-- *notes* (optional)	- icinga `Service` object attribute `notes`
-- *notes_url* (optional)	- icinga `Service` object attribute `notes_url`
-- *action_url* (optional)	- icinga `Service` object attribute `action_url`
-- *icon_image* (optional)	- icinga `Service` object attribute `icon_image`
-- *icon_image_alt* (optional)	- icinga `Service` object attribute `icon_image_alt`
-- *custom_vars* (optional)	- icinga `Service` object attribute `vars`
-- *tempalte* (optional)	- whether to create a `Service` template
+- *event_command* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `event_command`
+- *flapping_threshold* (optional, String)	- icinga `Service` object attribute `flapping_threshold`
+- *volatile* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `volatile`
+- *zone* (optional, String)	- icinga `Service` object attribute `zone`
+- *command_endpoint* (optional, String)	- icinga `Service` object attribute `command_endpoint`
+- *notes* (optional, String)	- icinga `Service` object attribute `notes`
+- *notes_url* (optional, String)	- icinga `Service` object attribute `notes_url`
+- *action_url* (optional, String)	- icinga `Service` object attribute `action_url`
+- *icon_image* (optional, String)	- icinga `Service` object attribute `icon_image`
+- *icon_image_alt* (optional, String)	- icinga `Service` object attribute `icon_image_alt`
+- *custom_vars* (optional, Hash)	- icinga `Service` object attribute `vars`
+- *tempalte* (optional, TrueClass/FalseClass)	- whether to create a `Service` template
 
 
 ## LWRP icinga2_applyservice
@@ -746,35 +756,35 @@ Above LWRP resource will apply an icinga `Service` object to all `Hosts` with cu
 
 
 - *action* (optional)	- default :create, options: :create, :delete, :reload
-- *display_name* (optional)	- icinga `Service` object attribute `display_name`
-- *import* (optional)	- icinga `Service` object attribute `import`
-- *host_name* (optional)	- icinga `Service` object attribute `host_name`
-- *groups* (optional)	- icinga `Service` object attribute `groups`
-- *check_command* (optional)	- icinga `Service` object attribute `check_command`
-- *max_check_attempts* (optional)	- icinga `Service` object attribute `max_check_attempts`
-- *check_period* (optional)	- icinga `Service` object attribute `check_period`
-- *check_interval* (optional)	- icinga `Service` object attribute `check_interval`
-- *retry_interval* (optional)	- icinga `Service` object attribute `retry_interval`
-- *enable_notifications* (optional)	- icinga `Service` object attribute `enable_notifications`
-- *enable_active_checks* (optional)	- icinga `Service` object attribute `enable_active_checks`
-- *enable_passive_checks* (optional)	- icinga `Service` object attribute `enable_passive_checks`
-- *enable_passive_checks* (optional)	- icinga `Service` object attribute `enable_passive_checks`
-- *enable_event_handler* (optional)	- icinga `Service` object attribute `enable_event_handler`
-- *enable_flapping* (optional)	- icinga `Service` object attribute `enable_flapping`
-- *enable_perfdata* (optional)	- icinga `Service` object attribute `enable_perfdata`
-- *event_command* (optional)	- icinga `Service` object attribute `event_command`
-- *flapping_threshold* (optional)	- icinga `Service` object attribute `flapping_threshold`
-- *volatile* (optional)	- icinga `Service` object attribute `volatile`
-- *zone* (optional)	- icinga `Service` object attribute `zone`
-- *command_endpoint* (optional)	- icinga `Service` object attribute `command_endpoint`
-- *notes* (optional)	- icinga `Service` object attribute `notes`
-- *notes_url* (optional)	- icinga `Service` object attribute `notes_url`
-- *action_url* (optional)	- icinga `Service` object attribute `action_url`
-- *icon_image* (optional)	- icinga `Service` object attribute `icon_image`
-- *icon_image_alt* (optional)	- icinga `Service` object attribute `icon_image_alt`
-- *custom_vars* (optional)	- icinga `Service` object attribute `vars`
-- *assign_where* (optional)	 - an array of `assign where` statements
-- *ignore_where* (optional)	 - an array of `ignore where` statements
+- *display_name* (optional, String)	- icinga `Service` object attribute `display_name`
+- *import* (optional, String)	- icinga `Service` object attribute `import`
+- *host_name* (optional, String)	- icinga `Service` object attribute `host_name`
+- *groups* (optional, Array)	- icinga `Service` object attribute `groups`
+- *check_command* (optional, String)	- icinga `Service` object attribute `check_command`
+- *max_check_attempts* (optional, Integer)	- icinga `Service` object attribute `max_check_attempts`
+- *check_period* (optional, String)	- icinga `Service` object attribute `check_period`
+- *check_interval* (optional, String/Integer)	- icinga `Service` object attribute `check_interval`
+- *retry_interval* (optional, String/Integer)	- icinga `Service` object attribute `retry_interval`
+- *enable_notifications* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_notifications`
+- *enable_active_checks* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_active_checks`
+- *enable_passive_checks* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_passive_checks`
+- *enable_passive_checks* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_passive_checks`
+- *enable_event_handler* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_event_handler`
+- *enable_flapping* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_flapping`
+- *enable_perfdata* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_perfdata`
+- *event_command* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `event_command`
+- *flapping_threshold* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `flapping_threshold`
+- *volatile* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `volatile`
+- *zone* (optional, String)	- icinga `Service` object attribute `zone`
+- *command_endpoint* (optional, String)	- icinga `Service` object attribute `command_endpoint`
+- *notes* (optional, String)	- icinga `Service` object attribute `notes`
+- *notes_url* (optional, String)	- icinga `Service` object attribute `notes_url`
+- *action_url* (optional, String)	- icinga `Service` object attribute `action_url`
+- *icon_image* (optional, String)	- icinga `Service` object attribute `icon_image`
+- *icon_image_alt* (optional, String)	- icinga `Service` object attribute `icon_image_alt`
+- *custom_vars* (optional, Hash)	- icinga `Service` object attribute `vars`
+- *assign_where* (optional, Array)	 - an array of `assign where` statements
+- *ignore_where* (optional, Array)	 - an array of `ignore where` statements
 
 
 ## LWRP icinga2_servicegroup
@@ -797,10 +807,10 @@ Above LWRP resource will create an icinga `ServiceGroup` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *display_name* (optional)	- icinga `ServiceGroup` attribute `display_name`
-- *groups* (optional)	- icinga `ServiceGroup` attribute `groups`
-- *assign_where* (optional)	 - an array of `assign where` statements
-- *ignore_where* (optional)	 - an array of `ignore where` statements
+- *display_name* (optional, String)	- icinga `ServiceGroup` attribute `display_name`
+- *groups* (optional, Array)	- icinga `ServiceGroup` attribute `groups`
+- *assign_where* (optional, Array)	 - an array of `assign where` statements
+- *ignore_where* (optional, Array)	 - an array of `ignore where` statements
 
 
 ## LWRP icinga2_feature
@@ -862,18 +872,18 @@ Above LWRP resource will create an icinga `User` template.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *display_name* (optional)	- icinga `User` attribute `display_name`
-- *import* (optional)	- icinga `User` attribute `import`
-- *groups* (optional)	- icinga `User` attribute `groups`
-- *email* (optional)	- icinga `User` attribute `email`
-- *pager* (optional)	- icinga `User` attribute `pager`
-- *period* (optional)	- icinga `User` attribute `period`
-- *states* (optional)	- icinga `User` attribute `states`
-- *types* (optional)	- icinga `User` attribute `types`
-- *zone* (optional)	- icinga `User` attribute `zone`
-- *custom_vars* (optional)	- icinga `User` attribute `vars`
-- *enable_notifications* (optional)	- icinga `User` attribute `enable_notifications`
-- *template* (optional)	- whether to create a `User` template
+- *display_name* (optional, String)	- icinga `User` attribute `display_name`
+- *import* (optional, String)	- icinga `User` attribute `import`
+- *groups* (optional, Array)	- icinga `User` attribute `groups`
+- *email* (optional, String)	- icinga `User` attribute `email`
+- *pager* (optional, String)	- icinga `User` attribute `pager`
+- *period* (optional, String)	- icinga `User` attribute `period`
+- *states* (optional, Array)	- icinga `User` attribute `states`
+- *types* (optional, Array)	- icinga `User` attribute `types`
+- *zone* (optional, String)	- icinga `User` attribute `zone`
+- *custom_vars* (optional, Hash)	- icinga `User` attribute `vars`
+- *enable_notifications* (optional, TrueClass/FalseClass)	- icinga `User` attribute `enable_notifications`
+- *template* (optional, TrueClass/FalseClass)	- whether to create a `User` template
 
 
 ## LWRP icinga2_usergroup
@@ -895,9 +905,9 @@ Above LWRP resource will create an icinga `UserGroup` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *display_name* (optional)	- icinga `UserGroup` attribute `display_name`
-- *groups* (optional)	- icinga `UserGroup` attribute `groups`
-- *zone* (optional)	- icinga `UserGroup` attribute `zone`
+- *display_name* (optional, String)	- icinga `UserGroup` attribute `display_name`
+- *groups* (optional, Array)	- icinga `UserGroup` attribute `groups`
+- *zone* (optional, String)	- icinga `UserGroup` attribute `zone`
 
 
 ## LWRP icinga2_zone
@@ -918,8 +928,8 @@ Above LWRP resource will create an icinga `Zone` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *endpoints* (optional)	- icinga `Zone` attribute `endpoints`
-- *parent* (optional)	- icinga `Zone` attribute `parent`
+- *endpoints* (optional, String)	- icinga `Zone` attribute `endpoints`
+- *parent* (optional, String)	- icinga `Zone` attribute `parent`
 
 
 ## LWRP icinga2_endpoint
@@ -941,9 +951,9 @@ Above LWRP resource will create an icinga `Endpoint` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *host* (optional)	- icinga `Endpoint` attribute `host`
-- *port* (optional)	- icinga `Endpoint` attribute `port`
-- *log_duration* (optional)	- icinga `Endpoint` attribute `log_duration`
+- *host* (optional, String)	- icinga `Endpoint` attribute `host`
+- *port* (optional, Integer)	- icinga `Endpoint` attribute `port`
+- *log_duration* (optional, String)	- icinga `Endpoint` attribute `log_duration`
 
 
 ## LWRP icinga2_timeperiod
@@ -980,11 +990,11 @@ Above LWRP resource will create an icinga `TimePeriod` template.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *display_name* (optional)	- icinga `TimePeriod` attribute `display_name`
-- *import* (optional)	- icinga `TimePeriod` attribute `import`
-- *zone* (optional)	- icinga `TimePeriod` attribute `zone`
-- *ranges* (optional)	- icinga `TimePeriod` attribute `ranges`
-- *template* (optional)	- whether to create an icinga `TimePeriod` template
+- *display_name* (optional, String)	- icinga `TimePeriod` attribute `display_name`
+- *import* (optional, String)	- icinga `TimePeriod` attribute `import`
+- *zone* (optional, String)	- icinga `TimePeriod` attribute `zone`
+- *ranges* (optional, Hash)	- icinga `TimePeriod` attribute `ranges`
+- *template* (optional, TrueClass/FalseClass)	- whether to create an icinga `TimePeriod` template
 
 
 ## LWRP icinga2_eventcommand
@@ -1005,12 +1015,12 @@ Above LWRP resource will create an icinga `EventCommand` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *import* (optional)	- icinga `EventCommand` attribute `import`
-- *command* (optional)	- icinga `EventCommand` attribute `command`
-- *env* (optional)	- icinga `EventCommand` attribute `env`
-- *timeout* (optional)	- icinga `EventCommand` attribute `timeout`
-- *arguments* (optional)	- icinga `EventCommand` attribute `arguments`
-- *custom_vars* (optional)	- icinga `EventCommand` attribute `custom_vars`
+- *import* (optional, String)	- icinga `EventCommand` attribute `import`
+- *command* (optional, String/Array)	- icinga `EventCommand` attribute `command`
+- *env* (optional, Hash)	- icinga `EventCommand` attribute `env`
+- *timeout* (optional, String/Integer)	- icinga `EventCommand` attribute `timeout`
+- *arguments* (optional, Hash)	- icinga `EventCommand` attribute `arguments`
+- *custom_vars* (optional, Hash)	- icinga `EventCommand` attribute `custom_vars`
 
 
 ## LWRP icinga2_checkcommand
@@ -1021,7 +1031,7 @@ LWRP `checkcommand` creates an icinga `CheckCommand` object.
 
 **LWRP CheckCommand example**
 
-	icinga2_checkcommand 'eventcommand' do
+	icinga2_checkcommand 'checkcommand' do
 	  command 'command name'
 	  env :attribute => 'value'
 	  arguments :attribute => 'value'
@@ -1034,14 +1044,14 @@ Above LWRP resource will create an icinga `CheckCommand` object.
 
 **LWRP Options**
 
-- *action* (optional)	- default :enable, options: :enable, :disable
-- *import* (optional)	- icinga `CheckCommand` attribute `import`
-- *command* (optional)	- icinga `CheckCommand` attribute `command`
-- *env* (optional)	- icinga `CheckCommand` attribute `env`
-- *timeout* (optional)	- icinga `CheckCommand` attribute `timeout`
-- *zone* (optional)	- icinga `CheckCommand` attribute `zone`
-- *arguments* (optional)	- icinga `CheckCommand` attribute `arguments`
-- *custom_vars* (optional)	- icinga `CheckCommand` attribute `custom_vars`
+- *action* (optional, String)	- default :enable, options: :enable, :disable
+- *import* (optional, String)	- default plugin-check-command, icinga `CheckCommand` attribute `import`
+- *command* (optional, String/Array)	- icinga `CheckCommand` attribute `command`
+- *env* (optional, Hash)	- icinga `CheckCommand` attribute `env`
+- *timeout* (optional, Integer)	- icinga `CheckCommand` attribute `timeout`
+- *zone* (optional, String)	- icinga `CheckCommand` attribute `zone`
+- *arguments* (optional, Hash)	- icinga `CheckCommand` attribute `arguments`
+- *custom_vars* (optional, Hash)	- icinga `CheckCommand` attribute `custom_vars`
 
 
 ## LWRP icinga2_scheduleddowntime
@@ -1066,15 +1076,15 @@ Above LWRP resource will create an icinga `ScheduledDowntime` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *host_name* (optional)	- icinga `ScheduledDowntime` attribute `host_name`
-- *service_name* (optional)	- icinga `ScheduledDowntime` attribute `service_name`
-- *author* (optional)	- icinga `ScheduledDowntime` attribute `author`
-- *comment* (optional)	- icinga `ScheduledDowntime` attribute `comment`
-- *fixed* (optional)	- icinga `ScheduledDowntime` attribute `fixed`
-- *duration* (optional)	- icinga `ScheduledDowntime` attribute `duration`
-- *zone* (optional)	- icinga `ScheduledDowntime` attribute `zone`
-- *ranges* (optional)	- icinga `ScheduledDowntime` attribute `ranges`
-- *template* (optional)	- whether to create an icinga `ScheduledDowntime` template
+- *host_name* (optional, String)	- icinga `ScheduledDowntime` attribute `host_name`
+- *service_name* (optional, String)	- icinga `ScheduledDowntime` attribute `service_name`
+- *author* (optional, String)	- icinga `ScheduledDowntime` attribute `author`
+- *comment* (optional, String)	- icinga `ScheduledDowntime` attribute `comment`
+- *fixed* (optional, TrueClass/FalseClass)	- icinga `ScheduledDowntime` attribute `fixed`
+- *duration* (optional, String)	- icinga `ScheduledDowntime` attribute `duration`
+- *zone* (optional, String)	- icinga `ScheduledDowntime` attribute `zone`
+- *ranges* (optional, Hash)	- icinga `ScheduledDowntime` attribute `ranges`
+- *template* (optional, TrueClass/FalseClass)	- whether to create an icinga `ScheduledDowntime` template
 
 
 ## LWRP icinga2_externalcommandlistener
@@ -1095,8 +1105,8 @@ Above LWRP resource will create an icinga `ExternalCommandListener` config objec
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default 'compat', icinga `ExternalCommandListener` attribute `library`
-- *command_path* (optional)	- icinga `ExternalCommandListener` attribute `command_path`
+- *library* (optional, String)	- default 'compat', icinga `ExternalCommandListener` attribute `library`
+- *command_path* (optional, String)	- icinga `ExternalCommandListener` attribute `command_path`
 
 
 ## LWRP icinga2_gelfwriter
@@ -1119,10 +1129,10 @@ Above LWRP resource will create an icinga `GelfWriter` config object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default 'perfdata', icinga `GelfWriter` attribute `library`
-- *host* (optional)	- icinga `GelfWriter` attribute `host`
-- *port* (optional)	- icinga `GelfWriter` attribute `port`
-- *source* (optional)	- icinga `GelfWriter` attribute `source`
+- *library* (optional, String)	- default 'perfdata', icinga `GelfWriter` attribute `library`
+- *host* (required, String)	- icinga `GelfWriter` attribute `host`
+- *port* (required, Integer)	- icinga `GelfWriter` attribute `port`
+- *source* (optional, String)	- icinga `GelfWriter` attribute `source`
 
 
 ## LWRP icinga2_graphitewriter
@@ -1144,11 +1154,11 @@ Above LWRP resource will create an icinga `GraphiteWriter` config object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default 'perfdata', icinga `GraphiteWriter` attribute `library`
-- *host* (optional)	- icinga `GraphiteWriter` attribute `host`
-- *port* (optional)	- icinga `GraphiteWriter` attribute `port`
-- *host_name_template* (optional)	- icinga `GraphiteWriter` attribute `host_name_template`
-- *service_name_template* (optional)	- icinga `GraphiteWriter` attribute `service_name_template`
+- *library* (optional, String)	- default 'perfdata', icinga `GraphiteWriter` attribute `library`
+- *host* (optional, String)	- icinga `GraphiteWriter` attribute `host`
+- *port* (optional, Integer)	- icinga `GraphiteWriter` attribute `port`
+- *host_name_template* (optional, String)	- default icinga.$host.name$, icinga `GraphiteWriter` attribute `host_name_template`
+- *service_name_template* (optional, String)	- default icinga.$host.name$.$service.name$, icinga `GraphiteWriter` attribute `service_name_template`
 
 
 ## LWRP icinga2_idomysqlconnection
@@ -1173,20 +1183,19 @@ Above LWRP resource will create an icinga `IdoMySqlConnection` config object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default 'db_ido_mysql', icinga `IdoMySqlConnection` attribute `library`
-- *host* (optional)	- icinga `IdoMySqlConnection` attribute `host`
-- *port* (optional)	- icinga `IdoMySqlConnection` attribute `port`
-- *user* (optional)	- icinga `IdoMySqlConnection` attribute `user`
-- *password* (optional)	- icinga `IdoMySqlConnection` attribute `password`
-- *database* (optional)	- icinga `IdoMySqlConnection` attribute `database`
-- *table_prefix* (optional)	- icinga `IdoMySqlConnection` attribute `table_prefix`
-- *instance_name* (optional)	- icinga `IdoMySqlConnection` attribute `instance_name`
-- *instance_description* (optional)	- icinga `IdoMySqlConnection` attribute `instance_description`
-- *enable_ha* (optional)	- icinga `IdoMySqlConnection` attribute `enable_ha`
-- *failover_timeout* (optional)	- icinga `IdoMySqlConnection` attribute `failover_timeout`
-- *enable_ha* (optional)	- icinga `IdoMySqlConnection` attribute `enable_ha`
-- *cleanup* (optional)	- icinga `IdoMySqlConnection` attribute `cleanup`
-- *categories* (optional)	- icinga `IdoMySqlConnection` attribute `categories`
+- *library* (optional, String)	- default 'db_ido_mysql', icinga `IdoMySqlConnection` attribute `library`
+- *host* (optional, String)	- icinga `IdoMySqlConnection` attribute `host`
+- *port* (optional, Integer)	- icinga `IdoMySqlConnection` attribute `port`
+- *user* (optional, String)	- icinga `IdoMySqlConnection` attribute `user`
+- *password* (optional, String)	- icinga `IdoMySqlConnection` attribute `password`
+- *database* (optional, String)	- icinga `IdoMySqlConnection` attribute `database`
+- *table_prefix* (optional, String)	- default icinga_, icinga `IdoMySqlConnection` attribute `table_prefix`
+- *instance_name* (optional, String)	- icinga `IdoMySqlConnection` attribute `instance_name`
+- *instance_description* (optional, String)	- icinga `IdoMySqlConnection` attribute `instance_description`
+- *enable_ha* (optional, TrueClass/FalseClass)	- icinga `IdoMySqlConnection` attribute `enable_ha`
+- *failover_timeout* (optional, String/Integer)	- icinga `IdoMySqlConnection` attribute `failover_timeout`
+- *cleanup* (optional, Hash)	- icinga `IdoMySqlConnection` attribute `cleanup`
+- *categories* (optional, Array)	- icinga `IdoMySqlConnection` attribute `categories`
 
 
 ## LWRP icinga2_idopgsqlconnection
@@ -1211,20 +1220,19 @@ Above LWRP resource will create an icinga `IdoPgSqlConnection` config object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default 'db_ido_mysql', icinga `IdoPgSqlConnection` attribute `library`
-- *host* (optional)	- icinga `IdoPgSqlConnection` attribute `host`
-- *port* (optional)	- icinga `IdoPgSqlConnection` attribute `port`
-- *user* (optional)	- icinga `IdoPgSqlConnection` attribute `user`
-- *password* (optional)	- icinga `IdoPgSqlConnection` attribute `password`
-- *database* (optional)	- icinga `IdoPgSqlConnection` attribute `database`
-- *table_prefix* (optional)	- icinga `IdoPgSqlConnection` attribute `table_prefix`
-- *instance_name* (optional)	- icinga `IdoPgSqlConnection` attribute `instance_name`
-- *instance_description* (optional)	- icinga `IdoPgSqlConnection` attribute `instance_description`
-- *enable_ha* (optional)	- icinga `IdoPgSqlConnection` attribute `enable_ha`
-- *failover_timeout* (optional)	- icinga `IdoPgSqlConnection` attribute `failover_timeout`
-- *enable_ha* (optional)	- icinga `IdoPgSqlConnection` attribute `enable_ha`
-- *cleanup* (optional)	- icinga `IdoPgSqlConnection` attribute `cleanup`
-- *categories* (optional)	- icinga `IdoPgSqlConnection` attribute `categories`
+- *library* (optional, String)	- default 'db_ido_mysql', icinga `IdoPgSqlConnection` attribute `library`
+- *host* (optional, String)	- icinga `IdoPgSqlConnection` attribute `host`
+- *port* (optional, Integer)	- icinga `IdoPgSqlConnection` attribute `port`
+- *user* (optional, String)	- icinga `IdoPgSqlConnection` attribute `user`
+- *password* (optional, String)	- icinga `IdoPgSqlConnection` attribute `password`
+- *database* (optional, String)	- icinga `IdoPgSqlConnection` attribute `database`
+- *table_prefix* (optional, String)	- icinga `IdoPgSqlConnection` attribute `table_prefix`
+- *instance_name* (optional, String)	- icinga `IdoPgSqlConnection` attribute `instance_name`
+- *instance_description* (optional, String)	- icinga `IdoPgSqlConnection` attribute `instance_description`
+- *enable_ha* (optional, TrueClass/FalseClass)	- icinga `IdoPgSqlConnection` attribute `enable_ha`
+- *failover_timeout* (optional, String/Integer)	- icinga `IdoPgSqlConnection` attribute `failover_timeout`
+- *cleanup* (optional, Hash)	- icinga `IdoPgSqlConnection` attribute `cleanup`
+- *categories* (optional, Array)	- icinga `IdoPgSqlConnection` attribute `categories`
 
 
 ## LWRP icinga2_sysloglogger
@@ -1244,7 +1252,7 @@ Above LWRP resource will create an icinga `SyslogLogger` object.
 **LWRP Options**
 
 - *name*(name_attribute)	- icinga `SyslogLogger` name
-- *severity* (optional)	- icinga `SyslogLogger` attribute `port`
+- *severity* (optional, String)	- icinga `SyslogLogger` attribute `port`
 
 
 ## LWRP icinga2_notification
@@ -1283,20 +1291,20 @@ Above LWRP resource will create an icinga `Notification` template.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *import* (optional)	- icinga `Notification` attribute `import`
-- *host_name* (optional)	- icinga `Notification` attribute `host_name`
-- *service_name* (optional)	- icinga `Notification` attribute `service_name`
-- *users* (optional)	- icinga `Notification` attribute `users`
-- *user_groups* (optional)	- icinga `Notification` attribute `user_groups`
-- *times* (optional)	- icinga `Notification` attribute `times`
-- *command* (optional)	- icinga `Notification` attribute `command`
-- *interval* (optional)	- icinga `Notification` attribute `interval`
-- *period* (optional)	- icinga `Notification` attribute `period`
-- *zone* (optional)	- icinga `Notification` attribute `zone`
-- *types* (optional)	- icinga `Notification` attribute `types`
-- *states* (optional)	- icinga `Notification` attribute `states`
-- *custom_vars* (optional)	- icinga `Notification` attribute `vars`
-- *template* (optional)	- whether to create a `Notification` template
+- *import* (optional, String)	- icinga `Notification` attribute `import`
+- *host_name* (optional, String)	- icinga `Notification` attribute `host_name`
+- *service_name* (optional, String)	- icinga `Notification` attribute `service_name`
+- *users* (optional, Array)	- icinga `Notification` attribute `users`
+- *user_groups* (optional, Array)	- icinga `Notification` attribute `user_groups`
+- *times* (optional, Hash)	- icinga `Notification` attribute `times`
+- *command* (optional, String)	- icinga `Notification` attribute `command`
+- *interval* (optional, String/Integer)	- icinga `Notification` attribute `interval`
+- *period* (optional, String)	- icinga `Notification` attribute `period`
+- *zone* (optional, String)	- icinga `Notification` attribute `zone`
+- *types* (optional, Array)	- icinga `Notification` attribute `types`
+- *states* (optional, Array)	- icinga `Notification` attribute `states`
+- *custom_vars* (optional, Hash)	- icinga `Notification` attribute `vars`
+- *template* (optional, TrueClass/FalseClass)	- whether to create a `Notification` template
 
 
 ## LWRP icinga2_applynotification
@@ -1336,19 +1344,19 @@ Above LWRP resource will apply `Notification` to all `Host` objects for provided
 
 **LWRP Options**
 
-- *object_type* (required)	- apply Notification to `Host` or `Service`, valid values are: Host Service
-- *action* (optional)	- default :enable, options: :enable, :disable
-- *import* (optional)	- icinga `Notification` attribute `import`
-- *users* (optional)	- icinga `Notification` attribute `users`
-- *user_groups* (optional)	- icinga `Notification` attribute `user_groups`
-- *times* (optional)	- icinga `Notification` attribute `times`
-- *command* (optional)	- icinga `Notification` attribute `command`
-- *interval* (optional)	- icinga `Notification` attribute `interval`
-- *period* (optional)	- icinga `Notification` attribute `period`
-- *types* (optional)	- icinga `Notification` attribute `types`
-- *states* (optional)	- icinga `Notification` attribute `states`
-- *assign_where* (optional)	- icinga `assign where` statements
-- *ignore_where* (optional)	- icinga `ignore where` statements
+- *object_type* (required, String)	- apply Notification to `Host` or `Service`, valid values are: Host Service
+- *action* (optional, String)	- default :enable, options: :enable, :disable
+- *import* (optional, String)	- icinga `Notification` attribute `import`
+- *users* (optional, Array)	- icinga `Notification` attribute `users`
+- *user_groups* (optional, Array)	- icinga `Notification` attribute `user_groups`
+- *times* (optional, Hash)	- icinga `Notification` attribute `times`
+- *command* (optional, String)	- icinga `Notification` attribute `command`
+- *interval* (optional, String/Integer)	- icinga `Notification` attribute `interval`
+- *period* (optional, String)	- icinga `Notification` attribute `period`
+- *types* (optional, Array)	- icinga `Notification` attribute `types`
+- *states* (optional, Array)	- icinga `Notification` attribute `states`
+- *assign_where* (optional, Array)	- icinga `assign where` statements
+- *ignore_where* (optional, Array)	- icinga `ignore where` statements
 
 
 ## LWRP icinga2_notificationcommand
@@ -1380,13 +1388,13 @@ Above LWRP resource will create an icinga `NotificationCommand` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *import* (optional)	- default plugin-notification-command, icinga `NotificationCommand` attribute `cert_path`
-- *command* (optional)	- icinga `NotificationCommand` attribute `command`
-- *env* (optional)	- icinga `NotificationCommand` attribute `env`
-- *timeout* (optional)	- icinga `NotificationCommand` attribute `timeout`
-- *zone* (optional)	- icinga `NotificationCommand` attribute `zone`
-- *arguments* (optional)	- icinga `NotificationCommand` attribute `arguments`
-- *custom_vars* (optional)	- icinga `NotificationCommand` attribute `vars`
+- *import* (optional, String)	- default plugin-notification-command, icinga `NotificationCommand` attribute `cert_path`
+- *command* (optional, String/Array)	- icinga `NotificationCommand` attribute `command`
+- *env* (optional, Hash)	- icinga `NotificationCommand` attribute `env`
+- *timeout* (optional, Integer)	- icinga `NotificationCommand` attribute `timeout`
+- *zone* (optional, String)	- icinga `NotificationCommand` attribute `zone`
+- *arguments* (optional, Hash)	- icinga `NotificationCommand` attribute `arguments`
+- *custom_vars* (optional, Hash)	- icinga `NotificationCommand` attribute `vars`
 
 
 
@@ -1411,16 +1419,16 @@ Above LWRP resource will create an icinga `ApiListener` object.
 
 **LWRP Options**
 
-- *action* (optional)	- default :enable, options: :enable, :disable
-- *cert_path* (optional)	- icinga `ApiListener` attribute `cert_path`
-- *key_path* (optional)	- icinga `ApiListener` attribute `key_path`
-- *ca_path* (optional)	- icinga `ApiListener` attribute `ca_path`
-- *crl_path* (optional)	- icinga `ApiListener` attribute `crl_path`
-- *bind_host* (optional)	- icinga `ApiListener` attribute `bind_host`
-- *bind_port* (optional)	- icinga `ApiListener` attribute `bind_port`
-- *ticket_salt* (optional)	- icinga `ApiListener` attribute `ticket_salt`
-- *accept_config* (optional)	- icinga `ApiListener` attribute `accept_config`
-- *accept_commands* (optional)	- icinga `ApiListener` attribute `accept_commands`
+- *action* (optional, String)	- default :enable, options: :enable, :disable
+- *cert_path* (required, String)	- icinga `ApiListener` attribute `cert_path`
+- *key_path* (required, String)	- icinga `ApiListener` attribute `key_path`
+- *ca_path* (required, String)	- icinga `ApiListener` attribute `ca_path`
+- *crl_path* (optional, String)	- icinga `ApiListener` attribute `crl_path`
+- *bind_host* (optional, String)	- icinga `ApiListener` attribute `bind_host`
+- *bind_port* (optional, String)	- icinga `ApiListener` attribute `bind_port`
+- *ticket_salt* (optional, String)	- icinga `ApiListener` attribute `ticket_salt`
+- *accept_config* (optional, TrueClass/FalseClass)	- icinga `ApiListener` attribute `accept_config`
+- *accept_commands* (optional, TrueClass/FalseClass)	- icinga `ApiListener` attribute `accept_commands`
 
 
 ## LWRP icinga2_livestatuslistener
@@ -1444,11 +1452,11 @@ Above LWRP resource will create an icinga `LiveStatusListener` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *socket_type* (optional)	- icinga `LiveStatusListener` attribute `socket_type`
-- *socket_path* (optional)	- icinga `LiveStatusListener` attribute `socket_path`
-- *bind_host* (optional)	- icinga `LiveStatusListener` attribute `bind_host`
-- *bind_port* (optional)	- icinga `LiveStatusListener` attribute `bind_port`
-- *compat_log_path* (optional)	- icinga `LiveStatusListener` attribute `compat_log_path`
+- *socket_type* (optional, String)	- icinga `LiveStatusListener` attribute `socket_type`
+- *socket_path* (optional, String)	- icinga `LiveStatusListener` attribute `socket_path`
+- *bind_host* (optional, String)	- icinga `LiveStatusListener` attribute `bind_host`
+- *bind_port* (optional, Integer)	- icinga `LiveStatusListener` attribute `bind_port`
+- *compat_log_path* (optional, String)	- icinga `LiveStatusListener` attribute `compat_log_path`
 
 
 
@@ -1471,10 +1479,10 @@ Above LWRP resource will create an icinga `StatusDataWriter` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default compat, icinga `StatusDataWriter` Object `library`
-- *status_path* (optional)	- icinga `StatusDataWriter` attribute `status_path`
-- *objects_path* (optional)	- icinga `StatusDataWriter` attribute `objects_path`
-- *update_interval* (optional)	- icinga `StatusDataWriter` attribute `update_interval`
+- *library* (optional, String)	- default compat, icinga `StatusDataWriter` Object `library`
+- *status_path* (optional, String)	- icinga `StatusDataWriter` attribute `status_path`
+- *objects_path* (optional, String)	- icinga `StatusDataWriter` attribute `objects_path`
+- *update_interval* (optional, String/Integer)	- icinga `StatusDataWriter` attribute `update_interval`
 
 
 
@@ -1496,9 +1504,9 @@ Above LWRP resource will create an icinga `CompatLogger` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default compat, icinga `CompatLogger` Object `library`
-- *log_dir* (optional)	- icinga `CompatLogger` attribute `log_dir`
-- *rotation_method* (optional)	- icinga `CompatLogger` attribute `rotation_method`
+- *library* (optional, String)	- default compat, icinga `CompatLogger` Object `library`
+- *log_dir* (optional, String)	- icinga `CompatLogger` attribute `log_dir`
+- *rotation_method* (optional, String)	- icinga `CompatLogger` attribute `rotation_method`
 
 
 
@@ -1519,8 +1527,8 @@ Above LWRP resource will create an icinga `CheckResultReader` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default compat, icinga `CheckResultReader` Object `library`
-- *spool_dir* (optional)	- icinga `CheckResultReader` attribute `spool_dir`
+- *library* (optional, String)	- default compat, icinga `CheckResultReader` Object `library`
+- *spool_dir* (optional, String)	- icinga `CheckResultReader` attribute `spool_dir`
 
 
 
@@ -1540,7 +1548,7 @@ Above LWRP resource will create an icinga `CheckerComponent` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default checker, icinga `CheckerComponent` Object `library`
+- *library* (optional, String)	- default checker, icinga `CheckerComponent` Object `library`
 
 
 
@@ -1561,8 +1569,8 @@ Above LWRP resource will create an icinga `NotificationComponent` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default notification, icinga `NotificationComponent` Object `library`
-- *enable_ha* (optional)	- default checker, icinga `NotificationComponent` attribute `enable_ha`
+- *library* (optional, String)	- default notification, icinga `NotificationComponent` Object `library`
+- *enable_ha* (optional, String)	- default checker, icinga `NotificationComponent` attribute `enable_ha`
 
 
 ## LWRP icinga2_filelogger
@@ -1582,8 +1590,8 @@ Above LWRP resource will create an icinga `FileLogger` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *path* (optional)	- default checker, icinga `FileLogger` attribute `path`
-- *severity* (optional)	- icinga `FileLogger` attribute `severity`
+- *path* (optional, String)	- default checker, icinga `FileLogger` attribute `path`
+- *severity* (optional, String)	- icinga `FileLogger` attribute `severity`
 
 
 ## LWRP icinga2_perfdatawriter
@@ -1607,14 +1615,14 @@ Above LWRP resource will create an icinga `PerfdataWriter` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional)	- default perfdata, icinga `PerfdataWriter` Object `library`
-- *host_perfdata_path* (optional)	- default checker, icinga `PerfdataWriter` attribute  `host_perfdata_path`
-- *service_perfdata_path* (optional)	- default checker, icinga `PerfdataWriter` attribute  `service_perfdata_path`
-- *host_temp_path* (optional)	- icinga `PerfdataWriter` attribute `host_temp_path`
-- *service_temp_path* (optional)	- icinga `PerfdataWriter` attribute `service_temp_path`
-- *host_format_template* (optional)	- icinga `PerfdataWriter` attribute `host_format_template`
-- *service_format_template* (optional)	- icinga `PerfdataWriter` attribute `service_format_template`
-- *rotation_interval* (optional)	- icinga `PerfdataWriter` attribute `rotation_interval`
+- *library* (optional, String)	- default perfdata, icinga `PerfdataWriter` Object `library`
+- *host_perfdata_path* (optional, String)	- default checker, icinga `PerfdataWriter` attribute  `host_perfdata_path`
+- *service_perfdata_path* (optional, String)	- default checker, icinga `PerfdataWriter` attribute  `service_perfdata_path`
+- *host_temp_path* (optional, String)	- icinga `PerfdataWriter` attribute `host_temp_path`
+- *service_temp_path* (optional, String)	- icinga `PerfdataWriter` attribute `service_temp_path`
+- *host_format_template* (optional, String)	- icinga `PerfdataWriter` attribute `host_format_template`
+- *service_format_template* (optional, String)	- icinga `PerfdataWriter` attribute `service_format_template`
+- *rotation_interval* (optional, String/Integer)	- icinga `PerfdataWriter` attribute `rotation_interval`
 
 
 
@@ -1625,46 +1633,48 @@ LWRP `applydependency` creates an icinga `apply Dependency` object for `Host` an
 
 **LWRP apply Dependency Service Object example**
 
-	icinga2_applydependency 'applydependencyto….' do
+	icinga2_applydependency 'applyservicedependency' do
 	  object_type 'Service'
-	  assign_where ['host.address && host.vars.environment == "development"']
-	  ignore_where ['host.vars.monitoring_disabled == true']
+	  parent_service_name 'check_nrpe'
+	  states %w(OK Critical Unknown Warning)
+	  period '24x7'
+	  assign_where ['service.check_command == "nrpe"']
+	  ignore_where ['service.name == "check_nrpe"']
 	end
-
 
 
 Above LWRP resource will apply `Dependency` to all `Service` objects for provided `assign where` statements and ignore for specified `ignore where` statements.
 
-**LWRP apply Notification Host Object example**
+**LWRP apply Dependency Host Object example**
 
-	icinga2_applynotification 'hostnotification' do
+	icinga2_applydependency 'applyhostdependency' do
 	  object_type 'Host'
-	  command 'mail-host-notification'
-	  users %w(user)
-	  interval '1h'
-	  assign_where ['host.address && host.vars.environment == "development"']
-	  ignore_where ['host.vars.monitoring_disabled == true']
+	  parent_host_name 'gateway host'
+	  states %w(Down Unknown)
+	  period '24x7'
+	  assign_where %w(host.address)
+	  ignore_where ['!host.address']
 	end
 
 
-Above LWRP resource will apply `Notification` to all `Host` objects for provided `assign_where` statements and ignore for specified `ignore_where` statements.
+Above LWRP resource will apply `Dependency` to all `Host` objects for provided `assign_where` statements and ignore for specified `ignore_where` statements.
 
 
 **LWRP Options**
 
-- *object_type* (required)	- apply Notification to `Host` or `Service`, valid values are: Host Service
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *import* (optional)	- icinga `Notification` attribute `import`
-- *users* (optional)	- icinga `Notification` attribute `users`
-- *user_groups* (optional)	- icinga `Notification` attribute `user_groups`
-- *times* (optional)	- icinga `Notification` attribute `times`
-- *command* (optional)	- icinga `Notification` attribute `command`
-- *interval* (optional)	- icinga `Notification` attribute `interval`
-- *period* (optional)	- icinga `Notification` attribute `period`
-- *types* (optional)	- icinga `Notification` attribute `types`
-- *states* (optional)	- icinga `Notification` attribute `states`
-- *assign_where* (optional)	- icinga `assign where` statements
-- *ignore_where* (optional)	- icinga `ignore where` statements
+- *object_relation* (optional, String) - default `to`, apply `Dependency` relation
+- *object_type* (required, String)	- apply Notification to `Host` or `Service`, valid values are: Host Service
+- *parent_host_name* (optional, String)	- icinga apply `Dependency` attribute `parent_host_name`
+- *child_host_name* (optional, String)	- icinga apply `Dependency` attribute `child_host_name`
+- *parent_service_name* (optional, String)	- icinga apply `Dependency` attribute `parent_service_name`
+- *child_service_name* (optional, String)	- icinga apply `Dependency` attribute `child_service_name`
+- *disable_checks* (optional, TrueClass/FalseClass)	- icinga apply `Dependency` attribute `disable_checks`
+- *disable_notifications* (optional, TrueClass/FalseClass)	- icinga apply `Dependency` attribute `disable_notifications`
+- *period* (optional, String)	- icinga apply `Dependency` attribute `period`
+- *states* (optional, Array)	- icinga apply `Dependency` attribute `states`
+- *assign_where* (optional, Array)	- icinga `assign where` statements
+- *ignore_where* (optional, Array)	- icinga `ignore where` statements
 
 
 ## Cookbook Advanced Attributes
@@ -2056,15 +2066,6 @@ Above LWRP resource will apply `Notification` to all `Host` objects for provided
 * `default['icinga2']['classic_ui']['cgi']['log_archive_path']` (default: `node['icinga2']['log_dir']/compat/archives`)
 
 * `default['icinga2']['classic_ui']['cgi']['date_format']` (default: `us`)
-
-
-## Cookbook Dependencies
-
-* `ulimit` cookbook
-* `apache2` cookbook
-* `yum` cookbook
-* `apt` cookbook
-* `pnp4nagios` cookbook
 
 
 ## Contributing
