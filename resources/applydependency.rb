@@ -22,13 +22,13 @@ actions :create, :delete
 default_action :create
 
 attribute :object_relation,       :kind_of => String, :default => 'to'
-attribute :object_type,           :kind_of => String, :default => nil
+attribute :object_type,           :required => true, :kind_of => String, :default => nil
 attribute :parent_host_name,      :kind_of => String, :default => nil
 attribute :child_host_name,       :kind_of => String, :default => nil
 attribute :parent_service_name,   :kind_of => String, :default => nil
 attribute :child_service_name,    :kind_of => String, :default => nil
-attribute :disable_checks,        :kind_of => String, :default => nil
-attribute :disable_notifications, :kind_of => String, :default => nil
+attribute :disable_checks,        :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :disable_notifications, :kind_of => [TrueClass, FalseClass], :default => nil
 attribute :period,                :kind_of => String, :default => nil
 attribute :states,                :kind_of => Array, :default => nil
 attribute :assign_where,          :kind_of => Array, :default => nil
