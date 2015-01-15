@@ -78,8 +78,8 @@ end
 default['icinga2']['custom_plugins_dir'] = '/opt/icinga2_custom_plugins'
 
 default['icinga2']['admin_user'] = 'icingaadmin'
-default['icinga2']['user'] = 'icinga'
-default['icinga2']['group'] = 'icinga'
+default['icinga2']['user'] = 'nagios'
+default['icinga2']['group'] = 'nagios'
 default['icinga2']['cmdgroup'] = 'icingacmd'
 
 # ulimit
