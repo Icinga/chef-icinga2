@@ -17,10 +17,6 @@ default['icinga2']['apt']['distribution'] = node['lsb']['codename']
 default['icinga2']['apt']['keyserver'] = 'keyserver.ubuntu.com'
 default['icinga2']['apt']['components'] = %w(main)
 default['icinga2']['apt']['deb_src'] = true
-<<<<<<< HEAD
-default['icinga2']['apt']['repo_key'] = 'http://packages.icinga.org/icinga.key'
-=======
->>>>>>> upstream/master
 default['icinga2']['apt']['key'] = '36862847'
 default['icinga2']['apt']['action'] = :add
 
