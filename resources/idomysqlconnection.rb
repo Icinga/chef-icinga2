@@ -23,7 +23,7 @@ default_action :create
 
 attribute :library,  :kind_of => String, :default => 'db_ido_mysql'
 attribute :host,  :kind_of => String, :default => 'localhost'
-attribute :port,  :kind_of => [String, Integer], :default => '3306'
+attribute :port,  :kind_of => Integer, :default => '3306'
 attribute :user,  :kind_of => String, :default => 'icinga'
 attribute :password,  :kind_of => String, :default => 'icinga'
 attribute :database,  :kind_of => String, :default => 'icinga'
