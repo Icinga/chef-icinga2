@@ -61,8 +61,9 @@ default['icinga2']['service_name'] = 'icinga2'
 case node['platform_family']
 when 'rhel'
 
-	default['icinga2']['user'] = 'icinga'
-	default['icinga2']['group'] = 'icinga'
+  default['icinga2']['user'] = 'icinga'
+  default['icinga2']['group'] = 'icinga'
+  default['icinga2']['cmdgroup'] = 'icingacmd'
   default['icinga2']['service_config_file'] = '/etc/sysconfig/icinga2'
 
   case node['kernel']['machine']
@@ -73,8 +74,9 @@ when 'rhel'
   end
 
 when 'debian'
-	default['icinga2']['user'] = 'nagios'
-	default['icinga2']['group'] = 'nagios'
+  default['icinga2']['user'] = 'nagios'
+  default['icinga2']['group'] = 'nagios'
+  default['icinga2']['cmdgroup'] = 'nagios'
   default['icinga2']['service_config_file'] = '/etc/default/icinga2'
   default['icinga2']['plugins_dir'] = '/usr/lib/nagios/plugins'
 end
@@ -82,7 +84,6 @@ end
 default['icinga2']['custom_plugins_dir'] = '/opt/icinga2_custom_plugins'
 
 default['icinga2']['admin_user'] = 'icingaadmin'
-default['icinga2']['cmdgroup'] = 'icingacmd'
 
 # ulimit
 default['icinga2']['limits']['memlock']    = 'unlimited'
