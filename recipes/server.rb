@@ -17,6 +17,13 @@
 # limitations under the License.
 #
 
+# Platform specific preparations
+case node['platform_family']
+when	'debian'
+	include_recipe 'apt'
+else
+end
+
 include_recipe 'icinga2::server_os_packages'
 
 # setup apache and icinga2 vhost
