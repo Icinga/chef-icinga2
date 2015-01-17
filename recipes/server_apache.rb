@@ -28,15 +28,15 @@ include_recipe 'apache2::mod_rewrite'
 
 template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-classic-ui.conf') do
   source 'apache.vhost.icinga2_classic_ui.conf.erb'
-  owner node['apache2']['user']
-  group node['apache2']['group']
+  owner node['apache']['user']
+  group node['apache']['group']
   notifies :reload, 'service[apache2]', :delayed
 end
 
 template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-web2.conf') do
   source 'apache.vhost.icinga2_web2.erb'
-  owner node['apache2']['user']
-  group node['apache2']['group']
+  owner node['apache']['user']
+  group node['apache']['group']
   notifies :reload, 'service[apache2]', :delayed
   variables(:web_root => node['icinga2']['web2']['web_root'],
             :web_uri => node['icinga2']['web2']['web_uri'],

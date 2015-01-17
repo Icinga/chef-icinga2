@@ -57,7 +57,7 @@ end
 template ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'passwd') do
   source 'icinga2.passwd.erb'
   owner 'root'
-  group node['apache2']['group']
+  group node['apache']['group']
   variables(:users => node['icinga2']['classic_ui']['users'])
   mode 0640
 end
