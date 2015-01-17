@@ -22,6 +22,11 @@
 # validate ido
 fail "incorrect ido #{node['icinga2']['ido']['type']}, valid are mysql pgsql" unless %w(mysql pgsql).include?(node['icinga2']['ido']['type'])
 
+# install icinga2 ido package
+package "icinga2-ido-#{node['icinga2']['ido']['type']}" do
+  version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix']
+end
+
 # load ido schema
 execute 'schema_load_ido_mysql' do
   command <<-EOH

@@ -42,9 +42,7 @@ when 'rhel'
   end
 end
 
-# install icinga2 core packages and ido
-%w(icinga2 icinga2-ido-mysql icinga2-ido-pgsql).each do |p|
-  package p do
-    version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix']
-  end
+# install icinga2 core packages
+package 'icinga2' do
+  version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix']
 end
