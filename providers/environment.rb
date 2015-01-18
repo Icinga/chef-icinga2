@@ -43,34 +43,39 @@ def create_objects
       server_region = nil
     end
   end
-  env_resources = Icinga2::Search.new(:environment => new_resource.environment,
-                                      :enable_cluster_hostgroup => new_resource.enable_cluster_hostgroup,
-                                      :cluster_attribute => new_resource.cluster_attribute,
-                                      :enable_application_hostgroup => new_resource.enable_application_hostgroup,
-                                      :application_attribute => new_resource.application_attribute,
-                                      :enable_role_hostgroup => new_resource.enable_role_hostgroup,
-                                      :ignore_node_error => new_resource.ignore_node_error,
-                                      :use_fqdn_resolv => new_resource.use_fqdn_resolv,
-                                      :failover_fqdn_address => new_resource.failover_fqdn_address,
-                                      :ignore_resolv_error => new_resource.ignore_resolv_error,
-                                      :exclude_recipes => new_resource.exclude_recipes,
-                                      :exclude_roles => new_resource.exclude_roles,
-                                      :env_custom_vars => new_resource.env_custom_vars,
-                                      :env_filter_node_vars => new_resource.env_filter_node_vars,
-                                      :limit_region => new_resource.limit_region,
-                                      :server_region => server_region,
-                                      :search_pattern => search_pattern,
-                                      :add_cloud_custom_vars => new_resource.add_cloud_custom_vars).environment_resources
+  env_resources = new_resource.env_resources || Icinga2::Search.new(:environment => new_resource.environment,
+                                                                    :enable_cluster_hostgroup => new_resource.enable_cluster_hostgroup,
+                                                                    :cluster_attribute => new_resource.cluster_attribute,
+                                                                    :enable_application_hostgroup => new_resource.enable_application_hostgroup,
+                                                                    :application_attribute => new_resource.application_attribute,
+                                                                    :enable_role_hostgroup => new_resource.enable_role_hostgroup,
+                                                                    :ignore_node_error => new_resource.ignore_node_error,
+                                                                    :use_fqdn_resolv => new_resource.use_fqdn_resolv,
+                                                                    :failover_fqdn_address => new_resource.failover_fqdn_address,
+                                                                    :ignore_resolv_error => new_resource.ignore_resolv_error,
+                                                                    :exclude_recipes => new_resource.exclude_recipes,
+                                                                    :exclude_roles => new_resource.exclude_roles,
+                                                                    :env_custom_vars => new_resource.env_custom_vars,
+                                                                    :env_filter_node_vars => new_resource.env_filter_node_vars,
+                                                                    :limit_region => new_resource.limit_region,
+                                                                    :server_region => server_region,
+                                                                    :search_pattern => search_pattern,
+                                                                    :add_cloud_custom_vars => new_resource.add_cloud_custom_vars).environment_resources
 
   template_file_name = new_resource.zone ? "host_#{new_resource.environment}_#{new_resource.zone}.conf" : "host_#{new_resource.environment}.conf"
+  if env_resources.key?('nodes') && env_resources['nodes'].is_a?(Hash)
+    env_hosts = env_resources['nodes']
+  else
+    env_hosts = {}
+  end
   hosts_template = template ::File.join(node['icinga2']['objects_dir'], template_file_name) do
-    source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
-    cookbook 'icinga2'
+    source new_resource.template
+    cookbook new_resource.cookbook
     owner node['icinga2']['user']
     group node['icinga2']['group']
     mode 0640
     variables(:environment => new_resource.environment,
-              :hosts => env_resources['nodes'],
+              :hosts => env_hosts,
               :import => new_resource.import,
               :check_command => new_resource.check_command,
               :max_check_attempts => new_resource.max_check_attempts,
@@ -102,11 +107,11 @@ def create_hostgroups(env_resources)
   env_hostgroups = []
 
   # environment hostgroups
-  env_hostgroups += env_resources['clusters'] if new_resource.enable_cluster_hostgroup
+  env_hostgroups += env_resources['clusters'] if new_resource.enable_cluster_hostgroup && env_resources.key?('clusters') && env_resources['clusters'].is_a?(Array)
 
-  env_hostgroups += env_resources['applications'] if new_resource.enable_application_hostgroup
+  env_hostgroups += env_resources['applications'] if new_resource.enable_application_hostgroup && env_resources.key?('applications') && env_resources['applications'].is_a?(Array)
 
-  env_hostgroups += env_resources['roles'] if new_resource.enable_role_hostgroup
+  env_hostgroups += env_resources['roles'] if new_resource.enable_role_hostgroup && env_resources.key?('roles') && env_resources['roles'].is_a?(Array)
 
   env_hostgroups.uniq!
 

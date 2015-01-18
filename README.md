@@ -279,6 +279,42 @@ There are certain functionalities added to LWRP `environment`, like:
 Simply create a LWRP resource for a chef environment, to start monitoring all nodes in that environment. More details can be found in examples.
 
 
+## Icinga2 Monitor an User Defined Chef Environment Nodes/HostGroups
+
+Last section explains the benefits of using LWRP `environment` using in built library search function to determine `chef_environment` nodes / icinga2 Host and auto create icinga2 HostGroup.
+
+This section explains how a user can provide a custom inventory list of nodes, host groups etc.
+
+To find all the valid chef nodes for a chef environment, this cookbook uses default library `icinga2::search`. There are lots of custom & cloud specific attributes embedded in it which may or may not work for every scenarios. 
+
+To overcome and make it less enforcing, LWRP `environment` has a Hash attribute `env_resources` which can be used by an user from a wrapper cookbook recipe to pass chef environment nodes & hostgroups. If this attribute is set, cookbook will not use default library to search chef_environment nodes and will create Host objects for user defined values.
+
+`env_resources` Hash attributes has below valid key names:
+
+- nodes - Hash of {:Hostfqdn => {icinga2 Host attributes}, :Hostfqdn => {icinga2 Host attributes}, …} 
+- clusters - Array of cluster HostGroups […] **if any**
+- applications - Array of application HostGroups […] **if any**
+- roles - Array of roles HostGroups […] **if any**
+
+e.g.
+
+
+	icinga2_environment 'UserDefinedEnvironment' do
+	  import node['icinga2']['server']['object']['host']['import']
+	  environment 'production'
+	  check_interval '1m'
+	  retry_interval '10s'
+	  max_check_attempts 3
+	  action_url '/pnp4nagios/graph?host=$HOSTNAME$&srv=_HOST_'
+	  env_resources :nodes => {:fqdn => {attrs}, :fqdn => {attrs}}
+	end
+
+
+For more details about nodes attributes, check LWRP `environment` object tempalte.
+
+>> Like `env_resources`, user can also define custom template for LWRP `environment` using attribute `cookbook` and `template`.
+
+
 ## Icinga2 Host Custom Vars
 
 **environment LWRP Host Vars**
@@ -501,7 +537,10 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 
 - *action* (optional)			- default :create, options: :create, :delete, :reload
 - *environment* (required, String)		- chef environment name
+- *cookbook* (optional, String)		- default icinga2, chef cookbook name for template
+- *template* (optional, String)		- default object.environment.conf.erb, chef template name
 - *search_pattern* (optional, String)	- chef search pattern for given environment
+- *env_resources* (optional, Hash)	- user provided Hash for environment nodes and host groups etc., overrides default chef search nodes inventory
 - *cluster_attribute* (optional, String)	-  chef node cluster attribute to create hostgroup and `Host` vars
 - *application_attribute* (optional, String) - chef node application attribute to create hostgroup and `Host` vars
 - *enable_cluster_hostgroup* (optional, TrueClass/FalseClass)	- whether to create `HostGroup` objects for chef node cluster's

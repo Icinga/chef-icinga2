@@ -23,6 +23,9 @@ default_action :create
 
 attribute :environment,     :kind_of => String, :required => true, :default => nil
 attribute :search_pattern,  :kind_of => String, :default => nil
+attribute :env_resources,   :kind_of => Hash, :default => nil
+attribute :cookbook, :kind_of => String, :default => 'icinga2'
+attribute :template, :kind_of => String, :default => 'object.environment.conf.erb'
 
 # create host group for node clusters, applications, roles and recipes
 attribute :enable_cluster_hostgroup,      :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['enable_cluster_hostgroup']
@@ -37,7 +40,7 @@ attribute :ignore_node_error,   :kind_of => [TrueClass, FalseClass], :default =>
 attribute :ignore_resolv_error, :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['ignore_resolv_error']
 attribute :exclude_recipes,     :kind_of => Array, :default => []
 attribute :exclude_roles,       :kind_of => Array, :default => []
-attribute :env_custom_vars,     :kind_of => Hash, :default => []
+attribute :env_custom_vars,     :kind_of => Hash, :default => {}
 attribute :limit_region,        :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['limit_region']
 attribute :server_region,       :kind_of => String, :default => nil
 
