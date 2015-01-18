@@ -26,11 +26,15 @@ include_recipe 'apache2::mod_cgi'
 include_recipe 'apache2::mod_ssl'
 include_recipe 'apache2::mod_rewrite'
 
-template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-classic-ui.conf') do
-  source 'apache.vhost.icinga2_classic_ui.conf.erb'
+# keeping it to default for now, need
+# to look into merging into a single
+# vhost config file
+template ::File.join(node['apache']['dir'], 'conf-available', "#{node['icinga2']['classic_ui']['apache_conf']}.conf") do
+  source "apache.vhost.icinga2_classic_ui.conf.#{node['platform_family']}.erb"
   owner node['apache']['user']
   group node['apache']['group']
   notifies :reload, 'service[apache2]', :delayed
+  only_if { node['icinga2']['classic_ui']['enable'] }
 end
 
 template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-web2.conf') do
@@ -41,7 +45,8 @@ template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-web2.conf
   variables(:web_root => node['icinga2']['web2']['web_root'],
             :web_uri => node['icinga2']['web2']['web_uri'],
             :conf_dir => node['icinga2']['web2']['conf_dir'])
+  only_if { node['icinga2']['web2']['enable'] }
 end
 
-apache_config 'icinga2-classic-ui'
-apache_config 'icinga2-web2'
+apache_config node['icinga2']['classic_ui']['apache_conf'] if node['icinga2']['classic_ui']['enable']
+apache_config 'icinga2-web2' if node['icinga2']['web2']['enable']
