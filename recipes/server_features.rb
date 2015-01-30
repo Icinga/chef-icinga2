@@ -18,19 +18,12 @@
 #
 
 node['icinga2']['enable_features'].sort.uniq.each do |f|
-  execute "enable_feature_#{f}" do
-    command "/usr/sbin/icinga2 feature enable #{f}"
-    creates ::File.join(node['icinga2']['features_enabled_dir'], "#{f}.conf")
-    only_if { node['icinga2']['enable_features_recipe'] && ::File.exist?(::File.join(node['icinga2']['features_available_dir'], "#{f}.conf")) }
-    notifies :reload, 'service[icinga2]', :delayed
-  end
+  icinga2_feature f
 end
 
 # disable all featues not defined to enable
 (node['icinga2']['features'].sort.uniq - node['icinga2']['enable_features'].sort.uniq).each do |f|
-  execute "disable_feature_#{f}" do
-    command "/usr/sbin/icinga2 feature disable #{f}"
-    only_if { node['icinga2']['enable_features_recipe'] && ::File.exist?(::File.join(node['icinga2']['features_enabled_dir'], "#{f}.conf")) }
-    notifies :reload, 'service[icinga2]', :delayed
+  icinga2_feature f do
+    enable false
   end
 end
