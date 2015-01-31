@@ -3,6 +3,57 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+0.10.x
+-----
+
+- Gerhard Sulzberger - corrected platform_family case statement in recipe `server_os_packages` & `server_install`
+
+- Virender Khatri - bump icinga2 version to 2.2.3-1
+
+- Virender Khatri - corrected LWRP applydependency resource attribute Class type
+
+- Virender Khatri - removed object_name LWRP applyservice resource attribute
+
+- Virender Khatri - fixed LWRP for resource attribute `port`
+
+- Virender Khatri - added LWRP resource Class to README
+
+- Virender Khatri - fixed server isntall attributes & recipes
+
+- Gerhard Sulzberger - added recipe `apt` for deb packages upgrade dependency
+
+- Gerhard Sulzberger - added icinga user & group for debian platform family
+
+- Virender Khatri - added icinga cmdgroup for debian platform family
+
+- Virender Khatri - fixed typo for apache node attribute reference
+
+- Virender Khatri - updated apache vhost template
+
+- Virender Khatri - added attribute for optional configuration of icinga2 classic ui & web2
+
+- Virender Khatri - fixed classic ui template & attributes for ubuntu / deb paltform family
+
+- Virender Khatri - allow LWRP environment chef resources override with custom template
+                    added LWRP attributes for custom resources attributes for icinga2 Host/HostGroup template
+
+- Andrei Scopenco - fixed package version suffix for release repo
+
+- Andrei Scopenco - fixed typos in LWRP idomysqlconnection
+
+- Andrei Scopenco - fixed typos and template in LWRP externalcommandlistener
+
+- Virender Khatri - fixed missing library template attribute for LWRP compatlogger
+
+- Virender Khatri - corrected icinga2 object name for LWRP idomysqlconnection
+
+- Virender Khatri - corrected icinga2 object name for LWRP idopgsqlconnection
+
+- Virender Khatri - corrected icinga2 object name for LWRP livestatuslistener
+
+- Virender Khatri - deprecated features mgmt via node attr in favor of LWRP
+
+
 0.7.6
 -----
 
