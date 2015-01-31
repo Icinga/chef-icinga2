@@ -51,7 +51,7 @@ def object_template
               :instance_description => new_resource.instance_description,
               :enable_ha => new_resource.enable_ha,
               :failover_timeout => new_resource.failover_timeout,
-              :cleanup => new_resourcei.cleanup,
+              :cleanup => new_resource.cleanup,
               :categories => new_resource.categories)
     notifies :reload, 'service[icinga2]', :delayed
   end
