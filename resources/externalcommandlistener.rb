@@ -22,4 +22,4 @@ actions :create, :delete
 default_action :create
 
 attribute :library,  :kind_of => String, :default => 'compat'
-attribute :comand_path,  :kind_of => String, :default => nil
+attribute :command_path,  :kind_of => String, :default => nil
