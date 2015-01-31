@@ -43,11 +43,6 @@ default['icinga2']['web_engine'] = 'apache'
 default['icinga2']['databag'] = 'icinga2'
 default['icinga2']['install_nagios_plugins'] = true
 
-default['icinga2']['enable_features_recipe'] = false # caution: this will create a conflict with feature LWRP
-
-default['icinga2']['features'] = %w(api checker command compatlog debuglog gelf graphite icingastatus ido-mysql ido-pgsql livestatus mainlog notification perfdata statusdata syslog)
-default['icinga2']['enable_features'] = %w(checker command mainlog statusdata)
-
 default['icinga2']['run_dir'] = '/var/run/icinga2'
 default['icinga2']['run_cmd_dir'] = ::File.join(node['icinga2']['run_dir'], 'cmd')
 default['icinga2']['cache_dir'] = '/var/cache/icinga2'
