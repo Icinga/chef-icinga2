@@ -31,6 +31,6 @@ attribute :table_prefix,  :kind_of => String, :default => 'icinga_'
 attribute :instance_name,  :kind_of => String, :default => 'default'
 attribute :instance_description,  :kind_of => String, :default => nil
 attribute :enable_ha,  :kind_of => [TrueClass, FalseClass], :default => nil
-attribute :failover_timeout,  :kind_of => [String, Integer], :default => '60s'
+attribute :failover_timeout,  :kind_of => [String, Integer], :default => '60'
 attribute :cleanup,  :kind_of => Hash, :default => nil
 attribute :categories,  :kind_of => Array, :default => nil
