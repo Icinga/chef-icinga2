@@ -33,6 +33,9 @@ include "constants.conf"
  */
 include <itl>
 include <plugins>
+<% if node['icinga2']['enable_manubulon'] -%>
+include <manubulon>
+<% end -%>
 
 /**
  * The features-available directory contains a number of configuration
