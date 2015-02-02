@@ -38,8 +38,10 @@ def object_resources
   end
 end
 
-# collect objects
-def objects
+# create object resource
+def object_template
+
+  # collect objects
   icinga2_objects = {}
   object_resources.reduce({}) do |_hash, resource|
     next if resource.action != :create || icinga2_objects.key?(resource.name)
@@ -49,18 +51,14 @@ def objects
                                        'log_duration' => resource.send('log_duration')
     }
   end
-  icinga2_objects
-end
 
-# create object resource
-def object_template
   ot = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}.conf") do
     source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
     cookbook 'icinga2'
     owner node['icinga2']['user']
     group node['icinga2']['group']
     mode 0640
-    variables(:objects => objects)
+    variables(:objects => icinga2_objects)
     notifies :reload, 'service[icinga2]', :delayed
   end
   ot.updated?
