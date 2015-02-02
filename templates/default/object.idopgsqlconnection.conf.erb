@@ -38,7 +38,7 @@ object IdoPgsqlConnection <%= @object.inspect -%> {
   enable_ha = <%= @enable_ha.inspect %>
   <% end -%>
   <% if @failover_timeout -%>
-  failover_timeout = <%= @failover_timeout.inspect %>
+  failover_timeout = <%= @failover_timeout %>
   <% end -%>
   <% if @cleanup -%>
   cleanup = {

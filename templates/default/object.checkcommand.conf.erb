@@ -33,7 +33,7 @@ object CheckCommand <%= object.inspect -%> {
   }
   <% end -%>
   <% if options['timeout'] -%>
-  timeout = <%= options['timeout'].inspect %>
+  timeout = <%= options['timeout'] %>
   <% end -%>
   <% if options['arguments'] && !options['arguments'].empty? -%>
   arguments = {
