@@ -24,7 +24,11 @@ include "constants.conf"
  */
 // disabled in favor of LWRP resources. use endpoint and
 // zone LWRP to create objects instead.
+<% if node['icinga2']['enable_zones_conf'] -%>
+include "zones.conf"
+<% else -%>
 // include "zones.conf"
+<% end -%>
 
 /**
  * The Icinga Template Library (ITL) provides a number of useful templates
