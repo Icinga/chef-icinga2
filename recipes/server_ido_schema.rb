@@ -44,7 +44,7 @@ execute 'schema_load_ido_pgsql' do
   command <<-EOH
   su - postgres -c 'export PGPASSWORD='\\''#{node['icinga2']['ido']['db_password']}'\\'' && \
   psql -h #{node['icinga2']['ido']['db_host']} \
-  -U #{node['icinga2']['ido']['db_user']}
+  -U #{node['icinga2']['ido']['db_user']} \
   -d #{node['icinga2']['ido']['db_name']} < /usr/share/icinga2-ido-#{node['icinga2']['ido']['type']}/schema/#{node['icinga2']['ido']['type']}.sql \
   && export PGPASSWORD=''
   && touch /etc/icinga2/schema_loaded_ido_pgsql
