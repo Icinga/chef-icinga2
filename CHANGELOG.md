@@ -3,7 +3,7 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
-0.10.x
+0.10.1
 -----
 
 - Gerhard Sulzberger - corrected platform_family case statement in recipe `server_os_packages` & `server_install`
@@ -53,6 +53,9 @@ This file is used to list changes made in each version of the icinga2 cookbook.
 
 - Virender Khatri - deprecated features mgmt via node attr in favor of LWRP
 
+- Virender Khatri - fixed interval / timeout object attribute in resource templates
+
+- JannikZed - fixed typo in recipe server_ido_schema.rb
 
 0.7.6
 -----

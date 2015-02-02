@@ -1,8 +1,6 @@
 icinga2 Cookbook
 ==================
 
-[![Build Status](https://travis-ci.org/vkhatri/chef-icinga2.svg?branch=master)](https://travis-ci.org/icinga/chef-icinga2)
-
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
 
@@ -15,11 +13,14 @@ what you find missing!
 https://github.com/icinga/chef-icinga2
 
 
+## Chef Super Market
+
+https://supermarket.chef.io/cookbooks/icinga2
+
 
 ## Issue Tracking
 
-For issue reporting or any discussion regarding this cookbook, open an issue at [Dev Icinga].
-
+For issue reporting or any discussion regarding this cookbook, open an issue at [Dev Icinga]. New users need to [Register] first.
 
 
 ## Major Changes
@@ -2126,7 +2127,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Copyright & License
 
-Authors:: Virender Khatri and [Contributors]
+Authors:: Check AUTHORS file
 
 <pre>
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -2145,6 +2146,6 @@ limitations under the License.
 
 [Icinga2]: https://www.icinga.org/
 [Chef]: https://www.chef.io/
-[Contributors]: https://github.com/vkhatri/chef-icinga2/graphs/contributors
 [Install]: https://github.com/icinga/icinga2/
 [Dev Icinga]: https://dev.icinga.org/projects/chef-icinga2
+[Register]: https://www.icinga.org/register/
