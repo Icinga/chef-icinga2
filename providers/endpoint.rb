@@ -40,7 +40,6 @@ end
 
 # create object resource
 def object_template
-
   # collect objects
   icinga2_objects = {}
   object_resources.reduce({}) do |_hash, resource|
