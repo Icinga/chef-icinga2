@@ -5,5 +5,5 @@ This file is used to maintain a list of Contributors.
 
 - Andrei Scopenco <AScopenco@parallels.com>
 - Gerhard Sulzbe <ges@runtastic.com>
-- JannikZed
+- Jannik Zinkl
 - Virender Khatri <vir.khatri@gmail.com>
