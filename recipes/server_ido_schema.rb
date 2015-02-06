@@ -29,27 +29,25 @@ end
 
 # load ido schema
 execute 'schema_load_ido_mysql' do
-  command <<-EOH
+  command "\
   mysql -h #{node['icinga2']['ido']['db_host']} \
   -u#{node['icinga2']['ido']['db_user']} \
   -p#{node['icinga2']['ido']['db_password']} \
   #{node['icinga2']['ido']['db_name']} < /usr/share/icinga2-ido-#{node['icinga2']['ido']['type']}/schema/#{node['icinga2']['ido']['type']}.sql \
-  && touch /etc/icinga2/schema_loaded_ido_mysql
-  EOH
-  creates '/etc/icinga2/schema_loaded_ido_mysql'
+  && touch /etc/icinga2/schema_loaded_ido_mysql"
+  creates '/etc/icinga2//schema_loaded_ido_mysql'
   only_if { node['icinga2']['ido']['load_schema'] && node['icinga2']['ido']['type'] == 'mysql' }
 end
 
 execute 'schema_load_ido_pgsql' do
-  command <<-EOH
-  su - postgres -c 'export PGPASSWORD='\\''#{node['icinga2']['ido']['db_password']}'\\'' && \
-  psql -h #{node['icinga2']['ido']['db_host']} \
-  -U #{node['icinga2']['ido']['db_user']} \
+  command "\
+  su - postgres -c \"export PGPASSWORD=\'#{node['icinga2']['ido']['db_password']}\' && \
+  psql -h #{node['icinga2']['ido']['db_host']}\
+  -U #{node['icinga2']['ido']['db_user']}\
   -d #{node['icinga2']['ido']['db_name']} < /usr/share/icinga2-ido-#{node['icinga2']['ido']['type']}/schema/#{node['icinga2']['ido']['type']}.sql \
-  && export PGPASSWORD=''
-  && touch /etc/icinga2/schema_loaded_ido_pgsql
-  EOH
-  creates '/etc/icinga2/schema_loaded_ido_pgsql'
+  && export PGPASSWORD=\'\'\" \
+  && touch /var/lib/pgsql/schema_loaded_ido_pgsql"
+  creates '/var/lib/pgsql/schema_loaded_ido_pgsql'
   only_if { node['icinga2']['ido']['load_schema'] && node['icinga2']['ido']['type'] == 'pgsql' }
 end
 
