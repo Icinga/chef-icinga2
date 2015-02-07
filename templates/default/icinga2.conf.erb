@@ -31,10 +31,8 @@ include "constants.conf"
  * and command definitions.
  * Common monitoring plugin command definitions are included separately.
  */
-include <itl>
-include <plugins>
-<% if node['icinga2']['enable_manubulon'] -%>
-include <manubulon>
+<% node['icinga2']['include_itl'].each do |inc| -%>
+include <<%= inc %>>
 <% end -%>
 
 /**
