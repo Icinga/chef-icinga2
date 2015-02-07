@@ -47,8 +47,7 @@ def object_template
     icinga2_objects[resource.name] = {}
     icinga2_objects[resource.name] = { 'host' => resource.send('host'),
                                        'port' => resource.send('port'),
-                                       'log_duration' => resource.send('log_duration')
-    }
+                                       'log_duration' => resource.send('log_duration') }
   end
 
   ot = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}.conf") do
