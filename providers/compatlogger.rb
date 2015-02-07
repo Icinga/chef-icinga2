@@ -41,6 +41,7 @@ def object_template
     mode 0640
     variables(:object => new_resource.name,
               :log_dir => new_resource.log_dir,
+              :library => new_resource.library,
               :rotation_method => new_resource.rotation_method)
     notifies :reload, 'service[icinga2]', :delayed
   end

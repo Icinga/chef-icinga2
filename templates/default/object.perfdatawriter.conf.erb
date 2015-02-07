@@ -29,6 +29,6 @@ object PerfdataWriter <%= @object.inspect -%> {
   service_format_template = <%= @service_format_template.inspect %>
   <% end -%>
   <% if @rotation_interval -%>
-  rotation_interval = <%= @rotation_interval.inspect %>
+  rotation_interval = <%= @rotation_interval %>
   <% end -%>
 }

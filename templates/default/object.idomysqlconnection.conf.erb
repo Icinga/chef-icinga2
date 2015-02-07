@@ -4,12 +4,12 @@
 */
 
 /**
- * IdoMySqlConnection Object.
+ * IdoMysqlConnection Object.
 */
 
 library <%= @library.inspect %>
 
-object IdoMySqlConnection <%= @object.inspect -%> {
+object IdoMysqlConnection <%= @object.inspect -%> {
   <% if @host -%>
   host = <%= @host.inspect %>
   <% end -%>
@@ -38,7 +38,7 @@ object IdoMySqlConnection <%= @object.inspect -%> {
   enable_ha = <%= @enable_ha.inspect %>
   <% end -%>
   <% if @failover_timeout -%>
-  failover_timeout = <%= @failover_timeout.inspect %>
+  failover_timeout = <%= @failover_timeout %>
   <% end -%>
   <% if @cleanup -%>
   cleanup = {

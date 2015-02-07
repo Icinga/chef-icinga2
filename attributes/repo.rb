@@ -22,7 +22,7 @@ default['icinga2']['apt']['action'] = :add
 
 # icinga2 package version suffix
 default['icinga2']['icinga2_version_suffix'] = value_for_platform(
-  %w(centos redhat fedora) => { 'default' => ".el#{node['platform_version']}" },
+  %w(centos redhat fedora) => { 'default' => ".el#{node['platform_version'].split('.')[0]}" },
   'amazon' => { 'default' => '.el6' },
   'ubuntu' => { 'default' => '~ppa1~' + node['lsb']['codename'].to_s + '1' }
 )

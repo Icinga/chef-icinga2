@@ -1,8 +1,6 @@
 icinga2 Cookbook
 ==================
 
-[![Build Status](https://travis-ci.org/vkhatri/chef-icinga2.svg?branch=master)](https://travis-ci.org/icinga/chef-icinga2)
-
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
 
@@ -15,7 +13,22 @@ what you find missing!
 https://github.com/icinga/chef-icinga2
 
 
+## Chef Super Market
+
+https://supermarket.chef.io/cookbooks/icinga2
+
+
+## Issue Tracking
+
+For issue reporting or any discussion regarding this cookbook, open an issue at [Dev Icinga]. New users need to [Register] first.
+
+
 ## Major Changes
+
+###v0.10.x
+
+* Deprecated node *features* attribute and recipe `icinga2::server_features` in favour of LWRP `feature`
+
 
 ###v0.7.0
 
@@ -55,8 +68,6 @@ https://github.com/icinga/chef-icinga2
 - `icinga2::server_install`   		- install icinga2 core/ido server packages
 
 - `icinga2::server_core`   			- configures icinga2 core configuration files & directories
-
-- `icinga2::server_features`   		- enable/disable icinga2 features
 
 - `icinga2::server_ido_schema`   		- load icinga2 ido db schema
 
@@ -285,13 +296,13 @@ Last section explains the benefits of using LWRP `environment` using in built li
 
 This section explains how a user can provide a custom inventory list of nodes, host groups etc.
 
-To find all the valid chef nodes for a chef environment, this cookbook uses default library `icinga2::search`. There are lots of custom & cloud specific attributes embedded in it which may or may not work for every scenarios. 
+To find all the valid chef nodes for a chef environment, this cookbook uses default library `icinga2::search`. There are lots of custom & cloud specific attributes embedded in it which may or may not work for every scenarios.
 
 To overcome and make it less enforcing, LWRP `environment` has a Hash attribute `env_resources` which can be used by an user from a wrapper cookbook recipe to pass chef environment nodes & hostgroups. If this attribute is set, cookbook will not use default library to search chef_environment nodes and will create Host objects for user defined values.
 
 `env_resources` Hash attributes has below valid key names:
 
-- nodes - Hash of {:Hostfqdn => {icinga2 Host attributes}, :Hostfqdn => {icinga2 Host attributes}, …} 
+- nodes - Hash of {:Hostfqdn => {icinga2 Host attributes}, :Hostfqdn => {icinga2 Host attributes}, …}
 - clusters - Array of cluster HostGroups […] **if any**
 - applications - Array of application HostGroups […] **if any**
 - roles - Array of roles HostGroups […] **if any**
@@ -1722,8 +1733,6 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 * `default['icinga2']['add_cloud_custom_vars']` (default: `true`): add cloud node attributes, limited cloud provider support is available
 
-* `default['icinga2']['enable_features_recipe']` (default: `false`): manage icinga2 features via node attribute `node['icinga2']['enable_features']`
-
 * `default['icinga2']['features_enabled_dir']` (default: `/etc/icinga2/features-enabled`): icinga2 enabled features location
 
 * `default['icinga2']['features_available_dir']` (default: `/etc/icinga2/features-available`): icinga2 available features location
@@ -1752,9 +1761,6 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 * `default['icinga2']['install_nagios_plugins']` (default: `true`): install nagios plugins to icinga2 server and clients
 
-* `default['icinga2']['features']` (default: `[available features]`): list of icinga2 available features
-
-* `default['icinga2']['enable_features']` (default: `[checker command compatlog mainlog notification statusdata perfdata]`): icinga2 enabled features
 
 
 ## Cookbook Core Attributes
@@ -2121,7 +2127,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Copyright & License
 
-Authors:: Virender Khatri and [Contributors]
+Authors:: Check AUTHORS file
 
 <pre>
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -2140,5 +2146,6 @@ limitations under the License.
 
 [Icinga2]: https://www.icinga.org/
 [Chef]: https://www.chef.io/
-[Contributors]: https://github.com/vkhatri/chef-icinga2/graphs/contributors
 [Install]: https://github.com/icinga/icinga2/
+[Dev Icinga]: https://dev.icinga.org/projects/chef-icinga2
+[Register]: https://www.icinga.org/register/

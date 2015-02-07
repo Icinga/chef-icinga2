@@ -48,8 +48,6 @@ include_recipe 'icinga2::server_pnp' if node['icinga2']['pnp']
 # objects
 include_recipe 'icinga2::server_objects' if node['icinga2']['disable_conf_d']
 
-include_recipe 'icinga2::server_features'
-
 execute 'icinga2_configcheck' do
   command '/usr/sbin/icinga2 daemon -c /etc/icinga2/icinga2.conf -C'
   action :nothing
