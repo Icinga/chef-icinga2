@@ -14,6 +14,9 @@ default['icinga2']['pnp'] = false
 default['icinga2']['disable_conf_d'] = false
 default['icinga2']['add_cloud_custom_vars'] = true
 
+# itl defaults
+default['icinga2']['include_itl'] = ['itl', 'plugins']
+
 # object conf file location
 default['icinga2']['objects_d'] = 'objects.d'
 default['icinga2']['objects_dir'] = ::File.join(node['icinga2']['conf_dir'], node['icinga2']['objects_d'])
