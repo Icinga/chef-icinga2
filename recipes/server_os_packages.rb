@@ -35,6 +35,6 @@ end
 # install the imagick package via pecl
 execute 'install imagick' do
   command "printf \'\\n\' | pecl install imagick && echo \"extension=imagick.so\" > /etc/php.d/imagick.ini && touch /etc/php.d/imagick_installed"
-  only_if { node['platform_family'] == 'rhel' }
+  only_if { %w(redhat fedora centos).include?(node['platform']) }
   creates '/etc/php.d/imagick_installed'
 end
