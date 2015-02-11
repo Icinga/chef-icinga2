@@ -24,10 +24,17 @@ when 'debian'
   os_packages = %w(g++ mailutils php5 php5-cli php5-fpm build-essential libgd2-xpm-dev libjpeg62 libjpeg62-dev libpng12-0 libpng12-dev libapache2-mod-php5 git-core)
   include_recipe 'apt'
 when 'rhel'
-  os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo php-soap php-ldap php-mysql php-pgsql php-pecl-imagick php-intl git)
+  os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo php-soap php-ldap php-mysql php-pgsql php-intl git ImageMagick ImageMagick-devel)
 end
 
 # dependencies
 os_packages.each do |p|
   package p
+end
+
+# install the imagick package via pecl
+execute 'install imagick' do
+  command "printf \'\\n\' | pecl install imagick && echo \"extension=imagick.so\" > /etc/php.d/imagick.ini && touch /etc/php.d/imagick_installed"
+  only_if { node['platform_family'] == 'rhel' }
+  creates '/etc/php.d/imagick_installed'
 end
