@@ -21,12 +21,18 @@ case node['platform_family']
 when 'debian'
   # package libjpeg62-dev conflicts with libgd2-xpm-dev
   # perhaps can be removed.
-  os_packages = %w(g++ mailutils php5 php5-cli php5-fpm build-essential libgd2-xpm-dev libjpeg62 libjpeg62-dev libpng12-0 libpng12-dev libapache2-mod-php5 git-core)
+  os_packages = %w(g++ mailutils php5 php5-cli php5-fpm build-essential
+                   libgd2-xpm-dev libjpeg62 libjpeg62-dev libpng12-0
+                   libpng12-dev libapache2-mod-php5 git-core imagemagick
+                   php5-imagick)
   include_recipe 'apt'
 when 'rhel'
-  os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo php-soap php-ldap php-mysql php-pgsql php-intl git)
+  os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd
+                   gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd
+                   php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo
+                   php-soap php-ldap php-mysql php-pgsql php-intl git)
   case node['platform']
-  when 'redhat','centos','fedora'
+  when 'redhat', 'centos', 'fedora'
     os_packages += %w(ImageMagick ImageMagick-devel)
   when 'amazon'
     os_packages.push 'php-pecl-imagick'
