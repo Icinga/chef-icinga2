@@ -3,6 +3,50 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.0.1
+-----
+
+- Jannik Zinkl - fixed pgqsl schema setup for extra line char
+
+- Andrei Scopenco - iBug #8384 fix for LWRP endpoint
+
+- Virender Khatri - iBug #8384 fix for lwrp apilistener
+
+- Virender Khatri - iBug #8384 fix for lwrp applydependency
+
+- Virender Khatri - iBug #8384 fix for lwrp applynotification
+
+- Virender Khatri - iBug #8384 fix for lwrp applyservice
+
+- Virender Khatri - iBug #8384 fix for lwrp checkcommand
+
+- Virender Khatri - iBug #8384 fix for lwrp eventcommand
+
+- Virender Khatri - iBug #8384 fix for lwrp hostgroup
+
+- Virender Khatri - iBug #8384 fix for lwrp notificationcommand
+
+- Virender Khatri - iBug #8384 fix for lwrp servicegroup
+
+- Virender Khatri - iBug #8384 fix for lwrp usergroup
+
+- Virender Khatri - iBug #8384 fix for lwrp zone
+
+- Jannik Zinkl - iBug #8377 fixing package php-pecl-imagick install for imagick
+
+- Virender Khatri - iBug #8377 added yum-epel repository for package php-pecl-imagick
+
+- Andrei Scopenco - added include_itl attribute for adding itl to icinga2.conf
+
+- Virender Khatri - iBug #8419 updated icinga web2 default uri to /icingaweb2
+
+- Virender Khatri - iBug #8377 added icingaweb2 packages dependency for debian platform family
+
+- Andrei Scopenco - iBug #8427 added attribute for disabling repository.d
+
+- Andrei Scopenco - iBug #8428 added lwrp zone resource attribute - global
+
+
 0.10.1
 -----
 
@@ -55,7 +99,7 @@ This file is used to list changes made in each version of the icinga2 cookbook.
 
 - Virender Khatri - fixed interval / timeout object attribute in resource templates
 
-- JannikZed - fixed typo in recipe server_ido_schema.rb
+- Jannik Zinkl - fixed typo in recipe server_ido_schema.rb
 
 0.7.6
 -----
