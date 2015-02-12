@@ -25,7 +25,7 @@ For issue reporting or any discussion regarding this cookbook, open an issue at 
 
 ## Contributing
 
-1. Open an issue at [Dev Icinga] regarding a bug / feature enhancement
+1. Open Bug / Feature issue at [Dev Icinga]
 2. Fork the repository on Github
 3. Create a named feature branch (like `add_component_x`)
 4. Write your change
@@ -38,11 +38,11 @@ For issue reporting or any discussion regarding this cookbook, open an issue at 
 
 ## Major Changes
 
-
-###v0.11.x
+###v2.0.1
 
 * icinga web2 uri updated to `/icingaweb2`
 
+* epel repository is by default enabled for rhel platform family except amazon platform
 
 
 ###v0.10.1
@@ -1000,6 +1000,7 @@ Above LWRP resource will create an icinga `Zone` object.
 - *action* (optional)	- default :enable, options: :enable, :disable
 - *endpoints* (optional, String)	- icinga `Zone` attribute `endpoints`
 - *parent* (optional, String)	- icinga `Zone` attribute `parent`
+- *global* (optional, TrueClass/FalseClass)	- icinga `Zone` attribute `global`
 
 
 ## LWRP icinga2_endpoint
@@ -1749,7 +1750,9 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Advanced Attributes
 
-* `default['icinga2']['disable_conf_d']` (default: `false`): disable icinga2 `conf.d` default configuration and use LWRP to manage icinga2 objects / templates
+* `default['icinga2']['disable_conf_d']` (default: `false`): disable icinga2 `conf.d` default configuration directory in `icinga2.conf` and use LWRP to manage icinga2 objects / templates
+
+* `default['icinga2']['disable_repository_d']` (default: `false`): disable icinga2 `repository.d` directory in `icinga2.conf`
 
 * `default['icinga2']['include_itl']` (default: `itl, plugins`): `icinga2.conf` include `itl` array attribute
 
