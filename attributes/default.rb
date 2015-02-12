@@ -15,7 +15,7 @@ default['icinga2']['disable_conf_d'] = false
 default['icinga2']['add_cloud_custom_vars'] = true
 
 # itl defaults
-default['icinga2']['include_itl'] = ['itl', 'plugins']
+default['icinga2']['include_itl'] = %w(itl plugins)
 
 # object conf file location
 default['icinga2']['objects_d'] = 'objects.d'
