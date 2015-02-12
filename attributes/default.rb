@@ -17,6 +17,9 @@ default['icinga2']['add_cloud_custom_vars'] = true
 # itl defaults
 default['icinga2']['include_itl'] = %w(itl plugins)
 
+# includes yum-epel cookbook to setup yum epel repository
+default['icinga2']['setup_epel'] = true
+
 # object conf file location
 default['icinga2']['objects_d'] = 'objects.d'
 default['icinga2']['objects_dir'] = ::File.join(node['icinga2']['conf_dir'], node['icinga2']['objects_d'])

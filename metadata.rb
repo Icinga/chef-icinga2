@@ -8,6 +8,7 @@ version '0.10.1'
 
 depends 'apt'
 depends 'yum', '~> 3.0'
+depends 'yum-epel'
 depends 'apache2'
 depends 'ulimit'
 depends 'pnp4nagios'

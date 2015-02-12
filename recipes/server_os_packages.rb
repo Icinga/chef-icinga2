@@ -33,27 +33,12 @@ when 'rhel'
   os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd
                    gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd
                    php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo
-                   php-soap php-ldap php-mysql php-pgsql php-intl git)
-  # perhaps adding epel repository will
-  # fix the yum install error php-pecl-imagick,
-  # to be tested.
-  os_packages += value_for_platform(
-    %w(centos redhat fedora) => { 'default' => %w(ImageMagick ImageMagick-devel) },
-    'amazon' => { 'default' => %w(php-pecl-imagick) }
-  )
+                   php-soap php-ldap php-mysql php-pgsql php-intl git php-pecl-imagick)
+  # yum epel repository is required for php-pecl-imagick
+  include_recipe 'yum-epel' if node['platform'] != 'amazon' && node['icinga2']['setup_epel']
 end
 
 # dependencies
 os_packages.each do |p|
   package p
-end
-
-# perhaps adding epel repository will
-# fix the yum install error php-pecl-imagick,
-# to be tested.
-# install the imagick package via pecl
-execute 'install imagick' do
-  command "printf \'\\n\' | pecl install imagick && echo \"extension=imagick.so\" > /etc/php.d/imagick.ini && touch /etc/php.d/imagick_installed"
-  only_if { %w(redhat fedora centos).include?(node['platform']) }
-  creates '/etc/php.d/imagick_installed'
 end
