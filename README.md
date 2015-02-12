@@ -23,6 +23,19 @@ https://supermarket.chef.io/cookbooks/icinga2
 For issue reporting or any discussion regarding this cookbook, open an issue at [Dev Icinga]. New users need to [Register] first.
 
 
+## Contributing
+
+1. Open an issue at [Dev Icinga] regarding a bug / feature enhancement
+2. Fork the repository on Github
+3. Create a named feature branch (like `add_component_x`)
+4. Write your change
+5. Write tests for your change (if applicable)
+6. Run the tests (`rake`), ensuring they all pass
+7. Write new resource/attribute description to `README.md`
+8. Write description about changes to PR along with [Dev Icinga] issue #
+9. Submit a Pull Request using Github
+
+
 ## Major Changes
 
 
@@ -2120,18 +2133,6 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 * `default['icinga2']['classic_ui']['cgi']['log_archive_path']` (default: `node['icinga2']['log_dir']/compat/archives`)
 
 * `default['icinga2']['classic_ui']['cgi']['date_format']` (default: `us`)
-
-
-## Contributing
-
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests (`rake`), ensuring they all pass
-6. Write new resource/attribute description to `README.md`
-7. Write description about changes to PR
-8. Submit a Pull Request using Github
 
 
 ## Copyright & License
