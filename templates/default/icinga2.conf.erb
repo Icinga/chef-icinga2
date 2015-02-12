@@ -48,7 +48,11 @@ include "features-enabled/*.conf"
  * The repository.d directory contains all configuration objects
  * managed by the 'icinga2 repository' CLI commands.
  */
+<% if node['icinga2']['disable_repository_d'] -%>
+// include_recursive "repository.d"
+<% else -%>
 include_recursive "repository.d"
+<% end -%>
 
 /**
  * Although in theory you could define all your objects in this file

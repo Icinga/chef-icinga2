@@ -12,6 +12,7 @@ default['icinga2']['pnp'] = false
 
 # avoid conflicts
 default['icinga2']['disable_conf_d'] = false
+default['icinga2']['disable_repository_d'] = false
 default['icinga2']['add_cloud_custom_vars'] = true
 
 # itl defaults
