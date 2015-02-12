@@ -46,7 +46,8 @@ def object_template
     next if resource.action != :create || icinga2_objects.key?(resource.name)
     icinga2_objects[resource.name] = {}
     icinga2_objects[resource.name] = { 'endpoints' => resource.send('endpoints'),
-                                       'parent' => resource.send('parent') }
+                                       'parent' => resource.send('parent'),
+                                       'global' => resource.send('global') }
   end
 
   # create object resource
