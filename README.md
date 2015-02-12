@@ -25,7 +25,14 @@ For issue reporting or any discussion regarding this cookbook, open an issue at 
 
 ## Major Changes
 
-###v0.10.x
+
+###v0.11.x
+
+* icinga web2 uri updated to `/icingaweb2`
+
+
+
+###v0.10.1
 
 * Deprecated node *features* attribute and recipe `icinga2::server_features` in favour of LWRP `feature`
 
@@ -1731,6 +1738,8 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 * `default['icinga2']['disable_conf_d']` (default: `false`): disable icinga2 `conf.d` default configuration and use LWRP to manage icinga2 objects / templates
 
+* `default['icinga2']['include_itl']` (default: `itl, plugins`): `icinga2.conf` include `itl` array attribute
+
 * `default['icinga2']['add_cloud_custom_vars']` (default: `true`): add cloud node attributes, limited cloud provider support is available
 
 * `default['icinga2']['features_enabled_dir']` (default: `/etc/icinga2/features-enabled`): icinga2 enabled features location
@@ -1895,7 +1904,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
  * `default[:icinga2][:web2][:web_root]` (default: `/usr/share/icingaweb2`): icingaweb2 web root location
 
- * `default[:icinga2][:web2][:web_uri]` (default: `/icingaweb`): icingweb2 web uri
+ * `default[:icinga2][:web2][:web_uri]` (default: `/icingaweb2`): icingweb2 web uri
 
  * `default[:icinga2][:web2][:conf_dir]` (default: `/etc/icingaweb2`): icingaweb2 config directory
 
