@@ -15,6 +15,9 @@ object Zone <%= object.inspect -%> {
   <% if options['parent'] -%>
   parent = <%= options['parent'].inspect %>
   <% end -%>
+  <% if options['global'] -%>
+  global = <%= options['global'].inspect %>
+  <% end -%>
 }
 
 <% end -%>

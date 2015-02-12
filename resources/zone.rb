@@ -21,5 +21,6 @@ actions :create, :delete
 
 default_action :create
 
-attribute :endpoints,  :kind_of => Array, :required => true, :default => nil
+attribute :endpoints,  :kind_of => Array, :default => nil
 attribute :parent,  :kind_of => String, :default => nil
+attribute :global,  :kind_of => [TrueClass, FalseClass], :default => nil
