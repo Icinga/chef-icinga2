@@ -1,4 +1,6 @@
 
+default['icinga2']['build_type'] = 'release' # options: release, snapshot
+
 default['icinga2']['yum']['description'] = 'ICINGA Stable Release'
 default['icinga2']['yum']['mirrorlist'] = nil
 default['icinga2']['yum']['gpgcheck'] = true
@@ -7,8 +9,8 @@ default['icinga2']['yum']['gpgkey'] = 'http://packages.icinga.org/icinga.key'
 default['icinga2']['yum']['action'] = :create
 
 default['icinga2']['yum']['baseurl'] = value_for_platform(
-  %w(centos redhat fedora) => { 'default' => 'http://packages.icinga.org/epel/$releasever/release/' },
-  'amazon' => { 'default' => 'http://packages.icinga.org/epel/6/release/' }
+  %w(centos redhat fedora) => { 'default' => "http://packages.icinga.org/epel/$releasever/#{node['icinga2']['build_type']}/" },
+  'amazon' => { 'default' => "http://packages.icinga.org/epel/6/#{node['icinga2']['build_type']}/" }
 )
 
 default['icinga2']['apt']['repo'] = 'ICINGA Stable Release'
