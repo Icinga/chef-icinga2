@@ -19,12 +19,7 @@
 
 node.default['apache']['servertokens']    = 'Minimal'
 
-include_recipe 'apache2::default'
-include_recipe 'apache2::mod_python'
-include_recipe 'apache2::mod_php5'
-include_recipe 'apache2::mod_cgi'
-include_recipe 'apache2::mod_ssl'
-include_recipe 'apache2::mod_rewrite'
+node['icinga2']['apache_modules'].each { |mod| include_recipe "apache2::#{mod}" }
 
 # keeping it to default for now, need
 # to look into merging into a single
