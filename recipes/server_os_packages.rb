@@ -24,7 +24,7 @@ when 'debian'
   # package libjpeg62-dev conflicts with libgd2-xpm-dev
   # perhaps can be removed.
   os_packages = %w(g++ mailutils php5 php5-cli php5-fpm build-essential
-                   libgd2-xpm-dev libjpeg62 libjpeg62-dev libpng12-0
+                   libgd2-xpm-dev libjpeg62 libpng12-0
                    libpng12-dev libapache2-mod-php5 git-core imagemagick
                    php5-imagick php-pear php5-xmlrpc php5-xsl php5-mysql
                    php-soap php5-gd php5-ldap php5-pgsql)
