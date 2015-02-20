@@ -27,7 +27,7 @@ when 'debian'
                    libgd2-xpm-dev libjpeg62 libpng12-0
                    libpng12-dev libapache2-mod-php5 git-core imagemagick
                    php5-imagick php-pear php5-xmlrpc php5-xsl php5-mysql
-                   php-soap php5-gd php5-ldap php5-pgsql)
+                   php-soap php5-gd php5-ldap php5-pgsql php5-intl)
   include_recipe 'apt'
 when 'rhel'
   os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd
