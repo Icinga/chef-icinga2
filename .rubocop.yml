@@ -5,6 +5,7 @@ AllCops:
     - Vagrantfile
     - Thorfile
     - Gemfile
+    - '.kitchen/*'
 AlignParameters:
   Enabled: true
 Encoding:
