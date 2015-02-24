@@ -34,12 +34,11 @@
   end
 end
 
-if node['icinga2']['user_defined_objects_dir']
-  directory node['icinga2']['user_defined_objects_dir'] do
-    owner node['icinga2']['user']
-    group node['icinga2']['group']
-    mode 0750
-  end
+directory node['icinga2']['user_defined_objects_dir'] do
+  owner node['icinga2']['user']
+  group node['icinga2']['group']
+  mode 0750
+  only_if { node['icinga2']['user_defined_objects_dir'] }
 end
 
 [node['icinga2']['log_dir'],
