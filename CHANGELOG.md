@@ -3,6 +3,29 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.1.0
+-----
+
+- Virender Khatri - iBug #8449 update default icingaweb2 version to use tag release
+
+- Virender Khatri - iBug #8409 bump icinga2 version
+
+- Virender Khatri - iFeature #8454, enable snapshot yum repository
+
+- Andrei Scopenco - allow to disable user_defined_objects_dir
+
+- Virender Khatri - iBug #8479 use packages.icinga.org for apt/yum snapshots repository
+
+- Virender Khatri - iBug #8481 use native htpasswd file location for icinga2 classicui
+
+- Virender Khatri - iBug #8469 mod_python deprecated for centos7/rhel7
+
+- Jannik Zinkl - iBug #8469, fixed platform_version condition
+
+- Virender Khatri - iBug #8494 package php5-intl added for ubuntu
+
+- Virender Khatri - iBug #8495 fix for libjpeg62-dev conflict with libgd2-xpm-dev
+
 2.0.1
 -----
 

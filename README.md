@@ -36,6 +36,11 @@ For issue reporting or any discussion regarding this cookbook, open an issue at 
 9. Submit a Pull Request using Github
 
 
+## TODO
+
+* classic ui setup is incomplete for ubuntu platform
+
+
 ## Major Changes
 
 ###v2.0.1
@@ -70,6 +75,7 @@ For issue reporting or any discussion regarding this cookbook, open an issue at 
 * `ulimit` cookbook
 * `apache2` cookbook
 * `yum` cookbook
+* `yum-epel` cookbook
 * `apt` cookbook
 * `pnp4nagios` cookbook
 
@@ -581,8 +587,8 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 - *failover_fqdn_address* (optional, TrueClass/FalseClass)	- whether to use chef node attribute `node['ipaddress']` if failed to resolve node FQDN
 - *ignore_resolv_error* (optional, TrueClass/FalseClass)	- whether to ignore node FQDN resolve error
 - *ignore_node_error* (optional, TrueClass/FalseClass)	- whether to ignore node if failed to determine `node[]'chef_environment']` or `node['fqdn']` or `node['hostname']`
-<del>- *exclude_recipes* (optional, Array)	- exclude chef node if `run_list` matches recipe, not yet tested </del>
-<del>- *exclude_roles* (optional, Array)	- exclude chef node if `run_list` matches role, not yet tested </del>
+- <del> *exclude_recipes* (optional, Array)	- exclude chef node if `run_list` matches recipe, not yet tested </del>
+- <del> *exclude_roles* (optional, Array)	- exclude chef node if `run_list` matches role, not yet tested </del>
 - *env_custom_vars* (optional, Hash)	- add `Host` object custom vars to all chef node
 - *limit_region* (optional, TrueClass/FalseClass)	- whether to limit chef node to chef server region, currently tested for Amazon EC2, e.g. a icinga2 server located in region `us-east-1` will only collect nodes located in `us-east-`` region
 - *server_region* (optional, String)	- icinga2 server region can be overridden if cloud provider is not supported by the cookbook using this attribute
@@ -1752,6 +1758,8 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 * `default['icinga2']['disable_conf_d']` (default: `false`): disable icinga2 `conf.d` default configuration directory in `icinga2.conf` and use LWRP to manage icinga2 objects / templates
 
+* `default['icinga2']['build_type']` (default: `release`): icinga2 repository build type, options: release snapshot
+
 * `default['icinga2']['disable_repository_d']` (default: `false`): disable icinga2 `repository.d` directory in `icinga2.conf`
 
 * `default['icinga2']['include_itl']` (default: `itl, plugins`): `icinga2.conf` include `itl` array attribute
@@ -1790,7 +1798,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Core Attributes
 
-* `default['icinga2']['version']` (default: `2.2.2-1`): icinga2 version
+* `default['icinga2']['version']` (default: `2.2.4-1`): icinga2 version
 
 * `default['icinga2']['conf_dir']` (default: `/etc/icinga2`): icinga2 configuration location
 
@@ -1845,6 +1853,8 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 * `default['icinga2']['user_defined_objects_dir']` (default: `/etc/icinga2/user_defined_objects`): icinga2 conf directory for user defined objects
 
 * `default['icinga2']['cmdgroup']` (default: `icingacmd`): icinga2 cmd user group
+
+* `default['icinga2']['apache_modules']` (default: `calculated`): apache modules / apache2 cookbook recipe to enable
 
 
 ## Cookbook Icinga2 Constants Attributes
@@ -1916,7 +1926,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
  * `default[:icinga2][:web2][:source_url]` (default: `git://git.icinga.org/icingaweb2.git`):
 
- * `default[:icinga2][:web2][:version]` (default: `master`): icingaweb2 git checkout version / branch / tag etc.
+ * `default[:icinga2][:web2][:version]` (default: `v2.0.0-beta2`): icingaweb2 git checkout version / branch / tag etc.
 
  * `default[:icinga2][:web2][:web_root]` (default: `/usr/share/icingaweb2`): icingaweb2 web root location
 
@@ -1938,7 +1948,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Repository Attributes
 
-* `default['icinga2']['yum']['description']` (default: `ICINGA Stable Release'):
+* `default['icinga2']['yum']['description']` (default: `ICINGA Release'):
 
 * `default['icinga2']['yum']['mirrorlist']` (default: `nil`):
 
@@ -1950,11 +1960,11 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 * `default['icinga2']['yum']['action']` (default: `:create`):
 
-* `default['icinga2']['yum']['baseurl']` (default: ``):
+* `default['icinga2']['yum']['baseurl']` (default: `calculated`):
 
-* `default['icinga2']['apt']['repo']` (default: `ICINGA Stable Release`):
+* `default['icinga2']['apt']['repo']` (default: `ICINGA Release`):
 
-* `default['icinga2']['apt']['uri']` (default: `http://ppa.launchpad.net/formorer/icinga/ubuntu`):
+* `default['icinga2']['apt']['uri']` (default: `calculated`):
 
 * `default['icinga2']['apt']['distribution']` (default: `node['lsb']['codename']`):
 
@@ -1971,9 +1981,9 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Classic UI CGI Core Attributes
 
-* `default['icinga2']['classic_ui']['version']` (default: `2.2.2-1`): icinga2 classic-ui package version
+* `default['icinga2']['classic_ui']['version']` (default: `2.2.4-1`): icinga2 classic-ui package version
 
-* `default['icinga2']['classic_ui']['gui_version']` (default: `1.12.0-0`): icinga2 gui package version
+* `default['icinga2']['classic_ui']['gui_version']` (default: `1.12.2-0`): icinga2 gui package version
 
 * `default['icinga2']['classic_ui']['web_root']` (default: `/usr/share/icinga`): icinga2 web doc root directory location
 
