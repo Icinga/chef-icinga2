@@ -87,6 +87,8 @@ default['icinga2']['custom_plugins_dir'] = '/opt/icinga2_custom_plugins'
 
 default['icinga2']['admin_user'] = 'icingaadmin'
 
+default['icinga2']['endpoint_port'] = 5665
+
 # ulimit
 default['icinga2']['limits']['memlock']    = 'unlimited'
 default['icinga2']['limits']['nofile']     = 48_000

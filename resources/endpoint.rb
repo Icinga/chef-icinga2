@@ -22,5 +22,5 @@ actions :create, :delete
 default_action :create
 
 attribute :host,  :kind_of => String, :default => nil
-attribute :port,  :kind_of => Integer, :default => nil
+attribute :port,  :kind_of => Integer, :default => node['icinga2']['endpoint_port']
 attribute :log_duration,  :kind_of => String, :default => nil
