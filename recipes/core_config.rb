@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Recipe:: server_core
+# Recipe:: core_config
 #
 # Copyright 2014, Virender Khatri
 #
@@ -107,28 +107,4 @@ template ::File.join(node['icinga2']['conf_dir'], 'constants.conf') do
   mode 0644
   variables(:options => node['icinga2']['constants'])
   notifies :reload, 'service[icinga2]', :delayed
-end
-
-# mail-service-notification command
-template ::File.join(node['icinga2']['scripts_dir'], 'mail-service-notification.sh') do
-  cookbook node['icinga2']['cookbook']
-  source 'mail-service-notification.sh.erb'
-  owner node['icinga2']['user']
-  group node['icinga2']['group']
-  mode 0755
-end
-
-# mail-host-notification command
-template ::File.join(node['icinga2']['scripts_dir'], 'mail-host-notification.sh') do
-  cookbook node['icinga2']['cookbook']
-  source 'mail-host-notification.sh.erb'
-  owner node['icinga2']['user']
-  group node['icinga2']['group']
-  mode 0755
-end
-
-user_ulimit node['icinga2']['user'] do
-  filehandle_limit node['icinga2']['limits']['nofile']
-  process_limit node['icinga2']['limits']['nproc']
-  memory_limit node['icinga2']['limits']['memlock']
 end

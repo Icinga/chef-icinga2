@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Recipe:: server
+# Recipe:: client
 #
 # Copyright 2014, Virender Khatri
 #
@@ -17,35 +17,12 @@
 # limitations under the License.
 #
 
-include_recipe 'icinga2::server_os_packages'
-
-# setup apache and icinga2 vhost
-case node['icinga2']['web_engine']
-when 'apache'
-  include_recipe 'icinga2::server_apache'
-else
-  fail "unknown web engine '#{node['icinga2']['web_engine']}'"
-end
+include_recipe 'icinga2::client_os_packages'
 
 # install icinga2 packages
 include_recipe 'icinga2::core_install'
 
 # configure icinga2 core files / directories
 include_recipe 'icinga2::core_config'
-
-# icinga2 classic ui
-include_recipe 'icinga2::server_classic_ui' if node['icinga2']['classic_ui']['enable']
-
-# icinga2 ido
-include_recipe 'icinga2::server_ido_schema'
-
-# icingweb2
-include_recipe 'icinga2::server_web2' if node['icinga2']['web2']['enable']
-
-# icinga2 pnp support
-include_recipe 'icinga2::server_pnp' if node['icinga2']['pnp']
-
-# objects
-include_recipe 'icinga2::server_objects' if node['icinga2']['disable_conf_d']
 
 include_recipe 'icinga2::service'

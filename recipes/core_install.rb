@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: icinga2
-# Recipe:: server_install
+# Recipe:: core_install
 #
 # Copyright 2014, Virender Khatri
 #
