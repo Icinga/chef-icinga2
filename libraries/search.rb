@@ -205,6 +205,9 @@ module Icinga2
       node_hash['custom_vars']['tags'] = node_hash['tags']
       node_hash['custom_vars']['disks'] = node_hash['disks']
 
+      # remote_client for remote checks
+      node_hash['custom_vars']['remote_client'] = node['fqdn']
+
       # add default chef attributes
       node_hash['custom_vars']['platform'] = node_hash['platform']
       node_hash['custom_vars']['platform_version'] = node_hash['platform_version']
