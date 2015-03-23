@@ -38,7 +38,9 @@ For issue reporting or any discussion regarding this cookbook, open an issue at 
 
 ## TODO
 
-* classic ui setup is incomplete for ubuntu platform
+* classic ui setup is incomplete for ubuntu/debian platform
+* add chef node zone/endpoint objects for icinga2 agent setup
+* add lwrp envendpoint / envzone lwrp for environment resource
 
 
 ## Major Changes
@@ -1798,7 +1800,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Core Attributes
 
-* `default['icinga2']['version']` (default: `2.2.4-1`): icinga2 version
+* `default['icinga2']['version']` (default: `2.3.2-1`): icinga2 version
 
 * `default['icinga2']['conf_dir']` (default: `/etc/icinga2`): icinga2 configuration location
 
@@ -1926,7 +1928,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
  * `default[:icinga2][:web2][:source_url]` (default: `git://git.icinga.org/icingaweb2.git`):
 
- * `default[:icinga2][:web2][:version]` (default: `v2.0.0-beta2`): icingaweb2 git checkout version / branch / tag etc.
+ * `default[:icinga2][:web2][:version]` (default: `v2.0.0-beta3`): icingaweb2 git checkout version / branch / tag etc.
 
  * `default[:icinga2][:web2][:web_root]` (default: `/usr/share/icingaweb2`): icingaweb2 web root location
 
@@ -1981,7 +1983,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Classic UI CGI Core Attributes
 
-* `default['icinga2']['classic_ui']['version']` (default: `2.2.4-1`): icinga2 classic-ui package version
+* `default['icinga2']['classic_ui']['version']` (default: `2.3.2-1`): icinga2 classic-ui package version
 
 * `default['icinga2']['classic_ui']['gui_version']` (default: `1.12.2-0`): icinga2 gui package version
 
@@ -1998,7 +2000,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Classic UI CGI User Access Attributes
 
-* `default['icinga2']['classic_ui']['users']` (default: `{ 'icingaadmin' => '$apr1$MZtKRLAy$AV9OiJ.V/mI9g30bHn9ol1' }`): Hash List of user => password (md5) for class ui access
+* `default['icinga2']['classic_ui']['users']` (default: `{ 'icingaadmin' => 'icingaadmin' }`): Hash List of user => password (md5) for class ui access
 
 * `default['icinga2']['classic_ui']['authorized_for_system_information']` (default: `[node['icinga2']['admin_user']]`): Array list of users authorized for system information
 

@@ -3,6 +3,22 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.1.6
+-----
+
+- Virender Khatri - Feature #8630, adding default Host vars remote_client
+
+- Virender Khatri - Feature #8631, add default endpoint port
+
+- Virender Khatri - Bug #8635, re-org recipes in favour of client agent recipe
+
+- Virender Khatri - Bug #8837, restart icinga2 service on package upgrade / install
+
+- Virender Khatri - Bug #8838, bump icinga2 version to v2.3.2
+
+- Virender Khatri - Bug #8838, bump icingaweb2 ref to beta3
+
+
 2.1.0
 -----
 
