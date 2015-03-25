@@ -20,7 +20,6 @@
 # add nrpe check to all nrpe enabled nodes.
 # e.g. add nrpe checks for nodes, node['icinga2']['client']['custom_vars']['nrpe'] = true
 icinga2_applyservice 'nrpe_check_load' do
-  object_name 'nrpe_check_load'
   import 'generic-service'
   check_command 'nrpe'
   custom_vars :nrpe_command => 'check_load'
@@ -28,7 +27,6 @@ icinga2_applyservice 'nrpe_check_load' do
 end
 
 icinga2_applyservice 'nrpe_check_disk_mounts' do
-  object_name 'nrpe_check_disk_mounts'
   import 'generic-service'
   check_command 'nrpe'
   custom_vars :nrpe_command => 'check_disk_mounts'
@@ -36,7 +34,6 @@ icinga2_applyservice 'nrpe_check_disk_mounts' do
 end
 
 icinga2_applyservice 'nrpe_check_zombie_procs' do
-  object_name 'nrpe_check_zombie_procs'
   import 'generic-service'
   check_command 'nrpe'
   custom_vars :nrpe_command => 'check_zombie_procs'
@@ -44,7 +41,6 @@ icinga2_applyservice 'nrpe_check_zombie_procs' do
 end
 
 icinga2_applyservice 'nrpe_check_mem' do
-  object_name 'nrpe_check_mem'
   import 'generic-service'
   check_command 'nrpe'
   custom_vars :nrpe_command => 'check_mem'

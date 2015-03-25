@@ -816,7 +816,6 @@ LWRP `service` creates an icinga `Service` object or template.
 
 	icinga2_applyservice 'nrpe_check_load' do
 	  display_name 'CPU Average Load'
-	  object_name 'nrpe_check_load'
 	  import 'generic-service'
 	  check_command 'nrpe'
 	  custom_vars :nrpe_command => 'check_load'
