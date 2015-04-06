@@ -3,6 +3,11 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.1.7
+-----
+
+- Virender Khatri - Feature #8997, bump update icinga2 version to v2.3.3
+
 2.1.6
 -----
 
