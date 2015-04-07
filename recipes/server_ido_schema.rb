@@ -24,7 +24,7 @@ fail "incorrect ido #{node['icinga2']['ido']['type']}, valid are mysql pgsql" un
 
 # install icinga2 ido package
 package "icinga2-ido-#{node['icinga2']['ido']['type']}" do
-  version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix']
+  version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix'] unless node['icinga2']['ignore_version']
 end
 
 # load ido schema

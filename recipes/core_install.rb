@@ -44,6 +44,6 @@ end
 
 # install icinga2 core packages
 package 'icinga2' do
-  version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix']
+  version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix'] unless node['icinga2']['ignore_version']
   notifies :restart, 'service[icinga2]', :delayed
 end
