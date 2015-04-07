@@ -3,6 +3,11 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.1.8
+-----
+
+- Virender Khatri - Bug #9001, added attribute to ignore default icinga2 package version
+
 2.1.7
 -----
 
