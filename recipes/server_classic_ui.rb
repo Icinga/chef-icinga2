@@ -20,11 +20,11 @@
 case node['platform_family']
 when 'debian'
   package 'icinga2-classicui' do
-    version node['icinga2']['classic_ui']['version'] + node['icinga2']['icinga2_version_suffix']
+    version node['icinga2']['classic_ui']['version'] + node['icinga2']['icinga2_version_suffix'] unless node['icinga2']['classic_ui']['version'] == 'latest'
   end
 when 'rhel'
   package 'icinga2-classicui-config' do
-    version node['icinga2']['classic_ui']['version'] + node['icinga2']['icinga2_version_suffix']
+    version node['icinga2']['classic_ui']['version'] + node['icinga2']['icinga2_version_suffix'] unless node['icinga2']['classic_ui']['version'] == 'latest'
   end
 
   package 'icinga-gui' do
