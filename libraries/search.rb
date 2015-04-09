@@ -203,7 +203,9 @@ module Icinga2
 
       # not required, keeping it for the moment
       node_hash['custom_vars']['tags'] = node_hash['tags']
-      node_hash['custom_vars']['disks'] = node_hash['disks']
+
+      # https://github.com/Icinga/icinga2/blob/master/doc/3-monitoring-basics.md
+      node_hash['custom_vars']['disks'] = { 'mounts' => { 'disk_partitions' => node_hash['disks'] } }
 
       # remote_client for remote checks
       node_hash['custom_vars']['remote_client'] = node['fqdn']
