@@ -89,7 +89,21 @@
   <%- end -%>
   <% if options['custom_vars'] -%>
   <% Hash[options['custom_vars'].sort].each do |var, value| -%>
-  <% if var && value -%>
+  <% if var && value && value.is_a?(Hash) -%>
+  <% value.each do |a, v|-%>
+  <% if a && v && v.is_a?(Hash) && !v.empty?-%>
+  vars.<%= var -%><%= [a].inspect -%> = {
+  <% v.each do |a1, v1|%>
+  <% if a1 && v1 %>
+  <%= a1 -%> = <%= v1.inspect %>
+  <% end -%>
+  <% end -%>
+  }
+  <% else -%>
+  vars.<%= var -%><%= [a].inspect -%> = <%= v.inspect %>
+  <% end -%>
+  <% end -%>
+  <% elsif var && value -%>
   vars.<%= var -%> = <%= value.inspect %>
   <% end -%>
   <% end -%>
