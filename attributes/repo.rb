@@ -11,13 +11,15 @@ when 'rhel'
   default['icinga2']['yum']['action'] = :create
 
   default['icinga2']['yum']['baseurl'] = value_for_platform(
+    # fedora platform has different repo, might want to change to it
     %w(centos redhat fedora) => { 'default' => "http://packages.icinga.org/epel/$releasever/#{node['icinga2']['build_type']}/" },
     'amazon' => { 'default' => "http://packages.icinga.org/epel/6/#{node['icinga2']['build_type']}/" }
   )
 
   # icinga2 package version suffix
   default['icinga2']['icinga2_version_suffix'] = value_for_platform(
-    %w(centos redhat fedora) => { 'default' => ".el#{node['platform_version'].split('.')[0]}" },
+    %w(centos redhat fedora) => { 'default' => ".el#{node['platform_version'].split('.')[0]}",
+                                  '7' => '.el7.centos' },
     'amazon' => { 'default' => '.el6' }
   )
 
