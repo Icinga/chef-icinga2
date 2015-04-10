@@ -19,7 +19,7 @@ when 'rhel'
   # icinga2 package version suffix
   default['icinga2']['icinga2_version_suffix'] = value_for_platform(
     %w(centos redhat fedora) => { 'default' => ".el#{node['platform_version'].split('.')[0]}",
-                                  '7' => '.el7.centos' },
+                                  '>= 7.0' => '.el7.centos' },
     'amazon' => { 'default' => '.el6' }
   )
 
