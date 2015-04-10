@@ -1,4 +1,8 @@
+<% if ['', '/'].include? @web_uri -%>
+DocumentRoot "<%= @web_root -%>/public"
+<% else %>
 Alias <%= @web_uri -%> "<%= @web_root -%>/public"
+<% end -%>
 
 <Directory "<%= @web_root -%>/public">
     Options SymLinksIfOwnerMatch
@@ -23,7 +27,11 @@ Alias <%= @web_uri -%> "<%= @web_root -%>/public"
 
     <IfModule mod_rewrite.c>
         RewriteEngine on
+        <% if ['', '/'].include? @web_uri -%>
+        RewriteBase /
+        <% else %>
         RewriteBase <%= @web_uri -%>/
+        <% end -%>
         RewriteCond %{REQUEST_FILENAME} -s [OR]
         RewriteCond %{REQUEST_FILENAME} -l [OR]
         RewriteCond %{REQUEST_FILENAME} -d
