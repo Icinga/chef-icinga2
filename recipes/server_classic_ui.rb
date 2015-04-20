@@ -33,8 +33,8 @@ when 'rhel'
 end
 
 directory node['icinga2']['classic_ui']['log_dir'] do
-  owner 'root'
-  group 'root'
+  owner node['icinga2']['user']
+  group node['icinga2']['cmdgroup']
   mode 0755
 end
 
