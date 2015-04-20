@@ -38,6 +38,12 @@ directory node['icinga2']['classic_ui']['log_dir'] do
   mode 0755
 end
 
+directory node['icinga2']['classic_ui']['cgi_log_dir'] do
+  owner node['icinga2']['user']
+  group node['icinga2']['cmdgroup']
+  mode 02775
+end
+
 template ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'cgi.cfg') do
   source 'icinga2.cgi.cfg.erb'
   owner 'root'
