@@ -24,32 +24,57 @@ when 'rhel'
   )
 
 when 'debian'
-  default['icinga2']['apt']['repo'] = 'ICINGA Stable Release'
-  default['icinga2']['apt']['keyserver'] = 'keyserver.ubuntu.com'
-  default['icinga2']['apt']['components'] = %w(main)
-  default['icinga2']['apt']['deb_src'] = true
-  default['icinga2']['apt']['action'] = :add
-
-  case node['icinga2']['build_type']
-  when 'snapshot'
-    default['icinga2']['apt']['repo'] = 'ICINGA Snapshots Release'
-    default['icinga2']['apt']['uri'] = 'http://packages.icinga.org/ubuntu'
-    default['icinga2']['apt']['distribution'] = 'icinga-' + node['lsb']['codename'].to_s + '-snapshots'
-    default['icinga2']['apt']['key'] = '34410682'
-
-    # icinga2 package version suffix
-    default['icinga2']['icinga2_version_suffix'] = value_for_platform(
-      'ubuntu' => { 'default' => '~' + node['lsb']['codename'].to_s }
-    )
-  when 'release'
+  case node['platform']
+  when 'ubuntu'
     default['icinga2']['apt']['repo'] = 'ICINGA Stable Release'
-    default['icinga2']['apt']['uri'] = 'http://ppa.launchpad.net/formorer/icinga/ubuntu'
-    default['icinga2']['apt']['distribution'] = node['lsb']['codename']
-    default['icinga2']['apt']['key'] = '36862847'
+    default['icinga2']['apt']['keyserver'] = 'keyserver.ubuntu.com'
+    default['icinga2']['apt']['components'] = %w(main)
+    default['icinga2']['apt']['deb_src'] = true
+    default['icinga2']['apt']['action'] = :add
 
-    # icinga2 package version suffix
-    default['icinga2']['icinga2_version_suffix'] = value_for_platform(
-      'ubuntu' => { 'default' => '~ppa1~' + node['lsb']['codename'].to_s + '1' }
-    )
+    case node['icinga2']['build_type']
+    when 'snapshot'
+      default['icinga2']['apt']['repo'] = 'ICINGA Snapshots Release'
+      default['icinga2']['apt']['uri'] = 'http://packages.icinga.org/ubuntu'
+      default['icinga2']['apt']['distribution'] = 'icinga-' + node['lsb']['codename'].to_s + '-snapshots'
+      default['icinga2']['apt']['key'] = '34410682'
+
+      # icinga2 package version suffix
+      default['icinga2']['icinga2_version_suffix'] = '~' + node['lsb']['codename'].to_s
+
+    when 'release'
+      default['icinga2']['apt']['repo'] = 'ICINGA Stable Release'
+      default['icinga2']['apt']['uri'] = 'http://ppa.launchpad.net/formorer/icinga/ubuntu'
+      default['icinga2']['apt']['distribution'] = node['lsb']['codename']
+      default['icinga2']['apt']['key'] = '36862847'
+
+      # icinga2 package version suffix
+      default['icinga2']['icinga2_version_suffix'] = '~ppa1~' + node['lsb']['codename'].to_s + '1'
+    end
+  when 'debian'
+    default['icinga2']['apt']['keyserver'] = 'keyserver.ubuntu.com'
+    default['icinga2']['apt']['components'] = %w(main)
+    default['icinga2']['apt']['deb_src'] = true
+    default['icinga2']['apt']['action'] = :add
+
+    case node['icinga2']['build_type']
+    when 'snapshot'
+      default['icinga2']['apt']['repo'] = 'ICINGA Snapshots Release'
+      default['icinga2']['apt']['uri'] = 'http://packages.icinga.org/debian'
+      default['icinga2']['apt']['distribution'] = 'icinga-' + node['lsb']['codename'].to_s + '-snapshots'
+      default['icinga2']['apt']['key'] = '34410682'
+
+      # icinga2 package version suffix
+      default['icinga2']['icinga2_version_suffix'] = '~' + node['lsb']['codename'].to_s
+
+    when 'release'
+      default['icinga2']['apt']['repo'] = 'ICINGA Stable Release debmon.org'
+      default['icinga2']['apt']['uri'] = 'http://debmon.org/debmon'
+      default['icinga2']['apt']['distribution'] = node['lsb']['codename']
+      default['icinga2']['apt']['key'] = '29D662D2'
+
+      # icinga2 package version suffix
+      default['icinga2']['icinga2_version_suffix'] = '~debmon' +  node['platform_verson'].split('.')[0] + '0+1'
+    end
   end
 end
