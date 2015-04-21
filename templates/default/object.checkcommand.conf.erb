@@ -14,11 +14,11 @@ object CheckCommand <%= object.inspect -%> {
   <% end -%>
   <% if options['command'] -%>
   <% if options['command'].is_a?(String) -%>
-  command = <%= options['command'] %>
+  command = "<%= options['command'] %>"
   <% elsif !options['command'].empty? -%>
   command = [
   <% options['command'].each do |cmd| -%>
-    <%= cmd  %>
+    "<%= cmd  %>"
   <% end -%>
   ]
   <% end -%>
