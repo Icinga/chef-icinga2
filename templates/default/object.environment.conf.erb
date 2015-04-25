@@ -12,7 +12,9 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <%- if @import -%>
   import <%= @import.inspect %>
   <%- end -%>
-  <%- if node_hash['hostname'] -%>
+  <%- if node_hash['fqdn'] -%>
+  display_name = <%= node_hash['fqdn'].inspect %>
+  <%- elsif node_hash['hostname'] -%>
   display_name = <%= node_hash['hostname'].inspect %>
   <%- end -%>
   <%- if node_hash['address'] -%>
