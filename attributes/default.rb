@@ -40,6 +40,9 @@ default['icinga2']['enable_application_hostgroup'] = true
 default['icinga2']['enable_role_hostgroup'] = false
 default['icinga2']['limit_region'] = true
 
+# host attribute to use for Host Object
+# attribute display_name in LWRP environment
+default['icinga2']['host_display_name_attr'] = 'hostname'
 default['icinga2']['use_fqdn_resolv'] = false
 default['icinga2']['failover_fqdn_address'] = true
 default['icinga2']['ignore_node_error'] = false

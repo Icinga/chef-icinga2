@@ -595,6 +595,7 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 - *enable_cluster_hostgroup* (optional, TrueClass/FalseClass)	- whether to create `HostGroup` objects for chef node cluster's
 - *enable_application_hostgroup* (optional, TrueClass/FalseClass)	- whether to create `HostGroup` objects for chef node application's
 - *enable_role_hostgroup* (optional, TrueClass/FalseClass)	- whether to create `HostGroup` objects for chef node run_list role
+- *host_display_name_attr* (optional, String)	- whether to use `hostname` or `fqdn` for Host Object attribute `display_name`, options: hostname fqdn
 - *use_fqdn_resolv* (optional, TrueClass/FalseClass)	- whether to use DNS FQDN resolved address for `Host` object attribute `address`
 - *failover_fqdn_address* (optional, TrueClass/FalseClass)	- whether to use chef node attribute `node['ipaddress']` if failed to resolve node FQDN
 - *ignore_resolv_error* (optional, TrueClass/FalseClass)	- whether to ignore node FQDN resolve error
@@ -1792,6 +1793,8 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 * `default['icinga2']['enable_role_hostgroup']` (default: `false`): creates icinga2 HostGroup Objects for environment roles
 
 * `default['icinga2']['limit_region']` (default: `true`): whether to limit monitoring to icinga2 server region, e.g. for ec2 collect nodes belongs to same region
+
+* `default['icinga2']['host_display_name_attr']` (default: `hostname`): whether to use `hostname` or `fqdn` for environment resource Host Object attribute `display_name`, options: hostname fqdn
 
 * `default['icinga2']['use_fqdn_resolv']` (default: `false`): whether to determine node `address` from fqdn
 

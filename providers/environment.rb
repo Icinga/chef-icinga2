@@ -76,6 +76,7 @@ def create_objects
     mode 0640
     variables(:environment => new_resource.environment,
               :hosts => env_hosts,
+              :host_display_name_attr => new_resource.host_display_name_attr,
               :import => new_resource.import,
               :check_command => new_resource.check_command,
               :max_check_attempts => new_resource.max_check_attempts,

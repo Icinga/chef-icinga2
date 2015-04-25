@@ -12,8 +12,8 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <%- if @import -%>
   import <%= @import.inspect %>
   <%- end -%>
-  <%- if node_hash['hostname'] -%>
-  display_name = <%= node_hash['hostname'].inspect %>
+  <%- if @host_display_name_attr && node_hash[@host_display_name_attr] -%>
+  display_name = <%= node_hash[@host_display_name_attr].inspect %>
   <%- end -%>
   <%- if node_hash['address'] -%>
   address = <%= node_hash['address'].inspect %>

@@ -43,6 +43,7 @@ attribute :exclude_roles,       :kind_of => Array, :default => []
 attribute :env_custom_vars,     :kind_of => Hash, :default => {}
 attribute :limit_region,        :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['limit_region']
 attribute :server_region,       :kind_of => String, :default => nil
+attribute :host_display_name_attr,        :kind_of => String, :equal_to => %w(fqdn hostname), :default => node['icinga2']['host_display_name_attr']
 
 attribute :add_cloud_custom_vars,         :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['add_cloud_custom_vars']
 attribute :env_filter_node_vars,          :kind_of => Hash, :default => {}
