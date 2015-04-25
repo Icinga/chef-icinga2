@@ -3,6 +3,35 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.3.1
+-----
+
+- Virender Khatri - Bug #9037, added Hash support for host / service custom vars
+
+- Virender Khatri - Bug #9019, fixed host.vars.disks attribute for lwrp environment
+
+- Virender Khatri - Bug #9038, added suffix centos for epel repo releasever 7
+
+- Marcel Beck - Bug #9038, rhel version check for centos suffix
+
+- Marcel Beck - Bug #9039, allow web_uri /
+
+- Virender Khatri - Bug #9066, allow arguments Hash key value to be String, Integer and Float for checkcommand lwrp
+
+- Virender Khatri - Bug #8788, possible fix for debian platform classic_ui cgi resource_file nil string
+
+- Virender Khatri - Bug #9126, manage classic ui cgi log directory
+
+- Virender Khatri - Bug #9125, update repo attribute to support debian platform
+
+- Virender Khatri - Bug #9128, fix user group ownership for node[icinga2][classic_ui][log_dir]
+
+- Virender Khatri - Bug #9129, classic ui unable to access icinga2 objects.cache on ubuntu platform
+
+- Jörg Herzinger - Bug #9132,Fix version contraint for centos 7 apache modules
+
+- Virender Khatri - Bug #9151, bump icinga2 version to v2.3.4-1, classic_ui version to v1.13.2
+
 2.1.8
 -----
 
