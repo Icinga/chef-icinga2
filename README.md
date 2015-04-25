@@ -314,6 +314,8 @@ There are certain functionalities added to LWRP `environment`, like:
 
 - `Host` object attribute `display_name` is set to chef node hostname
 
+- can exclude chef nodes from icinga2 monitoring if attribute `node['monitoring_off']` is set
+
 
 Simply create a LWRP resource for a chef environment, to start monitoring all nodes in that environment. More details can be found in examples.
 
@@ -539,6 +541,14 @@ Note: Default configuration files managed by cookbook:
 As mentioned in a section above, instead of creating `Host` objects for each chef node, using LWRP `environment` `Host` objects can easily be created for all chef nodes for a chef environment.
 
 LWRP resource attributes are common for all the `Host`. It may be required to define or override attribute for few specific `Host` objects, but it is not yet incorporated or foreseen any usage at this point which might change over time.
+
+
+**Turn Off Monitoring for a Chef Node**
+
+To turn off monitoring for a chef node, simply set attribute - `node['monitoring_off']`.
+
+If this attribute is set for a chef node, LWRP `environment` will simply ignore that node.
+
 
 **LWRP generated config file**
 

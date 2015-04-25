@@ -83,6 +83,12 @@ module Icinga2
       roles = []
       recipes = []
       results.each do |node|
+        # skip node if set not to monitor
+        if node['monitoring_off'] == true
+          Chef::Log.warn("#{node.name} is set to turn off the monitoring, node ignored")
+          next
+        end
+
         node_hash = convert_node(node)
 
         # match node attributes to given env attributes
@@ -91,12 +97,6 @@ module Icinga2
             Chef::Log.warn("node#{k}=#{node_hash[k]} does not match with env_filter_node_vars[#{k}]=#{env_filter_node_vars[k]}, node ignored")
             next
           end
-        end
-
-        # skip node if set not to monitor
-        if node['monitoring_off'] == true
-          Chef::Log.warn("#{node_hash['name']} is set to turn off the monitoring, node ignored")
-          next
         end
 
         # check server region with node region
