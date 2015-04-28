@@ -237,7 +237,7 @@ module Icinga2
           node_hash['custom_vars']['node_type'] = node['ec2']['instance_type']
           node_hash['custom_vars']['node_zone'] = node['ec2']['placement_availability_zone']
           node_hash['custom_vars']['node_region'] = node['ec2']['placement_availability_zone'].chop
-          node_hash['custom_vars']['node_security_groups'] = node['ec2']['security_groups']
+          node_hash['custom_vars']['node_security_groups'] = node['ec2']['security_groups'].sort.uniq if node['ec2']['security_groups'].is_a?(Array)
           node_hash['custom_vars']['node_wan_address'] = node['ec2']['public_ipv4'].to_s
 
           node['ec2']['network_interfaces_macs'].each do |_net, net_options|
