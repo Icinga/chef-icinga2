@@ -30,8 +30,8 @@ end
 # install icinga2 packages
 include_recipe 'icinga2::core_install'
 
-# configure icinga2 core files / directories
-include_recipe 'icinga2::core_config'
+# configure icinga2 server & core files / directories
+include_recipe 'icinga2::server_config'
 
 # icinga2 classic ui
 include_recipe 'icinga2::server_classic_ui' if node['icinga2']['classic_ui']['enable']
