@@ -21,8 +21,8 @@
   <% if options['users'] -%>
   users = <%= options['users'].inspect %>
   <% end -%>
-  <% if options['user_groups'] -%>
-  user_groups = <%= options['user_groups'].inspect %>
+  <% if options['user_groups'] && !options['user_groups'].empty? -%>
+  user_groups = <%= options['user_groups'].sort.uniq.inspect %>
   <% end -%>
   <% if options['command'] -%>
   command = <%= options['command'].inspect %>

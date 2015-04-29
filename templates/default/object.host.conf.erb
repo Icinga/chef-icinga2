@@ -22,7 +22,7 @@
   address6 = "<%= options['address6'].inspect %>
   <%- end -%>
   <%- if options['groups'] && !options['groups'].empty? -%>
-  groups = <%= options['groups'].inspect %>
+  groups = <%= options['groups'].sort.uniq.inspect %>
   <%- end -%>
   <%- if options['check_command'] -%>
   check_command = <%= options['check_command'].inspect %>

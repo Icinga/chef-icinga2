@@ -18,8 +18,8 @@ apply Notification <%= object.inspect -%> to <%= options['object_type'] -%> {
   <%- if options['users'] -%>
   users = <%= options['users'].inspect %>
   <%- end -%>
-  <%- if options['user_groups'] -%>
-  user_groups = <%= options['user_groups'].inspect %>
+  <%- if options['user_groups'] && !options['user_groups'].empty? -%>
+  user_groups = <%= options['user_groups'].sort.uniq.inspect %>
   <%- end -%>
   <%- if options['interval'] -%>
   interval = <%= options['interval'] %>

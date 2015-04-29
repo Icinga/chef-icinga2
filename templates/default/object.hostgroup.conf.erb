@@ -12,8 +12,8 @@ object HostGroup <%= object.inspect -%> {
   <% if options['display_name'] -%>
   display_name = <%= options['display_name'].inspect %>
   <% end -%>
-  <% if options['groups'] -%>
-  groups = <%= options['groups'].inspect %>
+  <% if options['groups'] && !options['groups'].empty? -%>
+  groups = <%= options['groups'].sort.uniq.inspect %>
   <% end -%>
   <% if options['assign_where'] -%>
   <%- options['assign_where'].each do |a|-%>

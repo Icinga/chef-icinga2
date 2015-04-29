@@ -18,8 +18,8 @@
   <% unless options['enable_notifications'].nil? -%>
   enable_notifications = <%= options['enable_notifications'].inspect %>
   <% end -%>
-  <% if options['groups'] -%>
-  groups = <%= options['groups'].inspect %>
+  <% if options['groups'] && !options['groups'].empty? -%>
+  groups = <%= options['groups'].sort.uniq.inspect %>
   <% end -%>
   <% if options['email'] -%>
   email = <%= options['email'].inspect %>
