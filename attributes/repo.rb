@@ -74,7 +74,7 @@ when 'debian'
       default['icinga2']['apt']['key'] = '29D662D2'
 
       # icinga2 package version suffix
-      default['icinga2']['icinga2_version_suffix'] = '~debmon' +  node['platform_verson'].split('.')[0] + '0+1'
+      default['icinga2']['icinga2_version_suffix'] = '~debmon' +  node['platform_version'].split('.')[0] + '0+1'
     end
   end
 end
