@@ -70,7 +70,7 @@ when 'debian'
     when 'release'
       default['icinga2']['apt']['repo'] = 'ICINGA Stable Release debmon.org'
       default['icinga2']['apt']['uri'] = 'http://debmon.org/debmon'
-      default['icinga2']['apt']['distribution'] = node['lsb']['codename']
+      default['icinga2']['apt']['distribution'] = "debmon-#{node['lsb']['codename']}"
       default['icinga2']['apt']['key'] = '29D662D2'
 
       # icinga2 package version suffix
