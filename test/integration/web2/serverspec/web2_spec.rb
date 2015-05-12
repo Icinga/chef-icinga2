@@ -4,8 +4,8 @@ set :backend, :exec
 set :path, '$PATH:/sbin:/usr/local/sbin'
 
 %w(
-    icinga2
-    icinga2-ido-mysql
+  icinga2
+  icinga2-ido-mysql
 ).each do |pkg|
   describe package(pkg) do
     it { should be_installed }
@@ -28,5 +28,5 @@ when 'ubuntu'
 end
 
 describe command('curl -IL localhost/icingaweb2/setup') do
-  its(:stdout) { should match(/HTTP\/1.1 200 OK/)}
+  its(:stdout) { should match(%r{HTTP/1.1 200 OK}) }
 end
