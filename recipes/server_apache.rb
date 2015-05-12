@@ -46,6 +46,11 @@ end
 apache_config node['icinga2']['classic_ui']['apache_conf'] if node['icinga2']['classic_ui']['enable']
 apache_config 'icinga2-web2' if node['icinga2']['web2']['enable']
 
+user 'nagios' do
+  system true
+  only_if { node['platform'] == 'ubuntu' }
+end
+
 group node['icinga2']['group'] do
   members [node['apache']['user'], node['icinga2']['user']]
   only_if { node['platform'] == 'ubuntu' }
