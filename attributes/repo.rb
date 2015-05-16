@@ -52,7 +52,7 @@ when 'debian'
       default['icinga2']['icinga2_version_suffix'] = '~ppa1~' + node['lsb']['codename'].to_s + '1'
     end
   when 'debian'
-    default['icinga2']['apt']['keyserver'] = 'keyserver.ubuntu.com'
+    default['icinga2']['apt']['keyserver'] = nil
     default['icinga2']['apt']['components'] = %w(main)
     default['icinga2']['apt']['deb_src'] = true
     default['icinga2']['apt']['action'] = :add
@@ -62,7 +62,7 @@ when 'debian'
       default['icinga2']['apt']['repo'] = 'ICINGA Snapshots Release'
       default['icinga2']['apt']['uri'] = 'http://packages.icinga.org/debian'
       default['icinga2']['apt']['distribution'] = 'icinga-' + node['lsb']['codename'].to_s + '-snapshots'
-      default['icinga2']['apt']['key'] = '34410682'
+      default['icinga2']['apt']['key'] = 'http://debmon.org/debmon/repo.key'
 
       # icinga2 package version suffix
       default['icinga2']['icinga2_version_suffix'] = '~' + node['lsb']['codename'].to_s
@@ -70,11 +70,11 @@ when 'debian'
     when 'release'
       default['icinga2']['apt']['repo'] = 'ICINGA Stable Release debmon.org'
       default['icinga2']['apt']['uri'] = 'http://debmon.org/debmon'
-      default['icinga2']['apt']['distribution'] = node['lsb']['codename']
-      default['icinga2']['apt']['key'] = '29D662D2'
+      default['icinga2']['apt']['distribution'] = "debmon-#{node['lsb']['codename']}"
+      default['icinga2']['apt']['key'] = 'http://debmon.org/debmon/repo.key'
 
       # icinga2 package version suffix
-      default['icinga2']['icinga2_version_suffix'] = '~debmon' +  node['platform_verson'].split('.')[0] + '0+1'
+      default['icinga2']['icinga2_version_suffix'] = '~debmon' + node['platform_version'].split('.')[0] + '0+1'
     end
   end
 end

@@ -8,9 +8,26 @@ provisioner:
 platforms:
   - name: ubuntu-12.04
   - name: centos-6.4
+  - name: debian-7.8
 
 suites:
   - name: default
     run_list:
       - recipe[icinga2::default]
     attributes:
+
+  - name: web2
+    driver:
+      network:
+        - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
+        - ["forwarded_port", {guest: 443, host: 8443, auto_correct: true}]
+    run_list:
+      - recipe[icinga2::default]
+      - recipe[icinga2::server]
+      - recipe[icinga2-test::default]
+    attributes:
+     icinga2:
+      web2:
+        enable: true
+      classic_ui:
+        enable: false

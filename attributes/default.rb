@@ -1,6 +1,11 @@
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/getting-started#getting-started
 
-default['icinga2']['version'] = '2.3.4-1'
+if node['platform_family'] == 'debian'
+  default['icinga2']['version'] = '2.3.4-3'
+else
+  default['icinga2']['version'] = '2.3.4-1'
+end
+
 default['icinga2']['ignore_version'] = false
 default['icinga2']['cookbook'] = 'icinga2'
 default['icinga2']['conf_dir'] = '/etc/icinga2'

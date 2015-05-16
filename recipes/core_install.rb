@@ -24,7 +24,7 @@ when 'debian'
     uri node['icinga2']['apt']['uri']
     distribution node['icinga2']['apt']['distribution']
     components node['icinga2']['apt']['components']
-    keyserver node['icinga2']['apt']['keyserver']
+    keyserver node['icinga2']['apt']['keyserver'] unless node['icinga2']['apt']['keyserver'].nil?
     key node['icinga2']['apt']['key']
     deb_src node['icinga2']['apt']['deb_src']
     action node['icinga2']['apt']['action']

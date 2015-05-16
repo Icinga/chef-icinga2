@@ -195,7 +195,7 @@ module Icinga2
       node_hash['platform'] = node['platform']
       node_hash['platform_version'] = node['platform_version']
       node_hash['tags'] = node['tags']
-      node_hash['disks'] = node['filesystem'].map { |d, o| d if d.to_s =~ /^\/dev/ && o['fs_type'] != 'swap' && o.key?('mount') }.compact if node['filesystem']
+      node_hash['disks'] = node['filesystem'].map { |d, o| d if d.to_s =~ %r{^/dev} && o['fs_type'] != 'swap' && o.key?('mount') }.compact if node['filesystem']
 
       node_hash['custom_vars'] = node_custom_vars(node['icinga2'])
       # chef client last run
