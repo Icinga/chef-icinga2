@@ -72,6 +72,7 @@ def object_template
                                        'icon_image_alt' => resource.send('icon_image_alt'),
                                        'assign_where' => resource.send('assign_where'),
                                        'ignore_where' => resource.send('ignore_where'),
+                                       'set' => resource.send('set'),
                                        'custom_vars' => resource.send('custom_vars') }
   end
 
