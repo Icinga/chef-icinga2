@@ -8,7 +8,7 @@
 */
 
 <% @objects.sort.map do |object, options|%>
-apply Service <%= object.inspect -%> {
+apply Service <%= options['set'].nil? ? object.inspect : "for (#{options['set']})" -%> {
   <%- if options['import'] -%>
   import <%= options['import'].inspect %>
   <%- end -%>

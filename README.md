@@ -839,12 +839,28 @@ LWRP `service` creates an icinga `Service` object or template.
 
 Above LWRP resource will apply an icinga `Service` object to all `Hosts` with custom vars `host.vars.nrpe`.
 
+**LWRP Apply Service For Object example**
+
+	icinga2_applyservice 'areca' do
+    set 'areca => config in host.vars.areca'
+	  display_name '"areca raidset" + areca'
+	  import 'generic-service'
+	  check_command 'check_snmp'
+	  assign_where ['"areca" in host.vars.enabled_services']
+	  check_interval '5m'
+	  retry_interval '3m'
+	  max_check_attempts 2
+	end
+
+Above LWRP resource will apply an icinga `Service` object with a Service for set (also called hash or dictionary) to all `Hosts` with custom vars `host.vars.enabled_services` including 'areca'.
+
 
 **LWRP Options**
 
 
 - *action* (optional)	- default :create, options: :create, :delete, :reload
 - *display_name* (optional, String)	- icinga `Service` object attribute `display_name`
+- *set* (optional, String) - gives a set (hash/dictionary) to the icinga `service` object
 - *import* (optional, String)	- icinga `Service` object attribute `import`
 - *host_name* (optional, String)	- icinga `Service` object attribute `host_name`
 - *groups* (optional, Array)	- icinga `Service` object attribute `groups`
