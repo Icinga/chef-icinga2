@@ -46,13 +46,22 @@ end
 apache_config node['icinga2']['classic_ui']['apache_conf'] if node['icinga2']['classic_ui']['enable']
 apache_config 'icinga2-web2' if node['icinga2']['web2']['enable']
 
+# group resource for user nagios
+group node['icinga2']['group'] do
+  only_if { node['platform'] == 'ubuntu' }
+  append true
+end
+
 user 'nagios' do
+  gid 'nagios'
   system true
   only_if { node['platform'] == 'ubuntu' }
 end
 
+# add group members
 group node['icinga2']['group'] do
   members [node['apache']['user'], node['icinga2']['user']]
   only_if { node['platform'] == 'ubuntu' }
   notifies :restart, 'service[apache2]', :delayed
+  action :modify
 end
