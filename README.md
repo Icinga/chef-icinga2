@@ -1046,7 +1046,7 @@ LWRP `endpoint` creates an icinga `Endpoint` object.
 
 	icinga2_endpoint 'endpoint' do
 	  host 'host address'
-	  port 'port'
+	  port 1234
 	  log_duration 'log duration'
 	end
 
@@ -1224,7 +1224,7 @@ LWRP `gelfwriter` creates an icinga `GelfWriter` object.
 	icinga2_gelfwriter 'gelfwriter' do
 	  library 'library'
 	  host 'host address'
-	  port 'port'
+	  port 1234
 	  source 'source'
 	end
 
@@ -1250,7 +1250,7 @@ LWRP `graphitewriter` creates an icinga `GraphiteWriter` object.
 	icinga2_graphitewriter 'graphitewriter' do
 	  library 'library'
 	  host 'host address'
-	  port 'port'
+	  port 1234
 	end
 
 Above LWRP resource will create an icinga `GraphiteWriter` config object.
@@ -1276,7 +1276,7 @@ LWRP `idomysqlconnection` creates an icinga `IdoMySqlConnection` object.
 	icinga2_idomysqlconnection 'idomysqlconnection' do
 	  library 'library'
 	  host 'host address'
-	  port 'port'
+	  port 1234
 	  user 'user name'
 	  password 'password'
 	  database 'database name'
@@ -1313,7 +1313,7 @@ LWRP `idopgsqlconnection` creates an icinga `IdoPgSqlConnection` object.
 	icinga2_idopgsqlconnection 'idopgsqlconnection' do
 	  library 'library'
 	  host 'host address'
-	  port 'port'
+	  port 1234
 	  user 'user name'
 	  password 'password'
 	  database 'database name'
