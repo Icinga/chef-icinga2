@@ -49,4 +49,4 @@ attribute :icon_image_alt,  :kind_of => String, :default => nil
 attribute :custom_vars,     :kind_of => Hash, :default => nil
 attribute :assign_where,          :kind_of => Array, :default => nil
 attribute :ignore_where,          :kind_of => Array, :default => nil
-attribute :set,          :kind_of => String, :regex => /^[a-z]+\s=>\s[a-z]+\sin\s\S+$/, default: nil
+attribute :set,          :kind_of => String, :regex => /^[a-z|_]+\s=>\s[a-z|_]+\sin\s\S+$/, default: nil
