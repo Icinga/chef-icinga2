@@ -3,6 +3,48 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.5.0
+-----
+
+- Virender Khatri - Bug #9173, update LWRP environment & README for monitoring_off
+
+- Virender Khatri - Bug #9174, make Host Object atttribute display_name configurable for LWRP environment
+
+- Virender Khatri - Bug #9194, sort aws host custom_vars attribute node_security_groups
+
+- Virender Khatri - Bug #9193, recipe server needs to include server_config
+
+- Virender Khatri - Bug #9195, sort groups attribute for resources icinga2 Objects
+
+- Steven De Coeyer - Update repo.rb typo
+
+- Steven De Coeyer - Add debian to, and reorders icinga2.apache_modules
+
+- Steven De Coeyer - Add debmon prefix to distribution for debian paltform family
+
+- Steven De Coeyer - Fix apt key for debmon repos
+
+- Steven De Coeyer - Add tests for icingaweb2
+
+- Steven De Coeyer - Fix version of packages for debian paltform family
+
+- Steven De Coeyer - Fix missing nagios user for ubuntu
+
+- Frederik Thuysbaert & Steven De Coeyer - Add set attribute to support 'apply Service for'
+
+- Frederik Thuysbaert & Steven De Coeyer - Adds evaluate_quotes method in favor of inspect
+
+- Frederik Thuysbaert - Update README to include Apply Service For
+
+- Virender Khatri - Bug #9370, fix nagios user group for ubuntu platform
+
+- Martin Stiborsky - Updated README.md for resource attribute port to be integer
+
+- Steven De Coeyer - Allows underscores in set attribute for resource applyservice
+
+- Virender Khatri - Feature #9299 add icinga2_script resource to add scripts from wrapper cookbook templates
+
+
 2.3.1
 -----
 

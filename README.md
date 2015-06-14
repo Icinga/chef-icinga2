@@ -1828,7 +1828,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Core Attributes
 
-* `default['icinga2']['version']` (default: `2.3.3-1`): icinga2 version
+* `default['icinga2']['version']` (default: `calculated`): icinga2 version
 
 * `default['icinga2']['conf_dir']` (default: `/etc/icinga2`): icinga2 configuration location
 
@@ -2011,7 +2011,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Classic UI CGI Core Attributes
 
-* `default['icinga2']['classic_ui']['version']` (default: `2.3.3-1`): icinga2 classic-ui package version
+* `default['icinga2']['classic_ui']['version']` (default: `calculated`): icinga2 classic-ui package version
 
 * `default['icinga2']['classic_ui']['gui_version']` (default: `1.12.2-0`): icinga2 gui package version
 
