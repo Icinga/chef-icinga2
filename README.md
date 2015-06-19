@@ -735,7 +735,7 @@ LWRP `hostgroup` creates an icinga `HostGroup` object.
 **LWRP HostGroup example**
 
 	icinga2_hostgroup 'hostgroup_name' do
-	  disaply_name 'Host Group'
+	  display_name 'Host Group'
 	  groups ['othergroup']
 	  assign_where ['"hostgroup_name" in host.vars.hostgroups']
 	  ignore_where ['"hostgroup_name" in host.vars.hostgroups']
@@ -899,7 +899,7 @@ LWRP `servicegroup` creates an icinga `ServiceGroup` object.
 **LWRP ServiceGroup example**
 
 	icinga2_servicegroup 'servicegroup_name' do
-	  disaply_name 'Service Group'
+	  display_name 'Service Group'
 	  groups ['othergroup']
 	  assign_where ['"servicegroup_name" in host.vars.servicegroups']
 	  ignore_where ['"servicegroup_name" in host.vars.servicegroups']
@@ -998,7 +998,7 @@ LWRP `usergroup` creates an icinga `UserGroup` object.
 **LWRP UserGroup example**
 
 	icinga2_usergroup 'usergroup_name' do
-	  disaply_name 'User Group'
+	  display_name 'User Group'
 	  groups ['usergroup']
 	  zone 'zone_name'
 	end
