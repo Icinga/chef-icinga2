@@ -3,6 +3,13 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.5.2
+-----
+
+- Martin Stiborsky - Updated README for LWRP examples typo fix
+
+- Virender Khatri - Feature #9457, bump icinga2 version to 2.3.5-1
+
 2.5.0
 -----
 
