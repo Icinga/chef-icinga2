@@ -38,7 +38,7 @@ For issue reporting or any discussion regarding this cookbook, open an issue at 
 
 ## TODO
 
-* classic ui setup is incomplete for ubuntu/debian platform
+* add icinga2 web2 configuration support
 * add chef node zone/endpoint objects for icinga2 agent setup
 * add lwrp envendpoint / envzone lwrp for environment resource
 
