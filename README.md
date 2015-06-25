@@ -153,7 +153,7 @@ Currently Icinga2 installation is supported **ONLY** via Repository Packages, as
 To setup icinga2 server on a node, add recipe `icinga2::server` which will install necessary packages and configuration files.
 
 
-## Icing2 with PNP4Nagios
+## Icinga2 with PNP4Nagios
 
 Recipe `icinga2::server_pnp` setup and configures `PNP4Nagios` along with `rrdtool`.
 
@@ -438,6 +438,7 @@ Currently icinga2 cookbook supports below Objects LWRP Resources:
 - icinga2_notification
 - icinga2_notificationcommand
 - icinga2_scheduleddowntime
+- icinga2_script
 - icinga2_service
 - icinga2_servicegroup
 - icinga2_sysloglogger
@@ -1190,6 +1191,32 @@ Above LWRP resource will create an icinga `ScheduledDowntime` object.
 - *zone* (optional, String)	- icinga `ScheduledDowntime` attribute `zone`
 - *ranges* (optional, Hash)	- icinga `ScheduledDowntime` attribute `ranges`
 - *template* (optional, TrueClass/FalseClass)	- whether to create an icinga `ScheduledDowntime` template
+
+
+## LWRP icinga2_script
+
+
+LWRP `script` creates a template resource file script under `node['icinga2']['scripts_dir']`. This resource is optional and not necessary applicable to all scenarios.
+
+
+**LWRP script example**
+
+	icinga2_script 'mail-host-notification-custom.sh' do
+	  cookbook 'wrapper_cookbook'
+	  source 'mail-host-notification-custom.sh.erb'
+	  variables {}
+	end
+
+Above LWRP resource will create a script file under `node['icinga2']['scripts_dir']/mail-host-notification-custom.sh` using template `mail-host-notification-custom.sh.erb` from cookbook `wrapper_cookbook`.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *name* (optional, String)	- template resource script file name
+- *source* (optional, String)	- template resource attribute `source`
+- *cookbook* (optional, String)	- template resource attribute `cookbook`
+- *variables* (optional, String)	- template resource attribute `variables`
 
 
 ## LWRP icinga2_externalcommandlistener
