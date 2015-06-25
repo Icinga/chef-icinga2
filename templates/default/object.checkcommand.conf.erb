@@ -57,7 +57,7 @@ object CheckCommand <%= object.inspect -%> {
   <% if options['custom_vars'] -%>
   <% Hash[options['custom_vars'].sort].each do |var, value| -%>
   <% if var && value -%>
-  vars.<%= var -%> = <%= value.inspect %>
+  vars.<%= var -%> = <%= evaluate_quotes(value) %>
   <% end -%>
   <% end -%>
   <% end -%>
