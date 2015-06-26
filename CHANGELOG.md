@@ -3,6 +3,15 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.5.5
+-----
+
+- Martin Stiborsky - Feature #9492, Node name added as a option for host display name for environment resource
+
+- Virender Khatri - Bug #9488, evaluate string for icinga2 function
+
+- Virender Khatri - Bug #9488, Functions as Custom Attribute doesnt work with custom_vars for checkcommand resource
+
 2.5.2
 -----
 
