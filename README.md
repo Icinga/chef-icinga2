@@ -2040,7 +2040,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 * `default['icinga2']['classic_ui']['version']` (default: `calculated`): icinga2 classic-ui package version
 
-* `default['icinga2']['classic_ui']['gui_version']` (default: `1.12.2-0`): icinga2 gui package version
+* `default['icinga2']['classic_ui']['gui_version']` (default: `1.13.2-0`): icinga2 gui package version
 
 * `default['icinga2']['classic_ui']['web_root']` (default: `/usr/share/icinga`): icinga2 web doc root directory location
 
