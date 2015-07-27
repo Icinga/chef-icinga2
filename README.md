@@ -351,7 +351,7 @@ e.g.
 	end
 
 
-For more details about nodes attributes, check LWRP `environment` object tempalte.
+For more details about nodes attributes, check LWRP `environment` object template.
 
 >> Like `env_resources`, user can also define custom template for LWRP `environment` using attribute `cookbook` and `template`.
 
@@ -725,7 +725,7 @@ Above LWRP resource will create an icinga `Host` template - `generic-host`.
 - *icon_image* (optional, String)	- icinga `Host` object attribute `icon_image`
 - *icon_image_alt* (optional, String)	- icinga `Host` object attribute `icon_image_alt`
 - *custom_vars* (optional, String)	- icinga `Host` object attribute `vars`
-- *tempalte* (optional, String)	- whether to create a `Host` template
+- *template* (optional, TrueClass/FalseClass)	- whether to create a `Host` template
 
 
 ## LWRP icinga2_hostgroup
@@ -816,7 +816,7 @@ Above LWRP resource will create an icinga `Service` template object for a `gener
 - *icon_image* (optional, String)	- icinga `Service` object attribute `icon_image`
 - *icon_image_alt* (optional, String)	- icinga `Service` object attribute `icon_image_alt`
 - *custom_vars* (optional, Hash)	- icinga `Service` object attribute `vars`
-- *tempalte* (optional, TrueClass/FalseClass)	- whether to create a `Service` template
+- *template* (optional, TrueClass/FalseClass)	- whether to create a `Service` template
 
 
 ## LWRP icinga2_applyservice
@@ -1158,6 +1158,7 @@ Above LWRP resource will create an icinga `CheckCommand` object.
 - *zone* (optional, String)	- icinga `CheckCommand` attribute `zone`
 - *arguments* (optional, Hash)	- icinga `CheckCommand` attribute `arguments`
 - *custom_vars* (optional, Hash)	- icinga `CheckCommand` attribute `custom_vars`
+- *template* (optional, TrueClass/FalseClass) - whether to create a `CheckCommand` template
 
 
 ## LWRP icinga2_scheduleddowntime
