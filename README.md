@@ -8,6 +8,8 @@ More features and attributes will be added over time, **feel free to contribute*
 what you find missing!
 
 
+>> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/icinga2).
+
 ## Repository
 
 https://github.com/icinga/chef-icinga2
