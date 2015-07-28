@@ -27,3 +27,4 @@ attribute :env,         :kind_of => Hash, :default => nil
 attribute :timeout,     :kind_of => [String, Integer], :default => nil
 attribute :arguments,   :kind_of => Hash, :default => nil
 attribute :custom_vars, :kind_of => Hash, :default => nil
+attribute :template,    :kind_of => [TrueClass, FalseClass], :default => false
