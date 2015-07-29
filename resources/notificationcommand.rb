@@ -28,3 +28,4 @@ attribute :timeout,     :kind_of => Integer, :default => nil
 attribute :zone,        :kind_of => String, :default => nil
 attribute :arguments,   :kind_of => Hash, :default => nil
 attribute :custom_vars, :kind_of => Hash, :default => nil
+attribute :template,    :kind_of => [TrueClass, FalseClass], :default => false

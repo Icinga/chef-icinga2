@@ -8,7 +8,7 @@
 */
 
 <% @objects.sort.map do |object, options|%>
-object NotificationCommand <%= object.inspect -%> {
+<%= options['object_class'] -%> NotificationCommand <%= object.inspect -%> {
   <% if options['import'] -%>
   import <%= options['import'].inspect %>
   <% end -%>

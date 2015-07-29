@@ -39,30 +39,59 @@ def object_resources
 end
 
 # collect objects and create resource template
-def object_template
+def objects
   # collect objects
   icinga2_objects = {}
+  icinga2_templates = {}
   object_resources.reduce({}) do |_hash, resource|
-    next if resource.action != :create || icinga2_objects.key?(resource.name)
-    icinga2_objects[resource.name] = {}
-    icinga2_objects[resource.name] = { 'import' => resource.send('import'),
-                                       'command' => resource.send('command'),
-                                       'env' => resource.send('env'),
-                                       'timeout' => resource.send('timeout'),
-                                       'zone' => resource.send('zone'),
-                                       'arguments' => resource.send('arguments'),
-                                       'custom_vars' => resource.send('custom_vars') }
+    next unless resource.action == :create
+    if resource.send('template') && !icinga2_templates.key?(resource.name)
+      icinga2_templates[resource.name] = {}
+      icinga2_templates[resource.name] = { 'import' => resource.send('import'),
+                                           'command' => resource.send('command'),
+                                           'env' => resource.send('env'),
+                                           'timeout' => resource.send('timeout'),
+                                           'zone' => resource.send('zone'),
+                                           'arguments' => resource.send('arguments'),
+                                           'custom_vars' => resource.send('custom_vars'),
+                                           'object_class' => 'template' }
+    elsif !icinga2_objects.key?(resource.name)
+      icinga2_objects[resource.name] = {}
+      icinga2_objects[resource.name] = { 'import' => resource.send('import'),
+                                         'command' => resource.send('command'),
+                                         'env' => resource.send('env'),
+                                         'timeout' => resource.send('timeout'),
+                                         'zone' => resource.send('zone'),
+                                         'arguments' => resource.send('arguments'),
+                                         'custom_vars' => resource.send('custom_vars'),
+                                         'object_class' => 'object' }
+    end
   end
+  [icinga2_objects, icinga2_templates]
+end
 
+# create object / template resource
+def object_template
+  objs, tmpls = objects
   # create object resource
-  ot = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}.conf") do
+  ob = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}.conf") do
     source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
     cookbook 'icinga2'
     owner node['icinga2']['user']
     group node['icinga2']['group']
     mode 0640
-    variables(:objects => icinga2_objects)
+    variables(:objects => objs)
     notifies :reload, 'service[icinga2]', :delayed
   end
-  ot.updated?
+  # create template resource
+  te = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}_template.conf") do
+    source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
+    cookbook 'icinga2'
+    owner node['icinga2']['user']
+    group node['icinga2']['group']
+    mode 0640
+    variables(:objects => tmpls)
+    notifies :reload, 'service[icinga2]', :delayed
+  end
+  ob.updated? || te.updated?
 end
