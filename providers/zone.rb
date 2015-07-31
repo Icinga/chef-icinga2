@@ -43,7 +43,7 @@ def object_template
   # collect objects
   icinga2_objects = {}
   object_resources.reduce({}) do |_hash, resource|
-    next if resource.action != :create || icinga2_objects.key?(resource.name)
+    next if !icinga2_resource_create?(resource.action) || icinga2_objects.key?(resource.name)
     icinga2_objects[resource.name] = {}
     icinga2_objects[resource.name] = { 'endpoints' => resource.send('endpoints'),
                                        'parent' => resource.send('parent'),

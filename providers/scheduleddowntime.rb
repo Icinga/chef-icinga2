@@ -43,7 +43,7 @@ def objects
   icinga2_objects = {}
   icinga2_templates = {}
   object_resources.reduce({}) do |_hash, resource|
-    next unless resource.action == :create
+    next unless icinga2_resource_create?(resource.action)
     if resource.send('template') && !icinga2_templates.key?(resource.name)
       icinga2_templates[resource.name] = {}
       icinga2_templates[resource.name] = { 'host_name' => resource.send('host_name'),

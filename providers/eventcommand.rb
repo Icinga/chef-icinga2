@@ -44,7 +44,7 @@ def objects
   icinga2_objects = {}
   icinga2_templates = {}
   object_resources.reduce({}) do |_hash, resource|
-    next unless resource.action == :create
+    next unless icinga2_resource_create?(resource.action)
     if resource.send('template') && !icinga2_templates.key?(resource.name)
       icinga2_templates[resource.name] = {}
       icinga2_templates[resource.name] = { 'import' => resource.send('import'),
@@ -81,6 +81,7 @@ def object_template
     variables(:objects => objs)
     notifies :reload, 'service[icinga2]', :delayed
   end
+  # create template resource
   te = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}_template.conf") do
     source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
     cookbook 'icinga2'
