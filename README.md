@@ -1,6 +1,8 @@
 icinga2 Cookbook
 ==================
 
+[![Cookbook](http://img.shields.io/badge/cookbook-v2.6.5-green.svg)](https://github.com/icinga/chef-icinga2)
+
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
 
