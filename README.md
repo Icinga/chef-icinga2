@@ -1207,7 +1207,6 @@ LWRP `script` creates a template resource file script under `node['icinga2']['sc
 	icinga2_script 'mail-host-notification-custom.sh' do
 	  cookbook 'wrapper_cookbook'
 	  source 'mail-host-notification-custom.sh.erb'
-	  variables {}
 	end
 
 Above LWRP resource will create a script file under `node['icinga2']['scripts_dir']/mail-host-notification-custom.sh` using template `mail-host-notification-custom.sh.erb` from cookbook `wrapper_cookbook`.
@@ -1216,10 +1215,9 @@ Above LWRP resource will create a script file under `node['icinga2']['scripts_di
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *name* (optional, String)	- template resource script file name
-- *source* (optional, String)	- template resource attribute `source`
-- *cookbook* (optional, String)	- template resource attribute `cookbook`
-- *variables* (optional, String)	- template resource attribute `variables`
+- *source* (required, String)	- template resource attribute `source`
+- *cookbook* (required, String)	- template resource attribute `cookbook`
+- *variables* (optional, Hash)	- template resource attribute `variables`
 
 
 ## LWRP icinga2_externalcommandlistener
