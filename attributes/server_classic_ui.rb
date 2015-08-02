@@ -8,12 +8,12 @@ default['icinga2']['classic_ui']['apache_conf'] = value_for_platform(
 )
 
 if node['platform_family'] == 'debian'
-  default['icinga2']['classic_ui']['version'] = '2.3.7-1'
+  default['icinga2']['classic_ui']['version'] = '2.3.8-1'
 else
-  default['icinga2']['classic_ui']['version'] = '2.3.7-1'
+  default['icinga2']['classic_ui']['version'] = '2.3.8-1'
 end
 
-default['icinga2']['classic_ui']['gui_version'] = '1.13.2-0'
+default['icinga2']['classic_ui']['gui_version'] = '1.13.3-0'
 default['icinga2']['classic_ui']['web_root'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => '/usr/share/icinga' },
   %w(debian ubuntu) => { 'default' => '/usr/share/icinga2/classicui' }
