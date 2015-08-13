@@ -209,14 +209,14 @@ To add more users for icinga2 Classic UI auth, add new users to Hash attribute i
 
 Icinga2 Classic UI User authorization is managed by below node Array attributes:
 
-	node['icinga2']['classic_ui']['authorized_for_system_information']
-	node['icinga2']['classic_ui']['authorized_for_configuration_information']
-	node['icinga2']['classic_ui']['authorized_for_full_command_resolution']
-	node['icinga2']['classic_ui']['authorized_for_system_commands']
-	node['icinga2']['classic_ui']['authorized_for_all_services']
-	node['icinga2']['classic_ui']['authorized_for_all_hosts']
-	node['icinga2']['classic_ui']['authorized_for_all_service_commands']
-	node['icinga2']['classic_ui']['authorized_for_all_host_commands']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_system_information']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_configuration_information']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_full_command_resolution']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_system_commands']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_services']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_hosts']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_service_commands']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_host_commands']
 
 By simply adding users to above attributes will provide necessary access to the UI.
 
@@ -230,8 +230,8 @@ To add a guest user without any admin privileges, first add a `guest` user (with
 
 Then authorise `guest` user to view `Host/Service` status
 
-	node['icinga2']['classic_ui']['authorized_for_all_services'] = %w(icingaadmin guest)
-	node['icinga2']['classic_ui']['authorized_for_all_hosts'] = %w(icingaadmin guest)
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_services'] = 'icingaadmin,guest'
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_hosts'] = 'icingaadmin,guest'
 
 
 
@@ -239,14 +239,14 @@ Then authorise `guest` user to view `Host/Service` status
 
 To make a user `admin`, add the user to below node attributes:
 
-	node['icinga2']['classic_ui']['authorized_for_system_information']
-	node['icinga2']['classic_ui']['authorized_for_configuration_information']
-	node['icinga2']['classic_ui']['authorized_for_full_command_resolution']
-	node['icinga2']['classic_ui']['authorized_for_system_commands']
-	node['icinga2']['classic_ui']['authorized_for_all_services']
-	node['icinga2']['classic_ui']['authorized_for_all_hosts']
-	node['icinga2']['classic_ui']['authorized_for_all_service_commands']
-	node['icinga2']['classic_ui']['authorized_for_all_host_commands']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_system_information']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_configuration_information']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_full_command_resolution']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_system_commands']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_services']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_hosts']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_service_commands']
+	node['icinga2']['classic_ui']['cgi']['authorized_for_all_host_commands']
 
 
 ## Icinga2 Server IDO Schema Load
