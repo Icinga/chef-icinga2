@@ -1037,7 +1037,7 @@ Above LWRP resource will create an icinga `Zone` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *endpoints* (optional, String)	- icinga `Zone` attribute `endpoints`
+- *endpoints* (optional, Array)	- icinga `Zone` attribute `endpoints`
 - *parent* (optional, String)	- icinga `Zone` attribute `parent`
 - *global* (optional, TrueClass/FalseClass)	- icinga `Zone` attribute `global`
 
@@ -1061,7 +1061,7 @@ Above LWRP resource will create an icinga `Endpoint` object.
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *host* (optional, String)	- icinga `Endpoint` attribute `host`
+- *host* (optional, Array)	- icinga `Endpoint` attribute `host`
 - *port* (optional, Integer)	- icinga `Endpoint` attribute `port`
 - *log_duration* (optional, String)	- icinga `Endpoint` attribute `log_duration`
 
