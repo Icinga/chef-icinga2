@@ -22,7 +22,7 @@ actions :create, :delete
 default_action :create
 
 attribute :import,      :kind_of => String, :default => 'plugin-check-command'
-attribute :command,     :kind_of => [String, Array], :required => true, :default => nil
+attribute :command,     :kind_of => [String, Array], :default => nil
 attribute :env,         :kind_of => Hash, :default => nil
 attribute :timeout,     :kind_of => Integer, :default => nil
 attribute :zone,        :kind_of => String, :default => nil
