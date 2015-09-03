@@ -252,7 +252,7 @@ module Icinga2
 
       # add node custom vars from environment lwrp
       env_custom_vars.each do |k, v|
-        node_hash['custom_vars'][k] = v if variable_check(k)
+        node_hash['custom_vars'][k.to_s] = v if variable_check(k)
       end
 
       node_hash
