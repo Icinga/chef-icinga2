@@ -68,7 +68,19 @@ def create_objects
   else
     env_hosts = {}
   end
-  hosts_template = template ::File.join(node['icinga2']['objects_dir'], template_file_name) do
+  if new_resource.zone
+    env_resources_path = ::File.join(node['icinga2']['zones_dir'], new_resource.zone, template_file_name)
+
+    directory ::File.join(node['icinga2']['zones_dir'], new_resource.zone) do
+      owner node['icinga2']['user']
+      group node['icinga2']['group']
+      action :create
+      only_if { env_hosts.length > 0 }
+    end
+  else
+    env_resources_path = ::File.join(node['icinga2']['objects_dir'], template_file_name)
+  end
+  hosts_template = template env_resources_path do
     source new_resource.template
     cookbook new_resource.cookbook
     owner node['icinga2']['user']
@@ -92,7 +104,6 @@ def create_objects
               :event_command => new_resource.event_command,
               :flapping_threshold => new_resource.flapping_threshold,
               :volatile => new_resource.volatile,
-              :zone => new_resource.zone,
               :command_endpoint => new_resource.command_endpoint,
               :notes => new_resource.notes,
               :notes_url => new_resource.notes_url,

@@ -38,97 +38,10 @@ def object_resources
   end
 end
 
-# collect objects
-def objects
-  icinga2_objects = {}
-  icinga2_templates = {}
-  object_resources.reduce({}) do |_hash, resource|
-    next unless icinga2_resource_create?(resource.action)
-    if resource.send('template') && !icinga2_templates.key?(resource.name)
-      icinga2_templates[resource.name] = {}
-      icinga2_templates[resource.name] = { 'import' => resource.send('import'),
-                                           'display_name' => resource.send('display_name'),
-                                           'address' => resource.send('address'),
-                                           'address6' => resource.send('address6'),
-                                           'groups' => resource.send('groups'),
-                                           'check_command' => resource.send('check_command'),
-                                           'max_check_attempts' => resource.send('max_check_attempts'),
-                                           'check_period' => resource.send('check_period'),
-                                           'check_interval' => resource.send('check_interval'),
-                                           'retry_interval' => resource.send('retry_interval'),
-                                           'enable_notifications' => resource.send('enable_notifications'),
-                                           'enable_active_checks' => resource.send('enable_active_checks'),
-                                           'enable_passive_checks' => resource.send('enable_passive_checks'),
-                                           'enable_event_handler' => resource.send('enable_event_handler'),
-                                           'enable_flapping' => resource.send('enable_flapping'),
-                                           'enable_perfdata' => resource.send('enable_perfdata'),
-                                           'event_command' => resource.send('event_command'),
-                                           'flapping_threshold' => resource.send('flapping_threshold'),
-                                           'volatile' => resource.send('volatile'),
-                                           'zone' => resource.send('zone'),
-                                           'command_endpoint' => resource.send('command_endpoint'),
-                                           'notes' => resource.send('notes'),
-                                           'notes_url' => resource.send('notes_url'),
-                                           'action_url' => resource.send('action_url'),
-                                           'icon_image' => resource.send('icon_image'),
-                                           'icon_image_alt' => resource.send('icon_image_alt'),
-                                           'custom_vars' => resource.send('custom_vars'),
-                                           'object_class' => 'template' }
-    elsif !icinga2_objects.key?(resource.name)
-      icinga2_objects[resource.name] = {}
-      icinga2_objects[resource.name] = { 'import' => resource.send('import'),
-                                         'display_name' => resource.send('display_name'),
-                                         'address' => resource.send('address'),
-                                         'address6' => resource.send('address6'),
-                                         'groups' => resource.send('groups'),
-                                         'check_command' => resource.send('check_command'),
-                                         'max_check_attempts' => resource.send('max_check_attempts'),
-                                         'check_period' => resource.send('check_period'),
-                                         'check_interval' => resource.send('check_interval'),
-                                         'retry_interval' => resource.send('retry_interval'),
-                                         'enable_notifications' => resource.send('enable_notifications'),
-                                         'enable_active_checks' => resource.send('enable_active_checks'),
-                                         'enable_passive_checks' => resource.send('enable_passive_checks'),
-                                         'enable_event_handler' => resource.send('enable_event_handler'),
-                                         'enable_flapping' => resource.send('enable_flapping'),
-                                         'enable_perfdata' => resource.send('enable_perfdata'),
-                                         'event_command' => resource.send('event_command'),
-                                         'flapping_threshold' => resource.send('flapping_threshold'),
-                                         'volatile' => resource.send('volatile'),
-                                         'zone' => resource.send('zone'),
-                                         'command_endpoint' => resource.send('command_endpoint'),
-                                         'notes' => resource.send('notes'),
-                                         'notes_url' => resource.send('notes_url'),
-                                         'action_url' => resource.send('action_url'),
-                                         'icon_image' => resource.send('icon_image'),
-                                         'icon_image_alt' => resource.send('icon_image_alt'),
-                                         'custom_vars' => resource.send('custom_vars'),
-                                         'object_class' => 'object' }
-    end
-  end
-  [icinga2_objects, icinga2_templates]
-end
 
 # create object resource
 def object_template
-  objs, tmpls = objects
-  ob = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}.conf") do
-    source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
-    cookbook 'icinga2'
-    owner node['icinga2']['user']
-    group node['icinga2']['group']
-    mode 0640
-    variables(:objects => objs)
-    notifies :reload, 'service[icinga2]', :delayed
-  end
-  te = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}_template.conf") do
-    source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
-    cookbook 'icinga2'
-    owner node['icinga2']['user']
-    group node['icinga2']['group']
-    mode 0640
-    variables(:objects => tmpls)
-    notifies :reload, 'service[icinga2]', :delayed
-  end
-  ob.updated? || te.updated?
+  resource_keys = %w(import display_name address address6 groups check_command max_check_attempts check_period check_interval retry_interval enable_notifications enable_active_checks enable_passive_checks enable_event_handler enable_flapping enable_perfdata event_command flapping_threshold volatile zone command_endpoint notes notes_url action_url icon_image icon_image_alt custom_vars)
+
+  processIcinga2Resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, true)
 end

@@ -51,9 +51,6 @@
   }
   <% end -%>
 
-  <% if options['zone'] -%>
-  zone = <%= options['zone'].inspect %>
-  <% end -%>
   <% if options['custom_vars'] -%>
   <% Hash[options['custom_vars'].sort].each do |var, value| -%>
   <% if var && value -%>

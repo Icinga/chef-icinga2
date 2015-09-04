@@ -15,9 +15,6 @@
   <% if options['display_name'] -%>
   display_name = <%= options['display_name'].inspect %>
   <% end -%>
-  <% if options['zone'] -%>
-  zone = <%= options['zone'].inspect %>
-  <% end -%>
   <% if options['ranges'] -%>
   ranges = {
   <% options['ranges'].each do |day, time| -%>

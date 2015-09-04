@@ -40,34 +40,7 @@ end
 
 # collect objects and create resource template
 def object_template
-  # collect objects
-  icinga2_objects = {}
-  object_resources.reduce({}) do |_hash, resource|
-    next if !icinga2_resource_create?(resource.action) || icinga2_objects.key?(resource.name)
-    icinga2_objects[resource.name] = {}
-    icinga2_objects[resource.name] = { 'object_type' => resource.send('object_type'),
-                                       'import' => resource.send('import'),
-                                       'command' => resource.send('command'),
-                                       'users' => resource.send('users'),
-                                       'user_groups' => resource.send('user_groups'),
-                                       'interval' => resource.send('interval'),
-                                       'period' => resource.send('period'),
-                                       'types' => resource.send('types'),
-                                       'states' => resource.send('states'),
-                                       'times' => resource.send('times'),
-                                       'assign_where' => resource.send('assign_where'),
-                                       'ignore_where' => resource.send('ignore_where') }
-  end
+  resource_keys = %w(object_type import command users user_groups interval period types states times assign_where ignore_where zone)
 
-  # create object resource
-  ot = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}.conf") do
-    source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
-    cookbook 'icinga2'
-    owner node['icinga2']['user']
-    group node['icinga2']['group']
-    mode 0640
-    variables(:objects => icinga2_objects)
-    notifies :reload, 'service[icinga2]', :delayed
-  end
-  ot.updated?
+  processIcinga2Resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, false)
 end

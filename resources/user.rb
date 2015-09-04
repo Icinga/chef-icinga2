@@ -29,7 +29,7 @@ attribute :pager,         :kind_of => String, :default => nil
 attribute :period,        :kind_of => String, :default => nil
 attribute :states,        :kind_of => Array, :default => nil
 attribute :types,         :kind_of => Array, :default => nil
-attribute :zone,          :kind_of => Array, :default => nil
+attribute :zone,          :kind_of => String, :default => nil
 attribute :custom_vars,   :kind_of => Hash, :default => nil
 attribute :enable_notifications,   :kind_of => [TrueClass, FalseClass, NilClass], :default => nil
 attribute :template,      :kind_of => [TrueClass, FalseClass, NilClass], :default => nil

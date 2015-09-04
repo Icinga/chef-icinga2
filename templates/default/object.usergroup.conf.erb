@@ -15,9 +15,6 @@ object UserGroup <%= object.inspect -%> {
   <% if options['groups'] && !options['groups'].empty? -%>
   groups = <%= options['groups'].sort.uniq.inspect %>
   <% end -%>
-  <% if options['zone'] -%>
-  zone = <%= options['zone'].inspect %>
-  <% end -%>
 }
 
 <% end -%>
