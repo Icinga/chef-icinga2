@@ -42,5 +42,5 @@ end
 def object_template
   resource_keys = %w(display_name groups email pager period states types import zone enable_notifications custom_vars)
 
-  processIcinga2Resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, true)
+  process_icinga2_resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, true)
 end

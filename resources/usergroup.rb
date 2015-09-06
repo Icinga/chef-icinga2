@@ -21,6 +21,6 @@ actions :create, :delete
 
 default_action :create
 
-attribute :display_name,  :kind_of => String, :default => nil
+attribute :display_name, :kind_of => String, :default => nil
 attribute :groups,  :kind_of => Array, :default => nil
 attribute :zone,    :kind_of => String, :default => nil

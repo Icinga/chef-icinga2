@@ -38,10 +38,9 @@ def object_resources
   end
 end
 
-
 # create object resource
 def object_template
   resource_keys = %w(import display_name address address6 groups check_command max_check_attempts check_period check_interval retry_interval enable_notifications enable_active_checks enable_passive_checks enable_event_handler enable_flapping enable_perfdata event_command flapping_threshold volatile zone command_endpoint notes notes_url action_url icon_image icon_image_alt custom_vars)
 
-  processIcinga2Resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, true)
+  process_icinga2_resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, true)
 end

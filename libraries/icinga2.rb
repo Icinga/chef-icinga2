@@ -21,25 +21,24 @@ end
 
 # the template icinga definition should be placed to a separate file with '_template' suffix in the filename
 # in order to do that for objects assigned to a zone, this function separate the object into two hashes
-def separateZoneResources(zone_objects)
-  objectResources = Hash.new
-  templateResources = Hash.new
+def separate_zone_resources(zone_objects)
+  object_resources = {}
+  template_resources = {}
 
   zone_objects.each do |resourceKey, resourceObject|
     if resourceObject['object_class'] == 'object'
-      objectResources[resourceKey] = resourceObject
+      object_resources[resourceKey] = resourceObject
     elsif resourceObject['object_class'] == 'template'
-      templateResources[resourceKey] = resourceObject
+      template_resources[resourceKey] = resourceObject
     else
-      Chef::Application.fatal!("Unknown object_class (#{resourceObject['object_class']}), resourceKey=#{resourceKey}, resourceObject=#{resourceObject}", 1) 
+      Chef::Application.fatal!("Unknown object_class (#{resourceObject['object_class']}), resourceKey=#{resourceKey}, resourceObject=#{resourceObject}", 1)
     end
   end
 
-  [objectResources, templateResources]
+  [object_resources, template_resources]
 end
 
-
-def processIcinga2Resources(resource_name, resource_keys, object_resources, template_support)
+def process_icinga2_resources(resource_name, resource_keys, object_resources, template_support)
   icinga2_objects = {}
   # default value for a new key in the hash is an empty hash
   # key is a zone name, the hash for the key keeps an objet definitions, each unique, each is a hash again
@@ -47,7 +46,7 @@ def processIcinga2Resources(resource_name, resource_keys, object_resources, temp
 
   object_resources.reduce({}) do |_hash, resource|
     next if !icinga2_resource_create?(resource.action) || icinga2_objects.key?(resource.name)
-    resource_data = Hash[resource_keys.map {|x| [x, resource.send(x)]}]
+    resource_data = Hash[resource_keys.map { |x| [x, resource.send(x)] }]
 
     # not all icinga object support templating
     # the object_class have to be determined in any case
@@ -61,7 +60,7 @@ def processIcinga2Resources(resource_name, resource_keys, object_resources, temp
       resource_data['object_class'] = 'object'
     end
 
-    # TODO check first is such an object/key exist already, print a warning if so
+    # TODO: check first is such an object/key exist already, print a warning if so
     # if resource.send('template') && !icinga2_objects.key?(resource.name)
     if resource_data['zone']
       icinga2_zoned_objects[resource_data['zone']][resource.name] = resource_data
@@ -71,12 +70,12 @@ def processIcinga2Resources(resource_name, resource_keys, object_resources, temp
   end
 
   # separate object and teplate icinga definitions
-  icinga2_objects_grouped = icinga2_objects.group_by { |k,v| v['object_class']}
+  icinga2_objects_grouped = icinga2_objects.group_by { |_k, v| v['object_class'] }
   # now, this might be better refactored into a simple function with a simple loop, because I don't think I'll be
   # able to understand immediatelly after a halt year or so
   # what is does, it just produces a hash, with two keys, 'object' and 'template', under a key is another hash with
   # icinga object definitions, which are then processed by a template resource and ERB template file
-  icinga2_objects_dict = icinga2_objects_grouped.keys.each_with_object({'object' => {}, 'template' => {}}) { |str,hash| hash[str] = Hash[icinga2_objects_grouped[str]]}
+  icinga2_objects_dict = icinga2_objects_grouped.keys.each_with_object('object' => {}, 'template' => {}) { |str, hash| hash[str] = Hash[icinga2_objects_grouped[str]] }
 
   ot = template ::File.join(node['icinga2']['objects_dir'], "#{resource_name}.conf") do
     source "object.#{resource_name}.conf.erb"
@@ -103,7 +102,6 @@ def processIcinga2Resources(resource_name, resource_keys, object_resources, temp
   zoned_objects_updated = false
 
   icinga2_zoned_objects.each do |zone, zone_objects|
-
     directory ::File.join(node['icinga2']['zones_dir'], zone) do
       owner node['icinga2']['user']
       group node['icinga2']['group']
@@ -111,7 +109,7 @@ def processIcinga2Resources(resource_name, resource_keys, object_resources, temp
       only_if { zone_objects.length > 0 }
     end
 
-    zoned_objects, zoned_templates = separateZoneResources(zone_objects)
+    zoned_objects, zoned_templates = separate_zone_resources(zone_objects)
 
     zoned_ot = template ::File.join(node['icinga2']['zones_dir'], zone, "#{resource_name}.conf") do
       source "object.#{resource_name}.conf.erb"
@@ -135,12 +133,8 @@ def processIcinga2Resources(resource_name, resource_keys, object_resources, temp
       only_if { zoned_templates.length > 0 }
     end
 
-    if zoned_ot.updated? || zoned_te.updated?
-      zoned_objects_updated = true
-    end
-
+    zoned_objects_updated = true if zoned_ot.updated? || zoned_te.updated?
   end
 
   ot.updated? || te.updated? || zoned_objects_updated
-
 end

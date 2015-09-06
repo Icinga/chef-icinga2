@@ -32,11 +32,11 @@ end
 icinga2_timeperiod '9to5' do
   import 'legacy-timeperiod'
   display_name 'Icinga 2 9to5 TimePeriod'
-  ranges 'monday'  => '09:00-17:00',
+  ranges 'monday' => '09:00-17:00',
          'tuesday'   => '09:00-17:00',
          'wednesday' => '09:00-17:00',
          'thursday'  => '09:00-17:00',
-         'friday'  => '09:00-17:00'
+         'friday' => '09:00-17:00'
 end
 
 icinga2_timeperiod 'never' do

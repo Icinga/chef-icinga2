@@ -26,8 +26,8 @@ attribute :import,        :kind_of => String, :default => nil
 attribute :host_name,     :kind_of => String, :default => nil
 attribute :groups,        :kind_of => Array, :default => nil
 attribute :check_command, :kind_of => String, :default => nil
-attribute :max_check_attempts,  :kind_of => Integer, :default => nil
-attribute :check_period,  :kind_of => String, :default => nil
+attribute :max_check_attempts, :kind_of => Integer, :default => nil
+attribute :check_period, :kind_of => String, :default => nil
 attribute :check_interval,      :kind_of => [String, Integer], :regex => /^\d+[smhd]$/, :default => nil
 attribute :retry_interval,      :kind_of => [String, Integer], :regex => /^\d+[smhd]$/, :default => nil
 attribute :enable_notifications,  :kind_of => [TrueClass, FalseClass], :default => nil
@@ -40,7 +40,7 @@ attribute :event_command,         :kind_of => String, :default => nil
 attribute :flapping_threshold,    :kind_of => String, :default => nil
 attribute :volatile,      :kind_of => [TrueClass, FalseClass], :default => nil
 attribute :zone,          :kind_of => String, :default => nil
-attribute :command_endpoint,      :kind_of => String, :default => nil
+attribute :command_endpoint, :kind_of => String, :default => nil
 attribute :notes,         :kind_of => String, :default => nil
 attribute :notes_url,     :kind_of => String, :default => nil
 attribute :action_url,    :kind_of => String, :default => nil

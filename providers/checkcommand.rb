@@ -41,5 +41,5 @@ end
 def object_template
   resource_keys = %w(import command env timeout zone arguments custom_vars)
 
-  processIcinga2Resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, true)
+  process_icinga2_resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, true)
 end

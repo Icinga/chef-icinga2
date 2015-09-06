@@ -24,4 +24,4 @@ default_action :create
 attribute :library,       :kind_of => String, :default => 'compat'
 attribute :status_path,   :kind_of => String, :default => nil
 attribute :objects_path,  :kind_of => String, :default => nil
-attribute :update_interval,  :kind_of => [String, Integer], :default => nil
+attribute :update_interval, :kind_of => [String, Integer], :default => nil

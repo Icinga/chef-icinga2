@@ -34,7 +34,7 @@ attribute :enable_application_hostgroup,  :kind_of => [TrueClass, FalseClass], :
 attribute :application_attribute,         :kind_of => String, :default => node['icinga2']['application_attribute']
 attribute :enable_role_hostgroup,         :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['enable_role_hostgroup']
 
-attribute :use_fqdn_resolv,     :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['use_fqdn_resolv']
+attribute :use_fqdn_resolv, :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['use_fqdn_resolv']
 attribute :failover_fqdn_address, :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['failover_fqdn_address']
 attribute :ignore_node_error,   :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['ignore_node_error']
 attribute :ignore_resolv_error, :kind_of => [TrueClass, FalseClass], :default => node['icinga2']['ignore_resolv_error']

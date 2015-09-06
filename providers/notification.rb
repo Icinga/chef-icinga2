@@ -38,10 +38,9 @@ def object_resources
   end
 end
 
-
 # create object resource
 def object_template
   resource_keys = %w(import host_name service_name users user_groups times command interval period zone types states custom_vars)
 
-  processIcinga2Resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, true)
+  process_icinga2_resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, true)
 end

@@ -42,5 +42,5 @@ end
 def object_template
   resource_keys = %w(display_name groups zone)
 
-  processIcinga2Resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, false)
+  process_icinga2_resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, false)
 end

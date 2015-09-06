@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-node.default['apache']['servertokens']    = 'Minimal'
+node.default['apache']['servertokens'] = 'Minimal'
 
 node['icinga2']['apache_modules'].each { |mod| include_recipe "apache2::#{mod}" }
 

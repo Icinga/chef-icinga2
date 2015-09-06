@@ -263,7 +263,7 @@ module Icinga2
       # add icinga2 host custom vars from node custom_vars
       if vars && vars.key?('client')
         if vars['client'].key?('custom_vars') && vars['client']['custom_vars'].is_a?(Hash)
-          custom_vars =  vars['client']['custom_vars'].to_hash
+          custom_vars = vars['client']['custom_vars'].to_hash
         end
       end
       custom_vars

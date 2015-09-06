@@ -21,4 +21,4 @@ actions :create, :delete
 
 default_action :create
 
-attribute :severity,  :kind_of => String, :default => nil
+attribute :severity, :kind_of => String, :default => nil

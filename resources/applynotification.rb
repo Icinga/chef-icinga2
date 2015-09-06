@@ -33,4 +33,4 @@ attribute :states,        :kind_of => Array, :default => nil
 attribute :times,         :kind_of => Hash, :default => nil
 attribute :assign_where,          :kind_of => Array, :default => nil
 attribute :ignore_where,          :kind_of => Array, :default => nil
-attribute :zone,          :kind_of => String, :default => nil
+attribute :zone, :kind_of => String, :default => nil

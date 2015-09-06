@@ -21,5 +21,5 @@ actions :create, :delete
 
 default_action :create
 
-attribute :environment,  :name_attribute => true, :kind_of => String, :default => nil
-attribute :groups,  :kind_of => Array, :default => []
+attribute :environment, :name_attribute => true, :kind_of => String, :default => nil
+attribute :groups, :kind_of => Array, :default => []

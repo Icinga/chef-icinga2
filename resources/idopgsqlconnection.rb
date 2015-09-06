@@ -21,16 +21,16 @@ actions :create, :delete
 
 default_action :create
 
-attribute :library,  :kind_of => String, :default => 'db_ido_mysql'
+attribute :library, :kind_of => String, :default => 'db_ido_mysql'
 attribute :host,  :kind_of => String, :default => 'localhost'
 attribute :port,  :kind_of => Integer, :default => '3306'
 attribute :user,  :kind_of => String, :default => 'icinga'
 attribute :password,  :kind_of => String, :default => 'icinga'
 attribute :database,  :kind_of => String, :default => 'icinga'
-attribute :table_prefix,  :kind_of => String, :default => 'icinga_'
-attribute :instance_name,  :kind_of => String, :default => 'default'
-attribute :instance_description,  :kind_of => String, :default => nil
-attribute :enable_ha,  :kind_of => [TrueClass, FalseClass], :default => nil
-attribute :failover_timeout,  :kind_of => [String, Integer], :default => '60s'
-attribute :cleanup,  :kind_of => Hash, :default => nil
-attribute :categories,  :kind_of => Array, :default => nil
+attribute :table_prefix, :kind_of => String, :default => 'icinga_'
+attribute :instance_name, :kind_of => String, :default => 'default'
+attribute :instance_description, :kind_of => String, :default => nil
+attribute :enable_ha, :kind_of => [TrueClass, FalseClass], :default => nil
+attribute :failover_timeout, :kind_of => [String, Integer], :default => '60s'
+attribute :cleanup, :kind_of => Hash, :default => nil
+attribute :categories, :kind_of => Array, :default => nil

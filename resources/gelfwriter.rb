@@ -21,7 +21,7 @@ actions :create, :delete
 
 default_action :create
 
-attribute :library,  :kind_of => String, :default => 'perfdata'
+attribute :library, :kind_of => String, :default => 'perfdata'
 attribute :host,  :required => true, :kind_of => String, :default => nil
 attribute :port,  :required => true, :kind_of => Integer, :default => nil
-attribute :source,  :kind_of => String, :default => nil
+attribute :source, :kind_of => String, :default => nil

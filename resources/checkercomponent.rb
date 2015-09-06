@@ -21,4 +21,4 @@ actions :create, :delete
 
 default_action :create
 
-attribute :library,  :kind_of => String, :default => 'checker'
+attribute :library, :kind_of => String, :default => 'checker'
