@@ -31,6 +31,7 @@ icinga2_notificationcommand 'mail-service-notification' do
       'HOSTDISPLAYNAME' => '$host.display_name$',\
       'SERVICEDISPLAYNAME' => '$service.display_name$',\
       'USEREMAIL' => '$user.email$'
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 # add icinga host notification command
@@ -47,4 +48,5 @@ icinga2_notificationcommand 'mail-host-notification' do
       'USEREMAIL' => '$user.email$',\
       'HOSTSTATE' => '$host.state$',\
       'HOSTOUTPUT' => '$host.output$'
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end

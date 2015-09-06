@@ -27,6 +27,7 @@ icinga2_timeperiod '24x7' do
          'friday' => '00:00-24:00',
          'saturday' => '00:00-24:00',
          'sunday' => '00:00-24:00'
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 icinga2_timeperiod '9to5' do
@@ -37,9 +38,11 @@ icinga2_timeperiod '9to5' do
          'wednesday' => '09:00-17:00',
          'thursday'  => '09:00-17:00',
          'friday' => '09:00-17:00'
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 icinga2_timeperiod 'never' do
   import 'legacy-timeperiod'
   display_name 'Icinga 2 never TimePeriod'
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end
