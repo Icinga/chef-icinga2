@@ -20,6 +20,7 @@
 # generic-user user template
 icinga2_user 'generic-user' do
   template true
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 # add default icingaadmin user
@@ -31,4 +32,5 @@ icinga2_user 'icingaadmin' do
   display_name 'Icinga 2 Admin'
   groups %w(icingaadmins)
   email 'root@localhost'
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end

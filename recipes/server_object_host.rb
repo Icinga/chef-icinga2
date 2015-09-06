@@ -23,4 +23,5 @@ icinga2_host 'generic-host' do
   check_interval node['icinga2']['server']['object']['host']['check_interval']
   retry_interval node['icinga2']['server']['object']['host']['retry_interval']
   check_command node['icinga2']['server']['object']['host']['check_command']
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end

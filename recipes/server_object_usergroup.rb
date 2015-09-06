@@ -19,4 +19,5 @@
 
 icinga2_usergroup 'icingaadmins' do
   display_name 'Icinga 2 Admin Group'
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end

@@ -22,4 +22,5 @@ icinga2_service 'generic-service' do
   max_check_attempts node['icinga2']['server']['object']['host']['max_check_attempts']
   check_interval node['icinga2']['server']['object']['host']['check_interval']
   retry_interval node['icinga2']['server']['object']['host']['retry_interval']
+  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
 end
