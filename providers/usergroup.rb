@@ -40,25 +40,7 @@ end
 
 # collect objects and create resource template
 def object_template
-  # collect objects
-  icinga2_objects = {}
-  object_resources.reduce({}) do |_hash, resource|
-    next if !icinga2_resource_create?(resource.action) || icinga2_objects.key?(resource.name)
-    icinga2_objects[resource.name] = {}
-    icinga2_objects[resource.name] = { 'display_name' => resource.send('display_name'),
-                                       'zone' => resource.send('zone'),
-                                       'groups' => resource.send('groups') }
-  end
+  resource_keys = %w(display_name groups zone)
 
-  # create object resource
-  ot = template ::File.join(node['icinga2']['objects_dir'], "#{::File.basename(__FILE__, '.rb')}.conf") do
-    source "object.#{::File.basename(__FILE__, '.rb')}.conf.erb"
-    cookbook 'icinga2'
-    owner node['icinga2']['user']
-    group node['icinga2']['group']
-    mode 0640
-    variables(:objects => icinga2_objects)
-    notifies :reload, 'service[icinga2]', :delayed
-  end
-  ot.updated?
+  processIcinga2Resources(::File.basename(__FILE__, '.rb'), resource_keys, object_resources, false)
 end

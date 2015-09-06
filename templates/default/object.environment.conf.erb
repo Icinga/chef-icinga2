@@ -66,9 +66,6 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <%- unless @volatile.nil? -%>
   volatile = <%= @volatile.inspect %>
   <%- end -%>
-  <%- if @zone -%>
-  zone = <%= @zone.inspect %>
-  <%- end -%>
   <%- if @command_endpoint -%>
   command_endpoint = <%= @command_endpoint.inspect %>
   <%- end -%>
