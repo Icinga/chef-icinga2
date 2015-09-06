@@ -102,7 +102,8 @@ def process_icinga2_resources(resource_name, resource_keys, object_resources, te
   zoned_objects_updated = false
 
   icinga2_zoned_objects.each do |zone, zone_objects|
-    directory ::File.join(node['icinga2']['zones_dir'], zone) do
+    directory "zone_#{zone}" do
+      path ::File.join(node['icinga2']['zones_dir'], zone)
       owner node['icinga2']['user']
       group node['icinga2']['group']
       action :create
