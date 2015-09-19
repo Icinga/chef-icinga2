@@ -32,7 +32,7 @@ end
 directory node['icinga2']['web2']['log_dir'] do
   owner node[node['icinga2']['web_engine']]['user']
   group node[node['icinga2']['web_engine']]['group']
-  mode '0665'
+  mode '0775'
 end
 
 # setup token
