@@ -8,9 +8,9 @@ default['icinga2']['classic_ui']['apache_conf'] = value_for_platform(
 )
 
 if node['platform_family'] == 'debian'
-  default['icinga2']['classic_ui']['version'] = '2.3.8-1'
+  default['icinga2']['classic_ui']['version'] = '2.3.10-1'
 else
-  default['icinga2']['classic_ui']['version'] = '2.3.8-1'
+  default['icinga2']['classic_ui']['version'] = '2.3.10-1'
 end
 
 default['icinga2']['classic_ui']['gui_version'] = '1.13.3-0'
