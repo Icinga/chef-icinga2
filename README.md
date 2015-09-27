@@ -27,6 +27,20 @@ https://supermarket.chef.io/cookbooks/icinga2
 For issue reporting or any discussion regarding this cookbook, open an issue at [Dev Icinga]. New users need to [Register] first.
 
 
+## Supported Icinga Version
+
+This cookbook is being developed for Icinga2 - v2.2.x primarily on Amazon Platform (EPEL Release 6 Package).
+
+
+## Supported Icinga2 Install Types
+
+Currently Icinga2 installation is supported **ONLY** via Repository Packages, as it is a recommended best practice.
+
+## Chef Requirement
+
+This cookbook requires Chef Version 11.x or above.
+
+
 ## Contributing
 
 1. Open Bug / Feature issue at [Dev Icinga]
@@ -140,16 +154,6 @@ For issue reporting or any discussion regarding this cookbook, open an issue at 
 
 - `icinga2::server_web2`		- icinga2 web2 ui default attributes file
 
-
-
-## Supported Icinga Version
-
-This cookbook is being developed for Icinga2 - v2.2.x primarily on Amazon Platform (EPEL Release 6 Package).
-
-
-## Supported Icinga2 Install Types
-
-Currently Icinga2 installation is supported **ONLY** via Repository Packages, as it is a recommended best practice.
 
 
 ## Icinga2 Server Setup
