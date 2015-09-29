@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe 'icinga2::attributes'
+
 include_recipe 'icinga2::client_os_packages'
 
 # install icinga2 packages

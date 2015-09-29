@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe 'icinga2::attributes'
+
 include_recipe 'icinga2::server_os_packages'
 
 # setup apache and icinga2 vhost
