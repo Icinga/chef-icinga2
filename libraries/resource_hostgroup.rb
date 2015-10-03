@@ -31,6 +31,14 @@ class Chef
         )
       end
 
+      def zone(arg = nil)
+        set_or_return(
+          :zone, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
       def assign_where(arg = nil)
         set_or_return(
           :assign_where, arg,
@@ -59,7 +67,7 @@ class Chef
         set_or_return(
           :resource_properties, arg,
           :kind_of => Array,
-          :default => %w(display_name groups assign_where ignore_where)
+          :default => %w(display_name groups zone assign_where ignore_where)
         )
       end
     end
