@@ -17,7 +17,7 @@ class Chef
 
       def library(arg = nil)
         set_or_return(
-          :severity, arg,
+          :library, arg,
           :kind_of => String,
           :default => 'notification'
         )
