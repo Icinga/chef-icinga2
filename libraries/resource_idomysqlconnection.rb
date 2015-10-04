@@ -27,7 +27,7 @@ class Chef
         set_or_return(
           :host, arg,
           :kind_of => String,
-          :default => 'localhost'
+          :default => nil
         )
       end
 
@@ -35,15 +35,15 @@ class Chef
         set_or_return(
           :port, arg,
           :kind_of => Integer,
-          :default => 3306
+          :default => nil
         )
       end
 
       def user(arg = nil)
         set_or_return(
-          :bind_port, arg,
+          :user, arg,
           :kind_of => String,
-          :default => 'icinga'
+          :default => nil
         )
       end
 
@@ -51,7 +51,7 @@ class Chef
         set_or_return(
           :password, arg,
           :kind_of => String,
-          :default => 'icinga'
+          :default => nil
         )
       end
 
@@ -59,7 +59,7 @@ class Chef
         set_or_return(
           :database, arg,
           :kind_of => String,
-          :default => 'icinga'
+          :default => nil
         )
       end
 
@@ -67,7 +67,7 @@ class Chef
         set_or_return(
           :table_prefix, arg,
           :kind_of => String,
-          :default => 'icinga_'
+          :default => nil
         )
       end
 
@@ -75,7 +75,7 @@ class Chef
         set_or_return(
           :instance_name, arg,
           :kind_of => String,
-          :default => 'default'
+          :default => nil
         )
       end
 
@@ -91,7 +91,7 @@ class Chef
         set_or_return(
           :enable_ha, arg,
           :kind_of => [TrueClass, FalseClass],
-          :default => 'icinga'
+          :default => nil
         )
       end
 
@@ -99,7 +99,7 @@ class Chef
         set_or_return(
           :failover_timeout, arg,
           :kind_of => [String, Integer],
-          :default => 'icinga'
+          :default => nil
         )
       end
 
@@ -107,7 +107,7 @@ class Chef
         set_or_return(
           :cleanup, arg,
           :kind_of => Hash,
-          :default => 'icinga'
+          :default => nil
         )
       end
 
@@ -115,7 +115,7 @@ class Chef
         set_or_return(
           :categories, arg,
           :kind_of => Array,
-          :default => 'icinga'
+          :default => nil
         )
       end
     end
