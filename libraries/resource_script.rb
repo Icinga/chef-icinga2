@@ -18,9 +18,8 @@ class Chef
       def source(arg = nil)
         set_or_return(
           :source, arg,
-          :required => true,
           :kind_of => String,
-          :default => nil
+          :default => name
         )
       end
 
