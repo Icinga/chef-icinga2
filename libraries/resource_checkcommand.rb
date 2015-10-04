@@ -16,7 +16,7 @@ class Chef
 
       def import(arg = nil)
         set_or_return(
-          :cert_path, arg,
+          :import, arg,
           :kind_of => String,
           :default => 'plugin-check-command'
         )
