@@ -36,7 +36,7 @@ class Chef
           execute "enable_feature_#{new_resource.name}" do
             command "/usr/sbin/icinga2 feature enable #{new_resource.name}"
             creates ::File.join(node['icinga2']['features_enabled_dir'], "#{new_resource.name}.conf")
-            notifies :reload, 'service[icinga2]', :delayed
+            notifies :reload, 'service[icinga2]'
           end
           new_resource.updated_by_last_action(true)
         end
@@ -46,7 +46,7 @@ class Chef
         if ::File.exist?(::File.join(node['icinga2']['features_enabled_dir'], "#{new_resource.name}.conf"))
           execute "disable_feature_#{new_resource.name}" do
             command "/usr/sbin/icinga2 feature disable #{new_resource.name}"
-            notifies :reload, 'service[icinga2]', :delayed
+            notifies :reload, 'service[icinga2]'
           end
           new_resource.updated_by_last_action(true)
         end
