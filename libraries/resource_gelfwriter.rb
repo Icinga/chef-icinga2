@@ -26,7 +26,6 @@ class Chef
       def host(arg = nil)
         set_or_return(
           :host, arg,
-          :required => true,
           :kind_of => String,
           :default => nil
         )
@@ -35,7 +34,6 @@ class Chef
       def port(arg = nil)
         set_or_return(
           :port, arg,
-          :required => true,
           :kind_of => Integer,
           :default => nil
         )
