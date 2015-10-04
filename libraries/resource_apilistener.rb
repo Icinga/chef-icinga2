@@ -60,7 +60,7 @@ class Chef
       def bind_port(arg = nil)
         set_or_return(
           :bind_port, arg,
-          :kind_of => [String, Integer],
+          :kind_of => Integer,
           :default => nil
         )
       end
@@ -77,7 +77,7 @@ class Chef
         set_or_return(
           :accept_config, arg,
           :kind_of => [TrueClass, FalseClass],
-          :default => true
+          :default => nil
         )
       end
 
