@@ -26,7 +26,6 @@ class Chef
       def host(arg = nil)
         set_or_return(
           :host, arg,
-          :required => true,
           :kind_of => String,
           :default => nil
         )
@@ -35,7 +34,6 @@ class Chef
       def port(arg = nil)
         set_or_return(
           :port, arg,
-          :required => true,
           :kind_of => Integer,
           :default => nil
         )
@@ -45,16 +43,15 @@ class Chef
         set_or_return(
           :host_name_template, arg,
           :kind_of => String,
-          :default => 'icinga.$host.name$'
+          :default => nil
         )
       end
 
       def service_name_template(arg = nil)
         set_or_return(
           :service_name_template, arg,
-          :required => true,
           :kind_of => String,
-          :default => 'icinga.$host.name$.$service.name$'
+          :default => nil
         )
       end
     end
