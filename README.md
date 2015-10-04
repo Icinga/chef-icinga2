@@ -458,7 +458,6 @@ Currently icinga2 cookbook supports below Objects LWRP Resources:
 - icinga2_statusdatawriter
 - icinga2_compatlogger
 - icinga2_checkresultreader
-- icinga2_checkercomponent
 - icinga2_notificationcomponent
 - icinga2_filelogger
 - icinga2_perfdatawriter
@@ -1668,26 +1667,6 @@ Above LWRP resource will create an icinga `CheckResultReader` object.
 - *action* (optional)	- default :enable, options: :enable, :disable
 - *library* (optional, String)	- default compat, icinga `CheckResultReader` Object `library`
 - *spool_dir* (optional, String)	- icinga `CheckResultReader` attribute `spool_dir`
-
-
-
-## LWRP icinga2_checkercomponent
-
-LWRP `checkercomponent` creates an icinga `CheckerComponent` object.
-
-
-**LWRP CheckerComponent example**
-
-	icinga2_checkercomponent 'checkercomponent'
-
-
-Above LWRP resource will create an icinga `CheckerComponent` object.
-
-
-**LWRP Options**
-
-- *action* (optional)	- default :enable, options: :enable, :disable
-- *library* (optional, String)	- default checker, icinga `CheckerComponent` Object `library`
 
 
 
