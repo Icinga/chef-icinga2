@@ -24,7 +24,7 @@ class Chef
 
       def port(arg = nil)
         set_or_return(
-          :endpoint, arg,
+          :port, arg,
           :kind_of => Integer,
           :default => node['icinga2']['endpoint_port']
         )
