@@ -16,7 +16,7 @@ class Chef
 
       def import(arg = nil)
         set_or_return(
-          :host_name, arg,
+          :import, arg,
           :kind_of => String,
           :default => 'plugin-notification-command'
         )
