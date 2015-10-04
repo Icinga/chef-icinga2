@@ -26,7 +26,7 @@ class Chef
         set_or_return(
           :import, arg,
           :kind_of => String,
-          :default => nil
+          :default => 'legacy-timeperiod'
         )
       end
 
