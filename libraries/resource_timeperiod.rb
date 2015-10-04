@@ -16,7 +16,7 @@ class Chef
 
       def display_name(arg = nil)
         set_or_return(
-          :cert_path, arg,
+          :display_name, arg,
           :kind_of => String,
           :default => nil
         )
