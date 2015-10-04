@@ -134,6 +134,7 @@ class Chef
 
         hostgroup_template = icinga2_envhostgroup new_resource.environment do
           groups env_hostgroups
+          zone new_resource.zone
         end
 
         hostgroup_template.updated?
