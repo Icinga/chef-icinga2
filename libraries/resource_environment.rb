@@ -17,7 +17,7 @@ class Chef
 
       def environment(arg = nil)
         set_or_return(
-          :severity, arg,
+          :environment, arg,
           :required => true,
           :kind_of => String,
           :default => nil
