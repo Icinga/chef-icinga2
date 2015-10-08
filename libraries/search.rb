@@ -33,7 +33,7 @@ module Icinga2
                   :enable_application_hostgroup, :application_attribute, :ignore_node_error,
                   :ignore_resolv_error, :exclude_recipes, :exclude_roles, :env_custom_vars,
                   :limit_region, :server_region, :search_pattern, :use_fqdn_resolv,
-                  :add_cloud_custom_vars,
+                  :add_cloud_custom_vars, :env_skip_node_vars,
                   :env_filter_node_vars, :failover_fqdn_address
 
     def initialize(options = {})
@@ -54,6 +54,7 @@ module Icinga2
       @use_fqdn_resolv = options[:use_fqdn_resolv]
       @add_cloud_custom_vars = options[:add_cloud_custom_vars]
       @env_filter_node_vars = options[:env_filter_node_vars]
+      @env_skip_node_vars = options[:env_skip_node_vars]
       @failover_fqdn_address = options[:failover_fqdn_address]
     end
 
@@ -90,14 +91,31 @@ module Icinga2
         end
 
         node_hash = convert_node(node)
+        break_loop = false
 
         # match node attributes to given env attributes
         env_filter_node_vars.each do |k, v|
-          unless node_hash[k] == v
+          node_value = node_hash[k.to_s]
+          if (v.is_a?(String) && v != node_value) || (v.is_a?(Regexp) && node_value !~ v) || (v.is_a?(Array) && !v.include?(node_value))
             Chef::Log.warn("node#{k}=#{node_hash[k]} does not match with env_filter_node_vars[#{k}]=#{env_filter_node_vars[k]}, node ignored")
-            next
+            break_loop = true
           end
+          break if break_loop
         end
+
+        next if break_loop
+
+        # skip node attributes to given env attributes
+        env_skip_node_vars.each do |k, v|
+          node_value = node_hash[k.to_s]
+          if (v.is_a?(String) && v == node_value) || (v.is_a?(Regexp) && node_value =~ v) || (v.is_a?(Array) && v.include?(node_value))
+            Chef::Log.warn("node[#{k}]=#{node_value} matches with env_skip_node_vars[#{k}]=#{v.inspect}, node #{node.name} ignored")
+            break_loop = true
+          end
+          break if break_loop
+        end
+
+        next if break_loop
 
         # check server region with node region
         if limit_region && server_region

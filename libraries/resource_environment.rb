@@ -194,6 +194,14 @@ class Chef
         )
       end
 
+      def env_skip_node_vars(arg = nil)
+        set_or_return(
+          :env_skip_node_vars, arg,
+          :kind_of => Hash,
+          :default => {}
+        )
+      end
+
       # environment host default attributes
       def import(arg = nil)
         set_or_return(

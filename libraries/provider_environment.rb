@@ -61,6 +61,7 @@ class Chef
                                                                           :exclude_recipes => new_resource.exclude_recipes,
                                                                           :exclude_roles => new_resource.exclude_roles,
                                                                           :env_custom_vars => new_resource.env_custom_vars,
+                                                                          :env_skip_node_vars => new_resource.env_skip_node_vars,
                                                                           :env_filter_node_vars => new_resource.env_filter_node_vars,
                                                                           :limit_region => new_resource.limit_region,
                                                                           :server_region => server_region,
