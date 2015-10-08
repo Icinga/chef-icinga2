@@ -614,7 +614,8 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 - *limit_region* (optional, TrueClass/FalseClass)	- whether to limit chef node to chef server region, currently tested for Amazon EC2, e.g. a icinga2 server located in region `us-east-1` will only collect nodes located in `us-east-`` region
 - *server_region* (optional, String)	- icinga2 server region can be overridden if cloud provider is not supported by the cookbook using this attribute
 - *add_cloud_custom_vars* (optional, TrueClass/FalseClass)	- whether to add cloud attributes, currently supports amazon ec2, e.g. instance id, vpc subnet etc.
-- *env_filter_node_vars* (optional, Hash)	- filter or match chef nodes for a given `Hash` attribute values
+- *env_filter_node_vars* (optional, Hash)	- filter or match chef nodes for a given `Hash` attribute key value pairs
+- *env_skip_node_vars* (optional, Hash)	- ignore chef nodes for a given `Hash` attribute key value pairs
 - *import* (optional, String)	- icinga `Host` object import template attribute
 - *check_command* (optional, String)	- icinga `Host` object attribute `check_command`
 - *max_check_attempts* (optional, Integer)	- icinga `Host` object attribute `max_check_attempts`
@@ -1220,7 +1221,7 @@ Above LWRP resource will create a script file under `node['icinga2']['scripts_di
 **LWRP Options**
 
 - *action* (optional)	- default :enable, options: :enable, :disable
-- *source* (required, String)	- template resource attribute `source`
+- *source* (optional, String)	- default :name, template resource attribute `source`
 - *cookbook* (required, String)	- template resource attribute `cookbook`
 - *variables* (optional, Hash)	- template resource attribute `variables`
 
@@ -1675,7 +1676,7 @@ Above LWRP resource will create an icinga `CheckResultReader` object.
 LWRP `notificationcomponent` creates an icinga `NotificationComponent` object.
 
 
-**LWRP CheckerComponent example**
+**LWRP NotificationComponent example**
 
 	icinga2_notificationcomponent 'notificationcomponent' do
 	end
@@ -1686,9 +1687,9 @@ Above LWRP resource will create an icinga `NotificationComponent` object.
 
 **LWRP Options**
 
-- *action* (optional)	- default :enable, options: :enable, :disable
+- *action* (optional)	- default :create, options: :create, :delete
 - *library* (optional, String)	- default notification, icinga `NotificationComponent` Object `library`
-- *enable_ha* (optional, String)	- default checker, icinga `NotificationComponent` attribute `enable_ha`
+- *enable_ha* (optional, String)	- icinga `NotificationComponent` attribute `enable_ha`
 
 
 ## LWRP icinga2_filelogger
@@ -1696,7 +1697,7 @@ Above LWRP resource will create an icinga `NotificationComponent` object.
 LWRP `filelogger` creates an icinga `FileLogger` object.
 
 
-**LWRP CheckerComponent example**
+**LWRP FileLogger example**
 
 	icinga2_filelogger 'filelogger' do
 	end
@@ -1707,8 +1708,8 @@ Above LWRP resource will create an icinga `FileLogger` object.
 
 **LWRP Options**
 
-- *action* (optional)	- default :enable, options: :enable, :disable
-- *path* (optional, String)	- default checker, icinga `FileLogger` attribute `path`
+- *action* (optional)	- default :create, options: :create, :delete
+- *path* (optional, String)	- icinga `FileLogger` attribute `path`
 - *severity* (optional, String)	- icinga `FileLogger` attribute `severity`
 
 
@@ -1734,8 +1735,8 @@ Above LWRP resource will create an icinga `PerfdataWriter` object.
 
 - *action* (optional)	- default :enable, options: :enable, :disable
 - *library* (optional, String)	- default perfdata, icinga `PerfdataWriter` Object `library`
-- *host_perfdata_path* (optional, String)	- default checker, icinga `PerfdataWriter` attribute  `host_perfdata_path`
-- *service_perfdata_path* (optional, String)	- default checker, icinga `PerfdataWriter` attribute  `service_perfdata_path`
+- *host_perfdata_path* (optional, String)	- icinga `PerfdataWriter` attribute  `host_perfdata_path`
+- *service_perfdata_path* (optional, String)	- icinga `PerfdataWriter` attribute  `service_perfdata_path`
 - *host_temp_path* (optional, String)	- icinga `PerfdataWriter` attribute `host_temp_path`
 - *service_temp_path* (optional, String)	- icinga `PerfdataWriter` attribute `service_temp_path`
 - *host_format_template* (optional, String)	- icinga `PerfdataWriter` attribute `host_format_template`
