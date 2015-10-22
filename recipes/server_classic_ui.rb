@@ -63,7 +63,7 @@ end
 template 'icinga2_classic_ui_htpasswd' do
   path value_for_platform(
     %w(centos redhat fedora amazon) => { 'default' => ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'passwd') },
-    'ubuntu' => { 'default' => ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'htpasswd.users') }
+    %w(debian ubuntu) => { 'default' => ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'htpasswd.users') }
   )
   source 'icinga2.passwd.erb'
   owner 'root'
