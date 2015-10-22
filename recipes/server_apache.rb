@@ -48,21 +48,21 @@ apache_config 'icinga2-web2' if node['icinga2']['web2']['enable']
 
 # group resource for user nagios
 group node['icinga2']['group'] do
-  only_if { node['platform'] == 'ubuntu' }
+  only_if { node['platform_family'] == 'debian' }
   append true
 end
 
 user 'nagios' do
   gid 'nagios'
   system true
-  only_if { node['platform'] == 'ubuntu' }
+  only_if { node['platform_family'] == 'debian' }
 end
 
 # add group members
 group "manage_members_#{node['icinga2']['group']}" do
   group_name node['icinga2']['group']
   members [node['apache']['user'], node['icinga2']['user']]
-  only_if { node['platform'] == 'ubuntu' }
+  only_if { node['platform_family'] == 'debian' }
   notifies :restart, 'service[apache2]', :delayed
   action :modify
 end
