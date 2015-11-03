@@ -2,6 +2,10 @@ icinga2 CHANGELOG
 =================
 
 This file is used to list changes made in each version of the icinga2 cookbook.
+2.6.6
+-----
+
+- Jo Rhett - Allow the use of packages for icingaweb2 interface, provide more control of git checkout
 
 2.6.5
 -----
