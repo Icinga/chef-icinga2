@@ -70,5 +70,11 @@ include_recursive "<%= node['icinga2']['objects_d'] -%>"
 
 <% if node['icinga2']['user_defined_objects_d'] -%>
 // User defined Objects / Configuration
+<% if node['icinga2']['user_defined_objects_d'].is_a? Array
+  node['icinga2']['user_defined_objects_d'].each do |include_dir| -%>
+include_recursive "<%= include_dir -%>"
+<% end # each -%>
+<% else # if not array -%>
 include_recursive "<%= node['icinga2']['user_defined_objects_d'] -%>"
-<% end -%>
+<% end # if array -%>
+<% end # if objects_d defined -%>
