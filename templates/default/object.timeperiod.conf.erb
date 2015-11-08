@@ -19,7 +19,7 @@
   ranges = {
   <% options['ranges'].each do |day, time| -%>
   <% if day && time -%>
-    <%= day -%> = <%= time.inspect %>
+    <%= day.inspect -%> = <%= time.inspect %>
   <% end -%>
   <% end -%>
   }
