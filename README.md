@@ -63,6 +63,12 @@ This cookbook requires Chef Version 11.x or above.
 
 ## Major Changes
 
+
+###v2.7.x
+
+* Attribute `default['icinga2']['user_defined_objects_d']` is deprecated. For User defined configuration directories,
+use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.
+
 ###v2.0.1
 
 * icinga web2 uri updated to `/icingaweb2`
@@ -383,11 +389,10 @@ A resource attribute will be added to `icinga2_host` LWRP to perform a search to
 
 ## icinga2 User Defined Objects / Configuration
 
-A configuration directory is created under `/etc/icinga2` for user to put configuration not default to `icinga2` or LWRP.
 
-Directory name is configurable using node attribute `node['icinga2']['user_defined_objects_d']`.
+Attribute `node['icinga2']['user_defined_objects_dir']` manages user defined configuration directories location.
 
-This is just to keep user custom defined configuration, it is included in `icinga2.conf`.
+Directories will be created under `/etc/icinga2/` and also included in `icinga2.conf`.
 
 
 ## LWRP Examples
@@ -1892,9 +1897,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 * `default['icinga2']['cmdgroup']` (default: `icingacmd`): icinga2 cmd user group
 
-* `default['icinga2']['user_defined_objects_d']` (default: `user_defined_objects`): icinga2 conf directory name for user defined objects
-
-* `default['icinga2']['user_defined_objects_dir']` (default: `/etc/icinga2/user_defined_objects`): icinga2 conf directory for user defined objects
+* `default['icinga2']['user_defined_objects_dir']` (default: `['user_defined_objects']`): user defined configuration directories, each directory is included in `icinga2.conf` file.
 
 * `default['icinga2']['cmdgroup']` (default: `icingacmd`): icinga2 cmd user group
 

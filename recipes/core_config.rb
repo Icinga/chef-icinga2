@@ -34,11 +34,12 @@
   end
 end
 
-directory node['icinga2']['user_defined_objects_dir'] do
-  owner node['icinga2']['user']
-  group node['icinga2']['group']
-  mode 0750
-  only_if { node['icinga2']['user_defined_objects_dir'] }
+node['icinga2']['user_defined_objects_dir'].each do |d|
+  directory ::File.join(node['icinga2']['conf_dir'], d) do
+    owner node['icinga2']['user']
+    group node['icinga2']['group']
+    mode 0750
+  end
 end
 
 [node['icinga2']['log_dir'],
