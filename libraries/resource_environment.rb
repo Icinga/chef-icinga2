@@ -186,6 +186,14 @@ class Chef
         )
       end
 
+      def add_inet_custom_vars(arg = nil)
+        set_or_return(
+          :add_inet_custom_vars, arg,
+          :kind_of => [TrueClass, FalseClass],
+          :default => node['icinga2']['add_inet_custom_vars']
+        )
+      end
+
       def add_node_vars(arg = nil)
         set_or_return(
           :add_node_vars, arg,

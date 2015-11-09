@@ -34,7 +34,7 @@ module Icinga2
                   :ignore_resolv_error, :exclude_recipes, :exclude_roles, :env_custom_vars,
                   :limit_region, :server_region, :search_pattern, :use_fqdn_resolv,
                   :add_cloud_custom_vars, :env_skip_node_vars, :add_node_vars,
-                  :env_filter_node_vars, :failover_fqdn_address
+                  :env_filter_node_vars, :failover_fqdn_address, :add_inet_custom_vars
 
     def initialize(options = {})
       @query = options
@@ -53,6 +53,7 @@ module Icinga2
       @search_pattern = options[:search_pattern]
       @use_fqdn_resolv = options[:use_fqdn_resolv]
       @add_cloud_custom_vars = options[:add_cloud_custom_vars]
+      @add_inet_custom_vars = options[:add_inet_custom_vars]
       @add_node_vars = options[:add_node_vars]
       @env_filter_node_vars = options[:env_filter_node_vars]
       @env_skip_node_vars = options[:env_skip_node_vars]
@@ -238,6 +239,16 @@ module Icinga2
       node_hash['custom_vars']['memory'] = !node['memory'].nil? && !node['memory']['total'].nil? ? (node['memory']['total'].gsub(/\D/, '').to_i / 1024).to_s + 'MB' : '0MB'
       node_hash['custom_vars']['environment'] = node_hash['chef_environment']
       node_hash['custom_vars']['run_list'] = node_hash['run_list'].to_s
+      # add inet ip address custom vars
+      if add_inet_custom_vars && !node['network'].nil?
+        node['network']['interfaces'].each do |k, v|
+          next if k == 'lo'
+          v['addresses'].each do |i, o|
+            next if o['family'] !~ /inet/
+              node_hash['custom_vars']["address_#{o['family']}_#{k}"] = i
+          end
+        end
+      end
 
       if enable_cluster_hostgroup && cluster_attribute
         node_hash[cluster_attribute] = node[cluster_attribute.to_sym].to_s
