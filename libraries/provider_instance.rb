@@ -78,13 +78,13 @@ class Chef
         object_resources = {}
         template_resources = {}
 
-        zone_objects.each do |resourceKey, resourceObject|
-          if resourceObject['object_class'] == 'object'
-            object_resources[resourceKey] = resourceObject
-          elsif resourceObject['object_class'] == 'template'
-            template_resources[resourceKey] = resourceObject
+        zone_objects.each do |resource_key, resource_object|
+          if resource_object['object_class'] == 'object'
+            object_resources[resource_key] = resource_object
+          elsif resource_object['object_class'] == 'template'
+            template_resources[resource_key] = resource_object
           else
-            Chef::Application.fatal!("Unknown object_class (#{resourceObject['object_class']}), resourceKey=#{resourceKey}, resourceObject=#{resourceObject}", 1)
+            Chef::Application.fatal!("Unknown object_class (#{resource_object['object_class']}), resource_key=#{resource_key}, resource_object=#{resource_object}", 1)
           end
         end
 
