@@ -186,6 +186,14 @@ class Chef
         )
       end
 
+      def add_node_vars(arg = nil)
+        set_or_return(
+          :add_node_vars, arg,
+          :kind_of => Hash,
+          :default => {}
+        )
+      end
+
       def env_filter_node_vars(arg = nil)
         set_or_return(
           :env_filter_node_vars, arg,

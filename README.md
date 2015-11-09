@@ -370,7 +370,7 @@ For more details about nodes attributes, check LWRP `environment` object templat
 >> Like `env_resources`, user can also define custom template for LWRP `environment` using attribute `cookbook` and `template`.
 
 
-## Icinga2 Host Custom Vars
+## Icinga2 Global Host Custom Vars
 
 **environment LWRP Host Vars**
 
@@ -387,7 +387,22 @@ To add `Host` custom vars, use Hash attribute `custom_vars`.
 A resource attribute will be added to `icinga2_host` LWRP to perform a search to fetch custom vars defined for a node, so that manual addition is not required.
 
 
-## icinga2 User Defined Objects / Configuration
+## Icinga2 Node Attributes as Host Custom Vars
+
+`environment` resource attribute `add_node_vars` can add a node attribute to Host custom vars.
+
+e.g. to add a custom var `hardware` with value of node attribute `node['dmi']['system']['manufacturer']`
+
+```
+icinga2_environment 'environment' do
+  add_ohai_vars 'hardware' => %w(dmi system manufacturer)
+end
+```
+
+It will add a custom var `vars.hardware` to environemnt Host objects.
+
+
+## Icinga2 User Defined Objects / Configuration
 
 
 Attribute `node['icinga2']['user_defined_objects_dir']` manages user defined configuration directories location.
@@ -619,6 +634,7 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 - *limit_region* (optional, TrueClass/FalseClass)	- whether to limit chef node to chef server region, currently tested for Amazon EC2, e.g. a icinga2 server located in region `us-east-1` will only collect nodes located in `us-east-`` region
 - *server_region* (optional, String)	- icinga2 server region can be overridden if cloud provider is not supported by the cookbook using this attribute
 - *add_cloud_custom_vars* (optional, TrueClass/FalseClass)	- whether to add cloud attributes, currently supports amazon ec2, e.g. instance id, vpc subnet etc.
+- *add_node_vars* (optional, Hash)	- add node attributes to custom vars, e.g. `add_ohai_vars 'hardware' => %w(dmi system manufacturer)` will add a custom var hardware with value of node attribute `node['dmi']['system']['manufacturer']`
 - *env_filter_node_vars* (optional, Hash)	- filter or match chef nodes for a given `Hash` attribute key value pairs
 - *env_skip_node_vars* (optional, Hash)	- ignore chef nodes for a given `Hash` attribute key value pairs
 - *import* (optional, String)	- icinga `Host` object import template attribute

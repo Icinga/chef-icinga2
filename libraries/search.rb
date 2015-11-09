@@ -33,7 +33,7 @@ module Icinga2
                   :enable_application_hostgroup, :application_attribute, :ignore_node_error,
                   :ignore_resolv_error, :exclude_recipes, :exclude_roles, :env_custom_vars,
                   :limit_region, :server_region, :search_pattern, :use_fqdn_resolv,
-                  :add_cloud_custom_vars, :env_skip_node_vars,
+                  :add_cloud_custom_vars, :env_skip_node_vars, :add_node_vars,
                   :env_filter_node_vars, :failover_fqdn_address
 
     def initialize(options = {})
@@ -53,6 +53,7 @@ module Icinga2
       @search_pattern = options[:search_pattern]
       @use_fqdn_resolv = options[:use_fqdn_resolv]
       @add_cloud_custom_vars = options[:add_cloud_custom_vars]
+      @add_node_vars = options[:add_node_vars]
       @env_filter_node_vars = options[:env_filter_node_vars]
       @env_skip_node_vars = options[:env_skip_node_vars]
       @failover_fqdn_address = options[:failover_fqdn_address]
@@ -273,6 +274,13 @@ module Icinga2
         node_hash['custom_vars'][k.to_s] = v if variable_check(k)
       end
 
+      # add node attributes
+      # there might be a better way to do this
+      add_node_vars.each do |k, v|
+        fail "expecting an Array of keys for key '#{k}' in resource attribute :add_node_vars" unless v.is_a?(Array)
+        node_hash['custom_vars'][k.to_s] = hash_key_value(node, v)
+      end
+
       node_hash
     end
 
@@ -291,6 +299,20 @@ module Icinga2
       fail ArgumentError, "#{node_hash['name']} missing 'chef_environment'" unless node_hash['chef_environment']
       fail ArgumentError, "#{node_hash['name']} missing 'fqdn'" unless node_hash['fqdn']
       fail ArgumentError, "#{node_hash['name']} missing 'hostname'" unless node_hash['hostname']
+    end
+
+    def hash_key_value(hash, keys = [])
+      value = nil
+      keys.each do |key|
+        if hash.key?(key)
+          hash = hash[key]
+          value = hash
+        else
+          value = nil
+          break
+        end
+      end
+      value
     end
   end
 end

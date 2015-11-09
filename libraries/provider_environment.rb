@@ -66,6 +66,7 @@ class Chef
                                                                           :limit_region => new_resource.limit_region,
                                                                           :server_region => server_region,
                                                                           :search_pattern => search_pattern,
+                                                                          :add_node_vars => new_resource.add_node_vars,
                                                                           :add_cloud_custom_vars => new_resource.add_cloud_custom_vars).environment_resources
 
         template_file_name = new_resource.zone ? "host_#{new_resource.environment}_#{new_resource.zone}.conf" : "host_#{new_resource.environment}.conf"
