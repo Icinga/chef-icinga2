@@ -1,7 +1,7 @@
 icinga2 Cookbook
 ==================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v2.6.5-green.svg)](https://github.com/icinga/chef-icinga2)
+[![Cookbook](http://img.shields.io/badge/cookbook-v2.6.6-green.svg)](https://github.com/icinga/chef-icinga2)
 
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
@@ -1992,17 +1992,26 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
  * `default[:icinga2][:web2][:enable]` (default: `false`): whether to setup icingaweb2
 
- * `default[:icinga2][:web2][:source_url]` (default: `git://git.icinga.org/icingaweb2.git`):
+ * `default[:icinga2][:web2][:install_method]` (default: `package`): or `git`
 
- * `default[:icinga2][:web2][:version]` (default: `v2.0.0-beta3`): icingaweb2 git checkout version / branch / tag etc.
+ * `default[:icinga2][:web2][:package_action]` (default: `upgrade`): or `create` to avoid upgrades
 
- * `default[:icinga2][:web2][:web_root]` (default: `/usr/share/icingaweb2`): icingaweb2 web root location
+ * `default[:icinga2][:web2][:version]` (default: `2.0.0-5`): icingaweb2 package version
 
  * `default[:icinga2][:web2][:web_uri]` (default: `/icingaweb2`): icingweb2 web uri
 
  * `default[:icinga2][:web2][:conf_dir]` (default: `/etc/icingaweb2`): icingaweb2 config directory
 
  * `default[:icinga2][:web2][:log_dir]` (default: `/var/log/icingaweb2`): icingaweb2 log directory
+
+
+### Git Attributes
+
+ * `default[:icinga2][:web2][:source_url]` (default: `git://git.icinga.org/icingaweb2.git`):
+
+ * `default[:icinga2][:web2][:git_version]` (default: `v2.0.0`): icingaweb2 git checkout version / branch / tag etc.
+
+ * `default[:icinga2][:web2][:web_root]` (default: `/usr/share/icingaweb2`): icingaweb2 web checkout location
 
 
 ## Cookbook Ulimit Attributes

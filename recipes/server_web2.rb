@@ -48,9 +48,22 @@ file ::File.join(node['icinga2']['web2']['conf_dir'], 'setup.token') do
   mode 0660
 end
 
-git node['icinga2']['web2']['web_root'] do
-  repository node['icinga2']['web2']['source_url']
-  revision node['icinga2']['web2']['version']
-  user node[node['icinga2']['web_engine']]['user']
-  group node[node['icinga2']['web_engine']]['group']
+if node['icinga2']['web2']['install_method'] == 'package'
+  package 'icingaweb2' do
+    action  node['icinga2']['web2']['package_action']
+    version node['icinga2']['web2']['package_version'] + node['icinga2']['icinga2_version_suffix']
+      unless node['icinga2']['ignore_version'] || node['icinga2']['web2']['package_action'] == 'upgrade'
+    end
+  end
+else
+  package 'icingaweb2' do
+    action  'remove'
+  end
+  git node['icinga2']['web2']['web_root'] do
+    action node['icinga2']['web2']['git_action']
+    repository node['icinga2']['web2']['source_url']
+    revision node['icinga2']['web2']['version']
+    user node[node['icinga2']['web_engine']]['user']
+    group node[node['icinga2']['web_engine']]['group']
+  end
 end
