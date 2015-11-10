@@ -1973,17 +1973,19 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Icinga2 IDO Attributes
 
- * `default[:icinga2][:ido][:type]` (default: `mysql`): icinga2 ido type, valid are `mysql pgsql`
+ * `default[:icinga2]['ido']['type']` (default: `mysql`): icinga2 ido type, valid are `mysql pgsql`
 
- * `default[:icinga2][:ido][:load_schema]` (default: `false`): whether to load db schema
+ * `default[:icinga2]['ido']['load_schema']` (default: `false`): whether to load db schema
 
- * `default[:icinga2][:ido][:db_host]` (default: `localhost`): Icinga2 ido db host
+ * `default[:icinga2]['ido']['db_host']` (default: `localhost`): Icinga2 ido db host
 
- * `default[:icinga2][:ido][:db_name]` (default: `icinga`): Icinga2 ido db name
+ * `default[:icinga2]['ido']['db_name']` (default: `icinga`): Icinga2 ido db name
 
- * `default[:icinga2][:ido][:db_user]` (default: `icinga`): Icinga2 ido db user
+ * `default[:icinga2]['ido']['db_user']` (default: `icinga`): Icinga2 ido db user
 
- * `default[:icinga2][:ido][:db_password]` (default: `icinga`): Icinga2 ido db password
+ * `default[:icinga2]['ido']['db_password']` (default: `icinga`): Icinga2 ido db password
+
+ * `default[:icinga2]['ido']['mysql_home']` (default: `/etc/mysql`): sets value for environment variable `MYSQL_HOME` for schema load
 
 
 ## Cookbook Icingaweb2 Attributes
