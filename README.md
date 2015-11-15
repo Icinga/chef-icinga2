@@ -1,7 +1,7 @@
 icinga2 Cookbook
 ==================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v2.6.5-green.svg)](https://github.com/icinga/chef-icinga2)
+[![Cookbook](http://img.shields.io/badge/cookbook-v2.6.9-green.svg)](https://github.com/icinga/chef-icinga2)
 
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
@@ -64,7 +64,7 @@ This cookbook requires Chef Version 11.x or above.
 ## Major Changes
 
 
-###v2.7.x
+###v2.6.9
 
 * Attribute `default['icinga2']['user_defined_objects_d']` is deprecated. For User defined configuration directories,
 use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.

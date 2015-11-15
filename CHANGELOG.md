@@ -3,6 +3,55 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.6.9
+-----
+
+- analogrithems@gmail.com - Bug 10090, attribute command is optional for resource checkcommand
+
+- Virender Khatri - Bug #10055, env_custom_vars key must be of type string
+
+- Martin Stiborsky - Feature 10094, added suport for placing configuration into zones in zones.d
+
+- Martin Stiborsky - Feature 10094, support for default configuration zone
+
+- Jo Rhett - Bug 10176, Fixed icinga log issue
+
+- Virender Khatri - Feature #10223, Major Cookbook Refactoring for LWRP Resources
+
+- Virender Khatri - Bug #9900, icinga2 classic ui user creation doc and code out of sync
+
+- Virender Khatri - Bug #10276, delete resource checkercomponent in favor feature checker
+
+- Virender Khatri - Bug #10261, fixes resource envhostgroup and environment to support zone distributed deployments
+
+- Virender Khatri - Feature #10279, remove :delayed from service notify
+
+- Virender Khatri - Feature #10280, object GelfWriter configuration attributes are optional
+
+- Virender Khatri - Feature #10281, object GraphiteWriter configuration attributes are optional
+
+- Virender Khatri - Feature #10282, object IdoMySqlConnection configuration attributes are optional
+
+- Virender Khatri - Feature #10283, object IdoPgSqlConnection configuration attributes are optional
+
+- Virender Khatri - Feature #10285, map attribute source default value to :resource_name for resource script
+
+- Virender Khatri - Feature #10286, set resource timeperiod attribute import default value to legacy-timeperiod
+
+- Virender Khatri - Bug #10334 and Feature #10333, added new attribute env_skip_node_vars and fixed env_filter_node_vars
+
+- Jo Rhett - Feature #10573, Add the ability to include multiple user defined directories.
+
+- Jo Rhett - Bug #10564, Day names need to be quoted in timeperiod definitions
+
+- Virender Khatri - Bug #10585, update cookbook for default['icinga2']['user_defined_objects_dir']
+
+- Virender Khatri - Bug #10149, added capability to add node attributes to custom vars
+
+- Virender Khatri - Bug #9842, add inet ip address custom vars
+
+- Virender Khatri - Bug #10215, added MYSQL_HOME env variable during schema load
+
 2.6.5
 -----
 
