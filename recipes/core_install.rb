@@ -34,7 +34,7 @@ when 'rhel'
   yum_repository 'icinga2' do
     description node['icinga2']['yum']['description']
     baseurl node['icinga2']['yum']['baseurl']
-    mirrorlist node['icinga2']['yum']['mirrorlist']
+    mirrorlist node['icinga2']['yum']['mirrorlist'] if node['icinga2']['yum']['mirrorlist']
     gpgcheck node['icinga2']['yum']['gpgcheck']
     gpgkey node['icinga2']['yum']['gpgkey']
     enabled node['icinga2']['yum']['enabled']

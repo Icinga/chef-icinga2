@@ -17,11 +17,6 @@
 # limitations under the License.
 #
 
-execute 'icinga2_configcheck' do
-  command '/usr/sbin/icinga2 daemon -c /etc/icinga2/icinga2.conf -C'
-  action :nothing
-end
-
 service 'icinga2' do
   service_name node['icinga2']['service_name']
   supports :status => true, :reload => true, :restart => true

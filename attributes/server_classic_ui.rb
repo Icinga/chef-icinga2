@@ -20,8 +20,8 @@ default['icinga2']['classic_ui']['web_root'] = value_for_platform(
 )
 
 default['icinga2']['classic_ui']['home_dir'] = value_for_platform(
-  %w(centos redhat fedora amazon) => { 'default' => '/etc/icinga' },
-  %w(debian ubuntu) => { 'default' => '/etc/icinga2-classicui' }
+  %w(debian ubuntu) => { 'default' => '/etc/icinga2-classicui' },
+  'default' => '/etc/icinga'
 )
 default['icinga2']['classic_ui']['conf_dir'] = node['icinga2']['classic_ui']['home_dir']
 default['icinga2']['classic_ui']['log_dir'] = '/var/log/icinga'

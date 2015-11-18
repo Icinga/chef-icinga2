@@ -245,7 +245,7 @@ module Icinga2
           next if k == 'lo'
           v['addresses'].each do |i, o|
             next if o['family'] !~ /inet/
-              node_hash['custom_vars']["address_#{o['family']}_#{k}"] = i
+            node_hash['custom_vars']["address_#{o['family']}_#{k}"] = i
           end
         end
       end
