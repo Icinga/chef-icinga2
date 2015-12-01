@@ -24,6 +24,8 @@ node.set['pnp4nagios']['spool_dir'] = node['icinga2']['perfdata_dir']
 
 include_recipe 'pnp4nagios::default'
 
+directory '/usr/share/icinga/ssi'
+
 link '/usr/share/icinga/ssi/status-header.ssi' do
   to ::File.join(node['pnp4nagios']['source_dir'], 'contrib/ssi/status-header.ssi')
   only_if { node['icinga2']['classic_ui']['enable'] }
