@@ -3,6 +3,19 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.7.0
+-----
+
+- Virender Khatri - Feature #10642, bump icinga2 version to v2.4.0
+
+- Virender Khatri - Bug #10756, point default[pnp4nagios][auth_file] to icinga htpasswd file
+
+- Virender Khatri - Bug #10755, manage directory /usr/share/icinga/ssi
+
+- Virender Khatri - Bug #10753, fix cloning resource attributes from prior resource (CHEF-3694)
+
+- Virender Khatri - Feature #10107, added chefspec
+
 2.6.9
 -----
 
