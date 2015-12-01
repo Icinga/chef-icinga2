@@ -59,7 +59,8 @@ user 'nagios' do
 end
 
 # add group members
-group node['icinga2']['group'] do
+group "manage_members_#{node['icinga2']['group']}" do
+  group_name node['icinga2']['group']
   members [node['apache']['user'], node['icinga2']['user']]
   only_if { node['platform'] == 'ubuntu' }
   notifies :restart, 'service[apache2]', :delayed
