@@ -130,7 +130,8 @@ class Chef
         # icinga object definitions, which are then processed by a template resource and ERB template file
         icinga2_objects_dict = icinga2_objects_grouped.keys.each_with_object('object' => {}, 'template' => {}) { |str, hash| hash[str] = Hash[icinga2_objects_grouped[str]] }
 
-        ot = template ::File.join(node['icinga2']['objects_dir'], "#{resource_name}.conf") do
+        ot = template "object_config_#{resource_name}_#{new_resource.name}" do
+          path ::File.join(node['icinga2']['objects_dir'], "#{resource_name}.conf")
           cookbook 'icinga2'
           source "object.#{resource_name}.conf.erb"
           owner node['icinga2']['user']
@@ -140,7 +141,8 @@ class Chef
           only_if { icinga2_objects_dict['object'].length > 0 }
         end
 
-        te = template ::File.join(node['icinga2']['objects_dir'], "#{resource_name}_template.conf") do
+        te = template "object_template_#{resource_name}_#{new_resource.name}" do
+          path ::File.join(node['icinga2']['objects_dir'], "#{resource_name}_template.conf")
           source "object.#{resource_name}.conf.erb"
           cookbook 'icinga2'
           owner node['icinga2']['user']
@@ -154,7 +156,7 @@ class Chef
         zoned_objects_updated = false
 
         icinga2_zoned_objects.each do |zone, zone_objects|
-          zone_dir = directory "zone_#{zone}" do
+          zone_dir = directory "zone_directory_#{resource_name}_#{zone}_#{new_resource.name}" do
             path ::File.join(node['icinga2']['zones_dir'], zone)
             owner node['icinga2']['user']
             group node['icinga2']['group']
@@ -164,7 +166,8 @@ class Chef
 
           zoned_objects, zoned_templates = separate_zone_resources(zone_objects)
 
-          zoned_ot = template ::File.join(node['icinga2']['zones_dir'], zone, "#{resource_name}.conf") do
+          zoned_ot = template "zone_config_#{resource_name}_#{zone}_#{new_resource.name}" do
+            path ::File.join(node['icinga2']['zones_dir'], zone, "#{resource_name}.conf")
             source "object.#{resource_name}.conf.erb"
             cookbook 'icinga2'
             owner node['icinga2']['user']
@@ -175,7 +178,8 @@ class Chef
             only_if { zoned_objects.length > 0 }
           end
 
-          zoned_te = template ::File.join(node['icinga2']['zones_dir'], zone, "#{resource_name}_template.conf") do
+          zoned_te = template "zone_template_#{resource_name}_#{zone}_#{new_resource.name}" do
+            path ::File.join(node['icinga2']['zones_dir'], zone, "#{resource_name}_template.conf")
             source "object.#{resource_name}.conf.erb"
             cookbook 'icinga2'
             owner node['icinga2']['user']
