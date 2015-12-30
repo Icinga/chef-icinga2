@@ -1050,6 +1050,8 @@ LWRP `usergroup` creates an icinga `UserGroup` object.
 	  display_name 'User Group'
 	  groups ['usergroup']
 	  zone 'zone_name'
+    assign_where ['assign where statement']
+    ignore_where ['ignore where statement']
 	end
 
 Above LWRP resource will create an icinga `UserGroup` object.
@@ -1061,6 +1063,8 @@ Above LWRP resource will create an icinga `UserGroup` object.
 - *display_name* (optional, String)	- icinga `UserGroup` attribute `display_name`
 - *groups* (optional, Array)	- icinga `UserGroup` attribute `groups`
 - *zone* (optional, String)	- icinga `UserGroup` attribute `zone`
+- *assign_where* (optional, Array)   - an array of `assign where` statements
+- *ignore_where* (optional, Array)   - an array of `ignore where` statements
 
 
 ## LWRP icinga2_zone

@@ -55,11 +55,19 @@ class Chef
         )
       end
 
+      def ignore_where(arg = nil)
+        set_or_return(
+          :ignore_where, arg,
+          :kind_of => Array,
+          :default => nil
+        )
+      end
+
       def resource_properties(arg = nil)
         set_or_return(
           :resource_properties, arg,
           :kind_of => Array,
-          :default => %w(assign_where display_name groups zone)
+          :default => %w(assign_where ignore_where display_name groups zone)
         )
       end
     end

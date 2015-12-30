@@ -8,6 +8,10 @@ This file is used to list changes made in each version of the icinga2 cookbook.
 
 - Virender Khatri - Feature #10900, fix to allow multiple environment resources for an environment
 
+- Van Driessche Vincent - Feature #10831, Adds support to use "assign where" in usergroups
+
+- Virender Khatri - Feature #10831, Adds support to use "ignore where" in usergroups
+
 2.7.0
 -----
 
