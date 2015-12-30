@@ -15,6 +15,11 @@ object UserGroup <%= object.inspect -%> {
   <% if options['groups'] && !options['groups'].empty? -%>
   groups = <%= options['groups'].sort.uniq.inspect %>
   <% end -%>
+  <% if options['assign_where'] -%>
+  <%- options['assign_where'].each do |a|-%>
+  assign where <%= a %>
+  <% end -%>
+  <% end -%>
 }
 
 <% end -%>
