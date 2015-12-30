@@ -70,7 +70,7 @@ class Chef
                                                                           :add_inet_custom_vars => new_resource.add_inet_custom_vars,
                                                                           :add_cloud_custom_vars => new_resource.add_cloud_custom_vars).environment_resources
 
-        template_file_name = new_resource.zone ? "host_#{new_resource.environment}_#{new_resource.zone}.conf" : "host_#{new_resource.environment}.conf"
+        template_file_name = new_resource.zone ? "host_#{new_resource.environment}_#{new_resource.zone}_#{new_resource.name}.conf" : "host_#{new_resource.environment}_#{new_resource.name}.conf"
         if env_resources.key?('nodes') && env_resources['nodes'].is_a?(Hash)
           env_hosts = env_resources['nodes']
         else

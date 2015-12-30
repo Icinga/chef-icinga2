@@ -3,6 +3,11 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.7.1
+-----
+
+- Virender Khatri - Feature #10900, fix to allow multiple environment resources for an environment
+
 2.7.0
 -----
 
