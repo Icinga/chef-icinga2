@@ -89,19 +89,19 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <% if var && value && value.is_a?(Hash) -%>
   <% value.each do |a, v|-%>
   <% if a && v && v.is_a?(Hash) && !v.empty?-%>
-  vars.<%= var -%><%= [a].inspect -%> = {
+  vars["<%= var -%>"][<%= a.inspect -%>] = {
   <% v.each do |a1, v1|%>
   <% if a1 && v1 %>
-  <%= a1 -%> = <%= v1.inspect %>
+  "<%= a1 -%>" = <%= icinga_format(v1) %>
   <% end -%>
   <% end -%>
   }
   <% else -%>
-  vars.<%= var -%><%= [a].inspect -%> = <%= v.inspect %>
+  vars["<%= var -%>"][<%= a.inspect -%>] = <%= icinga_format(v) %>
   <% end -%>
   <% end -%>
   <% elsif var && value -%>
-  vars.<%= var -%> = <%= value.inspect %>
+  vars["<%= var -%>"] = <%= icinga_format(value) %>
   <% end -%>
   <% end -%>
   <% end -%>
