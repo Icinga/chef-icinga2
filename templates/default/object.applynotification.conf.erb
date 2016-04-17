@@ -37,7 +37,7 @@ apply Notification <%= object.inspect -%> to <%= options['object_type'] -%> {
   times = {
   <% options['times'].each do |var, value| %>
     <% if var && value -%>
-    <%= var %> = <%= value.inspect %>
+    <%= var %> = <%= value %>
     <%- end -%>
   <%- end -%>
   }
