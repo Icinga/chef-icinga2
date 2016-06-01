@@ -147,7 +147,7 @@ class Chef
 
       def create_endpoints(env_resources)
         nodes = env_resources['nodes']
-        env_endpoints = nodes.map {|n| n[1]['fqdn'] }
+        env_endpoints = nodes.map { |n| n[1]['fqdn'] }
 
         endpoint_template = icinga2_envendpoint new_resource.environment do
           endpoints env_endpoints
@@ -161,7 +161,7 @@ class Chef
 
       def create_zones(env_resources)
         nodes = env_resources['nodes']
-        env_zones = nodes.map {|n| n[1]['fqdn'] }
+        env_zones = nodes.map { |n| n[1]['fqdn'] }
 
         zone_template = icinga2_envzone new_resource.environment do
           zones env_zones
