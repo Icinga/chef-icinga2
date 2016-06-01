@@ -396,6 +396,30 @@ class Chef
           :default => nil
         )
       end
+
+      def endpoint_port(arg = nil)
+        set_or_return(
+          :endpoint_port, arg,
+          :kind_of => Integer,
+          :default => node['icinga2']['endpoint_port']
+        )
+      end
+
+      def endpoint_log_duration(arg = nil)
+        set_or_return(
+          :log_duration, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
+      def zone_parent(arg = nil)
+        set_or_return(
+          :log_duration, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
     end
   end
 end
