@@ -121,6 +121,8 @@ class Chef
           notifies :reload, 'service[icinga2]'
         end
         return true if hosts_template.updated? || create_hostgroups(env_resources)
+        return true if hosts_template.updated? || create_endpoints(env_resources)
+        return true if hosts_template.updated? || create_zones(env_resources)
       end
 
       def create_hostgroups(env_resources)
@@ -141,6 +143,33 @@ class Chef
         end
 
         hostgroup_template.updated?
+      end
+
+      def create_endpoints(env_resources)
+        nodes = env_resources['nodes']
+        env_endpoints = nodes.map { |n| n[1]['fqdn'] }
+
+        endpoint_template = icinga2_envendpoint new_resource.environment do
+          endpoints env_endpoints
+          port new_resource.endpoint_port
+          log_duration new_resource.endpoint_log_duration
+          zone new_resource.zone
+        end
+
+        endpoint_template.updated?
+      end
+
+      def create_zones(env_resources)
+        nodes = env_resources['nodes']
+        env_zones = nodes.map { |n| n[1]['fqdn'] }
+
+        zone_template = icinga2_envzone new_resource.environment do
+          zones env_zones
+          parent new_resource.zone_parent
+          zone new_resource.zone
+        end
+
+        zone_template.updated?
       end
     end
   end
