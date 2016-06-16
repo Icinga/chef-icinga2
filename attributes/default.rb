@@ -1,10 +1,6 @@
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/getting-started#getting-started
 
-if node['platform_family'] == 'debian'
-  default['icinga2']['version'] = '2.4.1-1'
-else
-  default['icinga2']['version'] = '2.4.1-1'
-end
+default['icinga2']['version'] = '2.4.1-1'
 
 default['icinga2']['ignore_version'] = false
 default['icinga2']['cookbook'] = 'icinga2'
