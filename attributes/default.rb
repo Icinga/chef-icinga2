@@ -67,18 +67,16 @@ default['icinga2']['service_name'] = 'icinga2'
 
 case node['platform_family']
 when 'rhel'
-
   default['icinga2']['user'] = 'icinga'
   default['icinga2']['group'] = 'icinga'
   default['icinga2']['cmdgroup'] = 'icingacmd'
   default['icinga2']['service_config_file'] = '/etc/sysconfig/icinga2'
 
-  case node['kernel']['machine']
-  when 'x86_64'
-    default['icinga2']['plugins_dir'] = '/usr/lib64/nagios/plugins'
-  else
-    default['icinga2']['plugins_dir'] = '/usr/lib/nagios/plugins'
-  end
+  default['icinga2']['plugins_dir'] = if node['kernel']['machine'] == 'x86_64'
+                                        '/usr/lib/nagios/plugins'
+                                      else
+                                        '/usr/lib64/nagios/plugins'
+                                      end
 
 when 'debian'
   default['icinga2']['user'] = 'nagios'

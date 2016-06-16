@@ -41,12 +41,8 @@ class Chef
       def object_template
         search_pattern = new_resource.search_pattern || "chef_environment:#{new_resource.environment}"
         if new_resource.limit_region && !new_resource.server_region
-          if node.key?('ec2')
-            server_region = node['ec2']['placement_availability_zone'].chop
-          else
-            # add more cloud providers
-            server_region = nil
-          end
+          server_region = nil
+          server_region node['ec2']['placement_availability_zone'].chop if node.key?('ec2')
         end
         env_resources = new_resource.env_resources || Icinga2::Search.new(:environment => new_resource.environment,
                                                                           :enable_cluster_hostgroup => new_resource.enable_cluster_hostgroup,
@@ -71,11 +67,9 @@ class Chef
                                                                           :add_cloud_custom_vars => new_resource.add_cloud_custom_vars).environment_resources
 
         template_file_name = new_resource.zone ? "host_#{new_resource.environment}_#{new_resource.zone}_#{new_resource.name}.conf" : "host_#{new_resource.environment}_#{new_resource.name}.conf"
-        if env_resources.key?('nodes') && env_resources['nodes'].is_a?(Hash)
-          env_hosts = env_resources['nodes']
-        else
-          env_hosts = {}
-        end
+        env_hosts = {}
+        env_hosts = env_resources['nodes'] if env_resources.key?('nodes') && env_resources['nodes'].is_a?(Hash)
+
         if new_resource.zone
           env_resources_path = ::File.join(node['icinga2']['zones_dir'], new_resource.zone, template_file_name)
 
@@ -83,7 +77,7 @@ class Chef
             owner node['icinga2']['user']
             group node['icinga2']['group']
             action :create
-            only_if { env_hosts.length > 0 }
+            only_if { !env_hosts.empty? }
           end
         else
           env_resources_path = ::File.join(node['icinga2']['objects_dir'], template_file_name)

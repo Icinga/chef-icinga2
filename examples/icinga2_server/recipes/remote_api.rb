@@ -32,7 +32,7 @@ bash 'Generate self signed crt/key' do
 end
 
 bash 'Signed self signed crt/key' do
-  code "icinga2 pki sign-csr " \
+  code 'icinga2 pki sign-csr ' \
        "--csr #{client_csr} " \
        "--cert #{client_crt}"
   not_if { ::File.exist?(client_crt) }
@@ -42,7 +42,7 @@ icinga2_apilistener 'master' do
   cert_path "\"#{client_crt}\""
   key_path "\"#{client_key}\""
   ca_path '"/var/lib/icinga2/ca/ca.crt"'
-  ticket_salt "TicketSalt"
+  ticket_salt 'TicketSalt'
 end
 
 icinga2_endpoint node.fqdn do

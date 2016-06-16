@@ -158,7 +158,7 @@ module Icinga2
           if node_hash['custom_vars']['hostgroups'].is_a?(Array)
             node_hash['custom_vars']['hostgroups'].push node_hash['chef_environment']
           else
-            fail "node 'hostgroups' must be defined as an Array of HostGroup name (node['icinga2']['client']['custom_vars']['hostgroups'])"
+            raise "node 'hostgroups' must be defined as an Array of HostGroup name (node['icinga2']['client']['custom_vars']['hostgroups'])"
           end
         else
           node_hash['custom_vars']['hostgroups'] = [node_hash['chef_environment']]
@@ -288,7 +288,7 @@ module Icinga2
       # add node attributes
       # there might be a better way to do this
       add_node_vars.each do |k, v|
-        fail "expecting an Array of keys for key '#{k}' in resource attribute :add_node_vars" unless v.is_a?(Array)
+        raise "expecting an Array of keys for key '#{k}' in resource attribute :add_node_vars" unless v.is_a?(Array)
         node_hash['custom_vars'][k.to_s] = hash_key_value(node, v)
       end
 
@@ -307,9 +307,9 @@ module Icinga2
     end
 
     def validate_node(node_hash)
-      fail ArgumentError, "#{node_hash['name']} missing 'chef_environment'" unless node_hash['chef_environment']
-      fail ArgumentError, "#{node_hash['name']} missing 'fqdn'" unless node_hash['fqdn']
-      fail ArgumentError, "#{node_hash['name']} missing 'hostname'" unless node_hash['hostname']
+      raise ArgumentError, "#{node_hash['name']} missing 'chef_environment'" unless node_hash['chef_environment']
+      raise ArgumentError, "#{node_hash['name']} missing 'fqdn'" unless node_hash['fqdn']
+      raise ArgumentError, "#{node_hash['name']} missing 'hostname'" unless node_hash['hostname']
     end
 
     def hash_key_value(hash, keys = [])

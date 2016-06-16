@@ -17,15 +17,16 @@
 # limitations under the License.
 #
 
-[node['icinga2']['conf_dir'],
- node['icinga2']['conf_d_dir'],
- node['icinga2']['pki_dir'],
- node['icinga2']['scripts_dir'],
- node['icinga2']['zones_dir'],
- node['icinga2']['objects_dir'],
- node['icinga2']['features_enabled_dir'],
- node['icinga2']['features_available_dir'],
- node['icinga2']['custom_plugins_dir']
+[
+  node['icinga2']['conf_dir'],
+  node['icinga2']['conf_d_dir'],
+  node['icinga2']['pki_dir'],
+  node['icinga2']['scripts_dir'],
+  node['icinga2']['zones_dir'],
+  node['icinga2']['objects_dir'],
+  node['icinga2']['features_enabled_dir'],
+  node['icinga2']['features_available_dir'],
+  node['icinga2']['custom_plugins_dir']
 ].each do |d|
   directory d do
     owner node['icinga2']['user']
@@ -42,11 +43,12 @@ node['icinga2']['user_defined_objects_dir'].each do |d|
   end
 end
 
-[node['icinga2']['log_dir'],
- node['icinga2']['run_dir'],
- ::File.join(node['icinga2']['log_dir'], 'compat'),
- ::File.join(node['icinga2']['log_dir'], 'compat', 'archives'),
- node['icinga2']['cache_dir']
+[
+  node['icinga2']['log_dir'],
+  node['icinga2']['run_dir'],
+  ::File.join(node['icinga2']['log_dir'], 'compat'),
+  ::File.join(node['icinga2']['log_dir'], 'compat', 'archives'),
+  node['icinga2']['cache_dir']
 ].each do |d|
   directory d do
     owner node['icinga2']['user']
@@ -79,12 +81,13 @@ template node['icinga2']['service_config_file'] do
   owner 'root'
   group 'root'
   mode 0644
-  variables(:log_dir => node['icinga2']['log_dir'],
-            :conf_dir => node['icinga2']['conf_dir'],
-            :user => node['icinga2']['user'],
-            :group => node['icinga2']['group'],
-            :cmdgroup => node['icinga2']['cmdgroup']
-           )
+  variables(
+    :log_dir => node['icinga2']['log_dir'],
+    :conf_dir => node['icinga2']['conf_dir'],
+    :user => node['icinga2']['user'],
+    :group => node['icinga2']['group'],
+    :cmdgroup => node['icinga2']['cmdgroup']
+  )
   notifies :reload, 'service[icinga2]', :delayed
 end
 
@@ -94,9 +97,10 @@ template ::File.join(node['icinga2']['conf_dir'], 'init.conf') do
   owner node['icinga2']['user']
   group node['icinga2']['group']
   mode 0644
-  variables(:user => node['icinga2']['user'],
-            :group => node['icinga2']['group']
-           )
+  variables(
+    :user => node['icinga2']['user'],
+    :group => node['icinga2']['group']
+  )
   notifies :reload, 'service[icinga2]', :delayed
 end
 
@@ -106,6 +110,8 @@ template ::File.join(node['icinga2']['conf_dir'], 'constants.conf') do
   owner node['icinga2']['user']
   group node['icinga2']['group']
   mode 0644
-  variables(:options => node['icinga2']['constants'])
+  variables(
+    :options => node['icinga2']['constants']
+  )
   notifies :reload, 'service[icinga2]', :delayed
 end

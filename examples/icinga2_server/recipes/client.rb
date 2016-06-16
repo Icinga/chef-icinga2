@@ -49,7 +49,7 @@ end
 
 bash 'Request master ca' do
   code "icinga2 pki request --host #{server_host} " \
-       "--port 5665 " \
+       '--port 5665 ' \
        "--ticket #{ticket} " \
        "--key #{client_key} " \
        "--cert #{client_crt} " \
