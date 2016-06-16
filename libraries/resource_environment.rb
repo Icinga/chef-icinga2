@@ -415,7 +415,7 @@ class Chef
 
       def zone_parent(arg = nil)
         set_or_return(
-          :log_duration, arg,
+          :zone_parent, arg,
           :kind_of => String,
           :default => nil
         )
