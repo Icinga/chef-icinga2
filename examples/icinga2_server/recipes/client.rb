@@ -85,4 +85,3 @@ icinga2_apilistener node.fqdn do
   bind_port 5665
   accept_commands true
 end
-end
