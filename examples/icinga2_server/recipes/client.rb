@@ -1,3 +1,5 @@
+['icinga2']['recreate_client_certs'] = false
+
 include_recipe 'icinga2::client'
 
 pki_dir       = '/etc/icinga2/pki'
