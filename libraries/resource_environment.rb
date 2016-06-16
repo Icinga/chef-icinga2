@@ -420,6 +420,14 @@ class Chef
           :default => nil
         )
       end
+
+      def pki_ticket_salt(arg = nil)
+        set_or_return(
+          :pki_ticket_salt, arg,
+          :kind_of => String,
+          :default => node['icinga2']['constants']['TicketSalt']
+        )
+      end
     end
   end
 end
