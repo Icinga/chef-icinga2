@@ -57,7 +57,6 @@ This cookbook requires Chef Version 11.x or above.
 ## TODO
 
 * add icinga2 web2 configuration support
-* add chef node zone/endpoint objects for icinga2 agent setup
 
 
 ## Major Changes
@@ -65,6 +64,10 @@ This cookbook requires Chef Version 11.x or above.
 ###v2.8.0
 
 * LWRP `environment` now generates endpoint/zone for every node to allow remote_execution.
+* LWRP `environment` now generates pki tickets in a data bag
+* Add example recipes to configure a client/remote_api server which allow
+external command execution
+* Allow to set command_endpoint as var and not only as string
 
 
 ###v2.7.1
