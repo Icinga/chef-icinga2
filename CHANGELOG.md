@@ -3,6 +3,21 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.8.0
+-----
+
+- Thomas Supertramp - Feature #11834, Add lwrp envendpoint / envzone lwrp for environment resource
+
+- Thomas Supertramp - Feature #11958, Add pki ticket generation through chef_environment lwrp
+
+- Thomas Supertramp - Feature #11872, Add example of icinga2 client recipe
+
+- Thomas Supertramp - Feature #11959, Add example of icinga2 remote api listener recipe
+
+- Thomas Supertramp - Bug #11769, Fix rubocop offenses
+
+- Thomas Supertramp - Feature #11960, Allow to set a var as command_endpoint and not only string
+
 2.7.1
 -----
 
