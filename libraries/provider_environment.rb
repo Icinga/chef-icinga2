@@ -41,12 +41,8 @@ class Chef
       def object_template
         search_pattern = new_resource.search_pattern || "chef_environment:#{new_resource.environment}"
         if new_resource.limit_region && !new_resource.server_region
-          if node.key?('ec2')
-            server_region = node['ec2']['placement_availability_zone'].chop
-          else
-            # add more cloud providers
-            server_region = nil
-          end
+          server_region = nil
+          server_region node['ec2']['placement_availability_zone'].chop if node.key?('ec2')
         end
         env_resources = new_resource.env_resources || Icinga2::Search.new(:environment => new_resource.environment,
                                                                           :enable_cluster_hostgroup => new_resource.enable_cluster_hostgroup,
@@ -71,11 +67,9 @@ class Chef
                                                                           :add_cloud_custom_vars => new_resource.add_cloud_custom_vars).environment_resources
 
         template_file_name = new_resource.zone ? "host_#{new_resource.environment}_#{new_resource.zone}_#{new_resource.name}.conf" : "host_#{new_resource.environment}_#{new_resource.name}.conf"
-        if env_resources.key?('nodes') && env_resources['nodes'].is_a?(Hash)
-          env_hosts = env_resources['nodes']
-        else
-          env_hosts = {}
-        end
+        env_hosts = {}
+        env_hosts = env_resources['nodes'] if env_resources.key?('nodes') && env_resources['nodes'].is_a?(Hash)
+
         if new_resource.zone
           env_resources_path = ::File.join(node['icinga2']['zones_dir'], new_resource.zone, template_file_name)
 
@@ -83,7 +77,7 @@ class Chef
             owner node['icinga2']['user']
             group node['icinga2']['group']
             action :create
-            only_if { env_hosts.length > 0 }
+            only_if { !env_hosts.empty? }
           end
         else
           env_resources_path = ::File.join(node['icinga2']['objects_dir'], template_file_name)
@@ -121,6 +115,9 @@ class Chef
           notifies :reload, 'service[icinga2]'
         end
         return true if hosts_template.updated? || create_hostgroups(env_resources)
+        return true if hosts_template.updated? || create_endpoints(env_resources)
+        return true if hosts_template.updated? || create_zones(env_resources)
+        return true if hosts_template.updated? || create_pki_tickets(env_resources)
       end
 
       def create_hostgroups(env_resources)
@@ -141,6 +138,76 @@ class Chef
         end
 
         hostgroup_template.updated?
+      end
+
+      def create_endpoints(env_resources)
+        nodes = env_resources['nodes']
+        env_endpoints = nodes.map { |n| n[1]['fqdn'] }
+
+        endpoint_template = icinga2_envendpoint new_resource.environment do
+          endpoints env_endpoints
+          port new_resource.endpoint_port
+          log_duration new_resource.endpoint_log_duration
+          zone new_resource.zone
+        end
+
+        endpoint_template.updated?
+      end
+
+      def create_zones(env_resources)
+        nodes = env_resources['nodes']
+        env_zones = nodes.map { |n| n[1]['fqdn'] }
+
+        zone_template = icinga2_envzone new_resource.environment do
+          zones env_zones
+          parent new_resource.zone_parent
+          zone new_resource.zone
+        end
+
+        zone_template.updated?
+      end
+
+      def create_pki_tickets(env_resources)
+        env       = new_resource.environment
+        salt      = new_resource.pki_ticket_salt
+        nodes     = env_resources['nodes']
+        all_fqdns = nodes.map { |n| n[1]['fqdn'] }
+        tickets   = {}
+
+        begin
+          databag_item = data_bag_item('icinga2', "#{env}-pki-tickets")
+          tickets      = databag_item['tickets']
+
+          if tickets['salt'] != salt
+            uncreated_tickets_fqdns = all_fqdns
+          else
+            tickets_fqdns = tickets.map { |k, _v| k }
+            uncreated_tickets_fqdns = all_fqdns - tickets_fqdns
+          end
+        rescue
+          uncreated_tickets_fqdns = all_fqdns
+        end
+
+        unless uncreated_tickets_fqdns.empty?
+          uncreated_tickets_fqdns.each do |f|
+            ruby_block "Create PKI-Ticket #{f}" do
+              block do
+                ticket_bash = Mixlib::ShellOut.new("icinga2 pki ticket --cn #{f} --salt #{salt}")
+                ticket_bash.run_command
+                tickets[f] = ticket_bash.stdout.chomp
+                databag_item = Chef::DataBagItem.new
+                databag_item.data_bag('icinga2')
+                databag_item.raw_data = {
+                  'id'      => "#{env}-pki-tickets",
+                  'tickets' => tickets,
+                  'salt'    => salt
+                }
+                databag_item.save
+              end
+              action :create
+            end
+          end
+        end
       end
     end
   end

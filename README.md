@@ -57,11 +57,18 @@ This cookbook requires Chef Version 11.x or above.
 ## TODO
 
 * add icinga2 web2 configuration support
-* add chef node zone/endpoint objects for icinga2 agent setup
-* add lwrp envendpoint / envzone lwrp for environment resource
 
 
 ## Major Changes
+
+###v2.8.0
+
+* LWRP `environment` now generates endpoint/zone for every node to allow remote_execution.
+* LWRP `environment` now generates pki tickets in a data bag
+* Add example recipes to configure a client/remote_api server which allow
+external command execution
+* Allow to set command_endpoint as var and not only as string
+
 
 ###v2.7.1
 
@@ -359,7 +366,7 @@ This section explains how a user can provide a custom inventory list of nodes, h
 
 To find all the valid chef nodes for a chef environment, this cookbook uses default library `icinga2::search`. There are lots of custom & cloud specific attributes embedded in it which may or may not work for every scenarios.
 
-To overcome and make it less enforcing, LWRP `environment` has a Hash attribute `env_resources` which can be used by an user from a wrapper cookbook recipe to pass chef environment nodes & hostgroups. If this attribute is set, cookbook will not use default library to search chef_environment nodes and will create Host objects for user defined values.
+To overcome and make it less enforcing, LWRP `environment` has a Hash attribute `env_resources` which can be used by an user from a wrapper cookbook recipe to pass chef environment nodes & hostgroups & endpoints & zones. If this attribute is set, cookbook will not use default library to search chef_environment nodes and will create Host objects for user defined values.
 
 `env_resources` Hash attributes has below valid key names:
 
@@ -469,7 +476,9 @@ Currently icinga2 cookbook supports below Objects LWRP Resources:
 - icinga2_applyservice
 - icinga2_checkcommand
 - icinga2_endpoint
+- icinga2_envendpoint
 - icinga2_envhostgroup
+- icinga2_envzone
 - icinga2_environment
 - icinga2_eventcommand
 - icinga2_externalcommandlistener
@@ -679,6 +688,9 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 - *action_url* (optional, String)	- icinga `Host` object attribute `action_url`
 - *icon_image* (optional, String)	- icinga `Host` object attribute `icon_image`
 - *icon_image_alt* (optional, String)	- icinga `Host` object attribute `icon_image_alt`
+- *endpoint_port* (optional, Integer)	- icinga `Endpoint` object attribute `port`
+- *endpoint_log_duration* (optional, String)	- icinga `Endpoint` object attribute `log_duration`
+- *zone_parent* (optional, String)	- icinga `Zone` object attribute `parent`
 
 
 Note: Few of LWRP resource attributes has default value, please check LWRP resource until information is added here.
@@ -703,11 +715,70 @@ Above LWRP resource will create `HostGroup` for a chef environment.
 
 **LWRP Options**
 
-- *action* (optional)	- default :enable, options: :enable, :disable
-- *environment* (name_attribute, String)	- chef environment name
-- *groups* (optional, Array)	- host group names
+- *action* (optional)	                   - default :enable, options: :enable, :disable
+- *environment* (name_attribute, String)   - chef environment name
+- *groups* (optional, Array)	           - host group names
 
 Note: This LWRP resource is only meant for LWRP `environment` and not to be used for custom resources.
+
+
+## LWRP icinga2_envendpoint
+
+LWRP `envendpoint` creates an icinga `Endpoint` object for LWRP `environment` endpoints.
+
+An `environment` endpoints are evaluated at compile time, hence it conflicts with LWRP `endpoint` resources. To avoid the conflict, LWRP `envendpoint` resources are created in a separate object file for an environment.
+
+
+**LWRP Environment Endpoint example**
+
+    icinga2_envendpoint 'envendpoint' do
+      endpoints %w(endpoint)
+      port 5665
+      environment environment_name
+      log_duration '1d'
+    end
+
+Above LWRP resource will create `Endpoint` for a chef environment.
+
+
+**LWRP Options**
+
+- *action* (optional)	                    - default :enable, options: :enable, :disable
+- *environment* (name_attribute, String)	- chef environment name
+- *endpoints* (optional, Array)	            - endpoint names
+- *port* (optional, Integer)	            - default 5665, The service name/port of the remote Icinga 2 instance
+- *log_duration* (optional, String)	        - Duration for keeping replay logs on connection loss.
+
+Note: This LWRP resource is only meant for LWRP `environment` and not to be used for custom resources.
+
+
+## LWRP icinga2_envzone
+
+LWRP `envzone` creates an icinga `Zone` object for LWRP `environment` zones.
+
+An `environment` zones are evaluated at compile time, hence it conflicts with LWRP `zone` resources. To avoid the conflict, LWRP `envzone` resources are created in a separate object file for an environment.
+
+
+**LWRP Environment Zone example**
+
+    icinga2_envzone 'envzone' do
+      zones %w(zone)
+      parent 'master'
+      environment environment_name
+    end
+
+Above LWRP resource will create `Zone` for a chef environment.
+
+
+**LWRP Options**
+
+- *action* (optional)	                    - default :enable, options: :enable, :disable
+- *environment* (name_attribute, String)	- chef environment name
+- *zones* (optional, Array)                 - zone names
+- *parent* (optional, String)	            - The name of the parent zone.
+
+Note: This LWRP resource is only meant for LWRP `environment` and not to be used for custom resources.
+
 
 ## LWRP icinga2_host
 

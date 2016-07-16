@@ -26,7 +26,7 @@ case node['icinga2']['web_engine']
 when 'apache'
   include_recipe 'icinga2::server_apache'
 else
-  fail "unknown web engine '#{node['icinga2']['web_engine']}'"
+  raise "unknown web engine '#{node['icinga2']['web_engine']}'"
 end
 
 # install icinga2 packages

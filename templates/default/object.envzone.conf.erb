@@ -1,0 +1,28 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * Chef Environment (Node)Zone Objects.
+*/
+
+# default environment endpoint object for env nodes
+<% @zones.sort.map do |zone|%>
+object Zone <%= zone.inspect -%> {
+  endpoints = [ <%= zone.inspect %> ]
+  <%- if @parent %>
+  parent = <%= @parent.inspect %>
+  <% end -%>
+}
+
+<% end -%>
+
+<%- if @zone %>
+object Zone <%= @zone.inspect -%> {
+  endpoints = <%= @zones.inspect %>
+  <%- if @parent %>
+  parent = <%= @parent.inspect %>
+  <% end -%>
+}
+<% end -%>

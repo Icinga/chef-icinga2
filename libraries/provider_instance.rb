@@ -62,7 +62,7 @@ class Chef
           when :icinga2_zone
             resource.is_a?(Chef::Resource::Icinga2Zone)
           else
-            fail "unknown resource type #{new_resource.resource_name}, submit a bug"
+            raise "unknown resource type #{new_resource.resource_name}, submit a bug"
           end
         end
       end
@@ -98,20 +98,16 @@ class Chef
         icinga2_zoned_objects = Hash.new { |h, k| h[k] = {} }
 
         object_resources.reduce({}) do |_hash, resource|
-          next if !icinga2_resource_create?(resource.action) || icinga2_objects.key?(resource.name)
+          next nil if !icinga2_resource_create?(resource.action) || icinga2_objects.key?(resource.name)
           resource_data = Hash[resource_properties.map { |x| [x, resource.send(x)] }]
 
           # not all icinga object support templating
           # the object_class have to be determined in any case
-          if template_support
-            if resource.send('template')
-              resource_data['object_class'] = 'template'
-            else
-              resource_data['object_class'] = 'object'
-            end
-          else
-            resource_data['object_class'] = 'object'
-          end
+          resource_data['object_class'] = if resource.send('template') && template_support
+                                            'template'
+                                          else
+                                            'object'
+                                          end
 
           # TODO: check first is such an object/key exist already, print a warning if so
           # if resource.send('template') && !icinga2_objects.key?(resource.name)
@@ -138,7 +134,7 @@ class Chef
           group node['icinga2']['group']
           variables :objects => icinga2_objects_dict['object']
           notifies :reload, 'service[icinga2]'
-          only_if { icinga2_objects_dict['object'].length > 0 }
+          only_if { !icinga2_objects_dict['object'].empty? }
         end
 
         te = template "object_template_#{resource_name}_#{new_resource.name}" do
@@ -150,7 +146,7 @@ class Chef
           mode 0640
           variables :objects => icinga2_objects_dict['template']
           notifies :reload, 'service[icinga2]'
-          only_if { icinga2_objects_dict['template'].length > 0 }
+          only_if { !icinga2_objects_dict['template'].empty? }
         end
 
         zoned_objects_updated = false
@@ -160,7 +156,7 @@ class Chef
             path ::File.join(node['icinga2']['zones_dir'], zone)
             owner node['icinga2']['user']
             group node['icinga2']['group']
-            only_if { zone_objects.length > 0 }
+            only_if { !zone_objects.empty? }
           end
           zone_dir.run_action :create
 
@@ -175,7 +171,7 @@ class Chef
             mode 0640
             variables :objects => zoned_objects
             notifies :reload, 'service[icinga2]'
-            only_if { zoned_objects.length > 0 }
+            only_if { !zoned_objects.length.empty? }
           end
 
           zoned_te = template "zone_template_#{resource_name}_#{zone}_#{new_resource.name}" do
@@ -187,7 +183,7 @@ class Chef
             mode 0640
             variables :objects => zoned_templates
             notifies :reload, 'service[icinga2]'
-            only_if { zoned_templates.length > 0 }
+            only_if { !zoned_templates.length.empty? }
           end
 
           zoned_objects_updated = true if zoned_ot.updated? || zoned_te.updated?

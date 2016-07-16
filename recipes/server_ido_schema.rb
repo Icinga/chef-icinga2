@@ -20,7 +20,7 @@
 # Note: User need to create DB database, user with grants.
 
 # validate ido
-fail "incorrect ido #{node['icinga2']['ido']['type']}, valid are mysql pgsql" unless %w(mysql pgsql).include?(node['icinga2']['ido']['type'])
+raise "incorrect ido #{node['icinga2']['ido']['type']}, valid are mysql pgsql" unless %w(mysql pgsql).include?(node['icinga2']['ido']['type'])
 
 # install icinga2 ido package
 package "icinga2-ido-#{node['icinga2']['ido']['type']}" do

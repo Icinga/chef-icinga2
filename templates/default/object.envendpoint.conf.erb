@@ -1,0 +1,22 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * Chef Environment Endpoint Objects.
+*/
+
+# default environment endpoint object for env nodes
+<% @endpoints.sort.map do |endpoint|%>
+object Endpoint <%= endpoint.inspect -%> {
+  host = <%= endpoint.inspect %>
+  <%- if @port %>
+  port = <%= @port.inspect %>
+  <% end -%>
+  <% if @log_duration -%>
+  log_duration = <%= @log_duration %>
+  <% end -%>
+}
+
+<% end -%>
