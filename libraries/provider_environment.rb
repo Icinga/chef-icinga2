@@ -40,9 +40,10 @@ class Chef
 
       def object_template
         search_pattern = new_resource.search_pattern || "chef_environment:#{new_resource.environment}"
-        if new_resource.limit_region && !new_resource.server_region
-          server_region = nil
-          server_region node['ec2']['placement_availability_zone'].chop if node.key?('ec2')
+        server_region = new_resource.server_region
+
+        if new_resource.limit_region && !server_region
+          server_region = node['ec2']['placement_availability_zone'].chop if node.key?('ec2')
         end
         env_resources = new_resource.env_resources || Icinga2::Search.new(:environment => new_resource.environment,
                                                                           :enable_cluster_hostgroup => new_resource.enable_cluster_hostgroup,
