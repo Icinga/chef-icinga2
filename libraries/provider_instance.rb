@@ -103,7 +103,7 @@ class Chef
 
           # not all icinga object support templating
           # the object_class have to be determined in any case
-          resource_data['object_class'] = if resource.send('template') && template_support
+          resource_data['object_class'] = if template_support && resource.send('template')
                                             'template'
                                           else
                                             'object'
