@@ -2,6 +2,7 @@
 
 default['icinga2']['version'] = '2.4.1-1'
 
+default['icinga2']['enable_env_pki'] = false
 default['icinga2']['ignore_version'] = false
 default['icinga2']['cookbook'] = 'icinga2'
 default['icinga2']['conf_dir'] = '/etc/icinga2'

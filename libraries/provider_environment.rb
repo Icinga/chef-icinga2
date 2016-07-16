@@ -116,9 +116,11 @@ class Chef
           notifies :reload, 'service[icinga2]'
         end
         return true if hosts_template.updated? || create_hostgroups(env_resources)
-        return true if hosts_template.updated? || create_endpoints(env_resources)
-        return true if hosts_template.updated? || create_zones(env_resources)
-        return true if hosts_template.updated? || create_pki_tickets(env_resources)
+        if node['icinga2']['enable_env_pki']
+          return true if hosts_template.updated? || create_endpoints(env_resources)
+          return true if hosts_template.updated? || create_zones(env_resources)
+          return true if hosts_template.updated? || create_pki_tickets(env_resources)
+        end
       end
 
       def create_hostgroups(env_resources)
