@@ -73,9 +73,9 @@ when 'rhel'
   default['icinga2']['service_config_file'] = '/etc/sysconfig/icinga2'
 
   default['icinga2']['plugins_dir'] = if node['kernel']['machine'] == 'x86_64'
-                                        '/usr/lib/nagios/plugins'
-                                      else
                                         '/usr/lib64/nagios/plugins'
+                                      else
+                                        '/usr/lib/nagios/plugins'
                                       end
 
 when 'debian'
