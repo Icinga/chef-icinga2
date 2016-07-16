@@ -62,7 +62,7 @@ class Chef
           cookbook 'icinga2'
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0640
+          mode 0o640
           variables(:object => new_resource.name,
                     :spool_dir => new_resource.spool_dir,
                     :library => new_resource.library)

@@ -111,7 +111,7 @@ class Chef
           cookbook 'icinga2'
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0640
+          mode 0o640
           variables(:object => new_resource.name,
                     :host_perfdata_path => new_resource.host_perfdata_path,
                     :service_perfdata_path => new_resource.service_perfdata_path,

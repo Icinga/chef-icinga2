@@ -84,7 +84,7 @@ class Chef
           cookbook 'icinga2'
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0640
+          mode 0o640
           variables(:environment => new_resource.environment, :groups => new_resource.groups)
           notifies :reload, 'service[icinga2]'
         end

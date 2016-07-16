@@ -18,7 +18,7 @@ describe 'icinga2::client' do
           source: 'icinga2.logrotate.erb',
           owner: 'root',
           group: 'root',
-          mode: 0644
+          mode: 0o644
         )
       end
 
@@ -75,7 +75,7 @@ describe 'icinga2::client' do
         source: 'icinga2.conf.erb',
         owner: 'icinga',
         group: 'icinga',
-        mode: 0644
+        mode: 0o644
       )
     end
 
@@ -85,7 +85,7 @@ describe 'icinga2::client' do
           source: "icinga2.#{c}.erb",
           owner: 'icinga',
           group: 'icinga',
-          mode: 0644
+          mode: 0o644
         )
       end
     end
@@ -95,7 +95,7 @@ describe 'icinga2::client' do
         source: 'icinga2.service.config.erb',
         owner: 'root',
         group: 'root',
-        mode: 0644
+        mode: 0o644
       )
     end
   end
@@ -133,7 +133,7 @@ describe 'icinga2::client' do
         source: 'icinga2.conf.erb',
         owner: 'nagios',
         group: 'nagios',
-        mode: 0644
+        mode: 0o644
       )
     end
 
@@ -143,7 +143,7 @@ describe 'icinga2::client' do
           source: "icinga2.#{c}.erb",
           owner: 'nagios',
           group: 'nagios',
-          mode: 0644
+          mode: 0o644
         )
       end
     end
@@ -153,7 +153,7 @@ describe 'icinga2::client' do
         source: 'icinga2.service.config.erb',
         owner: 'root',
         group: 'root',
-        mode: 0644
+        mode: 0o644
       )
     end
   end

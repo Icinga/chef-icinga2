@@ -143,7 +143,7 @@ class Chef
           cookbook 'icinga2'
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0640
+          mode 0o640
           variables :objects => icinga2_objects_dict['template']
           notifies :reload, 'service[icinga2]'
           only_if { !icinga2_objects_dict['template'].empty? }
@@ -168,7 +168,7 @@ class Chef
             cookbook 'icinga2'
             owner node['icinga2']['user']
             group node['icinga2']['group']
-            mode 0640
+            mode 0o640
             variables :objects => zoned_objects
             notifies :reload, 'service[icinga2]'
             only_if { !zoned_objects.length.empty? }
@@ -180,7 +180,7 @@ class Chef
             cookbook 'icinga2'
             owner node['icinga2']['user']
             group node['icinga2']['group']
-            mode 0640
+            mode 0o640
             variables :objects => zoned_templates
             notifies :reload, 'service[icinga2]'
             only_if { !zoned_templates.length.empty? }

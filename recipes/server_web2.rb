@@ -45,7 +45,7 @@ file ::File.join(node['icinga2']['web2']['conf_dir'], 'setup.token') do
   content node['icinga2']['web2']['setup_token']
   owner node[node['icinga2']['web_engine']]['user']
   group node[node['icinga2']['web_engine']]['group']
-  mode 0660
+  mode 0o660
 end
 
 git node['icinga2']['web2']['web_root'] do

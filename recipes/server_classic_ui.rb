@@ -35,20 +35,20 @@ end
 directory node['icinga2']['classic_ui']['log_dir'] do
   owner node['icinga2']['user']
   group node['icinga2']['cmdgroup']
-  mode 0755
+  mode 0o755
 end
 
 directory node['icinga2']['classic_ui']['cgi_log_dir'] do
   owner node['icinga2']['user']
   group node['icinga2']['cmdgroup']
-  mode 02775
+  mode 0o2775
 end
 
 template ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'cgi.cfg') do
   source 'icinga2.cgi.cfg.erb'
   owner 'root'
   group 'root'
-  mode 0644
+  mode 0o644
   variables(:options => node['icinga2']['classic_ui']['cgi'])
 end
 
@@ -56,7 +56,7 @@ template ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'resources.cfg')
   source 'icinga2.resources.cfg.erb'
   owner 'root'
   group 'root'
-  mode 0644
+  mode 0o644
   variables(:plugins_dir => node['icinga2']['plugins_dir'])
 end
 
@@ -69,5 +69,5 @@ template 'icinga2_classic_ui_htpasswd' do
   owner 'root'
   group node['apache']['group']
   variables(:users => node['icinga2']['classic_ui']['users'])
-  mode 0640
+  mode 0o640
 end

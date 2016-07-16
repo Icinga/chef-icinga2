@@ -39,7 +39,7 @@ describe 'icinga2::server_classic_ui' do
           source: "icinga2.#{c}.erb",
           owner: 'root',
           group: 'root',
-          mode: 0644
+          mode: 0o644
         )
       end
     end
@@ -49,7 +49,7 @@ describe 'icinga2::server_classic_ui' do
         source: 'icinga2.passwd.erb',
         owner: 'root',
         group: 'apache',
-        mode: 0640
+        mode: 0o640
       )
     end
   end
@@ -82,7 +82,7 @@ describe 'icinga2::server_classic_ui' do
           source: "icinga2.#{c}.erb",
           owner: 'root',
           group: 'root',
-          mode: 0644
+          mode: 0o644
         )
       end
     end
@@ -92,7 +92,7 @@ describe 'icinga2::server_classic_ui' do
         source: 'icinga2.passwd.erb',
         owner: 'root',
         group: 'www-data',
-        mode: 0640
+        mode: 0o640
       )
     end
   end

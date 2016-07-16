@@ -70,7 +70,7 @@ class Chef
           source new_resource.source
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0755
+          mode 0o755
           variables new_resource.variables if new_resource.variables
           action new_resource.action
         end
