@@ -18,3 +18,42 @@ def icinga2_resource_create?(a)
     false
   end
 end
+
+def icinga_format(toplevel)
+  case toplevel
+  when Hash
+  rval = "{ "
+  when Array
+  rval = "[ "
+  when NilClass
+    return 'null'
+  when String, Float, Fixnum
+    return toplevel.inspect
+  when Symbol
+    return toplevel.to_s.inspect
+  else
+    return toplevel.inspect.to_s.inspect
+  end
+
+  rval += toplevel.collect do |k,v|
+    prefix = ''
+
+    target = k
+    case toplevel
+    when Hash
+        prefix += "#{icinga_format(k)} = "
+        target = v
+    end
+
+    prefix += icinga_format(target)
+  end.join(', ')
+
+  case toplevel
+  when Hash
+  rval += " }"
+  when Array
+  rval += " ]"
+  end
+
+  return rval
+end
