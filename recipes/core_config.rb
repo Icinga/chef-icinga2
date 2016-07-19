@@ -63,7 +63,7 @@ template '/etc/logrotate.d/icinga2' do
   owner 'root'
   group 'root'
   mode 0o644
-  variables(:log_dir => node['icinga2']['log_dir'])
+  variables(:log_dir => node['icinga2']['log_dir'], :user => node['icinga2']['user'], :group => node['icinga2']['group'])
 end
 
 # icinga2.conf
