@@ -8,7 +8,7 @@
 */
 
 <% @objects.sort.map do |object, options|%>
-apply Service <%= options['set'].nil? ? object.inspect : "for (#{options['set']})" -%> {
+apply Service <%= object.inspect -%><%= " for (#{options['set']})" unless options['set'].nil? -%> {
   <%- if options['import'] -%>
   import <%= options['import'].inspect %>
   <%- end -%>
@@ -89,6 +89,11 @@ apply Service <%= options['set'].nil? ? object.inspect : "for (#{options['set']}
   <% if options['ignore_where'] -%>
   <% options['ignore_where'].each do |i| -%>
   ignore where <%= i %>
+  <% end -%>
+  <% end -%>
+  <% if options['merge_vars'] -%>
+  <% options['merge_vars'].each do |var| -%>
+  vars += <%= var %>
   <% end -%>
   <% end -%>
   <% if options['custom_vars'] -%>

@@ -967,12 +967,13 @@ Above LWRP resource will apply an icinga `Service` object to all `Hosts` with cu
 	  import 'generic-service'
 	  check_command 'check_snmp'
 	  assign_where ['"areca" in host.vars.enabled_services']
+	  merge_vars ['config']
 	  check_interval '5m'
 	  retry_interval '3m'
 	  max_check_attempts 2
 	end
 
-Above LWRP resource will apply an icinga `Service` object with a Service for set (also called hash or dictionary) to all `Hosts` with custom vars `host.vars.enabled_services` including 'areca'.
+Above LWRP resource will apply an icinga `Service` object with a Service for set (also called hash or dictionary) to all `Hosts` with custom vars `host.vars.enabled_services` including 'areca'. It will also merge the values in `config` into the `Service` object.
 
 
 **LWRP Options**
@@ -1007,6 +1008,7 @@ Above LWRP resource will apply an icinga `Service` object with a Service for set
 - *icon_image* (optional, String)	- icinga `Service` object attribute `icon_image`
 - *icon_image_alt* (optional, String)	- icinga `Service` object attribute `icon_image_alt`
 - *custom_vars* (optional, Hash)	- icinga `Service` object attribute `vars`
+- *merge_vars* (optional, Array)	- Merge vars from each member of a set into icinga `Service` object attribute `vars`
 - *assign_where* (optional, Array)	 - an array of `assign where` statements
 - *ignore_where* (optional, Array)	 - an array of `ignore where` statements
 
