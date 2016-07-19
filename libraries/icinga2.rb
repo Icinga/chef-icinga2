@@ -22,9 +22,9 @@ end
 def icinga_format(toplevel)
   case toplevel
   when Hash
-  rval = "{ "
+    rval = '{ '
   when Array
-  rval = "[ "
+    rval = '[ '
   when NilClass
     return 'null'
   when String, Float, Fixnum
@@ -35,14 +35,14 @@ def icinga_format(toplevel)
     return toplevel.inspect.to_s.inspect
   end
 
-  rval += toplevel.collect do |k,v|
+  rval += toplevel.collect do |k, v|
     prefix = ''
 
     target = k
     case toplevel
     when Hash
-        prefix += "#{icinga_format(k)} = "
-        target = v
+      prefix += "#{icinga_format(k)} = "
+      target = v
     end
 
     prefix += icinga_format(target)
@@ -50,10 +50,10 @@ def icinga_format(toplevel)
 
   case toplevel
   when Hash
-  rval += " }"
+    rval += ' }'
   when Array
-  rval += " ]"
+    rval += ' ]'
   end
 
-  return rval
+  rval
 end
