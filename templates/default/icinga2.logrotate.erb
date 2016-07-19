@@ -4,32 +4,31 @@
 #
 
 <%= @log_dir -%>/icinga2.log <%= @log_dir -%>/debug.log {
-  daily
+	daily
 	rotate 7
-	su icinga icinga
+	su <%= @user -%> <%= @group %>
 	compress
 	delaycompress
-  missingok
-  notifempty
-  create 644 icinga icinga
+	missingok
+	notifempty
+	create 644 <%= @user -%> <%= @group %>
 	copytruncate
 	postrotate
 		if ! killall -q -USR1 icinga2; then
 			exit 1
 		fi
-  endscript
+	endscript
 }
 
 <%= @log_dir -%>/error.log {
 	daily
-	su icinga icinga
+	su <%= @user -%> <%= @group %>
 	rotate 90
 	compress
 	delaycompress
 	missingok
 	notifempty
-	create 644 icinga icinga
+	create 644 <%= @user -%> <%= @group %>
 	copytruncate
 	# TODO: figure out how to get Icinga to re-open this log file
 }
-
