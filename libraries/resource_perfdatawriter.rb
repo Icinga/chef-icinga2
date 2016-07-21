@@ -113,6 +113,7 @@ class Chef
           group node['icinga2']['group']
           mode 0o640
           variables(:object => new_resource.name,
+                    :library => new_resource.library,
                     :host_perfdata_path => new_resource.host_perfdata_path,
                     :service_perfdata_path => new_resource.service_perfdata_path,
                     :host_temp_path => new_resource.host_temp_path,
