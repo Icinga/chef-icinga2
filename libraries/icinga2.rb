@@ -45,7 +45,7 @@ def icinga_format(toplevel)
       target = v
     end
 
-    prefix += icinga_format(target)
+    prefix + icinga_format(target)
   end.join(', ')
 
   case toplevel
