@@ -26,3 +26,6 @@ coverage/
 
 .kitchen/
 .kitchen.local.yml
+
+# Rubymine
+.idea/*
