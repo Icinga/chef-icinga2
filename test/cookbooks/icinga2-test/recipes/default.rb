@@ -1,1 +1,1 @@
-package 'curl' # minimal ubuntu precies does not come with curl
+package 'curl' # minimal ubuntu/debian does not come with curl

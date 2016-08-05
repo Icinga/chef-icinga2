@@ -1,7 +1,4 @@
-require 'serverspec'
-
-set :backend, :exec
-set :path, '$PATH:/sbin:/usr/local/sbin'
+require 'spec_helper'
 
 %w(
   icinga2
@@ -13,18 +10,16 @@ set :path, '$PATH:/sbin:/usr/local/sbin'
 end
 
 case os[:family]
-when 'centos'
-  describe file('/etc/httpd/conf-enabled/icinga2-web2.conf') do
-    it { should be_file }
-  end
-when 'debian'
-  describe file('/etc/apache2/conf-enabled/icinga2-web2.conf') do
-    it { should be_file }
-  end
-when 'ubuntu'
-  describe file('/etc/apache2/conf-enabled/icinga2-web2.conf') do
-    it { should be_file }
-  end
+  when 'centos'
+    webserver_config = '/etc/httpd/conf-enabled/icinga2-web2.conf'
+  when 'debian'
+    webserver_config = '/etc/apache2/conf-enabled/icinga2-web2.conf'
+  when 'ubuntu'
+    webserver_config = '/etc/apache2/conf-enabled/icinga2-web2.conf'
+end
+
+describe file(webserver_config) do
+  it { should be_file }
 end
 
 describe command('curl -IL localhost/icingaweb2/setup') do
