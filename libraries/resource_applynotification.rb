@@ -67,7 +67,7 @@ class Chef
         set_or_return(
           :interval, arg,
           :kind_of => [String, Integer],
-          :regex => /^\d+[smhd]$/,
+          :regex => /^0|\d+[smhd]$/,
           :default => nil
         )
       end
