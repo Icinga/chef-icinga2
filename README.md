@@ -125,25 +125,23 @@ use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.
 
 - `icinga2::default`     	- does not do anything, used for LWRP usage
 
+- `icinga2::client`     	- does not do anything, used for LWRP usage
+
+- `icinga2::client_os_package`     	- install icinga2 client os packages
+
+- `icinga2::core_config`     	- icinga2 common directory and file resources
+
+- `icinga2::core_install`     	- setup icinga2 repository and install icinga2 package
+
 - `icinga2::server`  		- install & configure icinga2 server with default icinga Objects
 
 - `icinga2::server_apache`		- manages apache and icinga2 classic ui / web / web2 vhost using `apache2` cookbook
 
-- `icinga2::server_os_packages`   		- install os packages for icinga2
+- `icinga2::server_classic_ui`      - configures icinga2 classic ui
 
-- `icinga2::server_install`   		- install icinga2 core/ido server packages
+- `icinga2::server_config`      - icinga2 server specific configuration
 
-- `icinga2::server_core`   			- configures icinga2 core configuration files & directories
-
-- `icinga2::server_ido_schema`   		- load icinga2 ido db schema
-
-- `icinga2::server_classic_ui`   		- configures icinga2 classic ui
-
-- `icinga2::server_web2`   		- configures icingaweb2
-
-- `icinga2::server_pnp`   		- configures pnp4nagios for icinga2
-
-- `icinga2::server_objects`   		- manages icinga2 default objects/templates objects if `node['icinga2']['disable_conf_d']` is set in which case `conf.d` objects config is not included in `icinga2.conf` and objects are created using LWRP
+- `icinga2::server_ido_schema`      - load icinga2 ido db schema
 
 - `icinga2::server_object_host`   	- creates icinga2 `generic-host` `Host` template
 
@@ -157,22 +155,31 @@ use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.
 
 - `icinga2::server_object_usergroup`   	- creates icinga2 `icingaadmins` `UserGroup` object
 
+- `icinga2::server_objects`       - manages icinga2 default objects/templates objects if `node['icinga2']['disable_conf_d']` is set in which case `conf.d` objects config is not included in `icinga2.conf` and objects are created using LWRP
+
+- `icinga2::server_os_packages`       - install icinga2 server os packages
+
+- `icinga2::server_pnp`       - configures pnp4nagios for icinga2
+
+- `icinga2::server_web2`      - configures icingaweb2
 
 ## Attributes
 
-- `icinga2::default` 			- icinga2 server default attributes file
+- `icinga2::default` 			- icinga2 default attributes
 
-- `icinga2::repo`				- icinga2 yum/apt repositories file for packages install
+- `icinga2::repo`				- icinga2 yum/apt repositories attributes
 
-- `icinga2::server_classic_ui` - icinga2 server classic ui default attributes file
+- `icinga2::server_apache` - apache2 attributes
 
-- `icinga2::server_constants`	- icinga2 server constants parameters file
+- `icinga2::server_classic_ui` - icinga2 server classic ui attributes
 
-- `icinga2::server_objects`		- icinga2 objects default attributes file
+- `icinga2::server_constants`	- icinga2 server constants attributes
 
-- `icinga2::server_ido`		- icinga2 ido db default attributes file
+- `icinga2::server_ido`		- icinga2 server ido db attributes
 
-- `icinga2::server_web2`		- icinga2 web2 ui default attributes file
+- `icinga2::server_objects`		- icinga2 server objects attributes
+
+- `icinga2::server_web2`		- icingaweb2 attributes
 
 
 
