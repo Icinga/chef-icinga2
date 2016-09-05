@@ -10,12 +10,12 @@ require 'spec_helper'
 end
 
 case os[:family]
-  when 'centos'
-    webserver_config = '/etc/httpd/conf-enabled/icinga2-web2.conf'
-  when 'debian'
-    webserver_config = '/etc/apache2/conf-enabled/icinga2-web2.conf'
-  when 'ubuntu'
-    webserver_config = '/etc/apache2/conf-enabled/icinga2-web2.conf'
+when 'centos'
+  webserver_config = '/etc/httpd/conf-enabled/icinga2-web2.conf'
+when 'debian'
+  webserver_config = '/etc/apache2/conf-enabled/icinga2-web2.conf'
+when 'ubuntu'
+  webserver_config = '/etc/apache2/conf-enabled/icinga2-web2.conf'
 end
 
 describe file(webserver_config) do

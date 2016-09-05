@@ -14,12 +14,12 @@ describe service('icinga2') do
 end
 
 case os[:family]
-  when 'centos'
-    webserver = 'httpd'
-  when 'debian'
-    webserver = 'apache2'
-  when 'ubuntu'
-    webserver = 'apache2'
+when 'centos'
+  webserver = 'httpd'
+when 'debian'
+  webserver = 'apache2'
+when 'ubuntu'
+  webserver = 'apache2'
 end
 
 describe service(webserver) do
