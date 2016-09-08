@@ -20,16 +20,16 @@ suites:
       - recipe[icinga2-test::default]
     attributes:
       icinga2:
-        version: '2.4.10-1'
+        ignore_version: true
         classic_ui:
-          version: '2.4.10-1'
+          version: '2.5.4-1'
 
   - name: client
     run_list:
       - recipe[icinga2::client]
     attributes:
       icinga2:
-        version: '2.4.10-1'
+        ignore_version: true
     
   - name: web2
     driver:
@@ -42,7 +42,7 @@ suites:
       - recipe[icinga2-test::default]
     attributes:
      icinga2:
-      version: '2.4.10-1'
+      ignore_version: true
       web2:
         enable: true
       classic_ui:
