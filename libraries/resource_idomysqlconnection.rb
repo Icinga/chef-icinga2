@@ -3,6 +3,7 @@ class Chef
   class Resource
     # provides icinga2_idomysqlconnection
     class Icinga2Idomysqlconnection < Chef::Resource
+      use_inline_resources if defined?(use_inline_resources)
       identity_attr :name
 
       def initialize(name, run_context = nil)

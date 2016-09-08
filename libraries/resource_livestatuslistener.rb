@@ -3,6 +3,7 @@ class Chef
   class Resource
     # provides icinga2_livestatuslistener
     class Icinga2Livestatuslistener < Chef::Resource
+      use_inline_resources if defined?(use_inline_resources)
       identity_attr :name
 
       def initialize(name, run_context = nil)

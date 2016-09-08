@@ -25,6 +25,8 @@ class Chef
     class Icinga2Feature < Chef::Provider::LWRPBase
       provides :icinga2_feature if respond_to?(:provides)
 
+      use_inline_resources if defined?(use_inline_resources)
+
       def whyrun_supported?
         true
       end
@@ -42,7 +44,9 @@ class Chef
         end
       end
 
-      def action_disable
+      action :disable do
+        raise "feature not available - #{new_resource.name}" unless ::File.exist?(::File.join(node['icinga2']['features_available_dir'], "#{new_resource.name}.conf"))
+
         if ::File.exist?(::File.join(node['icinga2']['features_enabled_dir'], "#{new_resource.name}.conf"))
           execute "disable_feature_#{new_resource.name}" do
             command "/usr/sbin/icinga2 feature disable #{new_resource.name}"
