@@ -7,6 +7,8 @@ class Chef
     class Icinga2Instance < Chef::Provider::LWRPBase
       provides :icinga2_instance if respond_to?(:provides)
 
+      use_inline_resources if defined?(use_inline_resources)
+
       def whyrun_supported?
         true
       end

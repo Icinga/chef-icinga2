@@ -3,6 +3,7 @@ class Chef
   class Resource
     # provides icinga2_sysloglogger
     class Icinga2Sysloglogger < Chef::Resource
+      use_inline_resources if defined?(use_inline_resources)
       identity_attr :name
 
       def initialize(name, run_context = nil)
