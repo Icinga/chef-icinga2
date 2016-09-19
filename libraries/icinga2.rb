@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 def evaluate_quotes(value)
   return value unless value.is_a? String
   if value.to_s =~ /\+|{{(.*?)}}/m

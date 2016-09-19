@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # https://wiki.icinga.org/display/howtos/Setting+up+Icinga+Classic+UI+Standalone
 
 default['icinga2']['classic_ui']['enable'] = false

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 if defined?(ChefSpec)
   def create_icinga2_apilistener(name)
     ChefSpec::Matchers::ResourceMatcher

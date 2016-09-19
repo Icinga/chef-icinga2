@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 default['icinga2']['web2']['enable'] = false
 default['icinga2']['web2']['install_method'] = 'package' # source
 default['icinga2']['web2']['source_url'] = 'git://git.icinga.org/icingaweb2.git'

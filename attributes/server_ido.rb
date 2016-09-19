@@ -1,4 +1,5 @@
-
+# frozen_string_literal: true
+default['icinga2']['ido']['type'] = 'mysql'
 default['icinga2']['ido']['load_schema'] = false
 default['icinga2']['ido']['install_mysql_client'] = false
 
