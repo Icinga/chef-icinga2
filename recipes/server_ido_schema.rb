@@ -64,6 +64,7 @@ end
 execute 'schema_load_ido_mysql' do
   command "\
   mysql -h #{node['icinga2']['ido']['db_host']} \
+  -P#{node['icinga2']['ido']['db_port']} \
   -u#{node['icinga2']['ido']['db_user']} \
   -p#{node['icinga2']['ido']['db_password']} \
   #{node['icinga2']['ido']['db_name']} < /usr/share/icinga2-ido-#{node['icinga2']['ido']['type']}/schema/#{node['icinga2']['ido']['type']}.sql \
@@ -77,6 +78,7 @@ execute 'schema_load_ido_pgsql' do
   command "\
   su - postgres -c \"export PGPASSWORD=\'#{node['icinga2']['ido']['db_password']}\' && \
   psql -h #{node['icinga2']['ido']['db_host']}\
+  -p #{node['icinga2']['ido']['db_port']} \
   -U #{node['icinga2']['ido']['db_user']}\
   -d #{node['icinga2']['ido']['db_name']} < /usr/share/icinga2-ido-#{node['icinga2']['ido']['type']}/schema/#{node['icinga2']['ido']['type']}.sql \
   && export PGPASSWORD=\'\'\" \
