@@ -27,7 +27,7 @@ def icinga_format(toplevel)
     rval = '[ '
   when NilClass
     return 'null'
-  when String, Float, Fixnum
+  when String, Float, Integer
     return toplevel.inspect
   when Symbol
     return toplevel.to_s.inspect
