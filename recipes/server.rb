@@ -45,7 +45,7 @@ include_recipe 'icinga2::server_ido_schema' if node['icinga2']['ido']['load_sche
 include_recipe 'icinga2::server_web2' if node['icinga2']['web2']['enable']
 
 # icinga2 pnp support
-include_recipe 'icinga2::server_pnp' if node['icinga2']['pnp'] && if node['icinga2']['classic_ui']['enable']
+include_recipe 'icinga2::server_pnp' if node['icinga2']['pnp'] && node['icinga2']['classic_ui']['enable']
 
 # objects
 include_recipe 'icinga2::server_objects' if node['icinga2']['disable_conf_d']
