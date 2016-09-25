@@ -17,11 +17,11 @@
 # limitations under the License.
 #
 
-node.set['pnp4nagios']['user'] = node['icinga2']['user']
-node.set['pnp4nagios']['group'] = node['icinga2']['cmdgroup']
-node.set['pnp4nagios']['nagios_base'] = '/icinga/cgi-bin'
-node.set['pnp4nagios']['spool_dir'] = node['icinga2']['perfdata_dir']
-node.set['pnp4nagios']['auth_file'] = value_for_platform(
+node.normal['pnp4nagios']['user'] = node['icinga2']['user']
+node.normal['pnp4nagios']['group'] = node['icinga2']['cmdgroup']
+node.normal['pnp4nagios']['nagios_base'] = '/icinga/cgi-bin'
+node.normal['pnp4nagios']['spool_dir'] = node['icinga2']['perfdata_dir']
+node.normal['pnp4nagios']['auth_file'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'passwd') },
   'ubuntu' => { 'default' => ::File.join(node['icinga2']['classic_ui']['conf_dir'], 'htpasswd.users') }
 )
