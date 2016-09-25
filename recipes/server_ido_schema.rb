@@ -27,6 +27,7 @@ package "icinga2-ido-#{node['icinga2']['ido']['type']}" do
   version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix'] unless node['icinga2']['ignore_version']
 end
 
+# disable ido-mysql default feature
 icinga2_feature 'ido-mysql' do
   action :disable
 end
@@ -69,7 +70,7 @@ execute 'schema_load_ido_mysql' do
   && touch /etc/icinga2/schema_loaded_ido_mysql"
   creates '/etc/icinga2//schema_loaded_ido_mysql'
   environment 'MYSQL_HOME' => node['icinga2']['ido']['mysql_home']
-  only_if { node['icinga2']['ido']['load_schema'] && node['icinga2']['ido']['type'] == 'mysql' }
+  only_if { node['icinga2']['ido']['type'] == 'mysql' }
 end
 
 execute 'schema_load_ido_pgsql' do
@@ -81,11 +82,11 @@ execute 'schema_load_ido_pgsql' do
   && export PGPASSWORD=\'\'\" \
   && touch /var/lib/pgsql/schema_loaded_ido_pgsql"
   creates '/var/lib/pgsql/schema_loaded_ido_pgsql'
-  only_if { node['icinga2']['ido']['load_schema'] && node['icinga2']['ido']['type'] == 'pgsql' }
+  only_if { node['icinga2']['ido']['type'] == 'pgsql' }
 end
 
 # enable icinga2 ido
-if node['icinga2']['ido']['type'] == 'mysql' && node['icinga2']['ido']['load_schema']
+if node['icinga2']['ido']['type'] == 'mysql'
   icinga2_idomysqlconnection "ido-#{node['icinga2']['ido']['type']}" do
     host node['icinga2']['ido']['db_host']
     port node['icinga2']['ido']['db_port']
@@ -93,7 +94,7 @@ if node['icinga2']['ido']['type'] == 'mysql' && node['icinga2']['ido']['load_sch
     password node['icinga2']['ido']['db_password']
     database node['icinga2']['ido']['db_name']
   end
-elsif node['icinga2']['ido']['type'] == 'pgsql' && node['icinga2']['ido']['load_schema']
+elsif node['icinga2']['ido']['type'] == 'pgsql'
   icinga2_idopgsqlconnection "ido-#{node['icinga2']['ido']['type']}" do
     host node['icinga2']['ido']['db_host']
     port node['icinga2']['ido']['db_port']

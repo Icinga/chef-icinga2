@@ -1,7 +1,8 @@
 
-default['icinga2']['ido']['install_mysql_client'] = false
-default['icinga2']['ido']['type'] = 'mysql'
 default['icinga2']['ido']['load_schema'] = false
+default['icinga2']['ido']['install_mysql_client'] = false
+
+default['icinga2']['ido']['type'] = 'mysql'
 default['icinga2']['ido']['db_host'] = 'localhost'
 default['icinga2']['ido']['db_port'] = 3306
 default['icinga2']['ido']['db_name'] = 'icinga'
@@ -9,7 +10,7 @@ default['icinga2']['ido']['db_user'] = 'icinga'
 default['icinga2']['ido']['db_password'] = 'icinga'
 default['icinga2']['ido']['mysql_home'] = '/etc/mysql'
 
-# configure mysql repo to install mysql client package
+# configure mysql official repo to install mysql client package
 default['icinga2']['ido']['mysql_version'] = '5.7'
 
 default['icinga2']['ido']['yum']['description'] = "MySQL Community #{node['icinga2']['ido']['mysql_version']}"
