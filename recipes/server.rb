@@ -39,7 +39,7 @@ include_recipe 'icinga2::server_config'
 include_recipe 'icinga2::server_classic_ui' if node['icinga2']['classic_ui']['enable']
 
 # icinga2 ido
-include_recipe 'icinga2::server_ido_schema'
+include_recipe 'icinga2::server_ido_schema' if node['icinga2']['ido']['load_schema']
 
 # icingweb2
 include_recipe 'icinga2::server_web2' if node['icinga2']['web2']['enable']
