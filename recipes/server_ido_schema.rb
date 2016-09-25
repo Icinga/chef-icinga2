@@ -27,6 +27,38 @@ package "icinga2-ido-#{node['icinga2']['ido']['type']}" do
   version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix'] unless node['icinga2']['ignore_version']
 end
 
+icinga2_feature 'ido-mysql' do
+  action :disable
+end
+
+if node['icinga2']['ido']['install_mysql_client']
+  case node['platform_family']
+  when 'debian'
+    # apt repository configuration
+    apt_repository 'icinga2-mysql-community' do
+      uri node['icinga2']['ido']['apt']['uri']
+      distribution node['icinga2']['ido']['apt']['distribution']
+      components node['icinga2']['ido']['apt']['components']
+      keyserver node['icinga2']['ido']['apt']['keyserver'] unless node['icinga2']['apt']['keyserver'].nil?
+      key node['icinga2']['ido']['apt']['key']
+      deb_src node['icinga2']['ido']['apt']['deb_src']
+      action node['icinga2']['ido']['apt']['action']
+    end
+  when 'rhel'
+    # yum repository configuration
+    yum_repository 'icinga2-mysql-community' do
+      description node['icinga2']['ido']['yum']['description']
+      baseurl node['icinga2']['ido']['yum']['baseurl']
+      gpgcheck node['icinga2']['ido']['yum']['gpgcheck']
+      gpgkey node['icinga2']['ido']['yum']['gpgkey']
+      enabled node['icinga2']['ido']['yum']['enabled']
+      action node['icinga2']['ido']['yum']['action']
+    end
+  end
+
+  package 'mysql-community-client'
+end
+
 # load ido schema
 execute 'schema_load_ido_mysql' do
   command "\
@@ -52,5 +84,21 @@ execute 'schema_load_ido_pgsql' do
   only_if { node['icinga2']['ido']['load_schema'] && node['icinga2']['ido']['type'] == 'pgsql' }
 end
 
-# enable icinga2 feature ido
-icinga2_feature "ido-#{node['icinga2']['ido']['type']}" if node['icinga2']['ido']['load_schema']
+# enable icinga2 ido
+if node['icinga2']['ido']['type'] == 'mysql' && node['icinga2']['ido']['load_schema']
+  icinga2_idomysqlconnection "ido-#{node['icinga2']['ido']['type']}" do
+    host node['icinga2']['ido']['db_host']
+    port node['icinga2']['ido']['db_port']
+    user node['icinga2']['ido']['db_user']
+    password node['icinga2']['ido']['db_password']
+    database node['icinga2']['ido']['db_name']
+  end
+elsif node['icinga2']['ido']['type'] == 'pgsql' && node['icinga2']['ido']['load_schema']
+  icinga2_idopgsqlconnection "ido-#{node['icinga2']['ido']['type']}" do
+    host node['icinga2']['ido']['db_host']
+    port node['icinga2']['ido']['db_port']
+    user node['icinga2']['ido']['db_user']
+    password node['icinga2']['ido']['db_password']
+    database node['icinga2']['ido']['db_name']
+  end
+end
