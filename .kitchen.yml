@@ -47,3 +47,6 @@ suites:
         enable: true
       classic_ui:
         enable: false
+      ido:
+        load_schema: true
+        install_mysql_client: true
