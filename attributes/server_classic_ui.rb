@@ -1,6 +1,7 @@
 # https://wiki.icinga.org/display/howtos/Setting+up+Icinga+Classic+UI+Standalone
 
-default['icinga2']['classic_ui']['enable'] = true
+default['icinga2']['classic_ui']['enable'] = false
+
 # in favour of existing users for rhel
 default['icinga2']['classic_ui']['apache_conf'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => 'icinga2-classic-ui' },
