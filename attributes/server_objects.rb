@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 default['icinga2']['server']['object']['global-templates'] = false
 default['icinga2']['server']['object']['host']['import'] = 'generic-host'
 default['icinga2']['server']['object']['host']['max_check_attempts'] = 3

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ['icinga2']['recreate_server_certs'] = false
 
 pki_dir       = '/etc/icinga2/pki'

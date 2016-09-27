@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 default['icinga2']['build_type'] = 'release' # options: stable, snapshot
 
 case node['platform_family']

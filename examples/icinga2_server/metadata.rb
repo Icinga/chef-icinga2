@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 name 'icinga2_server'
 maintainer 'Virender Khatri'
 maintainer_email 'vir.khatri@gmail.com'

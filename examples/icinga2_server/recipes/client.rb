@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ['icinga2']['recreate_client_certs'] = false
 
 include_recipe 'icinga2::client'

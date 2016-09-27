@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 # This seems wrong, but I don't actually know how to do this
 require_relative '../../libraries/icinga2.rb'
 
