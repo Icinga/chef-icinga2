@@ -12,17 +12,13 @@ platforms:
 
 suites:
   - name: server
-    driver:
-      network:
-        - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
+    require_chef_omnibus: 12.14.60
     run_list:
       - recipe[icinga2::server]
       - recipe[icinga2-test::default]
     attributes:
       icinga2:
         version: '2.5.4-1'
-        classic_ui:
-          version: '2.5.4-1'
 
   - name: client
     run_list:
@@ -31,22 +27,60 @@ suites:
       icinga2:
         version: '2.5.4-1'
 
-  - name: web2
+  - name: web2-package
+    require_chef_omnibus: 12.14.60
     driver:
       network:
         - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
         - ["forwarded_port", {guest: 443, host: 8443, auto_correct: true}]
     run_list:
-      - recipe[icinga2::default]
       - recipe[icinga2::server]
       - recipe[icinga2-test::default]
     attributes:
-     icinga2:
-      version: '2.5.4-1'
-      web2:
-        enable: true
-      classic_ui:
-        enable: false
-      ido:
-        load_schema: true
-        install_mysql_client: true
+      icinga2:
+        version: '2.5.4-1'
+        web2:
+          enable: true
+          install_method: package
+          version: 2.3.4
+        ido:
+          install_mysql_client: true
+          db_host: 192.168.1.152
+          load_schema: true
+          db_password: rooT-123
+  - name: web2-source
+    require_chef_omnibus: 12.14.60
+    driver:
+      network:
+        - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
+        - ["forwarded_port", {guest: 443, host: 8443, auto_correct: true}]
+    run_list:
+      - recipe[icinga2::server]
+      - recipe[icinga2-test::default]
+    attributes:
+      icinga2:
+        version: '2.5.4-1'
+        web2:
+          enable: true
+          install_method: source
+          version: 2.3.4
+        ido:
+          install_mysql_client: true
+          db_host: 192.168.1.152
+          load_schema: true
+          db_password: rooT-123
+  - name: classicui
+    require_chef_omnibus: 12.14.60
+    driver:
+      network:
+        - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
+        - ["forwarded_port", {guest: 443, host: 8443, auto_correct: true}]
+    run_list:
+      - recipe[icinga2::server]
+      - recipe[icinga2-test::default]
+    attributes:
+      icinga2:
+        version: '2.5.4-1'
+        classic_ui:
+          version: '2.5.4-1'
+          enable: true
