@@ -1,7 +1,7 @@
 icinga2 Cookbook
 ==================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v2.9.0-green.svg)](https://github.com/icinga/chef-icinga2)
+[![Cookbook](http://img.shields.io/badge/cookbook-v2.9.0-green.svg)](https://github.com/icinga/chef-icinga2) [![Build Status](https://travis-ci.org/Icinga/chef-icinga2.svg?branch=master)](https://travis-ci.org/Icinga/chef-icinga2)
 
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
@@ -14,7 +14,7 @@ what you find missing!
 
 ## Repository
 
-https://github.com/icinga/chef-icinga2
+https://github.com/Icinga/chef-icinga2
 
 
 ## Chef Super Market
@@ -29,12 +29,18 @@ For issue reporting or any discussion regarding this cookbook, open an issue at 
 
 ## Supported Icinga Version
 
-This cookbook is being developed for Icinga2 - v2.2.x primarily on Amazon Platform (EPEL Release 6 Package).
+This cookbook is being developed for Icinga2 - v2.2.x and later versions.
+
+
+## Supported OS
+
+ This cookbook has been tested on CentOS 6.8, CentOS 7.2 and Ubuntu 14.04.
 
 
 ## Supported Icinga2 Install Types
 
 Currently Icinga2 installation is supported **ONLY** via Repository Packages, as it is a recommended best practice.
+
 
 ## Chef Requirement
 
@@ -50,6 +56,12 @@ See CONTRIBUTING.md
 
 
 ## Major Changes
+
+###v2.9.1
+
+* Icinga2 ClassicUI is disabled by default, you can enable it by setting default['icinga2']['classic_ui']['enable'] value to `true`
+* Icingaweb2 installation is done by package instead of git source, you can change it via attribute default['icinga2']['web2']['install_method'] values `package, source`
+
 
 ###v2.8.0
 
@@ -183,25 +195,34 @@ use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.
 
 
 
-## Icinga2 Server Setup
+## Icinga2 Server Setup Recipes
 
-To setup icinga2 server on a node, add recipe `icinga2::server` which will install necessary packages and configuration files.
+### How to Install and Configure Icinga2 Server without UI
+
+- add recipe `icinga2::server` to your run_list
+
+### How to Install and Configure Icinga2 Server with ClassicUI
+
+- set node['icinga2']['classic_ui']['enable'] = true
+- add recipe `icinga2::server` to your run_list
+
+### How to Install and Configure Icinga2 Server with ClassicUI and PNP
+
+- set node['icinga2']['classic_ui']['enable'] = true
+- set node['icinga2']['pnp'] = true
+- add recipe `icinga2::server` to your run_list
 
 
-## Icinga2 with PNP4Nagios
+### How to Install and Configure Icinga2 Server with Icingaweb2 UI
 
-Recipe `icinga2::server_pnp` setup and configures `PNP4Nagios` along with `rrdtool`.
-
-Simply add recipe `icinga2::server_pnp` to icinga2 server `run_list` to setup `PNP4Nagios` along with `rrdcached`.
-
-For PNP4Nagios cookbook `pnp4nagios` is used and for RRDTool cookbook `rrdtool` is used.
+- set node['icinga2']['web2']['enable'] = true
+- add recipe `icinga2::server` to your run_list
 
 
-## Icinga2 Agent Client
+## Icinga2 Client Setup Recipe
 
-NRPE Client recipe was removed from this cookbook in favour of `nrpe` cookbook.
+To install and configure `icinga2` for client add recipe `icinga2::client` to agent run_list
 
-Icinga2 Agent setup will be added soon.
 
 
 ## Icinga2 Web / Classic UI engine
@@ -214,9 +235,7 @@ Web engine is configurable by node attribute `node['icinga2']['web_engine']`, de
 
 ## Icinga2 Classic UI
 
-Icinga2 Classic UI is enabled by default and set as default UI.
-
-However, Classic UI can be disabled by attribute `node['icinga2']['classic_ui']['enable']`.
+Icinga2 Classic UI is disabled by default and can be enabled by attribute `node['icinga2']['classic_ui']['enable']`.
 
 
 **How to add users for icinga2 Classic UI**
@@ -292,6 +311,8 @@ Icinga2 IDO type is configurable by node attribute `node['icinga2']['ido']['type
 
 >> ido pgsql schema upload is not fully tested, please open an issue if encounter any problem.
 
+Loading Schema require `mysql` or `psql` client, currently cookbook can install `mysql` client is `default['icinga2']['ido']['install_mysql_client']` is true.
+
 
 ## Icinga Web2 Setup
 
@@ -305,7 +326,7 @@ Recipe `icinga::server_web2` configures below items.
 - create token file `/etc/icingaweb2/setup.token`
 - create log directory `/var/log/icingaweb2`
 
-Rest of the configuration can be completed by browsing icingaweb2 Web UI `http://server/icingaweb`.
+Rest of the configuration can be completed by browsing icingaweb2 Web UI `http://server/icingaweb`. More configuration management will be added soon.
 
 
 ## Icinga2 Cluster Deployment
@@ -1960,7 +1981,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Core Attributes
 
-* `default['icinga2']['version']` (default: `calculated`): icinga2 version
+* `default['icinga2']['version']` (default: `2.5.4-1`): icinga2 version
 
 * `default['icinga2']['conf_dir']` (default: `/etc/icinga2`): icinga2 configuration location
 
@@ -2030,6 +2051,8 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Icinga2 Host Object default Attributes
 
+* `default['icinga2']['server']['object']['global-templates']` (default: `false`)
+
 * `default['icinga2']['server']['object']['host']['import']` (default: `'generic-host`)
 
 * `default['icinga2']['server']['object']['host']['max_check_attempts']` (default: `3`)
@@ -2071,7 +2094,11 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
  * `default[:icinga2]['ido']['load_schema']` (default: `false`): whether to load db schema
 
+ * `default[:icinga2]['ido']['install_mysql_client']` (default: `false`): install mysql client using mysql official repository
+
  * `default[:icinga2]['ido']['db_host']` (default: `localhost`): Icinga2 ido db host
+
+ * `default[:icinga2]['ido']['db_port']` (default: `3306`): Icinga2 ido db port
 
  * `default[:icinga2]['ido']['db_name']` (default: `icinga`): Icinga2 ido db name
 
@@ -2081,14 +2108,50 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
  * `default[:icinga2]['ido']['mysql_home']` (default: `/etc/mysql`): sets value for environment variable `MYSQL_HOME` for schema load
 
+ * `default['icinga2']['ido']['mysql_version']` (default: `false`): install mysql client if set true
+
+ * `default['icinga2']['ido']['yum']['description']` (default: `MySQL Community #{node['icinga2']['ido']['mysql_version']}`): yum repo resource attribute
+
+ * `default['icinga2']['ido']['yum']['gpgcheck']` (default: `true`): yum repo resource attribute
+
+ * `default['icinga2']['ido']['yum']['enabled']` (default: `true`): yum repo resource attribute
+
+ * `default['icinga2']['ido']['yum']['gpgkey']` (default: `https://raw.githubusercontent.com/Icinga/chef-icinga2/master/files/default/mysql_pubkey.asc`): yum repo resource attribute
+
+ * `default['icinga2']['ido']['yum']['action']` (default: `:create`): yum repo resource attribute
+
+ * `default['icinga2']['ido']['yum']['baseurl']` (default: `calculated`): yum repo resource attribute
+
+ * `default['icinga2']['ido']['apt']['repo']` (default: `MySQL Community #{node['icinga2']['ido']['mysql_version']}`): apt repository resource attribute
+
+ * `default['icinga2']['ido']['apt']['keyserver']` (default: `keyserver.ubuntu.com`): apt repository resource attribute
+
+ * `default['icinga2']['ido']['apt']['components']` (default: `["mysql-#{node['icinga2']['ido']['mysql_version']}"]`): apt repository resource attribute
+
+ * `default['icinga2']['ido']['apt']['deb_src']` (default: `false`): apt repository resource attribute
+
+ * `default['icinga2']['ido']['apt']['action']` (default: `:add`): apt repository resource attribute
+
+ * `default['icinga2']['ido']['apt']['repo']` (default: `MySQL Community #{node['icinga2']['ido']['mysql_version']}`): apt repository resource attribute
+
+ * `default['icinga2']['ido']['apt']['uri']` (default: `http://repo.mysql.com/apt/#{node['platform']}/`): apt repository resource attribute
+
+ * `default['icinga2']['ido']['apt']['distribution']` (default: `node['lsb']['codename']`): apt repository resource attribute
+
+ * `default['icinga2']['ido']['apt']['key']` (default: `5072E1F5`): apt repository resource attribute
+
 
 ## Cookbook Icingaweb2 Attributes
 
  * `default[:icinga2][:web2][:enable]` (default: `false`): whether to setup icingaweb2
 
+ * `default[:icinga2][:web2][:install_method]` (default: `package`): icingaweb2 install method, options: package, source
+
  * `default[:icinga2][:web2][:source_url]` (default: `git://git.icinga.org/icingaweb2.git`):
 
- * `default[:icinga2][:web2][:version]` (default: `v2.0.0-beta3`): icingaweb2 git checkout version / branch / tag etc.
+ * `default[:icinga2][:web2][:version]` (default: `2.3.4`): icingaweb2 package version / git branch / git tag etc.
+
+ * `default[:icinga2][:web2][:release]` (default: `1`): icingaweb2 package release
 
  * `default[:icinga2][:web2][:web_root]` (default: `/usr/share/icingaweb2`): icingaweb2 web root location
 
@@ -2143,9 +2206,11 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Classic UI CGI Core Attributes
 
-* `default['icinga2']['classic_ui']['version']` (default: `calculated`): icinga2 classic-ui package version
+* `default['icinga2']['classic_ui']['enable']` (default: `false`): setup icinga2 classic-ui if set true
 
-* `default['icinga2']['classic_ui']['gui_version']` (default: `1.13.2-0`): icinga2 gui package version
+* `default['icinga2']['classic_ui']['version']` (default: `2.5.4-1`): icinga2 classic-ui package version
+
+* `default['icinga2']['classic_ui']['gui_version']` (default: `1.13.3-0`): icinga2 gui package version
 
 * `default['icinga2']['classic_ui']['web_root']` (default: `/usr/share/icinga`): icinga2 web doc root directory location
 
