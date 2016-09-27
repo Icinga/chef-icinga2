@@ -21,7 +21,7 @@ default['icinga2']['ido']['yum']['gpgkey'] = 'https://raw.githubusercontent.com/
 default['icinga2']['ido']['yum']['action'] = :create
 default['icinga2']['ido']['yum']['baseurl'] = "http://repo.mysql.com/yum/mysql-#{node['icinga2']['ido']['mysql_version']}-community/el/#{node['platform_version'].split('.')[0]}/$basearch/"
 
-default['icinga2']['ido']['apt']['repo'] = 'ICINGA Stable Release'
+default['icinga2']['ido']['apt']['repo'] = "MySQL Community #{node['icinga2']['ido']['mysql_version']}"
 default['icinga2']['ido']['apt']['keyserver'] = 'keyserver.ubuntu.com'
 default['icinga2']['ido']['apt']['components'] = ["mysql-#{node['icinga2']['ido']['mysql_version']}"]
 default['icinga2']['ido']['apt']['deb_src'] = false
