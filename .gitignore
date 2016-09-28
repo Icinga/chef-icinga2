@@ -29,3 +29,5 @@ coverage/
 
 # Rubymine
 .idea/*
+
+.ignore/

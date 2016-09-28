@@ -108,3 +108,5 @@ databag/
 
 # Icinga2 LWRP examples
 examples/
+
+.ignore/
