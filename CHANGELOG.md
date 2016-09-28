@@ -3,6 +3,35 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.9.1
+-----
+
+- Blerim Sheqa - Ignore foodcritic FC057
+
+- Virender Khatri - Feature #12785, update to latest package release
+
+- Virender Khatri - Bug #12609 fix, cannot do core_install on Ubuntu 14 LTS
+
+- Virender Khatri - Fix ido setup, require mysql client to load schema
+
+- Virender Khatri - Bug #12787, include recipe service_ido_schema only if node[icinga2][ido][load_schema]
+
+- Virender Khatri - Bug #12788, do not include recipe server_pnp unless classis_ui and pnp
+
+- Virender Khatri - Updated kitchen
+
+- Virender Khatri - Bug #12794, add db port to ido schema load
+
+- Virender Khatri - Bug #12795, deprecate node.set
+
+- Virender Khatri - Bug #12796, disable classic_ui by default
+
+- Virender Khatri - Added package installation for icingaweb2
+
+- Virender Khatri - Updated packages version
+
+- JJ Asghar - Fix Rubocop for Ruby3
+
 2.9.0
 -----
 
