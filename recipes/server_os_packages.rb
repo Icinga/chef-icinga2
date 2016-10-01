@@ -21,28 +21,37 @@
 # install packages for icinga2 / classicui2 / web2
 
 case node['platform_family']
-when 'debian'
-  # package libjpeg62-dev conflicts with libgd2-xpm-dev
-  # perhaps can be removed.
-  os_packages = %w(g++ mailutils php5 php5-cli php5-fpm build-essential
+  when 'debian'
+    case node['lsb']['codename']
+      when 'trusty'
+        # package libjpeg62-dev conflicts with libgd2-xpm-dev
+        # perhaps can be removed.
+        os_packages = %w(g++ mailutils php5 php5-cli php5-fpm build-essential
                    libgd2-xpm-dev libjpeg62 libpng12-0
-                   libpng12-dev libapache2-mod-php5 imagemagick
+                   libpng12-dev libapache2-mod-php5 git-core imagemagick
                    php5-imagick php-pear php5-xmlrpc php5-xsl php5-mysql
                    php-soap php5-gd php5-ldap php5-pgsql php5-intl)
-  include_recipe 'apt'
+      when 'xenial'
+        os_packages = %w(g++ mailutils php5.5 php5.5-cli php5.5-fpm build-essential
+                   libgd2-xpm-dev libjpeg62 libpng12-0
+                   libpng12-dev libapache2-mod-php5.5 git-core imagemagick
+                   php5.5-imagick php-pear php5.5-xmlrpc php5.5-xsl php5.5-mysql
+                   php-soap php5.5-gd php5.5-ldap php5.5-pgsql php5.5-intl)
+    end
 
-  os_packages.push('git-core') if node['icinga2']['web2']['install_method'] == 'source' && node['icinga2']['web2']['enable'] == true
-
-when 'rhel'
-  os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd
+    apt_repository 'ondrej-php' do
+      uri 'ppa:ondrej/php'
+      distribution node['lsb']['codename']
+      only_if { node['lsb']['codename'] == 'xenial' } #That's Ubuntu 16 to you plebs
+    end
+    include_recipe 'apt'
+  when 'rhel'
+    os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd
                    gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd
                    php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo
-                   php-soap php-ldap php-mysql php-pgsql php-intl php-pecl-imagick)
-  # yum epel repository is required for php-pecl-imagick
-  include_recipe 'yum-epel' if node['platform'] != 'amazon' && node['icinga2']['setup_epel']
-
-  os_packages.push('git') if node['icinga2']['web2']['install_method'] == 'source' && node['icinga2']['web2']['enable'] == true
-
+                   php-soap php-ldap php-mysql php-pgsql php-intl git php-pecl-imagick)
+# yum epel repository is required for php-pecl-imagick
+    include_recipe 'yum-epel' if node['platform'] != 'amazon' && node['icinga2']['setup_epel']
 end
 
 # dependencies
