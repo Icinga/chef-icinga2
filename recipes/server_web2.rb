@@ -49,26 +49,21 @@ file ::File.join(node['icinga2']['web2']['conf_dir'], 'setup.token') do
 end
 
 # set php time zone
-php_ini = node['platform_family'] == 'rhel' ? '/etc/php.ini' : '/etc/php5/apache2/php.ini'
-execute 'Setup Apache2 PHP5' do
-  command "sudo sed -i -e 's/;date.timezone =/date.timezone = UTC/g' /etc/php5/apache2/php.ini"
-  action :run
-  only_if {File.exists?('/etc/php5/apache2/php.ini')}
-  notifies :reload, 'service[apache2]', :immediately
+if node['platform_family'] == 'rhel'
+  php_ini = '/etc/php.ini'
+else
+  if node['lsb']['codename'] == 'xenial'
+    php_ini = '/etc/php/5.5/apache2/php.ini'
+  else
+    php_ini = '/etc/php5/apache2/php.ini'
+  end
 end
-
-execute 'Setup Apache2 PHP5.5' do
-  command "sudo sed -i -e 's/;date.timezone =/date.timezone = UTC/g' /etc/php/5.5/apache2/php.ini"
-  action :run
-  only_if {File.exists?('/etc/php/5.5/apache2/php.ini')}
-  notifies :reload, 'service[apache2]', :immediately
-end
-
-execute 'Setup Apache2 PHP' do
-  command "sudo sed -i -e 's/;date.timezone =/date.timezone = UTC/g' /etc/php/5.5/apache2/php.ini"
-  action :run
-  only_if {File.exists?('/etc/php.ini')}
-  notifies :reload, 'service[apache2]', :immediately
+ruby_block 'set php timezone' do
+  block do
+    fe = Chef::Util::FileEdit.new(php_ini)
+    fe.search_file_replace_line(/^;date.timezone =.*/, "date.timezone = #{node['time']['timezone']}")
+    fe.write_file
+  end
 end
 
 # install icingaweb2
