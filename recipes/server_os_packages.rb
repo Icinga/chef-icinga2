@@ -26,22 +26,22 @@ case node['platform_family']
         # package libjpeg62-dev conflicts with libgd2-xpm-dev
         # perhaps can be removed.
         os_packages = %w(g++ mailutils php5 php5-cli php5-fpm build-essential
-                   libgd2-xpm-dev libjpeg62 libpng12-0
-                   libpng12-dev libapache2-mod-php5 imagemagick
-                   php5-imagick php-pear php5-xmlrpc php5-xsl php5-mysql
-                   php-soap php5-gd php5-ldap php5-pgsql php5-intl)
+                      libgd2-xpm-dev libjpeg62 libpng12-0
+                      libpng12-dev libapache2-mod-php5 imagemagick
+                      php5-imagick php-pear php5-xmlrpc php5-xsl php5-mysql
+                      php-soap php5-gd php5-ldap php5-pgsql php5-intl)
       when 'xenial'
         os_packages = %w(g++ mailutils php5.5 php5.5-cli php5.5-fpm build-essential
-                   libgd2-xpm-dev libjpeg62 libpng12-0
-                   libpng12-dev libapache2-mod-php5.5 imagemagick
-                   php5.5-imagick php-pear php5.5-xmlrpc php5.5-xsl php5.5-mysql
-                   php-soap php5.5-gd php5.5-ldap php5.5-pgsql php5.5-intl)
+                      libgd2-xpm-dev libjpeg62 libpng12-0
+                      libpng12-dev libapache2-mod-php5.5 imagemagick
+                      php5.5-imagick php-pear php5.5-xmlrpc php5.5-xsl php5.5-mysql
+                      php-soap php5.5-gd php5.5-ldap php5.5-pgsql php5.5-intl)
     end
 
     apt_repository 'ondrej-php' do
       uri 'ppa:ondrej/php'
       distribution node['lsb']['codename']
-      only_if { node['lsb']['codename'] == 'xenial' } #That's Ubuntu 16 to you plebs
+      only_if { node['lsb']['codename'] == 'xenial' } # That's Ubuntu 16
     end
     include_recipe 'apt'
     os_packages.push('git-core') if node['icinga2']['web2']['install_method'] == 'source' && node['icinga2']['web2']['enable'] == true

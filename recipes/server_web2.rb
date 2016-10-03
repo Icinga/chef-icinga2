@@ -51,13 +51,12 @@ end
 # set php time zone
 if node['platform_family'] == 'rhel'
   php_ini = '/etc/php.ini'
+elsif node['lsb']['codename'] == 'xenial'
+  php_ini = '/etc/php/5.5/apache2/php.ini'
 else
-  if node['lsb']['codename'] == 'xenial'
-    php_ini = '/etc/php/5.5/apache2/php.ini'
-  else
-    php_ini = '/etc/php5/apache2/php.ini'
-  end
+  php_ini = '/etc/php5/apache2/php.ini'
 end
+
 ruby_block 'set php timezone' do
   block do
     fe = Chef::Util::FileEdit.new(php_ini)
