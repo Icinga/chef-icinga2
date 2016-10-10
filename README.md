@@ -1,7 +1,7 @@
 icinga2 Cookbook
 ==================
 
-[![Cookbook](http://img.shields.io/badge/cookbook-v2.9.1-green.svg)](https://github.com/icinga/chef-icinga2) [![Build Status](https://travis-ci.org/Icinga/chef-icinga2.svg?branch=master)](https://travis-ci.org/Icinga/chef-icinga2)
+[![Cookbook](http://img.shields.io/badge/cookbook-v2.9.1-green.svg)](https://github.com/icinga/chef-icinga2) [![Build Status](https://travis-ci.org/Icinga/chef-icinga2.svg?branch=master)](https://travis-ci.org/Icinga/chef-icinga2)[![Build Status](https://jenkins-01.eastus.cloudapp.azure.com/job/icinga2-cookbook/badge/icon)](https://jenkins-01.eastus.cloudapp.azure.com/job/icinga2-cookbook/)
 
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
