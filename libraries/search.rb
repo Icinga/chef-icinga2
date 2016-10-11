@@ -206,8 +206,8 @@ module Icinga2
       node_hash['chef_environment'] = node.chef_environment
       node_hash['environment'] = node.chef_environment
       node_hash['run_list'] = node.run_list
-      node_hash['recipes'] = !node.run_list.nil? ? node.run_list.recipes : []
-      node_hash['roles'] = !node.run_list.nil? ? node.run_list.roles : []
+      node_hash['recipes'] = !node.run_list.nil? ? node.run_list&.recipes
+      node_hash['roles'] = !node.run_list.nil? ? node.run_list&.roles
       node_hash['fqdn'] = node['fqdn']
       node_hash['hostname'] = node['hostname']
       node_hash['kernel_machine'] = !node['kernel'].nil? ? node['kernel']['machine'] : nil
@@ -299,7 +299,7 @@ module Icinga2
     def node_custom_vars(vars)
       custom_vars = {}
       # add icinga2 host custom vars from node custom_vars
-      if vars && vars.key?('client')
+      if vars&.key?('client')
         if vars['client'].key?('custom_vars') && vars['client']['custom_vars'].is_a?(Hash)
           custom_vars = vars['client']['custom_vars'].to_hash
         end
