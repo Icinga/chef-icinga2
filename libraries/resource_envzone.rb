@@ -106,7 +106,8 @@ class Chef
             :environment => new_resource.environment,
             :zones => new_resource.zones,
             :zone => new_resource.zone,
-            :log_duration => new_resource.log_duration
+            :log_duration => new_resource.log_duration,
+            :parent => new_resource.parent
           )
           notifies :reload, 'service[icinga2]'
         end
