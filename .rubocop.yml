@@ -30,3 +30,5 @@ MethodLength:
   Enabled: false
 AbcSize:
   Enabled: false
+BlockLength:
+  Enabled: false
