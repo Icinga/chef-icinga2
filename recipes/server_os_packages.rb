@@ -19,6 +19,8 @@
 
 # install packages for icinga2 / classicui2 / web2
 
+os_packages = []
+
 case node['platform_family']
 when 'debian'
   case node['lsb']['codename']
