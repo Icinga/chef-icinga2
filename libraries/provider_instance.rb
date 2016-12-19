@@ -129,7 +129,7 @@ class Chef
 
         ot = template "object_config_#{resource_name}_#{new_resource.name}" do
           path ::File.join(node['icinga2']['objects_dir'], "#{resource_name}.conf")
-          cookbook 'icinga2'
+          cookbook new_resource.cookbook
           source "object.#{resource_name}.conf.erb"
           owner node['icinga2']['user']
           group node['icinga2']['group']
@@ -141,7 +141,7 @@ class Chef
         te = template "object_template_#{resource_name}_#{new_resource.name}" do
           path ::File.join(node['icinga2']['objects_dir'], "#{resource_name}_template.conf")
           source "object.#{resource_name}.conf.erb"
-          cookbook 'icinga2'
+          cookbook new_resource.cookbook
           owner node['icinga2']['user']
           group node['icinga2']['group']
           mode 0o640
@@ -166,7 +166,7 @@ class Chef
           zoned_ot = template "zone_config_#{resource_name}_#{zone}_#{new_resource.name}" do
             path ::File.join(node['icinga2']['zones_dir'], zone, "#{resource_name}.conf")
             source "object.#{resource_name}.conf.erb"
-            cookbook 'icinga2'
+            cookbook new_resource.cookbook
             owner node['icinga2']['user']
             group node['icinga2']['group']
             mode 0o640
@@ -178,7 +178,7 @@ class Chef
           zoned_te = template "zone_template_#{resource_name}_#{zone}_#{new_resource.name}" do
             path ::File.join(node['icinga2']['zones_dir'], zone, "#{resource_name}_template.conf")
             source "object.#{resource_name}.conf.erb"
-            cookbook 'icinga2'
+            cookbook new_resource.cookbook
             owner node['icinga2']['user']
             group node['icinga2']['group']
             mode 0o640
