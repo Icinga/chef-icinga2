@@ -49,13 +49,13 @@ file ::File.join(node['icinga2']['web2']['conf_dir'], 'setup.token') do
 end
 
 # set php time zone
-if node['platform_family'] == 'rhel'
-  php_ini = '/etc/php.ini'
-elsif node['lsb']['codename'] == 'xenial'
-  php_ini = '/etc/php/5.5/apache2/php.ini'
-else
-  php_ini = '/etc/php5/apache2/php.ini'
-end
+php_ini = if node['platform_family'] == 'rhel'
+            '/etc/php.ini'
+          elsif node['lsb']['codename'] == 'xenial'
+            '/etc/php/5.5/apache2/php.ini'
+          else
+            '/etc/php5/apache2/php.ini'
+          end
 
 ruby_block 'set php timezone' do
   block do

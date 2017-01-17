@@ -1,4 +1,5 @@
 AllCops:
+  TargetRubyVersion: 2.2
   Exclude:
     - Rakefile
     - Berksfile
@@ -29,4 +30,6 @@ ClassLength:
 MethodLength:
   Enabled: false
 AbcSize:
+  Enabled: false
+BlockLength:
   Enabled: false

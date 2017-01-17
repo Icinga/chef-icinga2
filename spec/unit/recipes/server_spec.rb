@@ -122,6 +122,7 @@ describe 'icinga2::server' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '12.04') do |node|
         node.automatic['platform_family'] = 'debian'
+        node.automatic['lsb']['codename'] = 'trusty'
       end.converge(described_recipe)
     end
 

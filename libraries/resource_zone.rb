@@ -16,6 +16,14 @@ class Chef
         @name = name
       end
 
+      def cookbook(arg = nil)
+        set_or_return(
+          :cookbook, arg,
+          :kind_of => String,
+          :default => 'icinga2'
+        )
+      end
+
       def endpoints(arg = nil)
         set_or_return(
           :endpoints, arg,

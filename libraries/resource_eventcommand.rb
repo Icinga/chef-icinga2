@@ -5,6 +5,14 @@ class Chef
     class Icinga2Eventcommand < Chef::Resource
       identity_attr :name
 
+      def cookbook(arg = nil)
+        set_or_return(
+          :cookbook, arg,
+          :kind_of => String,
+          :default => 'icinga2'
+        )
+      end
+
       def initialize(name, run_context = nil)
         super
         @resource_name = :icinga2_eventcommand if respond_to?(:resource_name)
