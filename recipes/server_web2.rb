@@ -51,10 +51,14 @@ end
 # set php time zone
 php_ini = if node['platform_family'] == 'rhel'
             '/etc/php.ini'
-          elsif node['lsb']['codename'] == 'xenial'
-            '/etc/php/5.6/apache2/php.ini'
+          elsif node['platform_family'] == 'debian'
+            if node['lsb']['codename'] == 'xenial'
+              '/etc/php/5.6/apache2/php.ini'
+            else
+              '/etc/php5/apache2/php.ini'
+            end
           else
-            '/etc/php5/apache2/php.ini'
+            raise "platform_family #{node['platform_family']} not supported"
           end
 
 ruby_block 'set php timezone' do
