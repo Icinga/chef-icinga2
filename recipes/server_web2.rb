@@ -92,12 +92,12 @@ if node['icinga2']['web2']['install_method'] == 'source'
 else
   package 'icingaweb2' do
     # skip ubuntu version for now
-    version web2_version if node['platform_family'] == 'rhel'
+    version web2_version unless node['icinga2']['ignore_version'] || !(node['platform_family'] == 'rhel')
     notifies :restart, 'service[icinga2]', :delayed
   end
 
   package 'icingacli' do
-    version cli_version
+    version cli_version unless node['icinga2']['ignore_version']
     notifies :restart, 'service[icinga2]', :delayed
     only_if { node['platform_family'] == 'rhel' }
   end
