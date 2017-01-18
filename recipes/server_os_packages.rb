@@ -34,10 +34,10 @@ when 'debian'
                      php-soap php5-gd php5-ldap php5-pgsql php5-intl)
   when 'xenial'
     os_packages = %w(g++ mailutils php5.6 php5.6-cli php5.6-fpm build-essential
-                   libgd2-xpm-dev libjpeg62 libpng12-0
-                   libpng12-dev libapache2-mod-php5.6 imagemagick
-                   php5.6-imagick php-pear php5.6-xmlrpc php5.6-xsl php5.6-mysql
-                   php-soap php5.6-gd php5.6-ldap php5.6-pgsql php5.6-intl)
+                     libgd2-xpm-dev libjpeg62 libpng12-0
+                     libpng12-dev libapache2-mod-php5.6 imagemagick
+                     php5.6-imagick php-pear php5.6-xmlrpc php5.6-xsl php5.6-mysql
+                     php-soap php5.6-gd php5.6-ldap php5.6-pgsql php5.6-intl)
   end
 
   apt_repository 'ondrej-php' do
