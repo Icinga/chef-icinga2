@@ -51,7 +51,7 @@ when 'rhel'
   os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd
                    gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd
                    php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo
-                   php-soap php-ldap php-mysql php-pgsql php-intl git php-pecl-imagick)
+                   php-soap php-ldap php-mysql php-pgsql php-intl php-pecl-imagick)
   # yum epel repository is required for php-pecl-imagick
   include_recipe 'yum-epel' if node['platform'] != 'amazon' && node['icinga2']['setup_epel']
   os_packages.push('git') if node['icinga2']['web2']['install_method'] == 'source' && node['icinga2']['web2']['enable'] == true
