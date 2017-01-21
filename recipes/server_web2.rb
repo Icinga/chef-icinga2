@@ -21,7 +21,12 @@
 web2_version = node['icinga2']['web2']['install_method'] == 'source' ? 'v' + node['icinga2']['web2']['version'] : node['icinga2']['web2']['version'] + '-' + node['icinga2']['web2']['release'] + node['icinga2']['icinga2_version_suffix'].to_s
 cli_version = node['icinga2']['web2']['version'] + '-' + node['icinga2']['web2']['release'] + node['icinga2']['icinga2_version_suffix']
 
-puts web2_version
+if node.attribute?('time') && node['time'].attribute?('timezone')
+  timezone = node['time']['timezone']
+else
+  timezone = 'UTC'
+  Chef::Log.warn("missing attribute node['time']['timezone'], using default value 'UTC'")
+end
 
 directory node['icinga2']['web2']['conf_dir'] do
   owner node[node['icinga2']['web_engine']]['user']
@@ -64,7 +69,7 @@ php_ini = if node['platform_family'] == 'rhel'
 ruby_block 'set php timezone' do
   block do
     fe = Chef::Util::FileEdit.new(php_ini)
-    fe.search_file_replace_line(/^;date.timezone =.*/, "date.timezone = #{node['time']['timezone']}")
+    fe.search_file_replace_line(/^;date.timezone =.*/, "date.timezone = #{timezone}")
     fe.write_file
   end
 end
