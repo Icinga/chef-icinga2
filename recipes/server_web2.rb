@@ -18,8 +18,9 @@
 # limitations under the License.
 #
 
-web2_version = node['icinga2']['web2']['install_method'] == 'source' ? 'v' + node['icinga2']['web2']['version'] : node['icinga2']['web2']['version'] + '-' + node['icinga2']['web2']['release'] + node['icinga2']['icinga2_version_suffix'].to_s
-cli_version = node['icinga2']['web2']['version'] + '-' + node['icinga2']['web2']['release'] + node['icinga2']['icinga2_version_suffix']
+cli_package_version = node['icinga2']['web2']['version']['icingacli'] + node['icinga2']['icinga2_version_suffix']
+web2_package_version = node['icinga2']['web2']['version']['icingaweb2'] + node['icinga2']['icinga2_version_suffix']
+web2_source_version = 'v' + node['icinga2']['web2']['version']['icingaweb2'].split('-')[0]
 
 if node.attribute?('time') && node['time'].attribute?('timezone')
   timezone = node['time']['timezone']
@@ -88,7 +89,7 @@ if node['icinga2']['web2']['install_method'] == 'source'
 
   git node['icinga2']['web2']['web_root'] do
     repository node['icinga2']['web2']['source_url']
-    revision web2_version
+    revision web2_source_version
     user node[node['icinga2']['web_engine']]['user']
     group node[node['icinga2']['web_engine']]['group']
     only_if { node['icinga2']['web2']['install_method'] == 'source' }
@@ -97,12 +98,12 @@ if node['icinga2']['web2']['install_method'] == 'source'
 else
   package 'icingaweb2' do
     # skip ubuntu version for now
-    version web2_version unless node['icinga2']['ignore_version'] || !(node['platform_family'] == 'rhel')
+    version web2_package_version unless node['icinga2']['ignore_version'] || !(node['platform_family'] == 'rhel')
     notifies :restart, 'service[icinga2]', :delayed
   end
 
   package 'icingacli' do
-    version cli_version unless node['icinga2']['ignore_version']
+    version cli_package_version unless node['icinga2']['ignore_version']
     notifies :restart, 'service[icinga2]', :delayed
     only_if { node['platform_family'] == 'rhel' }
   end
