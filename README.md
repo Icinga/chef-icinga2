@@ -2147,7 +2147,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
  * `default[:icinga2][:web2][:install_method]` (default: `package`): icingaweb2 install method, options: package, source
 
- * `default[:icinga2][:web2][:source_url]` (default: `git://git.icinga.org/icingaweb2.git`):
+ * `default[:icinga2][:web2][:source_url]` (default: `https://github.com/Icinga/icingaweb2.git`):
 
  * `default[:icinga2][:web2][:version]` (default: `2.3.4`): icingaweb2 package version / git branch / git tag etc.
 
