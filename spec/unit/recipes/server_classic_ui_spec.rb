@@ -12,8 +12,8 @@ describe 'icinga2::server_classic_ui' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.4') do |node|
         node.automatic['platform_family'] = 'rhel'
-        node.set['icinga2']['classic_ui']['enable'] = true
-        node.set['icinga2']['ignore_version'] = true
+        node.override['icinga2']['classic_ui']['enable'] = true
+        node.override['icinga2']['ignore_version'] = true
       end.converge(described_recipe)
     end
 
@@ -59,8 +59,8 @@ describe 'icinga2::server_classic_ui' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '12.04') do |node|
         node.automatic['platform_family'] = 'debian'
-        node.set['icinga2']['classic_ui']['enable'] = true
-        node.set['icinga2']['ignore_version'] = true
+        node.override['icinga2']['classic_ui']['enable'] = true
+        node.override['icinga2']['ignore_version'] = true
       end.converge(described_recipe)
     end
 
