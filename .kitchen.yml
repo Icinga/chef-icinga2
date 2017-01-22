@@ -1,34 +1,36 @@
 ---
+<%
+  db_host = ENV['KITCHEN_DB_HOST'] || 'localhost'
+  chef_omnibus_url = ENV['KITCHEN_CHEF_OMNIBUS_URL'] || nil
+%>
 driver:
   name: vagrant
 
 provisioner:
   name: chef_zero
+  <% if chef_omnibus_url %>
+  chef_omnibus_url: '<%= chef_omnibus_url %>'
+  <% end %>
 
 platforms:
-  - name: ubuntu-14.04
   - name: centos-6.8
   - name: centos-7.2
+  - name: ubuntu-14.04
+  - name: ubuntu-16.04
+  - name: debian-7
+  - name: debian-8
 
 suites:
   - name: server
-    require_chef_omnibus: 12.14.60
     run_list:
       - recipe[icinga2::server]
       - recipe[icinga2-test::default]
-    attributes:
-      icinga2:
-        version: '2.5.4-1'
 
   - name: client
     run_list:
       - recipe[icinga2::client]
-    attributes:
-      icinga2:
-        version: '2.5.4-1'
 
   - name: web2-package
-    require_chef_omnibus: 12.14.60
     driver:
       network:
         - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
@@ -38,18 +40,14 @@ suites:
       - recipe[icinga2-test::default]
     attributes:
       icinga2:
-        version: '2.5.4-1'
         web2:
           enable: true
           install_method: package
-          version: 2.3.4
         ido:
           install_mysql_client: true
-          db_host: 192.168.1.152
+          db_host: <%= db_host %>
           load_schema: true
-          db_password: rooT-123
   - name: web2-source
-    require_chef_omnibus: 12.14.60
     driver:
       network:
         - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
@@ -59,18 +57,14 @@ suites:
       - recipe[icinga2-test::default]
     attributes:
       icinga2:
-        version: '2.5.4-1'
         web2:
           enable: true
           install_method: source
-          version: 2.3.4
         ido:
           install_mysql_client: true
-          db_host: 192.168.1.152
+          db_host: <%= db_host %>
           load_schema: true
-          db_password: rooT-123
   - name: classicui
-    require_chef_omnibus: 12.14.60
     driver:
       network:
         - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
@@ -80,7 +74,5 @@ suites:
       - recipe[icinga2-test::default]
     attributes:
       icinga2:
-        version: '2.5.4-1'
         classic_ui:
-          version: '2.5.4-1'
           enable: true
