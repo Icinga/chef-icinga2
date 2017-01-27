@@ -205,6 +205,8 @@ If you are using this cookbook to manage `icinga2` configuration, set `default['
 
 Cookbook generated configuration files using LWRP are created under directory `default['icinga2']['objects_dir']`.
 
+>> `default['icinga2']['disable_conf_d']` default value is set to `true`.
+
 
 ### How to Install and Configure Icinga2 Server without UI
 
@@ -1944,7 +1946,7 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 ## Cookbook Advanced Attributes
 
-* `default['icinga2']['disable_conf_d']` (default: `false`): disable icinga2 `conf.d` default configuration directory in `icinga2.conf` and use LWRP to manage icinga2 objects / templates
+* `default['icinga2']['disable_conf_d']` (default: `true`): disable icinga2 `conf.d` default configuration directory in `icinga2.conf` and use LWRP to manage icinga2 objects / templates
 
 * `default['icinga2']['build_type']` (default: `release`): icinga2 repository build type, options: release snapshot
 
