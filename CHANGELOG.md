@@ -3,6 +3,66 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+unlreleased
+-----
+
+- Virender Khatri - Added .ignore directory to ignore
+
+- Cody Sandwith - Fixes references to PHP Aptitude package names and paths, to support Ubuntu 16.04
+
+- Cody Sandwith - Fixed PHP.ini's location and date_timezone attribute
+
+- Cody Sandwith - Added icinga web2 packages release version
+
+- Cody Sandwith - Cleaned up Aptitude/Yum package declarations
+
+- Cody Sandwith - Updated recipes to be more compatible with lint, and cleaned up comments
+
+- JJ Asghar - Rubocop fix
+
+- Ankit Rusia - Fix missing parent attribute for icinga2_envzone
+
+- Blerim Sheqa - Ignore rubocop BlockLenth
+
+- Frederik Thuysbaert - Makes wrapping possible of the object templates that belong to Icinga2Instance resources
+
+- Blerim Sheqa - Fix Rubocop again
+
+- Virender Khatri - fixed specs for trusty
+
+- Jeroen Jacobs - PR #241, Updates the web2 git source url
+
+- Cody Sandwith - PR #246, Ubuntu 16.04 Compatibility updates
+
+- Virender Khatri - PR #247, rubocop fix
+
+- Virender Khatri - Issue #249, should fail if os detail is unknown for php.ini file location
+
+- Virender Khatri - PR #252, fixed typo for web2_version check
+
+- Virender Khatri - PR #253, allow ignore version for icingaweb2 and icingacli packages
+
+- Virender Khatri - Issue #244, set default timezone value UTC if missing
+
+- Virender Khatri - Issue #256, remove default git package for rhel platform_family
+
+- Virender Khatri - Issue #245, #242, Fixed icingacli version install error
+
+- Virender Khatri - Updated Packages version to latest
+
+- Virender Khatri - Issue #258, set apache2 default mpm to prefork for ubuntu
+
+- Virender Khatri - Updated Kitchen
+
+- Virender Khatri - Issue #236, default disable default icinga2 conf directory
+
+- Virender Khatri - Issue #255, support debian platform
+
+- Virender Khatri - Issue #255, fixed kitchen debian os version
+
+- Virender Khatri - Issue #262, use dependency cookbooks latest version
+
+
 2.9.1
 -----
 
