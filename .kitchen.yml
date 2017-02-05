@@ -1,5 +1,7 @@
 ---
 <%
+  http_port = ENV['KITCHEN_ICINGA2_HTTP_PORT'] || 8080
+  https_port = ENV['KITCHEN_ICINGA2_HTTPS_PORT'] || 8443
   db_host = ENV['KITCHEN_DB_HOST'] || 'localhost'
   chef_omnibus_url = ENV['KITCHEN_CHEF_OMNIBUS_URL'] || nil
 %>
@@ -32,8 +34,8 @@ suites:
   - name: web2-package
     driver:
       network:
-        - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
-        - ["forwarded_port", {guest: 443, host: 8443, auto_correct: true}]
+        - ["forwarded_port", {guest: 80, host: <%= http_port %>, auto_correct: true}]
+        - ["forwarded_port", {guest: 443, host: <%= https_port %>, auto_correct: true}]
     run_list:
       - recipe[icinga2::server]
       - recipe[icinga2-test::default]
@@ -49,8 +51,8 @@ suites:
   - name: web2-source
     driver:
       network:
-        - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
-        - ["forwarded_port", {guest: 443, host: 8443, auto_correct: true}]
+        - ["forwarded_port", {guest: 80, host: <%= http_port %>, auto_correct: true}]
+        - ["forwarded_port", {guest: 443, host: <%= https_port %>, auto_correct: true}]
     run_list:
       - recipe[icinga2::server]
       - recipe[icinga2-test::default]
@@ -66,8 +68,8 @@ suites:
   - name: classicui
     driver:
       network:
-        - ["forwarded_port", {guest: 80, host: 8080, auto_correct: true}]
-        - ["forwarded_port", {guest: 443, host: 8443, auto_correct: true}]
+        - ["forwarded_port", {guest: 80, host: <%= http_port %>, auto_correct: true}]
+        - ["forwarded_port", {guest: 443, host: <%= https_port %>, auto_correct: true}]
     run_list:
       - recipe[icinga2::server]
       - recipe[icinga2-test::default]

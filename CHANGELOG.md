@@ -3,7 +3,7 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
-unlreleased
+2.9.2
 -----
 
 - Virender Khatri - Added .ignore directory to ignore
@@ -61,6 +61,10 @@ unlreleased
 - Virender Khatri - Issue #255, fixed kitchen debian os version
 
 - Virender Khatri - Issue #262, use dependency cookbooks latest version
+
+- Virender Khatri - Issue #267, update packages version to 2.6.1
+
+- Virender Khatri - Issue #266, Updated kitchen to allow ports override
 
 
 2.9.1

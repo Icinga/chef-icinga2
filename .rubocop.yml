@@ -33,3 +33,5 @@ AbcSize:
   Enabled: false
 BlockLength:
   Enabled: false
+BlockNesting:
+  Max: 4

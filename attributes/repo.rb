@@ -50,7 +50,7 @@ when 'debian'
       default['icinga2']['apt']['key'] = '36862847'
 
       # icinga2 package version suffix
-      default['icinga2']['icinga2_version_suffix'] = '~ppa1~' + node['lsb']['codename'].to_s + '2'
+      default['icinga2']['icinga2_version_suffix'] = '~ppa1~' + node['lsb']['codename'].to_s + '1'
     end
   when 'debian'
     default['icinga2']['apt']['keyserver'] = nil
@@ -75,11 +75,11 @@ when 'debian'
       default['icinga2']['apt']['key'] = 'http://debmon.org/debmon/repo.key'
 
       # icinga2 package version suffix
-      if node['platform_version'] > '7'
-        default['icinga2']['icinga2_version_suffix'] = '~debmon' + node['platform_version'].split('.')[0] + '+1'
-      else
-        default['icinga2']['icinga2_version_suffix'] = '~debmon' + node['platform_version'].split('.')[0] + '0+1'
-      end
+      default['icinga2']['icinga2_version_suffix'] = if node['platform_version'] > '7'
+                                                       '~debmon' + node['platform_version'].split('.')[0] + '+1'
+                                                     else
+                                                       '~debmon' + node['platform_version'].split('.')[0] + '0+1'
+                                                     end
     end
   end
 end
