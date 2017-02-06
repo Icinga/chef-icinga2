@@ -59,7 +59,7 @@ php_ini = if node['platform_family'] == 'rhel'
             '/etc/php.ini'
           elsif node['platform_family'] == 'debian'
             if node['lsb']['codename'] == 'xenial'
-              '/etc/php/5.6/apache2/php.ini'
+              '/etc/php/7.0/apache2/php.ini'
             else
               '/etc/php5/apache2/php.ini'
             end

@@ -23,6 +23,15 @@ node.default['apache']['mpm'] = 'prefork'
 
 node['icinga2']['apache_modules'].each { |mod| include_recipe "apache2::#{mod}" }
 
+if (node['platform_family'] == 'debian') && (node['lsb']['codename'] == 'xenial') # ~FC023
+  apache_module 'php7.0' do
+    conf false
+    filename 'libphp7.0.so'
+    identifier 'php7_module'
+    notifies :reload, 'service[apache2]'
+  end
+end
+
 # keeping it to default for now, need
 # to look into merging into a single
 # vhost config file
