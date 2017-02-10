@@ -3,6 +3,14 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+2.9.3
+-----
+
+- Virender Khatri - use php7 for ubuntu xenial #269, #69
+
+- Virender Khatri - fix ubuntu package version, reverted change by #267
+
+
 2.9.2
 -----
 
