@@ -33,6 +33,9 @@ object Host <%= node_hash['fqdn'].inspect %> {
   <%- if @check_period -%>
   check_period = <%= @check_period.inspect %>
   <%- end -%>
+  <%- if @notification_period -%>
+  notification_period = <%= @notification_period.inspect %>
+  <%- end -%>
   <%- if @check_interval -%>
   check_interval = <%= @check_interval %>
   <%- end -%>

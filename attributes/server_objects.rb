@@ -4,6 +4,7 @@ default['icinga2']['server']['object']['global-templates'] = false
 default['icinga2']['server']['object']['host']['import'] = 'generic-host'
 default['icinga2']['server']['object']['host']['max_check_attempts'] = 3
 default['icinga2']['server']['object']['host']['check_period'] = nil
+default['icinga2']['server']['object']['host']['notification_period'] = nil
 default['icinga2']['server']['object']['host']['check_interval'] = '1m'
 default['icinga2']['server']['object']['host']['retry_interval'] = '30s'
 default['icinga2']['server']['object']['host']['enable_notifications'] = true

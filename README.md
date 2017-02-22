@@ -700,6 +700,7 @@ Above LWRP resource will create `Host` objects for a chef environment nodes for 
 - *check_command* (optional, String)	- icinga `Host` object attribute `check_command`
 - *max_check_attempts* (optional, Integer)	- icinga `Host` object attribute `max_check_attempts`
 - *check_period* (optional, String)	- icinga `Host` object attribute `check_period`
+- *notification_period* (optional, String)	- icinga `Host` object attribute `notification_period`
 - *check_interval* (optional, String/Integer)	- icinga `Host` object attribute `check_interval`
 - *retry_interval* (optional, Integer)	- icinga `Host` object attribute `retry_interval`
 - *enable_notifications* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_notifications`
@@ -855,6 +856,7 @@ Above LWRP resource will create an icinga `Host` template - `generic-host`.
 - *check_command* (optional, String)	- icinga `Host` object attribute `check_command`
 - *max_check_attempts* (optional, Integer)	- icinga `Host` object attribute `max_check_attempts`
 - *check_period* (optional, String)	- icinga `Host` object attribute `check_period`
+- *notification_period* (optional, String)	- icinga `Host` object attribute `notification_period`
 - *check_interval* (optional, String/Integer)	- icinga `Host` object attribute `check_interval`
 - *retry_interval* (optional, String/Integer)	- icinga `Host` object attribute `retry_interval`
 - *enable_notifications* (optional, TrueClass/FalseClass)	- icinga `Host` object attribute `enable_notifications`
@@ -946,6 +948,7 @@ Above LWRP resource will create an icinga `Service` template object for a `gener
 - *check_command* (optional)	- icinga `Service` object attribute `check_command`
 - *max_check_attempts* (optional)	- icinga `Service` object attribute `max_check_attempts`
 - *check_period* (optional)	- icinga `Service` object attribute `check_period`
+- *notification_period* (optional)	- icinga `Service` object attribute `notification_period`
 - *check_interval* (optional)	- icinga `Service` object attribute `check_interval`
 - *retry_interval* (optional)	- icinga `Service` object attribute `retry_interval`
 - *enable_notifications* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_notifications`
@@ -1019,6 +1022,7 @@ Above LWRP resource will apply an icinga `Service` object with a Service for set
 - *check_command* (optional, String)	- icinga `Service` object attribute `check_command`
 - *max_check_attempts* (optional, Integer)	- icinga `Service` object attribute `max_check_attempts`
 - *check_period* (optional, String)	- icinga `Service` object attribute `check_period`
+- *notification_period* (optional, String)	- icinga `Service` object attribute `notification_period`
 - *check_interval* (optional, String/Integer)	- icinga `Service` object attribute `check_interval`
 - *retry_interval* (optional, String/Integer)	- icinga `Service` object attribute `retry_interval`
 - *enable_notifications* (optional, TrueClass/FalseClass)	- icinga `Service` object attribute `enable_notifications`
@@ -2071,6 +2075,8 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 * `default['icinga2']['server']['object']['host']['max_check_attempts']` (default: `3`)
 
 * `default['icinga2']['server']['object']['host']['check_period']` (default: `nil`)
+
+* `default['icinga2']['server']['object']['host']['notification_period']` (default: `nil`)
 
 * `default['icinga2']['server']['object']['host']['check_interval']` (default: `1800`)
 
