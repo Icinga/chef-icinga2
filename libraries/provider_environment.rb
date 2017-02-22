@@ -97,6 +97,7 @@ class Chef
                     :check_command => new_resource.check_command,
                     :max_check_attempts => new_resource.max_check_attempts,
                     :check_period => new_resource.check_period,
+                    :notification_period => new_resource.notification_period,
                     :check_interval => new_resource.check_interval,
                     :retry_interval => new_resource.retry_interval,
                     :enable_notifications => new_resource.enable_notifications,

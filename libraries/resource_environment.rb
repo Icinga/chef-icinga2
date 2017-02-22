@@ -252,6 +252,14 @@ class Chef
         )
       end
 
+      def notification_period(arg = nil)
+        set_or_return(
+          :notification_period, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
       def check_interval(arg = nil)
         set_or_return(
           :check_interval, arg,

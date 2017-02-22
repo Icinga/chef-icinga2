@@ -30,6 +30,9 @@
   <%- if options['check_period'] -%>
   check_period = <%= options['check_period'].inspect %>
   <%- end -%>
+  <%- if options['notification_period'] -%>
+  notification_period = <%= options['notification_period'].inspect %>
+  <%- end -%>
   <%- if options['check_interval'] -%>
   check_interval = <%= options['check_interval'] %>
   <%- end -%>
