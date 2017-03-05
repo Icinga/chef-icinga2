@@ -172,7 +172,7 @@ class Chef
             mode 0o640
             variables :objects => zoned_objects
             notifies :reload, 'service[icinga2]'
-            only_if { !zoned_objects.length.empty? }
+            only_if { !zoned_objects.empty? }
           end
 
           zoned_te = template "zone_template_#{resource_name}_#{zone}_#{new_resource.name}" do
@@ -184,7 +184,7 @@ class Chef
             mode 0o640
             variables :objects => zoned_templates
             notifies :reload, 'service[icinga2]'
-            only_if { !zoned_templates.length.empty? }
+            only_if { !zoned_templates.empty? }
           end
 
           zoned_objects_updated = true if zoned_ot.updated? || zoned_te.updated?
