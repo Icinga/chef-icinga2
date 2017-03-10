@@ -6,22 +6,22 @@ default['icinga2']['classic_ui']['enable'] = false
 # in favour of existing users for rhel
 default['icinga2']['classic_ui']['apache_conf'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => 'icinga2-classic-ui' },
-  %w(debian ubuntu) => { 'default' => 'icinga2-classicui' }
+  %w(debian ubuntu raspbian) => { 'default' => 'icinga2-classicui' }
 )
 
 default['icinga2']['classic_ui']['version'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => '2.6.1-1' },
-  %w(debian ubuntu) => { 'default' => '2.6.1-1' }
+  %w(debian ubuntu raspbian) => { 'default' => '2.6.1-1' }
 )
 
 default['icinga2']['classic_ui']['gui_version'] = '1.14.0-0'
 default['icinga2']['classic_ui']['web_root'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => '/usr/share/icinga' },
-  %w(debian ubuntu) => { 'default' => '/usr/share/icinga2/classicui' }
+  %w(debian ubuntu raspbian) => { 'default' => '/usr/share/icinga2/classicui' }
 )
 
 default['icinga2']['classic_ui']['home_dir'] = value_for_platform(
-  %w(debian ubuntu) => { 'default' => '/etc/icinga2-classicui' },
+  %w(debian ubuntu raspbian) => { 'default' => '/etc/icinga2-classicui' },
   'default' => '/etc/icinga'
 )
 default['icinga2']['classic_ui']['conf_dir'] = node['icinga2']['classic_ui']['home_dir']
@@ -44,12 +44,12 @@ default['icinga2']['classic_ui']['authorized_for_all_host_commands'] = [node['ic
 default['icinga2']['classic_ui']['cgi']['standalone_installation'] = 1
 default['icinga2']['classic_ui']['cgi']['physical_html_path'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => '/usr/share/icinga' },
-  %w(debian ubuntu) => { 'default' => '/usr/lib/cgi-bin/icinga2-classicui' }
+  %w(debian ubuntu raspbian) => { 'default' => '/usr/lib/cgi-bin/icinga2-classicui' }
 )
 
 default['icinga2']['classic_ui']['cgi']['url_html_path'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => '/icinga' },
-  %w(debian ubuntu) => { 'default' => '/icinga2-classicui' }
+  %w(debian ubuntu raspbian) => { 'default' => '/icinga2-classicui' }
 )
 
 default['icinga2']['classic_ui']['cgi']['url_stylesheets_path'] = "#{node['icinga2']['classic_ui']['cgi']['url_html_path']}/stylesheets"
@@ -111,5 +111,5 @@ default['icinga2']['classic_ui']['cgi']['log_archive_path'] = ::File.join(node['
 default['icinga2']['classic_ui']['cgi']['date_format'] = 'us'
 default['icinga2']['classic_ui']['cgi']['url_cgi_path'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => nil },
-  %w(debian ubuntu) => { 'default' => "/cgi-bin#{node['icinga2']['classic_ui']['cgi']['url_html_path']}" }
+  %w(debian ubuntu raspbian) => { 'default' => "/cgi-bin#{node['icinga2']['classic_ui']['cgi']['url_html_path']}" }
 )
