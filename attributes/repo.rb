@@ -52,7 +52,7 @@ when 'debian'
       # icinga2 package version suffix
       default['icinga2']['icinga2_version_suffix'] = '~ppa1~' + node['lsb']['codename'].to_s + '2'
     end
-  when 'debian'
+  when 'debian', 'raspbian'
     default['icinga2']['apt']['keyserver'] = nil
     default['icinga2']['apt']['components'] = %w(main)
     default['icinga2']['apt']['deb_src'] = true
