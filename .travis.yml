@@ -16,7 +16,7 @@ branches:
     - master
     - /^(?i:travis).*$/
     - /^(?i:feature).*$/
-    - /^(?i:issue).*$/
+    - /^(?i:fix).*$/
     - /^(?i:release).*$/
 
 services: docker
