@@ -1,11 +1,52 @@
-language: ruby
-bundler_args: --without integration
-rvm:
-  - 2.2.2
+sudo: required
+dist: trusty
+
+addons:
+  apt:
+    sources:
+      - chef-current-trusty
+    packages:
+      - chefdk
+
+# Don't run bundle install
+install: echo "skip bundle install"
+
 branches:
   only:
     - master
-# uncomment this line if your project needs to run something other than `rake`:
-# script: bundle exec rspec spec
+    - /^(?i:travis).*$/
+    - /^(?i:feature).*$/
+    - /^(?i:issue).*$/
+    - /^(?i:release).*$/
+
+services: docker
+
+env:
+  matrix:
+    - INSTANCE=classicui-ubuntu-1404
+    - INSTANCE=classicui-debian-8
+    - INSTANCE=classicui-centos-68
+    - INSTANCE=classicui-centos-7
+
 script:
-  - bundle exec rake lint
+  - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+  - cat .kitchen/logs/kitchen.log
+
+before_script:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
+
+
+matrix:
+  allow_failures:
+    - env: INSTANCE=classicui-ubuntu-1404
+    - env: INSTANCE=classicui-debian-8
+    - env: INSTANCE=classicui-centos-68
+    - env: INSTANCE=classicui-centos-7
+  include:
+    - script:
+      - /opt/chefdk/bin/chef exec rake
+      env: UNIT_AND_LINT=1
