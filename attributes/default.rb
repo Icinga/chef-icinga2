@@ -58,7 +58,6 @@ default['icinga2']['web_engine'] = 'apache'
 
 # icinga2 resources data bag
 default['icinga2']['databag'] = 'icinga2'
-default['icinga2']['install_nagios_plugins'] = true
 
 default['icinga2']['run_dir'] = '/var/run/icinga2'
 default['icinga2']['run_cmd_dir'] = ::File.join(node['icinga2']['run_dir'], 'cmd')
