@@ -1,6 +1,6 @@
 # Testing
 ## Prerequisites
-We recommend to intall [ChefDK] to your development environment.
+We recommend to install [ChefDK] to your development environment.
 It provides all tools used in the process of testig this cookbook.
 
 Before starting, make sure you have installed all dependencies:
