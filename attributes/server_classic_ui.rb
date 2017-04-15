@@ -10,8 +10,8 @@ default['icinga2']['classic_ui']['apache_conf'] = value_for_platform(
 )
 
 default['icinga2']['classic_ui']['version'] = value_for_platform(
-  %w(centos redhat fedora amazon) => { 'default' => '2.6.1-1' },
-  %w(debian ubuntu raspbian) => { 'default' => '2.6.1-1' }
+  %w(centos redhat fedora amazon) => { 'default' => '2.6.3-1' },
+  %w(debian ubuntu raspbian) => { 'default' => '2.6.3-1' }
 )
 
 default['icinga2']['classic_ui']['gui_version'] = '1.14.0-0'

@@ -1990,8 +1990,6 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 * `default['icinga2']['web_engine']` (default: `'apache'): icinga2 web server, currently supports only apache
 
-* `default['icinga2']['install_nagios_plugins']` (default: `true`): install nagios plugins to icinga2 server and clients
-
 * `default['icinga2']['enable_env_pki']` (default: `false`): whether to create env endpoints, zones and pki_tickets
 
 

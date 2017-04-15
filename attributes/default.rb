@@ -2,8 +2,8 @@
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/getting-started#getting-started
 
 default['icinga2']['version'] = value_for_platform(
-  %w(centos redhat fedora amazon) => { 'default' => '2.6.1-1' },
-  %w(debian ubuntu raspbian) => { 'default' => '2.6.1-1' }
+  %w(centos redhat fedora amazon) => { 'default' => '2.6.3-1' },
+  %w(debian ubuntu raspbian) => { 'default' => '2.6.3-1' }
 )
 
 default['icinga2']['enable_env_pki'] = false
@@ -58,7 +58,6 @@ default['icinga2']['web_engine'] = 'apache'
 
 # icinga2 resources data bag
 default['icinga2']['databag'] = 'icinga2'
-default['icinga2']['install_nagios_plugins'] = true
 
 default['icinga2']['run_dir'] = '/var/run/icinga2'
 default['icinga2']['run_cmd_dir'] = ::File.join(node['icinga2']['run_dir'], 'cmd')
