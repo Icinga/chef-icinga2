@@ -168,7 +168,7 @@ module Icinga2
 
         # collect nodes roles
         if enable_role_hostgroup
-          node_hash['custom_vars']['hostgroups'].push(*(roles.map { |r| node_hash['chef_environment'] + '-' + r }))
+          node_hash['custom_vars']['hostgroups'].push(*(node_hash['roles'].map { |r| node_hash['chef_environment'] + '-' + r }))
         end
 
         # collect nodes cluster
