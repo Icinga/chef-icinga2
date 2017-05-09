@@ -10,6 +10,7 @@ driver:
 
 provisioner:
   name: chef_zero
+  require_chef_omnibus: 12.19.36
   <% if chef_omnibus_url %>
   chef_omnibus_url: '<%= chef_omnibus_url %>'
   <% end %>
@@ -26,6 +27,9 @@ suites:
     run_list:
       - recipe[icinga2::server]
       - recipe[icinga2-test::default]
+    attributes:
+      icinga2:
+        enable_role_hostgroup: false
 
   - name: client
     run_list:
