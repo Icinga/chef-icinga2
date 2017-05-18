@@ -30,17 +30,21 @@
   node['icinga2']['custom_plugins_dir']
 ].each do |d|
   directory d do
-    owner node['icinga2']['user']
-    group node['icinga2']['group']
-    mode 0o750
+    unless platform?('windows')
+      owner node['icinga2']['user']
+      group node['icinga2']['group']
+      mode 0o750
+    end
   end
 end
 
 node['icinga2']['user_defined_objects_dir'].each do |d|
   directory ::File.join(node['icinga2']['conf_dir'], d) do
-    owner node['icinga2']['user']
-    group node['icinga2']['group']
-    mode 0o750
+    unless platform?('windows')
+      owner node['icinga2']['user']
+      group node['icinga2']['group']
+      mode 0o750
+    end
   end
 end
 
@@ -52,9 +56,11 @@ end
   node['icinga2']['cache_dir']
 ].each do |d|
   directory d do
-    owner node['icinga2']['user']
-    group node['icinga2']['cmdgroup']
-    mode 0o750
+    unless platform?('windows')
+      owner node['icinga2']['user']
+      group node['icinga2']['cmdgroup']
+      mode 0o750
+    end
   end
 end
 
@@ -72,9 +78,11 @@ end
 # icinga2.conf
 template ::File.join(node['icinga2']['conf_dir'], 'icinga2.conf') do
   source 'icinga2.conf.erb'
-  owner node['icinga2']['user']
-  group node['icinga2']['group']
-  mode 0o644
+  unless platform?('windows')
+    owner node['icinga2']['user']
+    group node['icinga2']['group']
+    mode 0o644
+  end
   notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
 end
 
@@ -82,9 +90,11 @@ unless platform?('windows')
   # icinga2 service config file
   template node['icinga2']['service_config_file'] do
     source 'icinga2.service.config.erb'
-    owner 'root'
-    group 'root'
-    mode 0o644
+    unless platform?('windows')
+      owner 'root'
+      group 'root'
+      mode 0o644
+    end
     variables(
       :log_dir => node['icinga2']['log_dir'],
       :conf_dir => node['icinga2']['conf_dir'],
@@ -99,9 +109,11 @@ end
 # icinga2 service init config file
 template ::File.join(node['icinga2']['conf_dir'], 'init.conf') do
   source 'icinga2.init.conf.erb'
-  owner node['icinga2']['user']
-  group node['icinga2']['group']
-  mode 0o644
+  unless platform?('windows')
+    owner node['icinga2']['user']
+    group node['icinga2']['group']
+    mode 0o644
+  end
   variables(
     :user => node['icinga2']['user'],
     :group => node['icinga2']['group']
@@ -112,9 +124,11 @@ end
 # icinga2 constants config file
 template ::File.join(node['icinga2']['conf_dir'], 'constants.conf') do
   source 'icinga2.constants.conf.erb'
-  owner node['icinga2']['user']
-  group node['icinga2']['group']
-  mode 0o644
+  unless platform?('windows')
+    owner node['icinga2']['user']
+    group node['icinga2']['group']
+    mode 0o644
+  end
   variables(
     :options => node['icinga2']['constants']
   )
