@@ -103,7 +103,7 @@ class Chef
                     :bind_port => new_resource.bind_port,
                     :socket_path => new_resource.socket_path,
                     :compat_log_path => new_resource.compat_log_path)
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end

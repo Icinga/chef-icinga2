@@ -107,7 +107,7 @@ class Chef
             :endpoints => new_resource.endpoints,
             :log_duration => new_resource.log_duration
           )
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end

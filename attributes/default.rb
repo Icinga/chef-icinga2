@@ -10,7 +10,13 @@ default['icinga2']['enable_env_pki'] = false
 default['icinga2']['enable_env_custom_pki'] = false
 default['icinga2']['ignore_version'] = false
 default['icinga2']['cookbook'] = 'icinga2'
-default['icinga2']['conf_dir'] = '/etc/icinga2'
+
+default['icinga2']['conf_dir'] = if node['platform'] == 'windows'
+                                   'C:\\ProgramData\\icinga2\\etc\\icinga2'
+                                 else
+                                   '/etc/icinga2'
+                                 end
+
 default['icinga2']['conf_d_dir'] = ::File.join(node['icinga2']['conf_dir'], 'conf.d')
 default['icinga2']['pki_dir'] = ::File.join(node['icinga2']['conf_dir'], 'pki')
 default['icinga2']['scripts_dir'] = ::File.join(node['icinga2']['conf_dir'], 'scripts')
@@ -60,14 +66,20 @@ default['icinga2']['web_engine'] = 'apache'
 # icinga2 resources data bag
 default['icinga2']['databag'] = 'icinga2'
 
-default['icinga2']['run_dir'] = '/var/run/icinga2'
+default['icinga2']['var_dir'] = if node['platform'] == 'windows'
+                                  'C:\\ProgramData\\icinga2\\var'
+                                else
+                                  '/var'
+                                end
+
+default['icinga2']['run_dir'] = ::File.join(node['icinga2']['var_dir'], 'run/icinga2')
 default['icinga2']['run_cmd_dir'] = ::File.join(node['icinga2']['run_dir'], 'cmd')
-default['icinga2']['cache_dir'] = '/var/cache/icinga2'
-default['icinga2']['spool_dir'] = '/var/spool/icinga2'
-default['icinga2']['perfdata_dir'] = '/var/spool/icinga2/perfdata'
-default['icinga2']['lib_dir'] = '/var/lib/icinga2'
-default['icinga2']['log_dir'] = '/var/log/icinga2'
-default['icinga2']['cache_dir'] = '/var/cache/icinga2'
+default['icinga2']['cache_dir'] = ::File.join(node['icinga2']['var_dir'], 'cache/icinga2')
+default['icinga2']['spool_dir'] = ::File.join(node['icinga2']['var_dir'], 'spool/icinga2')
+default['icinga2']['perfdata_dir'] = ::File.join(node['icinga2']['var_dir'], 'spool/icinga2/perfdata')
+default['icinga2']['lib_dir'] = ::File.join(node['icinga2']['var_dir'], 'lib/icinga2')
+default['icinga2']['log_dir'] = ::File.join(node['icinga2']['var_dir'], 'log/icinga2')
+default['icinga2']['cache_dir'] = ::File.join(node['icinga2']['var_dir'], 'cache/icinga2')
 default['icinga2']['service_name'] = 'icinga2'
 
 case node['platform_family']
@@ -89,9 +101,17 @@ when 'debian'
   default['icinga2']['cmdgroup'] = 'nagios'
   default['icinga2']['service_config_file'] = '/etc/default/icinga2'
   default['icinga2']['plugins_dir'] = '/usr/lib/nagios/plugins'
+when 'windows'
+  default['icinga2']['user'] = 'icinga'
+  default['icinga2']['group'] = 'icinga'
+  default['icinga2']['plugins_dir'] = 'C:\\Program Files\\ICINGA2\\share\\icinga2\\include\\plugins-contrib'
 end
 
-default['icinga2']['custom_plugins_dir'] = '/opt/icinga2_custom_plugins'
+default['icinga2']['custom_plugins_dir'] = if node['platform'] == 'windows'
+                                             'C:\\Program Files\\ICINGA2\\share\\icinga2\\include\\plugins-custom'
+                                           else
+                                             '/opt/icinga2_custom_plugins'
+                                           end
 
 default['icinga2']['admin_user'] = 'icingaadmin'
 

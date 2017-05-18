@@ -87,7 +87,7 @@ class Chef
           group node['icinga2']['group']
           mode 0o640
           variables(:environment => new_resource.environment, :groups => new_resource.groups)
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end

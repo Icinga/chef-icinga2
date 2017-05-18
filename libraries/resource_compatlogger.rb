@@ -76,7 +76,7 @@ class Chef
                     :log_dir => new_resource.log_dir,
                     :library => new_resource.library,
                     :rotation_method => new_resource.rotation_method)
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end

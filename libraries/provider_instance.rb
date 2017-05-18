@@ -134,7 +134,7 @@ class Chef
           owner node['icinga2']['user']
           group node['icinga2']['group']
           variables :objects => icinga2_objects_dict['object']
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
           only_if { !icinga2_objects_dict['object'].empty? }
         end
 
@@ -146,7 +146,7 @@ class Chef
           group node['icinga2']['group']
           mode 0o640
           variables :objects => icinga2_objects_dict['template']
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
           only_if { !icinga2_objects_dict['template'].empty? }
         end
 
@@ -171,7 +171,7 @@ class Chef
             group node['icinga2']['group']
             mode 0o640
             variables :objects => zoned_objects
-            notifies :reload, 'service[icinga2]'
+            notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
             only_if { !zoned_objects.empty? }
           end
 
@@ -183,7 +183,7 @@ class Chef
             group node['icinga2']['group']
             mode 0o640
             variables :objects => zoned_templates
-            notifies :reload, 'service[icinga2]'
+            notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
             only_if { !zoned_templates.empty? }
           end
 

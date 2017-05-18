@@ -115,7 +115,7 @@ class Chef
                     :action_url => new_resource.action_url,
                     :icon_image => new_resource.icon_image,
                     :icon_image_alt => new_resource.icon_image_alt)
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         return true if hosts_template.updated? || create_hostgroups(env_resources)
         if node['icinga2']['enable_env_pki']

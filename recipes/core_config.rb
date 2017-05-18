@@ -58,13 +58,15 @@ end
   end
 end
 
-# icinga2 logrotate
-template '/etc/logrotate.d/icinga2' do
-  source 'icinga2.logrotate.erb'
-  owner 'root'
-  group 'root'
-  mode 0o644
-  variables(:log_dir => node['icinga2']['log_dir'], :user => node['icinga2']['user'], :group => node['icinga2']['group'])
+unless platform?('windows')
+  # icinga2 logrotate
+  template '/etc/logrotate.d/icinga2' do
+    source 'icinga2.logrotate.erb'
+    owner 'root'
+    group 'root'
+    mode 0o644
+    variables(:log_dir => node['icinga2']['log_dir'], :user => node['icinga2']['user'], :group => node['icinga2']['group'])
+  end
 end
 
 # icinga2.conf
@@ -73,23 +75,25 @@ template ::File.join(node['icinga2']['conf_dir'], 'icinga2.conf') do
   owner node['icinga2']['user']
   group node['icinga2']['group']
   mode 0o644
-  notifies :reload, 'service[icinga2]', :delayed
+  notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
 end
 
-# icinga2 service config file
-template node['icinga2']['service_config_file'] do
-  source 'icinga2.service.config.erb'
-  owner 'root'
-  group 'root'
-  mode 0o644
-  variables(
-    :log_dir => node['icinga2']['log_dir'],
-    :conf_dir => node['icinga2']['conf_dir'],
-    :user => node['icinga2']['user'],
-    :group => node['icinga2']['group'],
-    :cmdgroup => node['icinga2']['cmdgroup']
-  )
-  notifies :reload, 'service[icinga2]', :delayed
+unless platform?('windows')
+  # icinga2 service config file
+  template node['icinga2']['service_config_file'] do
+    source 'icinga2.service.config.erb'
+    owner 'root'
+    group 'root'
+    mode 0o644
+    variables(
+      :log_dir => node['icinga2']['log_dir'],
+      :conf_dir => node['icinga2']['conf_dir'],
+      :user => node['icinga2']['user'],
+      :group => node['icinga2']['group'],
+      :cmdgroup => node['icinga2']['cmdgroup']
+    )
+    notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
+  end
 end
 
 # icinga2 service init config file
@@ -102,7 +106,7 @@ template ::File.join(node['icinga2']['conf_dir'], 'init.conf') do
     :user => node['icinga2']['user'],
     :group => node['icinga2']['group']
   )
-  notifies :reload, 'service[icinga2]', :delayed
+  notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
 end
 
 # icinga2 constants config file
@@ -114,5 +118,5 @@ template ::File.join(node['icinga2']['conf_dir'], 'constants.conf') do
   variables(
     :options => node['icinga2']['constants']
   )
-  notifies :reload, 'service[icinga2]', :delayed
+  notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
 end

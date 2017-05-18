@@ -67,7 +67,7 @@ class Chef
           variables(:object => new_resource.name,
                     :library => new_resource.library,
                     :command_path => new_resource.command_path)
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end
