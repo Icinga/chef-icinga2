@@ -94,19 +94,19 @@ unless platform?('windows')
     )
     notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
   end
-end
 
-# icinga2 service init config file
-template ::File.join(node['icinga2']['conf_dir'], 'init.conf') do
-  source 'icinga2.init.conf.erb'
-  owner node['icinga2']['user']
-  group node['icinga2']['group']
-  mode 0o644
-  variables(
-    :user => node['icinga2']['user'],
-    :group => node['icinga2']['group']
-  )
-  notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
+  # icinga2 service init config file
+  template ::File.join(node['icinga2']['conf_dir'], 'init.conf') do
+    source 'icinga2.init.conf.erb'
+    owner node['icinga2']['user']
+    group node['icinga2']['group']
+    mode 0o644
+    variables(
+      :user => node['icinga2']['user'],
+      :group => node['icinga2']['group']
+    )
+    notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
+  end
 end
 
 # icinga2 constants config file
