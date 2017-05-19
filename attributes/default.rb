@@ -12,7 +12,7 @@ default['icinga2']['ignore_version'] = false
 default['icinga2']['cookbook'] = 'icinga2'
 
 default['icinga2']['conf_dir'] = if node['platform'] == 'windows'
-                                   'C:\\ProgramData\\icinga2\\etc\\icinga2'
+                                   'C:/ProgramData/icinga2/etc/icinga2'
                                  else
                                    '/etc/icinga2'
                                  end
@@ -67,7 +67,7 @@ default['icinga2']['web_engine'] = 'apache'
 default['icinga2']['databag'] = 'icinga2'
 
 default['icinga2']['var_dir'] = if node['platform'] == 'windows'
-                                  'C:\\ProgramData\\icinga2\\var'
+                                  'C:/ProgramData/icinga2/var'
                                 else
                                   '/var'
                                 end
@@ -102,13 +102,14 @@ when 'debian'
   default['icinga2']['service_config_file'] = '/etc/default/icinga2'
   default['icinga2']['plugins_dir'] = '/usr/lib/nagios/plugins'
 when 'windows'
-  default['icinga2']['user'] = 'icinga'
-  default['icinga2']['group'] = 'icinga'
-  default['icinga2']['plugins_dir'] = 'C:\\Program Files\\ICINGA2\\share\\icinga2\\include\\plugins-contrib'
+  default['icinga2']['user'] = 'NT AUTHORITY\\NETWORK SERVICE'
+  default['icinga2']['group'] = 'NT AUTHORITY\\NETWORK SERVICE'
+  default['icinga2']['cmdgroup'] = 'NT AUTHORITY\\NETWORK SERVICE'
+  default['icinga2']['plugins_dir'] = 'C:/Program Files/ICINGA2/share/icinga2/include/plugins-contrib'
 end
 
 default['icinga2']['custom_plugins_dir'] = if node['platform'] == 'windows'
-                                             'C:\\Program Files\\ICINGA2\\share\\icinga2\\include\\plugins-custom'
+                                             'C:/Program Files/ICINGA2/share/icinga2/include/plugins-custom'
                                            else
                                              '/opt/icinga2_custom_plugins'
                                            end
