@@ -3,7 +3,8 @@
 
 default['icinga2']['version'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => '2.6.3-1' },
-  %w(debian ubuntu raspbian) => { 'default' => '2.6.3-1' }
+  %w(debian ubuntu raspbian) => { 'default' => '2.6.3-1' },
+  %w(windows) => { 'default' => '2.6.3' }
 )
 
 default['icinga2']['enable_env_pki'] = false
@@ -31,7 +32,11 @@ default['icinga2']['add_cloud_custom_vars'] = true
 default['icinga2']['add_inet_custom_vars'] = false
 
 # itl defaults
-default['icinga2']['include_itl'] = %w(itl plugins)
+default['icinga2']['include_itl'] = if node['platform'] == 'windows'
+                                      %w(itl plugins plugins-contrib manubulon)
+                                    else
+                                      %w(itl plugins)
+                                    end
 
 # includes yum-epel cookbook to setup yum epel repository
 default['icinga2']['setup_epel'] = true
@@ -105,7 +110,7 @@ when 'windows'
   default['icinga2']['user'] = 'NT AUTHORITY\\NETWORK SERVICE'
   default['icinga2']['group'] = 'NT AUTHORITY\\NETWORK SERVICE'
   default['icinga2']['cmdgroup'] = 'NT AUTHORITY\\NETWORK SERVICE'
-  default['icinga2']['plugins_dir'] = 'C:/Program Files/ICINGA2/share/icinga2/include/plugins-contrib'
+  default['icinga2']['plugins_dir'] = 'C:/Program Files/ICINGA2/sbin'
 end
 
 default['icinga2']['custom_plugins_dir'] = if node['platform'] == 'windows'

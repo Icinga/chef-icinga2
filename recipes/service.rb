@@ -20,7 +20,7 @@
 
 service 'icinga2' do
   service_name node['icinga2']['service_name']
-  supports :status => true, :reload => true, :restart => true
+  supports :status => true, :reload => platform?('windows') ? false : true, :restart => true
   action [:enable]
 end
 

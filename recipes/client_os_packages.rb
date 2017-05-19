@@ -19,20 +19,21 @@
 #
 
 # install packages for icinga2 / classicui2 / web2
+unless platform?('windows')
+  case node['platform_family']
+  when 'debian'
+    # package libjpeg62-dev conflicts with libgd2-xpm-dev
+    # perhaps can be removed.
+    os_packages = %w(g++ mailutils build-essential)
+    include_recipe 'apt'
+  when 'rhel'
+    os_packages = %w(gcc gcc-c++ glibc glibc-common mailx)
+    # yum epel repository is required for php-pecl-imagick
+    include_recipe 'yum-epel' if node['platform'] != 'amazon' && node['icinga2']['setup_epel']
+  end
 
-case node['platform_family']
-when 'debian'
-  # package libjpeg62-dev conflicts with libgd2-xpm-dev
-  # perhaps can be removed.
-  os_packages = %w(g++ mailutils build-essential)
-  include_recipe 'apt'
-when 'rhel'
-  os_packages = %w(gcc gcc-c++ glibc glibc-common mailx)
-  # yum epel repository is required for php-pecl-imagick
-  include_recipe 'yum-epel' if node['platform'] != 'amazon' && node['icinga2']['setup_epel']
-end
-
-# dependencies
-os_packages.each do |p|
-  package p
+  # dependencies
+  os_packages.each do |p|
+    package p
+  end
 end
