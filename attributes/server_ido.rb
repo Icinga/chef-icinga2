@@ -27,5 +27,9 @@ default['icinga2']['ido']['apt']['deb_src'] = false
 default['icinga2']['ido']['apt']['action'] = :add
 default['icinga2']['ido']['apt']['repo'] = "MySQL Community #{node['icinga2']['ido']['mysql_version']}"
 default['icinga2']['ido']['apt']['uri'] = "http://repo.mysql.com/apt/#{node['platform']}/"
-default['icinga2']['ido']['apt']['distribution'] = node['lsb']['codename']
+
+unless platform?('windows')
+  default['icinga2']['ido']['apt']['distribution'] = node['lsb']['codename']
+end
+
 default['icinga2']['ido']['apt']['key'] = '5072E1F5'
