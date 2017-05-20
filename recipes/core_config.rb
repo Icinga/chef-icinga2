@@ -54,6 +54,7 @@ end
   directory d do
     owner node['icinga2']['user']
     group node['icinga2']['cmdgroup']
+    recursive true if platform?('windows')
     mode 0o750
   end
 end
