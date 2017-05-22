@@ -20,6 +20,7 @@
 
 [
   node['icinga2']['conf_dir'],
+  ::File.join(node['icinga2']['conf_dir'], 'repository.d'),
   node['icinga2']['conf_d_dir'],
   node['icinga2']['pki_dir'],
   node['icinga2']['scripts_dir'],
