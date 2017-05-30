@@ -267,7 +267,7 @@ class Chef
         set_or_return(
           :set, arg,
           :kind_of => String,
-          :regex => /^[a-z|_]+\s=>\s[a-z|_]+\sin\s\S+$/,
+          :regex => /^([a-z|_]+\s=>\s)?[a-z|_]+\sin\s\S+$/,
           :default => nil
         )
       end
