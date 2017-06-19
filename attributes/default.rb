@@ -33,7 +33,7 @@ default['icinga2']['add_inet_custom_vars'] = false
 
 # itl defaults
 default['icinga2']['include_itl'] = if node['platform'] == 'windows'
-                                      %w(itl plugins plugins-contrib manubulon)
+                                      %w(itl plugins-windows)
                                     else
                                       %w(itl plugins)
                                     end
