@@ -35,18 +35,6 @@ include "constants.conf"
 include <<%= itl -%>>
 <% end -%>
 
-<% if node['platform'] == 'windows' -%>
-/**
- * This includes the Icinga 2 Windows plugins.
- */
-include <windows-plugins>
-
-/**
- * This includes the NSClient++ check commands.
- */
-include <nscp>
-<% end -%>
-
 /**
  * The features-available directory contains a number of configuration
  * files for features which can be enabled and disabled using the
