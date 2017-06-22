@@ -37,7 +37,7 @@
   <% end -%>
 
   <% if options['arguments'] && !options['arguments'].empty? -%>
-  arguments = {
+  arguments <% if options['import'] %>+<% end %>= {
     <% options['arguments'].each do |var, value| -%>
       <% if value.is_a?(String) -%>
       <%= var.inspect -%> = <%= value.inspect %>
