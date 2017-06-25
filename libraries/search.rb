@@ -30,7 +30,7 @@ require 'resolv'
 module Icinga2
   # fetch node information into Hash
   class Search
-    attr_accessor :query, :environment, :enable_cluster_hostgroup, :cluster_attribute,
+    attr_accessor :query, :environment, :enable_cluster_hostgroup, :enable_role_hostgroup, :cluster_attribute,
                   :enable_application_hostgroup, :application_attribute, :ignore_node_error,
                   :ignore_resolv_error, :exclude_recipes, :exclude_roles, :env_custom_vars,
                   :limit_region, :server_region, :search_pattern, :use_fqdn_resolv,
@@ -43,6 +43,7 @@ module Icinga2
       @enable_cluster_hostgroup = options[:enable_cluster_hostgroup]
       @cluster_attribute = options[:cluster_attribute]
       @enable_application_hostgroup = options[:enable_application_hostgroup]
+      @enable_role_hostgroup = options[:enable_role_hostgroup]
       @application_attribute = options[:application_attribute]
       @ignore_node_error = options[:ignore_node_error]
       @ignore_resolv_error = options[:ignore_resolv_error]
@@ -163,6 +164,11 @@ module Icinga2
           end
         else
           node_hash['custom_vars']['hostgroups'] = [node_hash['chef_environment']]
+        end
+
+        # collect nodes roles
+        if enable_role_hostgroup
+          node_hash['custom_vars']['hostgroups'].push(*(node_hash['roles'].map { |r| node_hash['chef_environment'] + '-' + r }))
         end
 
         # collect nodes cluster
