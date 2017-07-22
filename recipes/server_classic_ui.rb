@@ -18,6 +18,14 @@
 # limitations under the License.
 #
 
+# setup apache and icinga2 vhost
+case node['icinga2']['web_engine']
+when 'apache'
+  include_recipe 'icinga2::server_apache'
+else
+  raise "unknown web engine '#{node['icinga2']['web_engine']}'"
+end
+
 case node['platform_family']
 when 'debian'
   package 'icinga2-classicui' do

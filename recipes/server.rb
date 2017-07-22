@@ -22,14 +22,6 @@ include_recipe 'icinga2::attributes'
 
 include_recipe 'icinga2::server_os_packages'
 
-# setup apache and icinga2 vhost
-case node['icinga2']['web_engine']
-when 'apache'
-  include_recipe 'icinga2::server_apache'
-else
-  raise "unknown web engine '#{node['icinga2']['web_engine']}'"
-end
-
 # install icinga2 packages
 include_recipe 'icinga2::core_install'
 
