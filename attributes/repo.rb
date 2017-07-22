@@ -50,7 +50,7 @@ when 'debian'
       default['icinga2']['apt']['key'] = '36862847'
 
       # icinga2 package version suffix
-      default['icinga2']['icinga2_version_suffix'] = '~ppa1~' + node['lsb']['codename'].to_s + '2'
+      default['icinga2']['icinga2_version_suffix'] = '~ppa1~' + node['lsb']['codename'].to_s + '1'
     end
   when 'debian', 'raspbian'
     default['icinga2']['apt']['keyserver'] = nil
