@@ -23,6 +23,13 @@ node.default['apache']['mpm'] = 'prefork'
 
 node['icinga2']['apache_modules'].each { |mod| include_recipe "apache2::#{mod}" }
 
+if node['lsb']['codename'] == 'trusty'
+  package 'libapache2-mod-php5' do
+    action :install
+    notifies :reload, 'service[apache2]', :delayed
+  end
+end
+
 if (node['platform_family'] == 'debian') && (node['lsb']['codename'] == 'xenial') # ~FC023
   apache_module 'php7.0' do
     conf false

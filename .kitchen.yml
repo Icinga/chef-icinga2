@@ -27,6 +27,10 @@ suites:
     run_list:
       - recipe[icinga2::server]
       - recipe[icinga2-test::default]
+    attributes:
+      apt:
+        confd:
+          install_recommends: false
 
   - name: client
     run_list:
