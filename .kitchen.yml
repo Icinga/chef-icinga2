@@ -27,9 +27,6 @@ suites:
     run_list:
       - recipe[icinga2::server]
       - recipe[icinga2-test::default]
-    attributes:
-      icinga2:
-        enable_role_hostgroup: false
 
   - name: client
     run_list:
