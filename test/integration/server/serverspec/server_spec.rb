@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
+webserver = (os[:family] == 'redhat') ? 'httpd' : 'apache2'
+
 %w(
   icinga2
 ).each do |pkg|
@@ -14,20 +16,7 @@ describe service('icinga2') do
   it { should be_enabled }
 end
 
-case os[:family]
-when 'centos'
-  webserver = 'httpd'
-when 'debian'
-  webserver = 'apache2'
-when 'ubuntu'
-  webserver = 'apache2'
-end
-
 describe service(webserver) do
-  it { should be_running }
-  it { should be_enabled }
-end
-
-describe command('curl -IL -u icingaadmin:icingaadmin localhost/icinga2-classicui') do
-  its(:stdout) { should match(%r{HTTP/1.1 200 OK}) }
+  it { should_not be_running }
+  it { should_not be_enabled }
 end
