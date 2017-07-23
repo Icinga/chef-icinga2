@@ -31,3 +31,7 @@ end
 describe command("curl -IL -u icingaadmin:icingaadmin localhost/#{icinga2_http_path}") do
   its(:stdout) { should match(%r{HTTP/1.1 200 OK}) }
 end
+
+describe command("curl -IL -u icingaadmin:badpassword localhost/#{icinga2_http_path}") do
+  its(:stdout) { should match(%r{HTTP/1.1 401 Authorization Required}) }
+end
