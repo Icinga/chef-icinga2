@@ -24,40 +24,40 @@ provisioner:
   <% end %>
 
 platforms:
-- name: ubuntu-14.04
-  driver:
-    image: ubuntu:14.04
-    pid_one_command: /sbin/init
-    intermediate_instructions:
-      - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
-  attributes:
-    icinga2-test-mysql-instance:
-      service_manager: sysvinit
+  - name: ubuntu-14.04
+    driver:
+      image: ubuntu:14.04
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
+    attributes:
+      icinga2-test-mysql-instance:
+        service_manager: sysvinit
 
-- name: debian-8
-  driver:
-    image: debian:8
-    pid_one_command: /bin/systemd
-    intermediate_instructions:
-      - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
+  - name: debian-8
+    driver:
+      image: debian:8
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
 
-- name: centos-6.8
-  driver:
-    image: centos:6.8
-    pid_one_command: /sbin/init
-    platform: rhel
-    intermediate_instructions:
-      - RUN yum install -y net-tools initscripts which
-  attributes:
-    icinga2-test-mysql-instance:
-      service_manager: sysvinit
+  - name: centos-6.8
+    driver:
+      image: centos:6.8
+      pid_one_command: /sbin/init
+      platform: rhel
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts which
+    attributes:
+      icinga2-test-mysql-instance:
+        service_manager: sysvinit
 
-- name: centos-7
-  driver:
-    image: centos:7
-    pid_one_command: /usr/lib/systemd/systemd
-    platform: rhel
-    intermediate_instructions:
-      - RUN yum install -y net-tools initscripts systemd-sysv which lsof
+  - name: centos-7
+    driver:
+      image: centos:7
+      pid_one_command: /usr/lib/systemd/systemd
+      platform: rhel
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts systemd-sysv which lsof
