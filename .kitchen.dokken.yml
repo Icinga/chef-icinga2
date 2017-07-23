@@ -2,7 +2,7 @@
 <%
   http_port = ENV['KITCHEN_ICINGA2_HTTP_PORT'] || 8080
   https_port = ENV['KITCHEN_ICINGA2_HTTPS_PORT'] || 8443
-  db_host = ENV['KITCHEN_DB_HOST'] || 'localhost'
+  db_host = ENV['KITCHEN_DB_HOST'] || '127.0.0.1'
   chef_omnibus_url = ENV['KITCHEN_CHEF_OMNIBUS_URL'] || nil
 %>
 driver:
