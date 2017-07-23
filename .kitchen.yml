@@ -75,6 +75,7 @@ suites:
           db_host: <%= db_host %>
           db_password: X2BM0WKnN
           load_schema: true
+
   - name: classicui
     driver:
       network:
