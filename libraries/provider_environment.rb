@@ -205,7 +205,7 @@ class Chef
                 databag_item.raw_data = {
                   'id'      => "#{env}-pki-tickets",
                   'tickets' => tickets,
-                  'salt'    => salt
+                  'salt'    => salt,
                 }
                 databag_item.save
               end

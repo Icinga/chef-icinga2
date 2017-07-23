@@ -12,7 +12,7 @@ if node['icinga2']['recreate_server_certs']
     '/var/lib/icinga2/ca/ca.crt',
     client_key,
     client_crt,
-    client_csr
+    client_csr,
   ].each do |file|
     file file do
       action :delete

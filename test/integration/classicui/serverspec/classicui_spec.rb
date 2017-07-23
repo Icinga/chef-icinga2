@@ -31,7 +31,7 @@ end
 # Root path in debian-based distros opened for everyone
 # We'll check that explicitly
 if os[:family] != 'redhat'
-  describe command("curl -IL -u icingaadmin:badpassword localhost/icinga2-classicui") do
+  describe command('curl -IL -u icingaadmin:badpassword localhost/icinga2-classicui') do
     its(:stdout) { should match(%r{HTTP/1.1 200 OK}) }
   end
 end
