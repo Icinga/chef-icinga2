@@ -1,7 +1,3 @@
-mysql2_chef_gem 'default' do
-  action :install
-end
-
 mysql_version = case node['lsb']['codename']
                 when 'trusty', 'jessie', 'wheezy' then '5.5'
                 else '5.7'
@@ -16,7 +12,12 @@ if node['platform'] == 'centos'
     enabled true
     gpgcheck true
     gpgkey node['yum']['mysql57-community']['gpgkey'] unless node['yum']['mysql57-community']['gpgkey'].nil?
+    action :create
   end
+end
+
+mysql2_chef_gem 'default' do
+  action :install
 end
 
 mysql_service 'test-mysql' do
