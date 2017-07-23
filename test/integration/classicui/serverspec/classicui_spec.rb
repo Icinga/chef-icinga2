@@ -22,8 +22,8 @@ describe service('icinga2') do
 end
 
 describe service(webserver) do
-  it { should_not be_running }
-  it { should_not be_enabled }
+  it { should be_running }
+  it { should be_enabled }
 end
 
 describe command('curl -IL -u icingaadmin:icingaadmin localhost/icinga2-classicui') do
