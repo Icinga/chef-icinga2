@@ -34,6 +34,9 @@ platforms:
     attributes:
       icinga2-test-mysql-instance:
         service_manager: sysvinit
+      apt:
+        confd:
+          install_recommends: false
 
   - name: ubuntu-16.04
     driver:
@@ -42,6 +45,10 @@ platforms:
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
         - RUN /usr/bin/apt-get install -y apt-transport-https lsb-release procps net-tools
+    attributes:
+      apt:
+        confd:
+          install_recommends: false
 
   - name: debian-8
     driver:
@@ -50,6 +57,10 @@ platforms:
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
+    attributes:
+      apt:
+        confd:
+          install_recommends: false
 
   - name: centos-6.8
     driver:
