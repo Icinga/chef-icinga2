@@ -2,6 +2,7 @@ mysql_version = case node['lsb']['codename']
                 when 'trusty', 'jessie', 'wheezy' then '5.5'
                 else '5.7'
                 end
+mysql_service_manager = node['icinga2-test-mysql-instance']['service_manager']
 
 if node['platform'] == 'centos'
   yum_repository 'mysql57-community' do
@@ -22,6 +23,7 @@ end
 
 mysql_service 'test-mysql' do
   port '3306'
+  service_manager mysql_service_manager unless mysql_service_manager.nil?
   version mysql_version
   initial_root_password 'Xvtd7I9Hp2'
   action [:create, :start]
