@@ -5,9 +5,11 @@ packages = %w(icinga2)
 if os[:family] == 'redhat'
   webserver = 'httpd'
   packages += %w(icinga2-classicui-config icinga-gui)
+  icinga2_http_path = 'icinga'
 else
   webserver = 'apache2'
   packages += %w(icinga2-classicui)
+  icinga2_http_path = 'icinga2-classicui'
 end
 
 packages.each do |pkg|
@@ -26,6 +28,6 @@ describe service(webserver) do
   it { should be_enabled }
 end
 
-describe command('curl -IL -u icingaadmin:icingaadmin localhost/icinga2-classicui') do
+describe command("curl -IL -u icingaadmin:icingaadmin localhost/#{icinga2_http_path}") do
   its(:stdout) { should match(%r{HTTP/1.1 200 OK}) }
 end
