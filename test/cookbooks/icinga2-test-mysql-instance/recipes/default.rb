@@ -1,18 +1,15 @@
-mysql_version = case node['lsb']['codename']
-                when 'trusty', 'jessie', 'wheezy' then '5.5'
-                else '5.7'
-                end
+mysql_version = (node['lsb']['codename'] == 'xenial') ? '5.7' : '5.5'
 mysql_service_manager = node['icinga2-test-mysql-instance']['service_manager']
 
 if node['platform'] == 'centos'
-  yum_repository 'mysql57-community' do
-    baseurl node['yum']['mysql57-community']['baseurl'] unless node['yum']['mysql57-community']['baseurl'].nil?
-    mirrorlist node['yum']['mysql57-community']['mirrorlist'] unless node['yum']['mysql57-community']['mirrorlist'].nil?
-    description node['yum']['mysql57-community']['description'] unless node['yum']['mysql57-community']['description'].nil?
-    failovermethod node['yum']['mysql57-community']['failovermethod'] unless node['yum']['mysql57-community']['failovermethod'].nil?
+  yum_repository 'mysql55-community' do
+    baseurl node['yum']['mysql55-community']['baseurl'] unless node['yum']['mysql55-community']['baseurl'].nil?
+    mirrorlist node['yum']['mysql55-community']['mirrorlist'] unless node['yum']['mysql55-community']['mirrorlist'].nil?
+    description node['yum']['mysql55-community']['description'] unless node['yum']['mysql55-community']['description'].nil?
+    failovermethod node['yum']['mysql55-community']['failovermethod'] unless node['yum']['mysql55-community']['failovermethod'].nil?
     enabled true
     gpgcheck true
-    gpgkey node['yum']['mysql57-community']['gpgkey'] unless node['yum']['mysql57-community']['gpgkey'].nil?
+    gpgkey node['yum']['mysql55-community']['gpgkey'] unless node['yum']['mysql55-community']['gpgkey'].nil?
     action :create
   end
 end
