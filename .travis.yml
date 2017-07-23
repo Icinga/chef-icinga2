@@ -28,7 +28,28 @@ services: docker
 
 env:
   matrix:
+    - INSTANCE=server-ubuntu-1404
+    - INSTANCE=server-ubuntu-1604
+    - INSTANCE=server-debian-8
+    - INSTANCE=server-centos-68
+    - INSTANCE=server-centos-7
+    - INSTANCE=client-ubuntu-1404
+    - INSTANCE=client-ubuntu-1604
+    - INSTANCE=client-debian-8
+    - INSTANCE=client-centos-68
+    - INSTANCE=client-centos-7
+    - INSTANCE=web2-package-ubuntu-1404
+    - INSTANCE=web2-package-ubuntu-1604
+    - INSTANCE=web2-package-debian-8
+    - INSTANCE=web2-package-centos-68
+    - INSTANCE=web2-package-centos-7
+    - INSTANCE=web2-source-ubuntu-1404
+    - INSTANCE=web2-source-ubuntu-1604
+    - INSTANCE=web2-source-debian-8
+    - INSTANCE=web2-source-centos-68
+    - INSTANCE=web2-source-centos-7
     - INSTANCE=classicui-ubuntu-1404
+    - INSTANCE=classicui-ubuntu-1604
     - INSTANCE=classicui-debian-8
     - INSTANCE=classicui-centos-68
     - INSTANCE=classicui-centos-7
