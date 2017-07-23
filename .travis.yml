@@ -1,12 +1,17 @@
 sudo: required
 dist: trusty
 
-addons:
-  apt:
-    sources:
-      - chef-current-trusty
-    packages:
-      - chefdk
+# TODO: return back when with chef-client 13 support
+# addons:
+#   apt:
+#     sources:
+#       - chef-current-trusty
+#     packages:
+#       - chefdk
+
+before_install:
+  - wget 'https://packages.chef.io/files/stable/chefdk/1.5.0/ubuntu/14.04/chefdk_1.5.0-1_amd64.deb'
+  - sudo dpkg -i chefdk_1.5.0-1_amd64.deb
 
 # Don't run bundle install
 install: echo "skip bundle install"
