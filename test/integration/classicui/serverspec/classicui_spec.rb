@@ -9,7 +9,7 @@ if os[:family] == 'redhat'
 else
   webserver = 'apache2'
   packages += %w(icinga2-classicui)
-  icinga2_http_path = 'icinga2-classicui'
+  icinga2_http_path = 'cgi-bin/icinga2-classicui/status.cgi'
 end
 
 packages.each do |pkg|
@@ -28,10 +28,18 @@ describe service(webserver) do
   it { should be_enabled }
 end
 
+# Root path in debian-based distros opened for everyone
+# We'll check that explicitly
+if os[:family] != 'redhat'
+  describe command("curl -IL -u icingaadmin:badpassword localhost/icinga2-classicui") do
+    its(:stdout) { should match(%r{HTTP/1.1 200 OK}) }
+  end
+end
+
 describe command("curl -IL -u icingaadmin:icingaadmin localhost/#{icinga2_http_path}") do
   its(:stdout) { should match(%r{HTTP/1.1 200 OK}) }
 end
 
 describe command("curl -IL -u icingaadmin:badpassword localhost/#{icinga2_http_path}") do
-  its(:stdout) { should match(%r{HTTP/1.1 401 Authorization Required}) }
+  its(:stdout) { should match(%r{HTTP/1.1 401}) }
 end
