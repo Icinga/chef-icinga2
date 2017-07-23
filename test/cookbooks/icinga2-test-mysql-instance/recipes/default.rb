@@ -1,5 +1,6 @@
 mysql_version = (node['lsb']['codename'] == 'xenial') ? '5.7' : '5.5'
 mysql_service_manager = node['icinga2-test-mysql-instance']['service_manager']
+mysql2_gem_version = node['icinga2-test-mysql-instance']['gem_version']
 
 if node['platform'] == 'centos'
   yum_repository 'mysql55-community' do
@@ -15,6 +16,8 @@ if node['platform'] == 'centos'
 end
 
 mysql2_chef_gem 'default' do
+  package_version mysql_version
+  gem_version mysql2_gem_version unless mysql2_gem_version.nil?
   action :install
 end
 
