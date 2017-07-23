@@ -71,10 +71,8 @@ describe 'icinga2::server' do
       expect(chef_run).to create_yum_repository('icinga2')
     end
 
-    %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo php-soap php-ldap php-mysql php-pgsql php-intl php-pecl-imagick).each do |p|
-      it "install package #{p}" do
-        expect(chef_run).to install_package(p)
-      end
+    it 'install packages' do
+      expect(chef_run).to install_package(%w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo php-soap php-ldap php-mysql php-pgsql php-intl php-pecl-imagick))
     end
 
     it 'configure /etc/icinga2/icinga2.conf' do
@@ -141,10 +139,8 @@ describe 'icinga2::server' do
       expect(chef_run).to add_apt_repository('icinga2')
     end
 
-    %w(g++ mailutils php5 php5-cli php5-fpm build-essential libgd2-xpm-dev libjpeg62 libpng12-0 libpng12-dev libapache2-mod-php5 imagemagick php5-imagick php-pear php5-xmlrpc php5-xsl php5-mysql php-soap php5-gd php5-ldap php5-pgsql php5-intl).each do |p|
-      it "install package #{p}" do
-        expect(chef_run).to install_package(p)
-      end
+    it 'install packages' do
+      expect(chef_run).to install_package(%w(g++ mailutils php5 php5-cli php5-fpm build-essential libgd2-xpm-dev libjpeg62 libpng12-0 libpng12-dev imagemagick php5-imagick php-pear php5-xmlrpc php5-xsl php5-mysql php-soap php5-gd php5-ldap php5-pgsql php5-intl))
     end
 
     it 'configure /etc/icinga2/icinga2.conf' do
