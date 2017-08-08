@@ -58,6 +58,4 @@ when 'rhel'
 end
 
 # dependencies
-os_packages.each do |p|
-  package p
-end
+package os_packages unless os_packages.empty?
