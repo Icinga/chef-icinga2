@@ -122,7 +122,7 @@ class Chef
                     :host_format_template => new_resource.host_format_template,
                     :service_format_template => new_resource.service_format_template,
                     :rotation_interval => new_resource.rotation_interval)
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end

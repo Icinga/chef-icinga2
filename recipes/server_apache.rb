@@ -28,7 +28,7 @@ if (node['platform_family'] == 'debian') && (node['lsb']['codename'] == 'xenial'
     conf false
     filename 'libphp7.0.so'
     identifier 'php7_module'
-    notifies :reload, 'service[apache2]'
+    notifies platform?('windows') ? :restart : :reload, 'service[apache2]'
   end
 end
 
@@ -39,7 +39,7 @@ template ::File.join(node['apache']['dir'], 'conf-available', "#{node['icinga2']
   source "apache.vhost.icinga2_classic_ui.conf.#{node['platform_family']}.erb"
   owner node['apache']['user']
   group node['apache']['group']
-  notifies :reload, 'service[apache2]', :delayed
+  notifies platform?('windows') ? :restart : :reload, 'service[apache2]', :delayed
   only_if { node['icinga2']['classic_ui']['enable'] }
 end
 
@@ -47,7 +47,7 @@ template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-web2.conf
   source 'apache.vhost.icinga2_web2.erb'
   owner node['apache']['user']
   group node['apache']['group']
-  notifies :reload, 'service[apache2]', :delayed
+  notifies platform?('windows') ? :restart : :reload, 'service[apache2]', :delayed
   variables(:web_root => node['icinga2']['web2']['web_root'],
             :web_uri => node['icinga2']['web2']['web_uri'],
             :conf_dir => node['icinga2']['web2']['conf_dir'])

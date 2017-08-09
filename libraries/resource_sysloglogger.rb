@@ -58,7 +58,7 @@ class Chef
           mode 0o640
           variables(:object => new_resource.name,
                     :severity => new_resource.severity)
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end

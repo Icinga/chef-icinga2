@@ -109,7 +109,7 @@ class Chef
             :log_duration => new_resource.log_duration,
             :parent => new_resource.parent
           )
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end

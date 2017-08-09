@@ -36,7 +36,7 @@ This cookbook is being developed for Icinga2 - v2.2.x and later versions.
 
 ## Supported OS
 
- This cookbook has been tested on CentOS 6.8, CentOS 7.2 and Ubuntu 14.04.
+ This cookbook has been tested on CentOS 6.8, CentOS 7.2 Ubuntu 14.04 Windows Server 2012 R2, and Windows 10
 
 
 ## Supported Icinga2 Install Types
@@ -46,7 +46,7 @@ Currently Icinga2 installation is supported **ONLY** via Repository Packages, as
 
 ## Chef Requirement
 
-This cookbook requires Chef Version 11.x or above.
+This cookbook requires Chef Version 11.x thru 12.x
 
 
 ## Contributing

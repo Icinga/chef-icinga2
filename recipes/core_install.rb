@@ -17,34 +17,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-case node['platform_family']
-when 'debian'
-  # apt repository configuration
-  apt_repository 'icinga2' do
-    uri node['icinga2']['apt']['uri']
-    distribution node['icinga2']['apt']['distribution']
-    components node['icinga2']['apt']['components']
-    keyserver node['icinga2']['apt']['keyserver'] unless node['icinga2']['apt']['keyserver'].nil?
-    key node['icinga2']['apt']['key']
-    deb_src node['icinga2']['apt']['deb_src']
-    action node['icinga2']['apt']['action']
+if platform?('windows')
+  chocolatey_package 'icinga2' do
+    version node['icinga2']['version']
+    action :upgrade
   end
-when 'rhel'
-  # yum repository configuration
-  yum_repository 'icinga2' do
-    description node['icinga2']['yum']['description']
-    baseurl node['icinga2']['yum']['baseurl']
-    mirrorlist node['icinga2']['yum']['mirrorlist'] if node['icinga2']['yum']['mirrorlist']
-    gpgcheck node['icinga2']['yum']['gpgcheck']
-    gpgkey node['icinga2']['yum']['gpgkey']
-    enabled node['icinga2']['yum']['enabled']
-    action node['icinga2']['yum']['action']
+else
+  case node['platform_family']
+  when 'debian'
+    # apt repository configuration
+    apt_repository 'icinga2' do
+      uri node['icinga2']['apt']['uri']
+      distribution node['icinga2']['apt']['distribution']
+      components node['icinga2']['apt']['components']
+      keyserver node['icinga2']['apt']['keyserver'] unless node['icinga2']['apt']['keyserver'].nil?
+      key node['icinga2']['apt']['key']
+      deb_src node['icinga2']['apt']['deb_src']
+      action node['icinga2']['apt']['action']
+    end
+  when 'rhel'
+    # yum repository configuration
+    yum_repository 'icinga2' do
+      description node['icinga2']['yum']['description']
+      baseurl node['icinga2']['yum']['baseurl']
+      mirrorlist node['icinga2']['yum']['mirrorlist'] if node['icinga2']['yum']['mirrorlist']
+      gpgcheck node['icinga2']['yum']['gpgcheck']
+      gpgkey node['icinga2']['yum']['gpgkey']
+      enabled node['icinga2']['yum']['enabled']
+      action node['icinga2']['yum']['action']
+    end
   end
-end
 
-# install icinga2 core packages
-package 'icinga2' do
-  version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix'] unless node['icinga2']['ignore_version']
-  notifies :restart, 'service[icinga2]', :delayed
+  # install icinga2 core packages
+  package 'icinga2' do
+    version node['icinga2']['version'] + node['icinga2']['icinga2_version_suffix'] unless node['icinga2']['ignore_version']
+    notifies :restart, 'service[icinga2]', :delayed
+  end
 end

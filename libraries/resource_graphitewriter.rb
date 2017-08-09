@@ -94,7 +94,7 @@ class Chef
                     :port => new_resource.port,
                     :host_name_template => new_resource.host_name_template,
                     :service_name_template => new_resource.service_name_template)
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end

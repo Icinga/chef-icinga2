@@ -36,7 +36,7 @@
   timeout = <%= options['timeout'] %>
   <% end -%>
   <% if options['arguments'] && !options['arguments'].empty? -%>
-  arguments = {
+  arguments <% if options['import'] %>+<% end %>= {
     <% options['arguments'].each do |var, value| -%>
     <% if value.is_a?(String) || value.is_a?(Integer) || value.is_a?(Float) -%>
     <%= var.inspect -%> = <%= value.inspect %>

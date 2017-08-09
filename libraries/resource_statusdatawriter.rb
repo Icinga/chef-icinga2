@@ -85,7 +85,7 @@ class Chef
                     :status_path => new_resource.status_path,
                     :objects_path => new_resource.objects_path,
                     :update_interval => new_resource.update_interval)
-          notifies :reload, 'service[icinga2]'
+          notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
       end
