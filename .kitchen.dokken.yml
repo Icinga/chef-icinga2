@@ -2,16 +2,20 @@
 <%
   http_port = ENV['KITCHEN_ICINGA2_HTTP_PORT'] || 8080
   https_port = ENV['KITCHEN_ICINGA2_HTTPS_PORT'] || 8443
-  db_host = ENV['KITCHEN_DB_HOST'] || 'localhost'
+  db_host = ENV['KITCHEN_DB_HOST'] || '127.0.0.1'
   chef_omnibus_url = ENV['KITCHEN_CHEF_OMNIBUS_URL'] || nil
 %>
 driver:
   name: dokken
   privileged: true
-  chef_version: current
+  chef_version: 12.19.36
 
 transport:
   name: dokken
+
+verifier:
+  root_path: '/opt/verifier'
+  sudo: false
 
 provisioner:
   name: dokken
@@ -20,89 +24,59 @@ provisioner:
   <% end %>
 
 platforms:
-- name: ubuntu-14.04
-  driver:
-    image: ubuntu:14.04
-    intermediate_instructions:
-      - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
-
-- name: debian-8
-  driver:
-    image: debian:8
-    intermediate_instructions:
-      - RUN /usr/bin/apt-get update
-      - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
-
-- name: centos-6.8
-  driver:
-    image: centos:6.8
-    platform: rhel
-    intermediate_instructions:
-      - RUN yum install -y net-tools initscripts which
-
-- name: centos-7
-  driver:
-    image: centos:7
-    pid_one_command: /usr/lib/systemd/systemd
-    platform: rhel
-    intermediate_instructions:
-      - RUN yum install -y net-tools initscripts systemd-sysv which lsof
-
-
-suites:
-  - name: server
-    run_list:
-      - recipe[icinga2::server]
-      - recipe[icinga2-test::default]
-
-  - name: client
-    run_list:
-      - recipe[icinga2::client]
-
-  - name: web2-package
+  - name: ubuntu-14.04
     driver:
-      network:
-        - ["forwarded_port", {guest: 80, host: <%= http_port %>, auto_correct: true}]
-        - ["forwarded_port", {guest: 443, host: <%= https_port %>, auto_correct: true}]
-    run_list:
-      - recipe[icinga2::server]
-      - recipe[icinga2-test::default]
+      image: ubuntu:14.04
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
     attributes:
-      icinga2:
-        web2:
-          enable: true
-          install_method: package
-        ido:
-          install_mysql_client: true
-          db_host: <%= db_host %>
-          load_schema: true
-  - name: web2-source
+      icinga2-test-mysql-instance:
+        service_manager: sysvinit
+      apt:
+        confd:
+          install_recommends: false
+
+  - name: ubuntu-16.04
     driver:
-      network:
-        - ["forwarded_port", {guest: 80, host: <%= http_port %>, auto_correct: true}]
-        - ["forwarded_port", {guest: 443, host: <%= https_port %>, auto_correct: true}]
-    run_list:
-      - recipe[icinga2::server]
-      - recipe[icinga2-test::default]
+      image: ubuntu:16.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install -y apt-transport-https lsb-release procps net-tools
     attributes:
-      icinga2:
-        web2:
-          enable: true
-          install_method: source
-        ido:
-          install_mysql_client: true
-          db_host: <%= db_host %>
-          load_schema: true
-  - name: classicui
+      apt:
+        confd:
+          install_recommends: false
+
+  - name: debian-8
     driver:
-      network:
-        - ["forwarded_port", {guest: 80, host: <%= http_port %>, auto_correct: true}]
-        - ["forwarded_port", {guest: 443, host: <%= https_port %>, auto_correct: true}]
-    run_list:
-      - recipe[icinga2::server]
-      - recipe[icinga2-test::default]
+      image: debian:8
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
     attributes:
-      icinga2:
-        classic_ui:
-          enable: true
+      apt:
+        confd:
+          install_recommends: false
+
+  - name: centos-6.8
+    driver:
+      image: centos:6.8
+      pid_one_command: /sbin/init
+      platform: rhel
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts which
+    attributes:
+      icinga2-test-mysql-instance:
+        service_manager: sysvinit
+
+  - name: centos-7
+    driver:
+      image: centos:7
+      pid_one_command: /usr/lib/systemd/systemd
+      platform: rhel
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts systemd-sysv which lsof

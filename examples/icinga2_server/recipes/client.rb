@@ -15,7 +15,7 @@ if node['icinga2']['recreate_client_certs']
     '/etc/icinga2/pki/ca.crt',
     '/etc/icinga2/pki/trusted-master.crt',
     "/etc/icinga2/pki/#{node.fqdn}.key",
-    "/etc/icinga2/pki/#{node.fqdn}.crt"
+    "/etc/icinga2/pki/#{node.fqdn}.crt",
   ].each do |file|
     file file do
       action :delete

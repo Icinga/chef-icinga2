@@ -47,13 +47,18 @@ describe 'icinga2::server_apache' do
 
   context 'ubuntu' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '12.04') do |node|
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04') do |node|
         node.automatic['platform_family'] = 'debian'
+        node.automatic['lsb']['codename'] = 'trusty'
         node.set['icinga2']['classic_ui']['enable'] = true
         node.set['icinga2']['ignore_version'] = true
         node.set['icinga2']['web2']['enable'] = true
         node.set['platform'] = 'ubuntu'
       end.converge(described_recipe)
+    end
+
+    it 'install package libapache2-mod-php5' do
+      expect(chef_run).to install_package('libapache2-mod-php5')
     end
 
     it 'creates an icinga2-classicui config file for apache2' do

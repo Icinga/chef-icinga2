@@ -29,6 +29,14 @@ else
   Chef::Log.warn("missing attribute node['time']['timezone'], using default value 'UTC'")
 end
 
+# setup apache and icinga2 vhost
+case node['icinga2']['web_engine']
+when 'apache'
+  include_recipe 'icinga2::server_apache'
+else
+  raise "unknown web engine '#{node['icinga2']['web_engine']}'"
+end
+
 directory node['icinga2']['web2']['conf_dir'] do
   owner node[node['icinga2']['web_engine']]['user']
   group node[node['icinga2']['web_engine']]['group']

@@ -1,7 +1,7 @@
 icinga2 Cookbook
 ==================
 
-[![Cookbook](https://img.shields.io/github/tag/icinga/chef-icinga2.svg)](https://github.com/icinga/chef-icinga2) [![Build Status](https://travis-ci.org/Icinga/chef-icinga2.svg?branch=master)](https://travis-ci.org/Icinga/chef-icinga2)[![Build Status](https://jenkins-01.eastus.cloudapp.azure.com/job/icinga2-cookbook/badge/icon)](https://jenkins-01.eastus.cloudapp.azure.com/job/icinga2-cookbook/)
+[![Cookbook](https://img.shields.io/github/tag/icinga/chef-icinga2.svg)](https://github.com/icinga/chef-icinga2) [![Build Status](https://travis-ci.org/Icinga/chef-icinga2.svg?branch=master)](https://travis-ci.org/Icinga/chef-icinga2) [![Build Status](https://jenkins-01.eastus.cloudapp.azure.com/job/icinga2-cookbook/badge/icon)](https://jenkins-01.eastus.cloudapp.azure.com/job/icinga2-cookbook/)
 
 ![Icinga Logo](https://www.icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 

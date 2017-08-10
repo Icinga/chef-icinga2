@@ -29,7 +29,7 @@ when 'debian'
     # perhaps can be removed.
     os_packages = %w(g++ mailutils php5 php5-cli php5-fpm build-essential
                      libgd2-xpm-dev libjpeg62 libpng12-0
-                     libpng12-dev libapache2-mod-php5 imagemagick
+                     libpng12-dev imagemagick
                      php5-imagick php-pear php5-xmlrpc php5-xsl php5-mysql
                      php-soap php5-gd php5-ldap php5-pgsql php5-intl)
   when 'xenial'
@@ -58,6 +58,7 @@ when 'rhel'
 end
 
 # dependencies
-os_packages.each do |p|
-  package p
+package 'icinga2_packages' do
+  package_name os_packages
+  action :install
 end

@@ -1,6 +1,7 @@
 #!/usr/bin/env rake
 
 require 'foodcritic'
+require 'cookstyle'
 require 'rubocop/rake_task'
 require 'rspec/core/rake_task'
 
@@ -8,9 +9,11 @@ desc 'Run all'
 task :lint => %w(rubocop foodcritic spec)
 task :default => :lint
 
-desc 'Run Rubocop'
+desc 'Run Rubocop (Cookstyle)'
 task :rubocop do
-  RuboCop::RakeTask.new
+  RuboCop::RakeTask.new do |task|
+    task.options << "--display-cop-names"
+  end
 end
 
 desc 'Run Food Critic'
