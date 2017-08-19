@@ -10,7 +10,7 @@ describe 'icinga2::server_apache' do
 
   context 'rhel' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.4') do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
         node.automatic['platform_family'] = 'rhel'
         node.set['icinga2']['classic_ui']['enable'] = true
         node.set['icinga2']['web2']['enable'] = true

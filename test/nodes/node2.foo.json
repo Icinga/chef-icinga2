@@ -1,0 +1,20 @@
+{
+  "id": "node2.foo",
+  "chef_environment": "test",
+  "run_list": [],
+  "automatic": {
+    "platform": "centos",
+    "memory": 1024,
+		"memory": {
+			"total": "1694744kB"
+		},
+    "cpu": {
+      "total": 1
+    },
+    "fqdn": "node2.foo",
+    "hostname": "node2.foo",
+    "ipaddress": "192.168.100.102",
+    "application": "foo",
+    "flock": "foo"
+  }
+}

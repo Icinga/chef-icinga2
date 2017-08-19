@@ -16,6 +16,10 @@ describe 'icinga2::server' do
         end
       end
 
+      it 'create directory[/etc/icinga2/repository.d]' do
+        expect(chef_run).to create_directory('/etc/icinga2/repository.d')
+      end
+
       it 'install package icinga2' do
         expect(chef_run).to install_package('icinga2')
       end
@@ -37,12 +41,52 @@ describe 'icinga2::server' do
         expect(chef_run).to run_ruby_block('delayed_icinga2_service_start')
         expect(chef_run.ruby_block('delayed_icinga2_service_start')).to notify('service[icinga2]').to(:start).delayed
       end
+
+      it 'create icinga2_timeperiod[24x7]' do
+        expect(chef_run).to create_icinga2_timeperiod('24x7')
+      end
+
+      it 'create icinga2_timeperiod[9to5]' do
+        expect(chef_run).to create_icinga2_timeperiod('9to5')
+      end
+
+      it 'create icinga2_timeperiod[never]' do
+        expect(chef_run).to create_icinga2_timeperiod('never')
+      end
+
+      it 'create icinga2_service[generic-service]' do
+        expect(chef_run).to create_icinga2_service('generic-service')
+      end
+
+      it 'create icinga2_usergroup[icingaadmins]' do
+        expect(chef_run).to create_icinga2_usergroup('icingaadmins')
+      end
+
+      it 'create icinga2_user[generic-user]' do
+        expect(chef_run).to create_icinga2_user('generic-user')
+      end
+
+      it 'create icinga2_user[icingaadmin]' do
+        expect(chef_run).to create_icinga2_user('icingaadmin')
+      end
+
+      it 'create icinga2_host[generic-host]' do
+        expect(chef_run).to create_icinga2_host('generic-host')
+      end
+
+      it 'create icinga2_notificationcommand[mail-service-notification]' do
+        expect(chef_run).to create_icinga2_notificationcommand('mail-service-notification')
+      end
+
+      it 'create icinga2_notificationcommand[mail-host-notification]' do
+        expect(chef_run).to create_icinga2_notificationcommand('mail-host-notification')
+      end
     end
   end
 
   context 'rhel' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.4') do |node|
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
         node.automatic['platform_family'] = 'rhel'
       end.converge(described_recipe)
     end
@@ -118,7 +162,7 @@ describe 'icinga2::server' do
 
   context 'ubuntu' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '12.04') do |node|
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04') do |node|
         node.automatic['platform_family'] = 'debian'
         node.automatic['lsb']['codename'] = 'trusty'
       end.converge(described_recipe)

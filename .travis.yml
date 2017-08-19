@@ -1,17 +1,12 @@
 sudo: required
 dist: trusty
 
-# TODO: return back when with chef-client 13 support
-# addons:
-#   apt:
-#     sources:
-#       - chef-current-trusty
-#     packages:
-#       - chefdk
-
-before_install:
-  - wget 'https://packages.chef.io/files/stable/chefdk/1.5.0/ubuntu/14.04/chefdk_1.5.0-1_amd64.deb'
-  - sudo dpkg -i chefdk_1.5.0-1_amd64.deb
+addons:
+  apt:
+    sources:
+      - chef-stable-trusty
+    packages:
+      - chefdk
 
 # Don't run bundle install
 install: echo "skip bundle install"
@@ -28,31 +23,20 @@ services: docker
 
 env:
   matrix:
-    - INSTANCE=server-ubuntu-1404
-    - INSTANCE=server-ubuntu-1604
-    - INSTANCE=server-debian-8
-    - INSTANCE=server-centos-68
-    - INSTANCE=server-centos-7
-    - INSTANCE=client-ubuntu-1404
-    - INSTANCE=client-ubuntu-1604
-    - INSTANCE=client-debian-8
-    - INSTANCE=client-centos-68
-    - INSTANCE=client-centos-7
-    - INSTANCE=web2-package-ubuntu-1404
-    - INSTANCE=web2-package-ubuntu-1604
-    - INSTANCE=web2-package-debian-8
-    - INSTANCE=web2-package-centos-68
-    - INSTANCE=web2-package-centos-7
-    - INSTANCE=web2-source-ubuntu-1404
-    - INSTANCE=web2-source-ubuntu-1604
-    - INSTANCE=web2-source-debian-8
-    - INSTANCE=web2-source-centos-68
-    - INSTANCE=web2-source-centos-7
-    - INSTANCE=classicui-ubuntu-1404
-    - INSTANCE=classicui-ubuntu-1604
-    - INSTANCE=classicui-debian-8
-    - INSTANCE=classicui-centos-68
-    - INSTANCE=classicui-centos-7
+    - INSTANCE=default12-ubuntu-14
+    - INSTANCE=default12-ubuntu-16
+    - INSTANCE=default12-debian-8
+    - INSTANCE=default12-debian-9
+    - INSTANCE=default12-centos-6
+    - INSTANCE=default12-centos-7
+    - INSTANCE=default12-amazon
+    - INSTANCE=default13-ubuntu-14
+    - INSTANCE=default13-ubuntu-16
+    - INSTANCE=default13-debian-8
+    - INSTANCE=default13-debian-9
+    - INSTANCE=default13-centos-6
+    - INSTANCE=default13-centos-7
+    - INSTANCE=default13-amazon
 
 script:
   - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
@@ -67,6 +51,21 @@ before_script:
 
 
 matrix:
+  allow_failures:
+    - env: INSTANCE=default12-ubuntu-14
+    - env: INSTANCE=default12-ubuntu-16
+    - env: INSTANCE=default12-debian-8
+    - env: INSTANCE=default12-debian-9
+    - env: INSTANCE=default12-centos-6
+    - env: INSTANCE=default12-centos-7
+    - env: INSTANCE=default12-amazon
+    - env: INSTANCE=default13-ubuntu-14
+    - env: INSTANCE=default13-ubuntu-16
+    - env: INSTANCE=default13-debian-8
+    - env: INSTANCE=default13-debian-9
+    - env: INSTANCE=default13-centos-6
+    - env: INSTANCE=default13-centos-7
+    - env: INSTANCE=default13-amazon
   include:
     - script:
       - /opt/chefdk/bin/chef exec rake
