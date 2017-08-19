@@ -20,12 +20,17 @@
 
 require 'chef'
 require 'chef/node'
-require 'chef/rest'
 require 'chef/role'
 require 'chef/environment'
 require 'chef/data_bag'
 require 'chef/data_bag_item'
 require 'resolv'
+
+if Chef::VERSION.to_f >= 12.0
+  require 'chef/server_api'
+else
+  require 'chef/rest'
+end
 
 module Icinga2
   # fetch node information into Hash
