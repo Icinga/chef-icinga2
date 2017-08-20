@@ -24,7 +24,7 @@ class Chef
 
       # collect object defined resources
       def object_resources
-        run_context.resource_collection.select do |resource|
+        Chef.run_context.resource_collection.select do |resource|
           case new_resource.resource_name
           when :icinga2_apilistener
             resource.is_a?(Chef::Resource::Icinga2Apilistener)
