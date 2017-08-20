@@ -8,7 +8,6 @@
 driver:
   name: dokken
   privileged: true
-  chef_version: 12.19.36
 
 transport:
   name: dokken
@@ -19,18 +18,25 @@ verifier:
 
 provisioner:
   name: dokken
+  log_file: "/tmp/chef-client.log"
+  environment_path: test/environments
+  data_bags_path: test/databags
+  nodes_path: test/nodes
+  attributes:
+    icinga2:
+      ignore_version: true
   <% if chef_omnibus_url %>
   chef_omnibus_url: '<%= chef_omnibus_url %>'
   <% end %>
 
 platforms:
-  - name: ubuntu-14.04
+  - name: ubuntu-14
     driver:
       image: ubuntu:14.04
       pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl
     attributes:
       icinga2-test-mysql-instance:
         service_manager: sysvinit
@@ -38,13 +44,13 @@ platforms:
         confd:
           install_recommends: false
 
-  - name: ubuntu-16.04
+  - name: ubuntu-16
     driver:
       image: ubuntu:16.04
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install -y apt-transport-https lsb-release procps net-tools
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl
     attributes:
       apt:
         confd:
@@ -52,23 +58,34 @@ platforms:
 
   - name: debian-8
     driver:
-      image: debian:8
-      pid_one_command: /bin/systemd
+      image: debian:8.9
+      pid_one_command: /sbin/init
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
     attributes:
       apt:
         confd:
           install_recommends: false
 
-  - name: centos-6.8
+  - name: debian-9
+    driver:
+      image: debian:9.1
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
+    attributes:
+      apt:
+        confd:
+          install_recommends: false
+
+  - name: centos-6
     driver:
       image: centos:6.8
       pid_one_command: /sbin/init
       platform: rhel
       intermediate_instructions:
-        - RUN yum install -y net-tools initscripts which
+        - RUN yum install -y net-tools initscripts which curl
     attributes:
       icinga2-test-mysql-instance:
         service_manager: sysvinit
@@ -79,4 +96,38 @@ platforms:
       pid_one_command: /usr/lib/systemd/systemd
       platform: rhel
       intermediate_instructions:
-        - RUN yum install -y net-tools initscripts systemd-sysv which lsof
+        - RUN yum install -y net-tools initscripts systemd-sysv which lsof curl
+
+  - name: amazon
+    driver:
+      image: amazonlinux:2017.03
+      platform: amazon
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts which
+      pid_one_command: /sbin/init
+
+suites:
+  - name: default12
+    driver:
+      chef_version: 12.21.3
+    run_list:
+      - recipe[icinga2::server]
+      - recipe[icinga2::client]
+      - recipe[icinga2-test::default]
+    attributes:
+      icinga2:
+        # temp fix
+        disable_conf_d: false
+
+  - name: default13
+    driver:
+      chef_version: 13.2.20
+    run_list:
+      - recipe[icinga2::server]
+      - recipe[icinga2::client]
+      - recipe[icinga2-test::default]
+    attributes:
+      icinga2:
+        # temp fix
+        disable_conf_d: false
+
