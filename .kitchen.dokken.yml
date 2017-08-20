@@ -18,6 +18,7 @@ verifier:
 
 provisioner:
   name: dokken
+  log_file: "/tmp/chef-client.log"
   environment_path: test/environments
   data_bags_path: test/databags
   nodes_path: test/nodes
