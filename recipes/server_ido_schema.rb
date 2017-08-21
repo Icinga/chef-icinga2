@@ -46,7 +46,7 @@ if node['icinga2']['ido']['install_mysql_client']
       deb_src node['icinga2']['ido']['apt']['deb_src']
       action node['icinga2']['ido']['apt']['action']
     end
-  when 'rhel'
+  when 'rhel', 'amazon'
     # yum repository configuration
     yum_repository 'icinga2-mysql-community' do
       description node['icinga2']['ido']['yum']['description']

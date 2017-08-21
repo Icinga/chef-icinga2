@@ -88,7 +88,7 @@ default['icinga2']['cache_dir'] = ::File.join(node['icinga2']['var_dir'], 'cache
 default['icinga2']['service_name'] = 'icinga2'
 
 case node['platform_family']
-when 'rhel'
+when 'rhel', 'amazon'
   default['icinga2']['user'] = 'icinga'
   default['icinga2']['group'] = 'icinga'
   default['icinga2']['cmdgroup'] = 'icingacmd'

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 icinga2_usergroup 'testgroup' do
   display_name 'Test User Group'
 end

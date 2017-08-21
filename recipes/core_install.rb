@@ -35,7 +35,7 @@ else
       deb_src node['icinga2']['apt']['deb_src']
       action node['icinga2']['apt']['action']
     end
-  when 'rhel'
+  when 'rhel', 'amazon'
     # yum repository configuration
     yum_repository 'icinga2' do
       description node['icinga2']['yum']['description']

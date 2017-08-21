@@ -26,7 +26,7 @@ unless platform?('windows')
     # perhaps can be removed.
     os_packages = %w(g++ mailutils build-essential)
     include_recipe 'apt'
-  when 'rhel'
+  when 'rhel', 'amazon'
     os_packages = %w(gcc gcc-c++ glibc glibc-common mailx)
     # yum epel repository is required for php-pecl-imagick
     include_recipe 'yum-epel' if node['platform'] != 'amazon' && node['icinga2']['setup_epel']

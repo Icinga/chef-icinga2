@@ -63,7 +63,7 @@ file ::File.join(node['icinga2']['web2']['conf_dir'], 'setup.token') do
 end
 
 # set php time zone
-php_ini = if node['platform_family'] == 'rhel'
+php_ini = if node['platform_family'] =~ /rhel|amazon/
             '/etc/php.ini'
           elsif node['platform_family'] == 'debian'
             if node['lsb']['codename'] == 'xenial'

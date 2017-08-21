@@ -13,11 +13,11 @@ class Chef
       end
 
       action :create do
-        new_resource.updated_by_last_action(object_template)
+        object_template
       end
 
       action :delete do
-        new_resource.updated_by_last_action(object_template)
+        object_template
       end
 
       protected
