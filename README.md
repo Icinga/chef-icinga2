@@ -2077,6 +2077,8 @@ Above LWRP resource will apply `Dependency` to all `Host` objects for provided `
 
 * `default['icinga2']['apache_modules']` (default: `calculated`): apache modules / apache2 cookbook recipe to enable
 
+* `default['icinga2']['apache_conf_cookbook']` (default: `icinga2`): cookbook for apache templates
+
 
 ## Cookbook Icinga2 Constants Attributes
 

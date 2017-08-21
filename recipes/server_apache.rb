@@ -47,6 +47,7 @@ template ::File.join(node['apache']['dir'], 'conf-available', "#{node['icinga2']
   source "apache.vhost.icinga2_classic_ui.conf.#{apache_conf_file}.erb"
   owner node['apache']['user']
   group node['apache']['group']
+  cookbook node['icinga2']['apache_conf_cookbook']
   notifies platform?('windows') ? :restart : :reload, 'service[apache2]', :delayed
   only_if { node['icinga2']['classic_ui']['enable'] }
 end
@@ -55,6 +56,7 @@ template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-web2.conf
   source 'apache.vhost.icinga2_web2.erb'
   owner node['apache']['user']
   group node['apache']['group']
+  cookbook node['icinga2']['apache_conf_cookbook']
   notifies platform?('windows') ? :restart : :reload, 'service[apache2]', :delayed
   variables(:web_root => node['icinga2']['web2']['web_root'],
             :web_uri => node['icinga2']['web2']['web_uri'],
