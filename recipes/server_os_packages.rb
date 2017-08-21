@@ -47,7 +47,7 @@ when 'debian'
   end
   include_recipe 'apt'
   os_packages.push('git-core') if node['icinga2']['web2']['install_method'] == 'source' && node['icinga2']['web2']['enable'] == true
-when 'rhel'
+when 'rhel', 'amazon'
   os_packages = %w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd
                    gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd
                    php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo

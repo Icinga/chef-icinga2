@@ -3,7 +3,7 @@
 default['icinga2']['build_type'] = 'release' # options: stable, snapshot
 
 case node['platform_family']
-when 'rhel'
+when 'rhel', 'amazon'
   default['icinga2']['yum']['description'] = "ICINGA #{node['icinga2']['build_type'].capitalize} "
   default['icinga2']['yum']['mirrorlist'] = nil
   default['icinga2']['yum']['gpgcheck'] = true

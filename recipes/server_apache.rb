@@ -42,8 +42,9 @@ end
 # keeping it to default for now, need
 # to look into merging into a single
 # vhost config file
+apache_conf_file = node['platform_family'] == 'debian' ? 'debian' : 'rhel'
 template ::File.join(node['apache']['dir'], 'conf-available', "#{node['icinga2']['classic_ui']['apache_conf']}.conf") do
-  source "apache.vhost.icinga2_classic_ui.conf.#{node['platform_family']}.erb"
+  source "apache.vhost.icinga2_classic_ui.conf.#{apache_conf_file}.erb"
   owner node['apache']['user']
   group node['apache']['group']
   notifies platform?('windows') ? :restart : :reload, 'service[apache2]', :delayed

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 icinga2_usergroup 'testgroup' do
   display_name 'Test User Group'
 end
@@ -8,10 +7,10 @@ end
 icinga2_user 'testuser' do
   import 'generic-user'
   enable_notifications true
-  states %w(OK Warning Critical Unknown Up Down)
-  types %w(DowntimeStart DowntimeEnd DowntimeRemoved Custom Acknowledgement Problem Recovery FlappingStart FlappingEnd)
+  states %w[OK Warning Critical Unknown Up Down]
+  types %w[DowntimeStart DowntimeEnd DowntimeRemoved Custom Acknowledgement Problem Recovery FlappingStart FlappingEnd]
   display_name 'Test User'
-  groups %w(testgroup)
+  groups %w[testgroup]
   email 'testuser@localhost.localdomain'
   period '24x7'
 end

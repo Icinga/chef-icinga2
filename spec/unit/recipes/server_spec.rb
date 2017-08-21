@@ -84,7 +84,7 @@ describe 'icinga2::server' do
     end
   end
 
-  context 'rhel' do
+  shared_context 'rhel_family' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
         node.automatic['platform_family'] = 'rhel'
@@ -158,6 +158,26 @@ describe 'icinga2::server' do
         mode: 0o644
       )
     end
+  end
+
+  context 'rhel' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '6.8') do |node|
+        node.automatic['platform_family'] = 'rhel'
+      end.converge(described_recipe)
+    end
+
+    include_context 'rhel_family'
+  end
+
+  context 'amazon' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'amazon', version: '2017.03') do |node|
+        node.automatic['platform_family'] = 'amazon'
+      end.converge(described_recipe)
+    end
+
+    include_context 'rhel_family'
   end
 
   context 'ubuntu' do
