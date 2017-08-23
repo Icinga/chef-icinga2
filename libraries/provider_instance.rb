@@ -28,6 +28,8 @@ class Chef
           case new_resource.resource_name
           when :icinga2_apilistener
             resource.is_a?(Chef::Resource::Icinga2Apilistener)
+          when :icinga2_apiuser
+            resource.is_a?(Chef::Resource::Icinga2Apiuser)
           when :icinga2_applydependency
             resource.is_a?(Chef::Resource::Icinga2Applydependency)
           when :icinga2_applynotification

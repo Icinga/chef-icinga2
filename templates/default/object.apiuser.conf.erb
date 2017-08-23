@@ -1,0 +1,22 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * ApiUser Object.
+*/
+
+<% @objects.sort.map do |object, options|%>
+object ApiUser <%= object.inspect -%> {
+  <% if options['password'] -%>
+  password = "<%= options['password'] %>"
+  <% end -%>
+  <% if options['permissions'] -%>
+  permissions = <%= options['permissions'] %>
+  <% end -%>
+  <% if options['client_cn'] -%>
+  client_cn = "<%= options['client_cn'] %>"
+  <% end -%>
+}
+<% end -%>
