@@ -53,7 +53,7 @@ template ::File.join(node['apache']['dir'], 'conf-available', "#{node['icinga2']
 end
 
 template ::File.join(node['apache']['dir'], 'conf-available', 'icinga2-web2.conf') do
-  source 'apache.vhost.icinga2_web2.erb'
+  source node['icinga2']['apache_web2_template']
   owner node['apache']['user']
   group node['apache']['group']
   cookbook node['icinga2']['apache_conf_cookbook']
