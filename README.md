@@ -503,6 +503,7 @@ Similarly, `ignore where` statements are created using LWRP resource `Array` att
 Currently icinga2 cookbook supports below Objects LWRP Resources:
 
 - icinga2_apilistener
+- icinga2_apiuser
 - icinga2_applynotification
 - icinga2_applyservice
 - icinga2_checkcommand
@@ -1720,6 +1721,30 @@ Above LWRP resource will create an icinga `ApiListener` object.
 - *ticket_salt* (optional, String)	- icinga `ApiListener` attribute `ticket_salt`
 - *accept_config* (optional, TrueClass/FalseClass)	- icinga `ApiListener` attribute `accept_config`
 - *accept_commands* (optional, TrueClass/FalseClass)	- icinga `ApiListener` attribute `accept_commands`
+
+
+## LWRP icinga2_apiuser
+
+LWRP `apiuser` creates an icinga `ApiUser` object.
+
+
+**LWRP ApiUser example**
+
+        icinga2_apiuser 'master' do
+          password 'mysecretapipassword'
+          client_cn 'myname'
+          permissions '["*"]'
+        end
+
+Above LWRP resource will create an icinga `apiuser` object.
+
+
+**LWRP Options**
+
+- *action* (optional, String) - default :enable, options: :enable, :disable
+- *password* (required, String) - icinga `apiuser` attribute `password`
+- *permissions* (required, String) - icinga `apiuser` attribute `permissions`
+- *client_cn* (optional, String) - icinga `apiuser` attribute `client_cn`
 
 
 ## LWRP icinga2_livestatuslistener

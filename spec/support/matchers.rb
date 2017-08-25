@@ -10,6 +10,16 @@ if defined?(ChefSpec)
       .new(:icinga2_apilistener, :delete, name)
   end
 
+  def create_icinga2_apiuser(name)
+    ChefSpec::Matchers::ResourceMatcher
+      .new(:icinga2_apiuser, :create, name)
+  end
+
+  def delete_icinga2_apiuser(name)
+    ChefSpec::Matchers::ResourceMatcher
+      .new(:icinga2_apiuser, :delete, name)
+  end
+
   def create_icinga2_applydependency(name)
     ChefSpec::Matchers::ResourceMatcher
       .new(:icinga2_applydependency, :create, name)
