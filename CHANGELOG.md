@@ -3,6 +3,76 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+3.0.0
+-----
+
+- Bernhard Hackl - Fix NoMethodError in provider_instance
+
+- Peter Phillips - Added resources attribute notification_period
+
+- Bernhard Hackl - Added raspbian support
+
+- Virender Khatri - Documentation clean up for issue #265
+
+- Virender Khatri - Enabled travis kitchen tests with chefdk #281
+
+- David Beck - Updated documentation #285
+
+- Thomas Farvour - Added new attribute enable_role_hostgroup for environment + role hostgroup #286
+
+- Thomas Farvour - Pin chef omnibus version so that Chef 13 doesn't break all the tests
+
+- Thomas Farvour - Fixed hostgroup for roles
+
+- Thomas Farvour - Added attribute enable_env_custom_pki to skip PKI setup
+
+- Techcadia - Added windows support
+
+- Techcadia - Added directory resources for repository.d
+
+- Michael Siebert - Allow "item in host.vars.bar" syntax in icinga2_applyservice #287
+
+- Michael Friedrich - Add GitHub issue template #288
+
+- Techcadia - Updated service object template to use evaluate_quotes
+
+- Techcadia - Updated README for weird syntax and space
+
+- Bernhard Hackl - Fixed run_context null value return issue
+
+- Vil Surkin - Fix Trusty package version
+
+- Vil Surkin - Updated specs
+
+- Vil Surkin - Disabled apt install_recommends, install libapache2-mod-php5 only for ubuntu trusty
+
+- Vil Surkin - Added 'icinga2-test-mysql-instance' and updated kitchen tests
+
+- Vil Surkin - Added specs for icingaweb2
+
+- Vil Surkin - Added specs for classicui
+
+- Vil Surkin - Updated kitchen dokken tests
+
+- Vil Surkin - Switch from rubocop to cookstyle
+
+- Vil Surkin - Fix lint
+
+- Thomas Farvour - Updated icinga2 package version to 2.7.0
+
+- Virender Khatri - Switch to server_api for Chef 13, fix for #284
+
+- Virender Khatri - Fixed Debian9 kitchen test, gnupg dependency
+
+- Virender Khatri - Added Amazon Platform family support
+
+- Virender Khatri - Pin Travis chefdk=2.0.28-1
+
+- Andrei Skopenko - Added LWRP icinga2_apiuser
+
+- Andrei Skopenko - Added cookbook source for apache conf templates
+
+
 2.9.3
 -----
 
