@@ -18,7 +18,7 @@ depends 'yum-epel', '~> 2.1.1'
 depends 'apache2', '~> 3.2.2'
 depends 'ulimit', '~> 0.4.0'
 depends 'pnp4nagios', '~> 0.2.8'
-depends 'chocolatey', '~> 1.0.3'
+depends 'chocolatey', '~> 1.2.1'
 
 %w(redhat centos amazon ubuntu debian windows).each do |os|
   supports os
