@@ -517,6 +517,7 @@ Currently icinga2 cookbook supports below Objects LWRP Resources:
 - icinga2_feature
 - icinga2_gelfwriter
 - icinga2_graphitewriter
+- icinga2_influxdbwriter
 - icinga2_host
 - icinga2_hostgroup
 - icinga2_idomysqlconnection
@@ -1451,6 +1452,46 @@ Above LWRP resource will create an icinga `GraphiteWriter` config object.
 - *port* (optional, Integer)	- icinga `GraphiteWriter` attribute `port`
 - *host_name_template* (optional, String)	- default icinga.$host.name$, icinga `GraphiteWriter` attribute `host_name_template`
 - *service_name_template* (optional, String)	- default icinga.$host.name$.$service.name$, icinga `GraphiteWriter` attribute `service_name_template`
+
+
+## LWRP icinga2_influxdbwriter
+
+LWRP `influxdbwriter` creates an icinga `InfluxdbWriter` object.
+
+
+**LWRP InfluxdbWriter example**
+
+	icinga2_influxdbwriter 'influxdbwriter' do
+	  library 'library'
+	  host 'host address'
+	  port 8087
+	  database 'icinga2'
+	  username 'myuser'
+	  password 'mypassword'
+	end
+
+Above LWRP resource will create an icinga `InfluxdbWriter` config object.
+
+
+**LWRP Options**
+
+- *action* (optional)	- default :enable, options: :enable, :disable
+- *library* (optional, String)	- default 'perfdata', icinga `InfluxdbWriter` attribute `library`
+- *host* (optional, String)	- default 'localhost', icinga `InfluxdbWriter` attribute `host`
+- *port* (optional, Integer)	- default 8087, icinga `InfluxdbWriter` attribute `port`
+- *database* (optional, String)	- default 'icinga2', icinga `InfluxdbWriter` attribute `database`
+- *username* (optional, String)	- icinga `InfluxdbWriter` attribute `username`
+- *password* (optional, String)	- icinga `InfluxdbWriter` attribute `password`
+- *ssl_enable* (optional, String)	- default 'false', icinga `InfluxdbWriter` attribute `ssl_enable`
+- *ssl_ca_cert* (optional, String)	- icinga `InfluxdbWriter` attribute `ssl_ca_cert`
+- *ssl_cert* (optional, String)	- icinga `InfluxdbWriter` attribute `ssl_cert`
+- *ssl_key* (optional, String)	- icinga `InfluxdbWriter` attribute `ssl_key`
+- *host_template* (optional, String)	- icinga `InfluxdbWriter` attribute `host_template`
+- *service_template* (optional, String)	- icinga `InfluxdbWriter` attribute `service_template`
+- *enable_send_thresholds* (optional, String)	- icinga `InfluxdbWriter` attribute `enable_send_thresholds`
+- *enable_send_metadata* (optional, String)	- icinga `InfluxdbWriter` attribute `enable_send_metadata`
+- *flush_intervald* (optional, String)	- icinga `InfluxdbWriter` attribute `flush_intervald`
+- *flush_threshold* (optional, Integer)	- icinga `InfluxdbWriter` attribute `flush_threshold`
 
 
 ## LWRP icinga2_idomysqlconnection
