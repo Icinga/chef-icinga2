@@ -3,6 +3,17 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+3.0.1
+-----
+
+- Andrei Skopenko - FixHost object command_endpoint
+
+- Alex Markessinis - Updated chocolatey dependency
+
+- Andrei Skopenko - Fix icinga2 cache dir
+
+- Andrei Skopenko - Added influxdbwriter object
+
 3.0.0
 -----
 
