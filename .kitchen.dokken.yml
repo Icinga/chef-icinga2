@@ -3,7 +3,7 @@
   http_port = ENV['KITCHEN_ICINGA2_HTTP_PORT'] || 8080
   https_port = ENV['KITCHEN_ICINGA2_HTTPS_PORT'] || 8443
   db_host = ENV['KITCHEN_DB_HOST'] || '127.0.0.1'
-  chef_omnibus_url = ENV['KITCHEN_CHEF_OMNIBUS_URL'] || nil
+  db_port = ENV['KITCHEN_DB_PORT'] || '3306'
 %>
 driver:
   name: dokken
@@ -13,8 +13,7 @@ transport:
   name: dokken
 
 verifier:
-  root_path: '/opt/verifier'
-  sudo: false
+  name: inspec
 
 provisioner:
   name: dokken
@@ -23,11 +22,14 @@ provisioner:
   data_bags_path: test/databags
   nodes_path: test/nodes
   attributes:
+    apt:
+      confd:
+        install_recommends: false
     icinga2:
-      ignore_version: true
-  <% if chef_omnibus_url %>
-  chef_omnibus_url: '<%= chef_omnibus_url %>'
-  <% end %>
+      ignore_version: false
+    icingaweb2:
+      ido:
+        install_mysql_client: true
 
 platforms:
   - name: ubuntu-14
@@ -35,53 +37,39 @@ platforms:
       image: ubuntu:14.04
       pid_one_command: /sbin/init
       intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl
+        - RUN /usr/bin/apt-get update -qq
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
     attributes:
       icinga2-test-mysql-instance:
         service_manager: sysvinit
-      apt:
-        confd:
-          install_recommends: false
 
   - name: ubuntu-16
     driver:
       image: ubuntu:16.04
       pid_one_command: /bin/systemd
       intermediate_instructions:
-        - RUN /usr/bin/apt-get update
-        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl
-    attributes:
-      apt:
-        confd:
-          install_recommends: false
+        - RUN /usr/bin/apt-get update -qq
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
 
   - name: debian-8
     driver:
       image: debian:8.9
       pid_one_command: /sbin/init
       intermediate_instructions:
-        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
-    attributes:
-      apt:
-        confd:
-          install_recommends: false
 
   - name: debian-9
     driver:
-      image: debian:9.1
+      image: dokken/debian-9
+      pid_one_command: /bin/systemd
       intermediate_instructions:
-        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get update -qq
         - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
-    attributes:
-      apt:
-        confd:
-          install_recommends: false
 
   - name: centos-6
     driver:
-      image: centos:6.8
+      image: centos:6.9
       pid_one_command: /sbin/init
       platform: rhel
       intermediate_instructions:
@@ -98,36 +86,97 @@ platforms:
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts systemd-sysv which lsof curl
 
+  - name: fedora-26
+    driver:
+      image: fedora:26
+      pid_one_command: /usr/lib/systemd/systemd
+      platform: rhel
+      intermediate_instructions:
+        - RUN yum install -y net-tools initscripts systemd-sysv which lsof curl
+
   - name: amazon
     driver:
       image: amazonlinux:2017.03
+      pid_one_command: /sbin/init
       platform: amazon
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts which
-      pid_one_command: /sbin/init
 
 suites:
-  - name: default12
+  - name: chef12server
     driver:
-      chef_version: 12.21.3
+      chef_version: 12.21.4
+    verifier:
+      inspec_tests:
+        - test/smoke/server
     run_list:
-      - recipe[icinga2::server]
-      - recipe[icinga2::client]
+      - recipe[icinga2::default]
       - recipe[icinga2-test::default]
     attributes:
       icinga2:
         # temp fix
         disable_conf_d: false
 
-  - name: default13
+  - name: chef13server
     driver:
-      chef_version: 13.2.20
+      chef_version: 13.3.42
+    verifier:
+      inspec_tests:
+        - test/smoke/server
     run_list:
-      - recipe[icinga2::server]
-      - recipe[icinga2::client]
+      - recipe[icinga2::default]
       - recipe[icinga2-test::default]
     attributes:
       icinga2:
         # temp fix
         disable_conf_d: false
 
+  - name: chef12web2
+    driver:
+      chef_version: 12.21.4
+    verifier:
+      inspec_tests:
+        - test/smoke/web2
+    run_list:
+      - recipe[icinga2-test-mysql-instance::default]
+      - recipe[icinga2::default]
+      - recipe[icinga2-test::default]
+      - recipe[icingaweb2::default]
+    attributes:
+      icinga2:
+        # temp fix
+        disable_conf_d: false
+        chef12web2-centos-6: true
+      icingaweb2:
+        install_method: package
+        ido:
+          install_mysql_client: false
+          db_host: <%= db_host %>
+          db_port: <%= db_port %>
+          db_password: X2BM0WKnN
+          load_schema: true
+
+  - name: chef13web2
+    driver:
+      chef_version: 13.3.42
+    verifier:
+      inspec_tests:
+        - test/smoke/web2
+    run_list:
+      - recipe[icinga2-test-mysql-instance::default]
+      - recipe[icinga2::default]
+      - recipe[icinga2-test::default]
+      - recipe[icingaweb2::default]
+    attributes:
+      icinga2:
+        # temp fix
+        disable_conf_d: false
+        chef12web2-centos-6: true
+      icingaweb2:
+        install_method: package
+        ido:
+          install_mysql_client: false
+          db_host: <%= db_host %>
+          db_port: <%= db_port %>
+          db_password: X2BM0WKnN
+          load_schema: true
