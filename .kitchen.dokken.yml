@@ -29,7 +29,7 @@ provisioner:
       ignore_version: false
     icingaweb2:
       ido:
-        install_mysql_client: true
+        install_mysql_client: false
 
 platforms:
   - name: ubuntu-14
@@ -146,11 +146,10 @@ suites:
       icinga2:
         # temp fix
         disable_conf_d: false
-        chef12web2-centos-6: true
+        enable_icingaweb2: true
       icingaweb2:
         install_method: package
         ido:
-          install_mysql_client: false
           db_host: <%= db_host %>
           db_port: <%= db_port %>
           db_password: X2BM0WKnN
@@ -171,11 +170,10 @@ suites:
       icinga2:
         # temp fix
         disable_conf_d: false
-        chef12web2-centos-6: true
+        enable_icingaweb2: true
       icingaweb2:
         install_method: package
         ido:
-          install_mysql_client: false
           db_host: <%= db_host %>
           db_port: <%= db_port %>
           db_password: X2BM0WKnN
