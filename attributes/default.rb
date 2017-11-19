@@ -128,7 +128,7 @@ default['icinga2']['limits']['nproc']      = 'unlimited'
 case node['platform']
 when 'centos', 'redhat', 'fedora', 'amazon'
   default['icinga2']['version_suffix'] = value_for_platform(
-    %w[centos redhat] => { 'default' => ".el#{node['platform_version'].split('.')[0]}.icinga"},
+    %w(centos redhat) => { 'default' => ".el#{node['platform_version'].split('.')[0]}.icinga" },
     'fedora' => { 'default' => ".fc#{node['platform_version']}.icinga" },
     'amazon' => { 'default' => '.el6.icinga' }
   )

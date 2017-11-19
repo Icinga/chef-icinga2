@@ -38,7 +38,7 @@ end
   node['icinga2']['log_dir'],
   node['icinga2']['run_dir'],
   ::File.join(node['icinga2']['log_dir'], 'compat'),
-  ::File.join(node['icinga2']['log_dir'], 'compat', 'archives')
+  ::File.join(node['icinga2']['log_dir'], 'compat', 'archives'),
 ].each do |d|
   directory d do
     owner node['icinga2']['user']
@@ -151,4 +151,3 @@ user_ulimit node['icinga2']['user'] do
   process_limit node['icinga2']['limits']['nproc']
   memory_limit node['icinga2']['limits']['memlock']
 end
-

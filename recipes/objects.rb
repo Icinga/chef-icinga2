@@ -109,4 +109,3 @@ icinga2_timeperiod 'never' do
   display_name 'Icinga 2 never TimePeriod'
   zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
-
