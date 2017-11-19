@@ -16,7 +16,7 @@ icinga2_user 'testuser' do
 end
 
 icinga2_environment 'test' do
-  import node['icinga2']['server']['object']['host']['import']
+  import node['icinga2']['object']['host']['import']
   environment 'test'
   limit_region true
   ignore_resolv_error true

@@ -9,13 +9,13 @@
 # usergroup objects
 icinga2_usergroup 'icingaadmins' do
   display_name 'Icinga 2 Admin Group'
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 # user objects
 icinga2_user 'generic-user' do
   template true
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 icinga2_user 'icingaadmin' do
@@ -26,26 +26,26 @@ icinga2_user 'icingaadmin' do
   display_name 'Icinga 2 Admin'
   groups %w(icingaadmins)
   email 'root@localhost'
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 # host objects
 icinga2_host 'generic-host' do
   template true
-  max_check_attempts node['icinga2']['server']['object']['host']['max_check_attempts']
-  check_interval node['icinga2']['server']['object']['host']['check_interval']
-  retry_interval node['icinga2']['server']['object']['host']['retry_interval']
-  check_command node['icinga2']['server']['object']['host']['check_command']
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  max_check_attempts node['icinga2']['object']['host']['max_check_attempts']
+  check_interval node['icinga2']['object']['host']['check_interval']
+  retry_interval node['icinga2']['object']['host']['retry_interval']
+  check_command node['icinga2']['object']['host']['check_command']
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 # service objects
 icinga2_service 'generic-service' do
   template true
-  max_check_attempts node['icinga2']['server']['object']['host']['max_check_attempts']
-  check_interval node['icinga2']['server']['object']['host']['check_interval']
-  retry_interval node['icinga2']['server']['object']['host']['retry_interval']
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  max_check_attempts node['icinga2']['object']['host']['max_check_attempts']
+  check_interval node['icinga2']['object']['host']['check_interval']
+  retry_interval node['icinga2']['object']['host']['retry_interval']
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 # notificationcommand objects
@@ -63,7 +63,7 @@ icinga2_notificationcommand 'mail-service-notification' do
       'HOSTDISPLAYNAME' => '$host.display_name$',\
       'SERVICEDISPLAYNAME' => '$service.display_name$',\
       'USEREMAIL' => '$user.email$'
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 icinga2_notificationcommand 'mail-host-notification' do
@@ -79,7 +79,7 @@ icinga2_notificationcommand 'mail-host-notification' do
       'USEREMAIL' => '$user.email$',\
       'HOSTSTATE' => '$host.state$',\
       'HOSTOUTPUT' => '$host.output$'
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 # timeperiod objects
@@ -92,7 +92,7 @@ icinga2_timeperiod '24x7' do
          'friday' => '00:00-24:00',
          'saturday' => '00:00-24:00',
          'sunday' => '00:00-24:00'
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 icinga2_timeperiod '9to5' do
@@ -102,11 +102,11 @@ icinga2_timeperiod '9to5' do
          'wednesday' => '09:00-17:00',
          'thursday'  => '09:00-17:00',
          'friday' => '09:00-17:00'
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
 icinga2_timeperiod 'never' do
   display_name 'Icinga 2 never TimePeriod'
-  zone node['icinga2']['server']['object']['global-templates'] ? 'global-templates' : nil
+  zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 

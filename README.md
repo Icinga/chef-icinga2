@@ -103,18 +103,20 @@ use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.
 
 * LWRP `environment` now generates different conf file with zone name if resource attribute `zone` is defined
 
-  **file name:**
+**file name:**
 
-  file name without zone: `host_#{environment}_#{resource_name}.conf`
+```
+file name without zone: `host_#{environment}_#{resource_name}.conf`
 
-  file name with zone: `host_#{environment}_#{zone}_#{resource_name}.conf`
+file name with zone: `host_#{environment}_#{zone}_#{resource_name}.conf`
+```
 
-  >> Note: Cookbook version prior to v0.7.0 users must delete
-    configuration file `host_#{environment}.conf` manually if
-    `zone` attribute is defined.
+>> Note: Cookbook version prior to v0.7.0 users must delete
+  configuration file `host_#{environment}.conf` manually if
+  `zone` attribute is defined.
 
-  >> Note: Cookbook version prior to v2.7.1 users must delete
-    configuration files `host_#{environment}.conf / host_#{environment}_#{zone}.conf` manually.
+>> Note: Cookbook version prior to v2.7.1 users must delete
+  configuration files `host_#{environment}.conf / host_#{environment}_#{zone}.conf` manually.
 
 ## Cookbook Dependencies
 
@@ -229,18 +231,17 @@ To overcome and make it less enforcing, LWRP `environment` has a Hash attribute 
 - roles - Array of roles HostGroups […] **if any**
 
 e.g.
-
-
-	icinga2_environment 'UserDefinedEnvironment' do
-	  import node['icinga2']['server']['object']['host']['import']
-	  environment 'production'
-	  check_interval '1m'
-	  retry_interval '10s'
-	  max_check_attempts 3
-	  action_url '/pnp4nagios/graph?host=$HOSTNAME$&srv=_HOST_'
-	  env_resources :nodes => {:fqdn => {attrs}, :fqdn => {attrs}}
-	end
-
+```ruby
+icinga2_environment 'UserDefinedEnvironment' do
+  import node['icinga2']['object']['host']['import']
+  environment 'production'
+  check_interval '1m'
+  retry_interval '10s'
+  max_check_attempts 3
+  action_url '/pnp4nagios/graph?host=$HOSTNAME$&srv=_HOST_'
+  env_resources :nodes => {:fqdn => {attrs}, :fqdn => {attrs}}
+end
+```
 
 For more details about nodes attributes, check LWRP `environment` object template.
 
@@ -296,8 +297,6 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['disable_conf_d']` (default: `true`): disable icinga2 `conf.d` default configuration directory in `icinga2.conf` and use LWRP to manage icinga2 objects / templates
 
-* `default['icinga2']['build_type']` (default: `release`): icinga2 repository build type, options: release snapshot
-
 * `default['icinga2']['disable_repository_d']` (default: `false`): disable icinga2 `repository.d` directory in `icinga2.conf`
 
 * `default['icinga2']['include_itl']` (default: `itl, plugins`): `icinga2.conf` include `itl` array attribute
@@ -350,9 +349,9 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['zones_dir']` (default: `/etc/icinga2/zones.d`): icinga2 zones.d directory location
 
-* `default['icinga2']['databag']` (default: `'icinga2'): icinga2 databag name, currently not used
+* `default['icinga2']['databag']` (default: `icinga2`): icinga2 databag name, currently not used
 
-* `default['icinga2']['objects_d']` (default: `'objects.d`): cookbook created icinga2 Object/Templates resources directory name
+* `default['icinga2']['objects_d']` (default: `objects.d`): cookbook created icinga2 Object/Templates resources directory name
 
 * `default['icinga2']['objects_dir']` (default: `/etc/icinga2/objects.d`): cookbook created icinga2 Object/Templates resources directory location
 
@@ -372,7 +371,7 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['perfdata_dir']` (default: `/var/spool/icinga2/perfdata`): icinga2 perfdata directory location
 
-* `default['icinga2']['service_name']` (default: `icinga2'`): icinga2 process name
+* `default['icinga2']['service_name']` (default: `icinga2`): icinga2 process name
 
 * `default['icinga2']['service_config_file']` (default: `/etc/default/icinga2`): icinga2 * process configuration file
 
@@ -392,65 +391,57 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['cmdgroup']` (default: `icingacmd`): icinga2 cmd user group
 
-* `default['icinga2']['apache_modules']` (default: `calculated`): apache modules / apache2 cookbook recipe to enable
-
-* `default['icinga2']['apache_conf_cookbook']` (default: `icinga2`): cookbook for apache templates
-
-* `default['icinga2']['apache_classic_ui_template']` (default: `apache.vhost.icinga2_classic_ui.conf.#{node['platform_family']}.erb`): apache template for classic ui
-
-* `default['icinga2']['apache_web2_template']` (default: `apache.vhost.icinga2_web2.erb`): apache template for icingaweb2
-
 
 ## Cookbook Icinga2 Constants Attributes
 
-* `default['icinga2']['server']['constants']['NodeName']` (default: `node['fqdn']`): icinga2 NodeName constant
+* `default['icinga2']['constants']['NodeName']` (default: `node['fqdn']`): icinga2 NodeName constant
 
-* `default['icinga2']['server']['constants']['PluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
+* `default['icinga2']['constants']['PluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
 
-* `default['icinga2']['server']['constants']['ManubulonPluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
+* `default['icinga2']['constants']['ManubulonPluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
 
-* `default['icinga2']['server']['constants']['TicketSalt']` (default: `ed25aed394c4bf7d236b347bb67df466`): icinga2 default TicketSalt key
+* `default['icinga2']['constants']['TicketSalt']` (default: `ed25aed394c4bf7d236b347bb67df466`): icinga2 default TicketSalt key
 
 
 ## Cookbook Icinga2 Host Object default Attributes
 
-* `default['icinga2']['server']['object']['global-templates']` (default: `false`)
+* `default['icinga2']['object']['global-templates']` (default: `false`)
 
-* `default['icinga2']['server']['object']['host']['import']` (default: `'generic-host`)
+* `default['icinga2']['object']['host']['import']` (default: `'generic-host`)
 
-* `default['icinga2']['server']['object']['host']['max_check_attempts']` (default: `3`)
+* `default['icinga2']['object']['host']['max_check_attempts']` (default: `3`)
 
-* `default['icinga2']['server']['object']['host']['check_period']` (default: `nil`)
+* `default['icinga2']['object']['host']['check_period']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['notification_period']` (default: `nil`)
+* `default['icinga2']['object']['host']['notification_period']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['check_interval']` (default: `1800`)
+* `default['icinga2']['object']['host']['check_interval']` (default: `1800`)
 
-* `default['icinga2']['server']['object']['host']['retry_interval']` (default: `60`)
+* `default['icinga2']['object']['host']['retry_interval']` (default: `60`)
 
-* `default['icinga2']['server']['object']['host']['enable_notifications']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_notifications']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['enable_active_checks']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_active_checks']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['enable_passive_checks']` (default: `false`)
+* `default['icinga2']['object']['host']['enable_passive_checks']` (default: `false`)
 
-* `default['icinga2']['server']['object']['host']['enable_event_handler']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_event_handler']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['enable_flapping']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_flapping']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['enable_perfdata']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_perfdata']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['event_command']` (default: `nil`)
+* `default['icinga2']['object']['host']['event_command']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['flapping_threshold']` (default: `nil`)
+* `default['icinga2']['object']['host']['flapping_threshold']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['volatile']` (default: `nil`)
+* `default['icinga2']['object']['host']['volatile']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['check_command']` (default: `hostalive`)
+* `default['icinga2']['object']['host']['check_command']` (default: `hostalive`)
 
-* `default['icinga2']['server']['object']['host']['zone']` (default: `nil`)
+* `default['icinga2']['object']['host']['zone']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['command_endpoint']` (default: `nil`)
+* `default['icinga2']['object']['host']['command_endpoint']` (default: `nil`)
 
 
 ## Cookbook Ulimit Attributes
