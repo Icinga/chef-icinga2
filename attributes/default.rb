@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/getting-started#getting-started
 
-default['icinga2']['enable_icingaweb2'] = false
 default['icinga2']['version'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => '2.8.0-1' },
   %w(debian ubuntu raspbian) => { 'default' => '2.8.0-1' },
   %w(windows) => { 'default' => '2.8.0' }
 )
+default['icinga2']['ignore_version'] = false
+default['icinga2']['enable_icingaweb2'] = false
 
 default['icinga2']['enable_env_pki'] = false
 default['icinga2']['enable_env_custom_pki'] = false
-default['icinga2']['ignore_version'] = false
 default['icinga2']['cookbook'] = 'icinga2'
 
 default['icinga2']['conf_dir'] = if node['platform'] == 'windows'
@@ -82,7 +82,6 @@ default['icinga2']['spool_dir'] = ::File.join(node['icinga2']['var_dir'], 'spool
 default['icinga2']['perfdata_dir'] = ::File.join(node['icinga2']['var_dir'], 'spool/icinga2/perfdata')
 default['icinga2']['lib_dir'] = ::File.join(node['icinga2']['var_dir'], 'lib/icinga2')
 default['icinga2']['log_dir'] = ::File.join(node['icinga2']['var_dir'], 'log/icinga2')
-default['icinga2']['cache_dir'] = ::File.join(node['icinga2']['var_dir'], 'cache/icinga2')
 default['icinga2']['service_name'] = 'icinga2'
 
 case node['platform_family']

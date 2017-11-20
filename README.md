@@ -295,6 +295,8 @@ Check out LWRP.md for icinga2 resources.
 
 ## Cookbook Advanced Attributes
 
+* `default['icinga2']['ignore_version']` (default: `false`): ignore icinga2 package version
+
 * `default['icinga2']['disable_conf_d']` (default: `true`): disable icinga2 `conf.d` default configuration directory in `icinga2.conf` and use LWRP to manage icinga2 objects / templates
 
 * `default['icinga2']['disable_repository_d']` (default: `false`): disable icinga2 `repository.d` directory in `icinga2.conf`
@@ -333,11 +335,17 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['enable_env_pki']` (default: `false`): whether to create env endpoints, zones and pki_tickets
 
+* `default['icinga2']['enable_env_custom_pki']` (default: `false`): LWRP Paramter, should not be a node attribute
+
 
 
 ## Cookbook Core Attributes
 
-* `default['icinga2']['version']` (default: `2.8.0-X, calculated`): icinga2 version
+* `default['icinga2']['version']` (default: `2.8.0-X, calculated`): icinga2 package version
+
+* `default['icinga2']['setup_epel']` (default: `true`): if set includes cookbook recipe `yum-epel::default` for rhel and fedora platform_family
+
+* `default['icinga2']['cookbook']` (default: `icinga2`): icinga2 resources cookbook name
 
 * `default['icinga2']['conf_dir']` (default: `/etc/icinga2`): icinga2 configuration location
 
@@ -354,6 +362,8 @@ Check out LWRP.md for icinga2 resources.
 * `default['icinga2']['objects_d']` (default: `objects.d`): cookbook created icinga2 Object/Templates resources directory name
 
 * `default['icinga2']['objects_dir']` (default: `/etc/icinga2/objects.d`): cookbook created icinga2 Object/Templates resources directory location
+
+* `default['icinga2client']['var_dir']` (default: `calculated`): icinga2 run directory
 
 * `default['icinga2']['run_dir']` (default: `/var/run/icinga2`): icinga2 run directory
 
@@ -389,7 +399,10 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['user_defined_objects_dir']` (default: `['user_defined_objects']`): user defined configuration directories, each directory is included in `icinga2.conf` file.
 
-* `default['icinga2']['cmdgroup']` (default: `icingacmd`): icinga2 cmd user group
+* `default['icinga2']['endpoint_port']` (default: `5665`): icinga2 endpoint port
+
+* `default['icinga2']['version_suffix']` (default: `calculated`): icinga2 package suffix
+
 
 
 ## Cookbook Icinga2 Constants Attributes
