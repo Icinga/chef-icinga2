@@ -1,19 +1,22 @@
 ---
-<%
-  http_port = ENV['KITCHEN_ICINGA2_HTTP_PORT'] || 8080
-  https_port = ENV['KITCHEN_ICINGA2_HTTPS_PORT'] || 8443
-  db_host = ENV['KITCHEN_DB_HOST'] || '127.0.0.1'
-  chef_omnibus_url = ENV['KITCHEN_CHEF_OMNIBUS_URL'] || nil
-%>
 driver:
   name: vagrant
 
+verifier:
+  name: inspec
+
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 12.19.36
-  <% if chef_omnibus_url %>
-  chef_omnibus_url: '<%= chef_omnibus_url %>'
-  <% end %>
+  # require_chef_omnibus: 12.21.4
+  attributes:
+    icinga2:
+      ignore_version: true
+    apt:
+      compile_time_update: true
+      # temp fix
+      disable_conf_d: false
+      confd:
+        install_recommends: false
 
 platforms:
   - name: centos-6.8
@@ -21,87 +24,29 @@ platforms:
   - name: ubuntu-14.04
     run_list:
       - recipe[apt::default]
-    attributes:
-      apt:
-        compile_time_update: true
-        confd:
-          install_recommends: false
   - name: ubuntu-16.04
     run_list:
       - recipe[apt::default]
-    attributes:
-      apt:
-        compile_time_update: true
-        confd:
-          install_recommends: false
   - name: debian-8.5
     run_list:
       - recipe[apt::default]
-    attributes:
-      apt:
-        compile_time_update: true
-        confd:
-          install_recommends: false
 
 suites:
-  - name: server
-    run_list:
-      - recipe[icinga2::server]
-      - recipe[icinga2-test::default]
-
-  - name: client
-    run_list:
-      - recipe[icinga2::client]
-
-  - name: web2-package
+  - name: chef12server
     driver:
-      network:
-        - ["forwarded_port", {guest: 80, host: <%= http_port %>, auto_correct: true}]
-        - ["forwarded_port", {guest: 443, host: <%= https_port %>, auto_correct: true}]
+      require_chef_omnibus: 12.21.4
+    verifier:
+      inspec_tests:
+        - test/smoke/server
     run_list:
-      - recipe[icinga2-test-mysql-instance::default]
-      - recipe[icinga2::server]
+      - recipe[icinga2::default]
       - recipe[icinga2-test::default]
-    attributes:
-      icinga2:
-        web2:
-          enable: true
-          install_method: package
-        ido:
-          install_mysql_client: true
-          db_host: <%= db_host %>
-          db_password: X2BM0WKnN
-          load_schema: true
-
-  - name: web2-source
+  - name: chef13server
     driver:
-      network:
-        - ["forwarded_port", {guest: 80, host: <%= http_port %>, auto_correct: true}]
-        - ["forwarded_port", {guest: 443, host: <%= https_port %>, auto_correct: true}]
+      require_chef_omnibus: 13.3.42
+    verifier:
+      inspec_tests:
+        - test/smoke/server
     run_list:
-      - recipe[icinga2-test-mysql-instance::default]
-      - recipe[icinga2::server]
+      - recipe[icinga2::default]
       - recipe[icinga2-test::default]
-    attributes:
-      icinga2:
-        web2:
-          enable: true
-          install_method: source
-        ido:
-          install_mysql_client: true
-          db_host: <%= db_host %>
-          db_password: X2BM0WKnN
-          load_schema: true
-
-  - name: classicui
-    driver:
-      network:
-        - ["forwarded_port", {guest: 80, host: <%= http_port %>, auto_correct: true}]
-        - ["forwarded_port", {guest: 443, host: <%= https_port %>, auto_correct: true}]
-    run_list:
-      - recipe[icinga2::server]
-      - recipe[icinga2-test::default]
-    attributes:
-      icinga2:
-        classic_ui:
-          enable: true
