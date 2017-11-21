@@ -8,10 +8,6 @@ icinga2 Cookbook
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
 
-More features and attributes will be added over time, **feel free to contribute**
-what you find missing!
-
-
 >> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/icinga2).
 
 
@@ -41,8 +37,8 @@ For issue reporting or any discussion regarding this cookbook, open an issue.
 
 ## Chef Version
 
-- 12.x
-- 13.x
+- 12
+- 13
 
 
 ## Contributing
@@ -50,6 +46,19 @@ See CONTRIBUTING.md
 
 
 ## Major Changes
+
+###v4.0.0
+
+* Split icinga2 cookbook into differnt cookbooks
+  - created cookbook `icinga2repo` for icinga2 yum/apt repository setup
+  - created cookobook `icnigaweb2` for icingaweb2 setup
+  - created cookbook `icinga2client` for icinga2 client setup
+* `icinga2` cookbook now only manage `Icinga2` Server and other components like client, classicui, and icingaweb2 has been removed
+* `Icinga2 Classic UI` resources has been removed as it is no longer under development (since Icinga2 v2.8.0)
+* `Icinga Web2` resources has been removed from `icinga2` cookbook. Refer cookbook [icingaweb2] for `Icinga Web2` setup.
+* `Icinga2 Client` resources has been removed from `icinga2` cookbook. Refer cookbook [icinga2client] for `Icinga2 Client` setup.
+* `Icinga2 Repository` resources has been removed from `icinga2` cookbook. Refer cookbook [icinga2repo] for `Icinga2 Client` setup. All icinga cookbooks now uses `icinga2repo` for repository management.
+* Created LWRP.md to simplify README.md
 
 ###v2.9.1
 
@@ -124,7 +133,6 @@ file name with zone: `host_#{environment}_#{zone}_#{resource_name}.conf`
 - yum-epel
 - chocolatey
 - icinga2repo
-- icingaweb2
 
 
 ## Recipes
@@ -140,9 +148,7 @@ file name with zone: `host_#{environment}_#{zone}_#{resource_name}.conf`
 - `icinga2::service`     	- configure icinga2 service
 
 
-## Icinga2 Cookbooks and Recipes
-
-### Disable Default Configuration Directory
+## Icinga2 Default Configuration Directory
 
 If you are using this cookbook to manage `icinga2` configuration, set `default['icinga2']['disable_conf_d']` to `true`.
 
@@ -151,20 +157,29 @@ Cookbook generated configuration files using LWRP are created under directory `d
 >> `default['icinga2']['disable_conf_d']` default value is set to `true`.
 
 
+## Icinga2 Cookbooks and Recipes
+
 ### How to Install and Configure Icinga2 Server?
 
 Add recipe `icinga2::default` to run_list.
 
 
+### How to Setup Icinga2 YUM/APT Repository?
+
+Cookbook `icinga2repo::default` is used to setup icinga2 yum/apt repository.
+For more information, check out cookbook [icinga2repo].
+
+
+### How to Install and Configure Icinga2 Client?
+
+Add recipe `icinga2client::default` to run_list.
+For more information, check out cookbook [icinga2client].
+
+
 ### How to Install and Configure Icingaweb2?
 
-Set `node['icinga2']['enable_icingaweb2'] = true` to enable Icingaweb2.
-Check out cookbook [icingaweb2] for more information.
-
-
-## How to Install and Configure Icinga2 Client?
-
-Check out cookbook [icinga2client] for Icinga2 client setup.
+Add recipe `icingaweb2::default` to run_list.
+For more information, check out cookbook [icingaweb2].
 
 
 ## Icinga2 Cluster Deployment
@@ -485,8 +500,8 @@ limitations under the License.
 </pre>
 
 
-[Icinga2]: https://www.icinga.org/
+[Icinga2]: https://www.icinga.com/
 [Chef]: https://www.chef.io/
-[Install]: https://github.com/icinga/icinga2/
-[Dev Icinga]: https://dev.icinga.org/projects/chef-icinga2
-[Register]: https://www.icinga.org/register/
+[icinga2repp]: https://github.com/icinga/chef-icinga2repo/
+[icinga2client]: https://github.com/icinga/chef-icinga2client/
+[icingaweb2]: https://github.com/icinga/chef-icingaweb2/

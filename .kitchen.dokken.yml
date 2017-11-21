@@ -2,8 +2,6 @@
 <%
   http_port = ENV['KITCHEN_ICINGA2_HTTP_PORT'] || 8080
   https_port = ENV['KITCHEN_ICINGA2_HTTPS_PORT'] || 8443
-  db_host = ENV['KITCHEN_DB_HOST'] || '127.0.0.1'
-  db_port = ENV['KITCHEN_DB_PORT'] || '3306'
 %>
 driver:
   name: dokken
@@ -27,9 +25,6 @@ provisioner:
         install_recommends: false
     icinga2:
       ignore_version: false
-    icingaweb2:
-      ido:
-        install_mysql_client: false
 
 platforms:
   - name: ubuntu-14
@@ -130,51 +125,3 @@ suites:
       icinga2:
         # temp fix
         disable_conf_d: false
-
-  - name: chef12web2
-    driver:
-      chef_version: 12.21.4
-    verifier:
-      inspec_tests:
-        - test/smoke/web2
-    run_list:
-      - recipe[icinga2-test-mysql-instance::default]
-      - recipe[icinga2::default]
-      - recipe[icinga2-test::default]
-      - recipe[icingaweb2::default]
-    attributes:
-      icinga2:
-        # temp fix
-        disable_conf_d: false
-        enable_icingaweb2: true
-      icingaweb2:
-        install_method: package
-        ido:
-          db_host: <%= db_host %>
-          db_port: <%= db_port %>
-          db_password: X2BM0WKnN
-          load_schema: true
-
-  - name: chef13web2
-    driver:
-      chef_version: 13.3.42
-    verifier:
-      inspec_tests:
-        - test/smoke/web2
-    run_list:
-      - recipe[icinga2-test-mysql-instance::default]
-      - recipe[icinga2::default]
-      - recipe[icinga2-test::default]
-      - recipe[icingaweb2::default]
-    attributes:
-      icinga2:
-        # temp fix
-        disable_conf_d: false
-        enable_icingaweb2: true
-      icingaweb2:
-        install_method: package
-        ido:
-          db_host: <%= db_host %>
-          db_port: <%= db_port %>
-          db_password: X2BM0WKnN
-          load_schema: true

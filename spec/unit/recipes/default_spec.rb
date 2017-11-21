@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-describe 'icinga2::server' do
+describe 'icinga2::default' do
   before do
     stub_command('/usr/sbin/httpd -t').and_return(true)
     stub_command('/usr/sbin/apache2 -t').and_return(true)
@@ -10,7 +10,7 @@ describe 'icinga2::server' do
 
   shared_examples_for 'icinga' do
     context 'all_platforms' do
-      %w(attributes server_os_packages core_install core_config server_config service).each do |r|
+      %w(install config objects service).each do |r|
         it "include recipe icinga2::#{r}" do
           expect(chef_run).to include_recipe("icinga2::#{r}")
         end
@@ -93,7 +93,14 @@ describe 'icinga2::server' do
 
     include_examples 'icinga'
 
-    %w(/var/log/icinga2 /var/run/icinga2 /var/cache/icinga2 /var/log/icinga2/compat /var/log/icinga2/compat/archives).each do |d|
+    it 'creates directory /var/cache/icinga2' do
+      expect(chef_run).to create_directory('/var/cache/icinga2').with(
+        owner: 'icinga',
+        group: 'icinga'
+      )
+    end
+
+    %w(/var/log/icinga2 /var/run/icinga2 /var/log/icinga2/compat /var/log/icinga2/compat/archives).each do |d|
       it "creates directory #{d}" do
         expect(chef_run).to create_directory(d).with(
           owner: 'icinga',
@@ -111,12 +118,18 @@ describe 'icinga2::server' do
       end
     end
 
-    it 'adds icinga2 repository' do
-      expect(chef_run).to create_yum_repository('icinga2')
+    it 'adds icinga2-release repository' do
+      expect(chef_run).to create_yum_repository('icinga2-release')
     end
 
-    it 'install packages' do
-      expect(chef_run).to install_package(%w(gcc gcc-c++ glibc glibc-common mailx php php-devel gd gd-devel libjpeg libjpeg-devel libpng libpng-devel php-gd php-fpm php-cli php-pear php-xmlrpc php-xsl php-pdo php-soap php-ldap php-mysql php-pgsql php-intl php-pecl-imagick))
+    it 'adds icinga2-snapshot repository' do
+      expect(chef_run).to create_yum_repository('icinga2-snapshot')
+    end
+
+    %w(gcc gcc-c++ glibc glibc-common mailx).each do |p|
+      it 'install packages' do
+        expect(chef_run).to install_package(p)
+      end
     end
 
     it 'configure /etc/icinga2/icinga2.conf' do
@@ -124,7 +137,7 @@ describe 'icinga2::server' do
         source: 'icinga2.conf.erb',
         owner: 'icinga',
         group: 'icinga',
-        mode: 0o644
+        mode: 0o640
       )
     end
 
@@ -134,7 +147,7 @@ describe 'icinga2::server' do
           source: "icinga2.#{c}.erb",
           owner: 'icinga',
           group: 'icinga',
-          mode: 0o644
+          mode: 0o640
         )
       end
     end
@@ -155,7 +168,7 @@ describe 'icinga2::server' do
         source: 'icinga2.service.config.erb',
         owner: 'root',
         group: 'root',
-        mode: 0o644
+        mode: 0o640
       )
     end
   end
@@ -199,12 +212,18 @@ describe 'icinga2::server' do
       end
     end
 
-    it 'adds icinga2 apt repository' do
-      expect(chef_run).to add_apt_repository('icinga2')
+    it 'adds icinga2-release apt repository' do
+      expect(chef_run).to add_apt_repository('icinga2-release')
     end
 
-    it 'install packages' do
-      expect(chef_run).to install_package(%w(g++ mailutils php5 php5-cli php5-fpm build-essential libgd2-xpm-dev libjpeg62 libpng12-0 libpng12-dev imagemagick php5-imagick php-pear php5-xmlrpc php5-xsl php5-mysql php-soap php5-gd php5-ldap php5-pgsql php5-intl))
+    it 'remove icinga2-snapshot apt repository' do
+      expect(chef_run).to remove_apt_repository('icinga2-snapshot')
+    end
+
+    %w(g++ mailutils build-essential).each do |p|
+      it 'install packages' do
+        expect(chef_run).to install_package(p)
+      end
     end
 
     it 'configure /etc/icinga2/icinga2.conf' do
@@ -212,7 +231,7 @@ describe 'icinga2::server' do
         source: 'icinga2.conf.erb',
         owner: 'nagios',
         group: 'nagios',
-        mode: 0o644
+        mode: 0o640
       )
     end
 
@@ -233,7 +252,7 @@ describe 'icinga2::server' do
           source: "icinga2.#{c}.erb",
           owner: 'nagios',
           group: 'nagios',
-          mode: 0o644
+          mode: 0o640
         )
       end
     end
@@ -243,7 +262,7 @@ describe 'icinga2::server' do
         source: 'icinga2.service.config.erb',
         owner: 'root',
         group: 'root',
-        mode: 0o644
+        mode: 0o640
       )
     end
   end

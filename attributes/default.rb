@@ -7,7 +7,6 @@ default['icinga2']['version'] = value_for_platform(
   %w(windows) => { 'default' => '2.8.0' }
 )
 default['icinga2']['ignore_version'] = false
-default['icinga2']['enable_icingaweb2'] = false
 
 default['icinga2']['enable_env_pki'] = false
 default['icinga2']['enable_env_custom_pki'] = false
