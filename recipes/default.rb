@@ -9,5 +9,4 @@
 include_recipe 'icinga2::install'
 include_recipe 'icinga2::config'
 include_recipe 'icinga2::objects' if node['icinga2']['disable_conf_d']
-include_recipe 'icingaweb2::default' if node['icinga2']['enable_icingaweb2']
 include_recipe 'icinga2::service'

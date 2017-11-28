@@ -6,7 +6,7 @@ addons:
     sources:
       - chef-stable-trusty
     packages:
-      - chefdk=2.0.28-1
+      - chefdk
 
 # Don't run bundle install
 install: echo "skip bundle install"
@@ -39,6 +39,7 @@ env:
     - INSTANCE=chef13server-centos-7
     - INSTANCE=chef13server-fedora-26
     - INSTANCE=chef13server-amazon
+
 script:
   - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
   - cat .kitchen/logs/kitchen.log

@@ -8,10 +8,6 @@ icinga2 Cookbook
 This is a [Chef] cookbook to manage [Icinga2] using Chef LWRP.
 
 
-More features and attributes will be added over time, **feel free to contribute**
-what you find missing!
-
-
 >> For Production environment, always prefer the [most recent release](https://supermarket.chef.io/cookbooks/icinga2).
 
 
@@ -41,8 +37,8 @@ For issue reporting or any discussion regarding this cookbook, open an issue.
 
 ## Chef Version
 
-- 12.x
-- 13.x
+- 12
+- 13
 
 
 ## Contributing
@@ -50,6 +46,19 @@ See CONTRIBUTING.md
 
 
 ## Major Changes
+
+###v4.0.0
+
+* Split icinga2 cookbook into differnt cookbooks
+  - created cookbook `icinga2repo` for icinga2 yum/apt repository setup
+  - created cookobook `icnigaweb2` for icingaweb2 setup
+  - created cookbook `icinga2client` for icinga2 client setup
+* `icinga2` cookbook now only manage `Icinga2` Server and other components like client, classicui, and icingaweb2 has been removed
+* `Icinga2 Classic UI` resources has been removed as it is no longer under development (since Icinga2 v2.8.0)
+* `Icinga Web2` resources has been removed from `icinga2` cookbook. Refer cookbook [icingaweb2] for `Icinga Web2` setup.
+* `Icinga2 Client` resources has been removed from `icinga2` cookbook. Refer cookbook [icinga2client] for `Icinga2 Client` setup.
+* `Icinga2 Repository` resources has been removed from `icinga2` cookbook. Refer cookbook [icinga2repo] for `Icinga2 Client` setup. All icinga cookbooks now uses `icinga2repo` for repository management.
+* Created LWRP.md to simplify README.md
 
 ###v2.9.1
 
@@ -103,18 +112,20 @@ use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.
 
 * LWRP `environment` now generates different conf file with zone name if resource attribute `zone` is defined
 
-  **file name:**
+**file name:**
 
-  file name without zone: `host_#{environment}_#{resource_name}.conf`
+```
+file name without zone: `host_#{environment}_#{resource_name}.conf`
 
-  file name with zone: `host_#{environment}_#{zone}_#{resource_name}.conf`
+file name with zone: `host_#{environment}_#{zone}_#{resource_name}.conf`
+```
 
-  >> Note: Cookbook version prior to v0.7.0 users must delete
-    configuration file `host_#{environment}.conf` manually if
-    `zone` attribute is defined.
+>> Note: Cookbook version prior to v0.7.0 users must delete
+  configuration file `host_#{environment}.conf` manually if
+  `zone` attribute is defined.
 
-  >> Note: Cookbook version prior to v2.7.1 users must delete
-    configuration files `host_#{environment}.conf / host_#{environment}_#{zone}.conf` manually.
+>> Note: Cookbook version prior to v2.7.1 users must delete
+  configuration files `host_#{environment}.conf / host_#{environment}_#{zone}.conf` manually.
 
 ## Cookbook Dependencies
 
@@ -122,7 +133,6 @@ use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.
 - yum-epel
 - chocolatey
 - icinga2repo
-- icingaweb2
 
 
 ## Recipes
@@ -138,9 +148,7 @@ use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.
 - `icinga2::service`     	- configure icinga2 service
 
 
-## Icinga2 Cookbooks and Recipes
-
-### Disable Default Configuration Directory
+## Icinga2 Default Configuration Directory
 
 If you are using this cookbook to manage `icinga2` configuration, set `default['icinga2']['disable_conf_d']` to `true`.
 
@@ -149,20 +157,29 @@ Cookbook generated configuration files using LWRP are created under directory `d
 >> `default['icinga2']['disable_conf_d']` default value is set to `true`.
 
 
+## Icinga2 Cookbooks and Recipes
+
 ### How to Install and Configure Icinga2 Server?
 
 Add recipe `icinga2::default` to run_list.
 
 
+### How to Setup Icinga2 YUM/APT Repository?
+
+Cookbook `icinga2repo::default` is used to setup icinga2 yum/apt repository.
+For more information, check out cookbook [icinga2repo].
+
+
+### How to Install and Configure Icinga2 Client?
+
+Add recipe `icinga2client::default` to run_list.
+For more information, check out cookbook [icinga2client].
+
+
 ### How to Install and Configure Icingaweb2?
 
-Set `node['icinga2']['enable_icingaweb2'] = true` to enable Icingaweb2.
-Check out cookbook [icingaweb2] for more information.
-
-
-## How to Install and Configure Icinga2 Client?
-
-Check out cookbook [icinga2client] for Icinga2 client setup.
+Add recipe `icingaweb2::default` to run_list.
+For more information, check out cookbook [icingaweb2].
 
 
 ## Icinga2 Cluster Deployment
@@ -229,18 +246,17 @@ To overcome and make it less enforcing, LWRP `environment` has a Hash attribute 
 - roles - Array of roles HostGroups […] **if any**
 
 e.g.
-
-
-	icinga2_environment 'UserDefinedEnvironment' do
-	  import node['icinga2']['server']['object']['host']['import']
-	  environment 'production'
-	  check_interval '1m'
-	  retry_interval '10s'
-	  max_check_attempts 3
-	  action_url '/pnp4nagios/graph?host=$HOSTNAME$&srv=_HOST_'
-	  env_resources :nodes => {:fqdn => {attrs}, :fqdn => {attrs}}
-	end
-
+```ruby
+icinga2_environment 'UserDefinedEnvironment' do
+  import node['icinga2']['object']['host']['import']
+  environment 'production'
+  check_interval '1m'
+  retry_interval '10s'
+  max_check_attempts 3
+  action_url '/pnp4nagios/graph?host=$HOSTNAME$&srv=_HOST_'
+  env_resources :nodes => {:fqdn => {attrs}, :fqdn => {attrs}}
+end
+```
 
 For more details about nodes attributes, check LWRP `environment` object template.
 
@@ -294,9 +310,9 @@ Check out LWRP.md for icinga2 resources.
 
 ## Cookbook Advanced Attributes
 
-* `default['icinga2']['disable_conf_d']` (default: `true`): disable icinga2 `conf.d` default configuration directory in `icinga2.conf` and use LWRP to manage icinga2 objects / templates
+* `default['icinga2']['ignore_version']` (default: `false`): ignore icinga2 package version
 
-* `default['icinga2']['build_type']` (default: `release`): icinga2 repository build type, options: release snapshot
+* `default['icinga2']['disable_conf_d']` (default: `true`): disable icinga2 `conf.d` default configuration directory in `icinga2.conf` and use LWRP to manage icinga2 objects / templates
 
 * `default['icinga2']['disable_repository_d']` (default: `false`): disable icinga2 `repository.d` directory in `icinga2.conf`
 
@@ -334,11 +350,17 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['enable_env_pki']` (default: `false`): whether to create env endpoints, zones and pki_tickets
 
+* `default['icinga2']['enable_env_custom_pki']` (default: `false`): LWRP Paramter, should not be a node attribute
+
 
 
 ## Cookbook Core Attributes
 
-* `default['icinga2']['version']` (default: `2.8.0-X, calculated`): icinga2 version
+* `default['icinga2']['version']` (default: `2.8.0-X, calculated`): icinga2 package version
+
+* `default['icinga2']['setup_epel']` (default: `true`): if set includes cookbook recipe `yum-epel::default` for rhel and fedora platform_family
+
+* `default['icinga2']['cookbook']` (default: `icinga2`): icinga2 resources cookbook name
 
 * `default['icinga2']['conf_dir']` (default: `/etc/icinga2`): icinga2 configuration location
 
@@ -350,11 +372,13 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['zones_dir']` (default: `/etc/icinga2/zones.d`): icinga2 zones.d directory location
 
-* `default['icinga2']['databag']` (default: `'icinga2'): icinga2 databag name, currently not used
+* `default['icinga2']['databag']` (default: `icinga2`): icinga2 databag name, currently not used
 
-* `default['icinga2']['objects_d']` (default: `'objects.d`): cookbook created icinga2 Object/Templates resources directory name
+* `default['icinga2']['objects_d']` (default: `objects.d`): cookbook created icinga2 Object/Templates resources directory name
 
 * `default['icinga2']['objects_dir']` (default: `/etc/icinga2/objects.d`): cookbook created icinga2 Object/Templates resources directory location
+
+* `default['icinga2client']['var_dir']` (default: `calculated`): icinga2 run directory
 
 * `default['icinga2']['run_dir']` (default: `/var/run/icinga2`): icinga2 run directory
 
@@ -372,7 +396,7 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['perfdata_dir']` (default: `/var/spool/icinga2/perfdata`): icinga2 perfdata directory location
 
-* `default['icinga2']['service_name']` (default: `icinga2'`): icinga2 process name
+* `default['icinga2']['service_name']` (default: `icinga2`): icinga2 process name
 
 * `default['icinga2']['service_config_file']` (default: `/etc/default/icinga2`): icinga2 * process configuration file
 
@@ -390,67 +414,62 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['user_defined_objects_dir']` (default: `['user_defined_objects']`): user defined configuration directories, each directory is included in `icinga2.conf` file.
 
-* `default['icinga2']['cmdgroup']` (default: `icingacmd`): icinga2 cmd user group
+* `default['icinga2']['endpoint_port']` (default: `5665`): icinga2 endpoint port
 
-* `default['icinga2']['apache_modules']` (default: `calculated`): apache modules / apache2 cookbook recipe to enable
+* `default['icinga2']['version_suffix']` (default: `calculated`): icinga2 package suffix
 
-* `default['icinga2']['apache_conf_cookbook']` (default: `icinga2`): cookbook for apache templates
-
-* `default['icinga2']['apache_classic_ui_template']` (default: `apache.vhost.icinga2_classic_ui.conf.#{node['platform_family']}.erb`): apache template for classic ui
-
-* `default['icinga2']['apache_web2_template']` (default: `apache.vhost.icinga2_web2.erb`): apache template for icingaweb2
 
 
 ## Cookbook Icinga2 Constants Attributes
 
-* `default['icinga2']['server']['constants']['NodeName']` (default: `node['fqdn']`): icinga2 NodeName constant
+* `default['icinga2']['constants']['NodeName']` (default: `node['fqdn']`): icinga2 NodeName constant
 
-* `default['icinga2']['server']['constants']['PluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
+* `default['icinga2']['constants']['PluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
 
-* `default['icinga2']['server']['constants']['ManubulonPluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
+* `default['icinga2']['constants']['ManubulonPluginDir']` (default: `node['icinga2']['plugins_dir']`): icinga2 plugins directory location
 
-* `default['icinga2']['server']['constants']['TicketSalt']` (default: `ed25aed394c4bf7d236b347bb67df466`): icinga2 default TicketSalt key
+* `default['icinga2']['constants']['TicketSalt']` (default: `ed25aed394c4bf7d236b347bb67df466`): icinga2 default TicketSalt key
 
 
 ## Cookbook Icinga2 Host Object default Attributes
 
-* `default['icinga2']['server']['object']['global-templates']` (default: `false`)
+* `default['icinga2']['object']['global-templates']` (default: `false`)
 
-* `default['icinga2']['server']['object']['host']['import']` (default: `'generic-host`)
+* `default['icinga2']['object']['host']['import']` (default: `'generic-host`)
 
-* `default['icinga2']['server']['object']['host']['max_check_attempts']` (default: `3`)
+* `default['icinga2']['object']['host']['max_check_attempts']` (default: `3`)
 
-* `default['icinga2']['server']['object']['host']['check_period']` (default: `nil`)
+* `default['icinga2']['object']['host']['check_period']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['notification_period']` (default: `nil`)
+* `default['icinga2']['object']['host']['notification_period']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['check_interval']` (default: `1800`)
+* `default['icinga2']['object']['host']['check_interval']` (default: `1800`)
 
-* `default['icinga2']['server']['object']['host']['retry_interval']` (default: `60`)
+* `default['icinga2']['object']['host']['retry_interval']` (default: `60`)
 
-* `default['icinga2']['server']['object']['host']['enable_notifications']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_notifications']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['enable_active_checks']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_active_checks']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['enable_passive_checks']` (default: `false`)
+* `default['icinga2']['object']['host']['enable_passive_checks']` (default: `false`)
 
-* `default['icinga2']['server']['object']['host']['enable_event_handler']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_event_handler']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['enable_flapping']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_flapping']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['enable_perfdata']` (default: `true`)
+* `default['icinga2']['object']['host']['enable_perfdata']` (default: `true`)
 
-* `default['icinga2']['server']['object']['host']['event_command']` (default: `nil`)
+* `default['icinga2']['object']['host']['event_command']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['flapping_threshold']` (default: `nil`)
+* `default['icinga2']['object']['host']['flapping_threshold']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['volatile']` (default: `nil`)
+* `default['icinga2']['object']['host']['volatile']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['check_command']` (default: `hostalive`)
+* `default['icinga2']['object']['host']['check_command']` (default: `hostalive`)
 
-* `default['icinga2']['server']['object']['host']['zone']` (default: `nil`)
+* `default['icinga2']['object']['host']['zone']` (default: `nil`)
 
-* `default['icinga2']['server']['object']['host']['command_endpoint']` (default: `nil`)
+* `default['icinga2']['object']['host']['command_endpoint']` (default: `nil`)
 
 
 ## Cookbook Ulimit Attributes
@@ -481,8 +500,8 @@ limitations under the License.
 </pre>
 
 
-[Icinga2]: https://www.icinga.org/
+[Icinga2]: https://www.icinga.com/
 [Chef]: https://www.chef.io/
-[Install]: https://github.com/icinga/icinga2/
-[Dev Icinga]: https://dev.icinga.org/projects/chef-icinga2
-[Register]: https://www.icinga.org/register/
+[icinga2repp]: https://github.com/icinga/chef-icinga2repo/
+[icinga2client]: https://github.com/icinga/chef-icinga2client/
+[icingaweb2]: https://github.com/icinga/chef-icingaweb2/
