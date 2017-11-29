@@ -3,6 +3,21 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+4.0.0
+-----
+
+- Andrei Skopenko - Fix icinga2 package suffix for el7
+
+- Andrei Skopenko - Bump icinga2 version
+
+- Virender Khatri - Split cookbook to separate cookbooks
+
+- Virender Khatri - Created cookbook `icinga2client` for Icinga2 Clients
+
+- Virender Khatri - Created cookbook `icingaweb2` for Icingaweb2
+
+- Virender Khatri - Created cookbook `icinga2repo` for Icinga2 YUM/APT Repository
+
 3.0.1
 -----
 

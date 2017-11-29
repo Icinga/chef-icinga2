@@ -47,26 +47,27 @@ See CONTRIBUTING.md
 
 ## Major Changes
 
-###v4.0.0
+### v4.0.0
 
-* Split icinga2 cookbook into differnt cookbooks
+* Split icinga2 cookbook into different cookbooks
   - created cookbook `icinga2repo` for icinga2 yum/apt repository setup
-  - created cookobook `icnigaweb2` for icingaweb2 setup
+  - created cookbook `icingaweb2` for icingaweb2 setup
   - created cookbook `icinga2client` for icinga2 client setup
-* `icinga2` cookbook now only manage `Icinga2` Server and other components like client, classicui, and icingaweb2 has been removed
-* `Icinga2 Classic UI` resources has been removed as it is no longer under development (since Icinga2 v2.8.0)
-* `Icinga Web2` resources has been removed from `icinga2` cookbook. Refer cookbook [icingaweb2] for `Icinga Web2` setup.
-* `Icinga2 Client` resources has been removed from `icinga2` cookbook. Refer cookbook [icinga2client] for `Icinga2 Client` setup.
-* `Icinga2 Repository` resources has been removed from `icinga2` cookbook. Refer cookbook [icinga2repo] for `Icinga2 Client` setup. All icinga cookbooks now uses `icinga2repo` for repository management.
-* Created LWRP.md to simplify README.md
+* `Icinga2` cookbook now only manage `Icinga2` Server. Other components like packages repository, client, and icingaweb2 has been moved to different github repositories.
+* `Icinga2 Classic UI` is no longer under development (since Icinga2 v2.8.0).
+* `Icinga Web2` setup is managed by cookbook [icingaweb2].
+* `Icinga2 Client` setup is managed by cookbook [icinga2client].
+* `Icinga2 Repository` setup is managed by cookbook [icinga2repo]. All Icinga2 cookbooks now uses `icinga2repo` for packages repository setup.
+* Created a separate file LWRP.md for LWRP Resources.
 
-###v2.9.1
+
+### v2.9.1
 
 * Icinga2 ClassicUI is disabled by default, you can enable it by setting default['icinga2']['classic_ui']['enable'] value to `true`
 * Icingaweb2 installation is done by package instead of git source, you can change it via attribute default['icinga2']['web2']['install_method'] values `package, source`
 
 
-###v2.8.0
+### v2.8.0
 
 * LWRP `environment` now generates endpoint/zone for every node to allow remote_execution.
 * LWRP `environment` now generates pki tickets in a data bag
@@ -75,7 +76,7 @@ external command execution
 * Allow to set command_endpoint as var and not only as string
 
 
-###v2.7.1
+### v2.7.1
 
 * LWRP `environment` now generates conf file with resource name suffix to allow same environment multiple resources.
 
@@ -91,24 +92,24 @@ With Zone: "host_#{environment}_#{zone}.conf"
 Without Zone: "host_#{environment}.conf"
 ```
 
-###v2.6.9
+### v2.6.9
 
 * Attribute `default['icinga2']['user_defined_objects_d']` is deprecated. For User defined configuration directories,
 use `Array` attribute `default['icinga2']['user_defined_objects_dir']` instead.
 
-###v2.0.1
+### v2.0.1
 
 * icinga web2 uri updated to `/icingaweb2`
 
 * epel repository is by default enabled for rhel platform family except amazon platform
 
 
-###v0.10.1
+### v0.10.1
 
 * Deprecated node *features* attribute and recipe `icinga2::server_features` in favour of LWRP `feature`
 
 
-###v0.7.0
+### v0.7.0
 
 * LWRP `environment` now generates different conf file with zone name if resource attribute `zone` is defined
 
@@ -167,19 +168,19 @@ Add recipe `icinga2::default` to run_list.
 ### How to Setup Icinga2 YUM/APT Repository?
 
 Cookbook `icinga2repo::default` is used to setup icinga2 yum/apt repository.
-For more information, check out cookbook [icinga2repo].
+For more information, see cookbook [icinga2repo].
 
 
 ### How to Install and Configure Icinga2 Client?
 
 Add recipe `icinga2client::default` to run_list.
-For more information, check out cookbook [icinga2client].
+For more information, see cookbook [icinga2client].
 
 
 ### How to Install and Configure Icingaweb2?
 
 Add recipe `icingaweb2::default` to run_list.
-For more information, check out cookbook [icingaweb2].
+For more information, see cookbook [icingaweb2].
 
 
 ## Icinga2 Cluster Deployment
@@ -292,7 +293,7 @@ icinga2_environment 'environment' do
 end
 ```
 
-It will add a custom var `vars.hardware` to environemnt Host objects.
+It will add a custom var `vars.hardware` to environment Host objects.
 
 
 ## Icinga2 User Defined Objects / Configuration
@@ -305,7 +306,7 @@ Directories will be created under `/etc/icinga2/` and also included in `icinga2.
 
 ## LWRP
 
-Check out LWRP.md for icinga2 resources.
+See LWRP.md for icinga2 resources.
 
 
 ## Cookbook Advanced Attributes
@@ -350,7 +351,7 @@ Check out LWRP.md for icinga2 resources.
 
 * `default['icinga2']['enable_env_pki']` (default: `false`): whether to create env endpoints, zones and pki_tickets
 
-* `default['icinga2']['enable_env_custom_pki']` (default: `false`): LWRP Paramter, should not be a node attribute
+* `default['icinga2']['enable_env_custom_pki']` (default: `false`): LWRP Parameter, should not be a node attribute
 
 
 
@@ -502,6 +503,6 @@ limitations under the License.
 
 [Icinga2]: https://www.icinga.com/
 [Chef]: https://www.chef.io/
-[icinga2repp]: https://github.com/icinga/chef-icinga2repo/
+[icinga2repo]: https://github.com/icinga/chef-icinga2repo/
 [icinga2client]: https://github.com/icinga/chef-icinga2client/
 [icingaweb2]: https://github.com/icinga/chef-icingaweb2/
