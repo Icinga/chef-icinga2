@@ -170,6 +170,16 @@ if defined?(ChefSpec)
       .new(:icinga2_graphitewriter, :delete, name)
   end
 
+  def create_icinga2_influxdbwriter(name)
+    ChefSpec::Matchers::ResourceMatcher
+      .new(:icinga2_influxdbwriter, :create, name)
+  end
+
+  def delete_icinga2_influxdbwriter(name)
+    ChefSpec::Matchers::ResourceMatcher
+      .new(:icinga2_influxdbwriter, :delete, name)
+  end
+
   def create_icinga2_host(name)
     ChefSpec::Matchers::ResourceMatcher
       .new(:icinga2_host, :create, name)

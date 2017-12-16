@@ -1,0 +1,58 @@
+/**
+ * This file is managed by Chef.
+ * Do NOT modify this file directly.
+*/
+
+/**
+ * InfluxdbWriter Object.
+*/
+
+library <%= @library.inspect %>
+
+object InfluxdbWriter <%= @object.inspect -%> {
+  <% if @host -%>
+  host = <%= @host.inspect %>
+  <% end -%>
+  <% if @port -%>
+  port = <%= @port.inspect %>
+  <% end -%>
+  <% if @database -%>
+  database = <%= @database.inspect %>
+  <% end -%>
+  <% if @username -%>
+  username = <%= @username.inspect %>
+  <% end -%>
+  <% if @password -%>
+  password = <%= @password.inspect %>
+  <% end -%>
+  <% if @ssl_enable -%>
+  ssl_enable = <%= @ssl_enable %>
+  <% end -%>
+  <% if @ssl_ca_cert -%>
+  ssl_ca_cert = <%= @ssl_ca_cert.inspect %>
+  <% end -%>
+  <% if @ssl_cert -%>
+  ssl_cert = <%= @ssl_cert.inspect %>
+  <% end -%>
+  <% if @ssl_key -%>
+  ssl_key = <%= @ssl_key.inspect %>
+  <% end -%>
+  <% if @host_template -%>
+  host_template = <%= @host_template %>
+  <% end -%>
+  <% if @service_template -%>
+  service_template = <%= @service_template %>
+  <% end -%>
+  <% if @enable_send_thresholds -%>
+  enable_send_thresholds = <%= @enable_send_thresholds.inspect %>
+  <% end -%>
+  <% if @enable_send_metadata -%>
+  enable_send_metadata = <%= @enable_send_metadata.inspect %>
+  <% end -%>
+  <% if @flush_interval -%>
+  flush_interval = <%= @flush_interval %>
+  <% end -%>
+  <% if @flush_threshold -%>
+  flush_threshold = <%= @flush_threshold %>
+  <% end -%>
+}
