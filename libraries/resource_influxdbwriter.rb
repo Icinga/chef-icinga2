@@ -67,7 +67,7 @@ class Chef
       def ssl_enable(arg = nil)
         set_or_return(
           :ssl_enable, arg,
-          :kind_of => String,
+          :kind_of => [TrueClass, FalseClass],
           :default => false
         )
       end
