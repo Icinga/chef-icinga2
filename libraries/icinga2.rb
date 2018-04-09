@@ -28,6 +28,8 @@ def icinga_format(toplevel)
     rval = '[ '
   when NilClass
     return 'null'
+  when TrueClass, FalseClass
+    return toplevel.to_s
   when String, Float, Integer
     return toplevel.inspect
   when Symbol
