@@ -25,6 +25,9 @@ object IdoMysqlConnection <%= @object.inspect -%> {
   <% if @database -%>
   database = <%= @database.inspect %>
   <% end -%>
+  <% if @socket_path -%>
+  socket_path = <%= @socket_path.inspect %>
+  <% end -%>
   <% if @table_prefix -%>
   table_prefix = <%= @table_prefix.inspect %>
   <% end -%>
