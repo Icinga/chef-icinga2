@@ -1116,6 +1116,7 @@ icinga2_idomysqlconnection 'idomysqlconnection' do
   user 'user name'
   password 'password'
   database 'database name'
+  socket_path '/var/lib/mysql/mysql.sock'
 end
 ```
 
@@ -1156,6 +1157,7 @@ icinga2_idopgsqlconnection 'idopgsqlconnection' do
   user 'user name'
   password 'password'
   database 'database name'
+  socket_path '/tmp/.s.PGSQL.nnnn'
 end
 ```
 
