@@ -23,33 +23,6 @@ class Chef
         )
       end
 
-      def cert_path(arg = nil)
-        set_or_return(
-          :cert_path, arg,
-          :kind_of => String,
-          :required => true,
-          :default => nil
-        )
-      end
-
-      def key_path(arg = nil)
-        set_or_return(
-          :key_path, arg,
-          :kind_of => String,
-          :required => true,
-          :default => nil
-        )
-      end
-
-      def ca_path(arg = nil)
-        set_or_return(
-          :ca_path, arg,
-          :kind_of => String,
-          :required => true,
-          :default => nil
-        )
-      end
-
       def crl_path(arg = nil)
         set_or_return(
           :crl_path, arg,
@@ -110,7 +83,7 @@ class Chef
         set_or_return(
           :resource_properties, arg,
           :kind_of => Array,
-          :default => %w(cert_path key_path ca_path crl_path bind_host bind_port ticket_salt accept_config accept_commands)
+          :default => %w(crl_path bind_host bind_port ticket_salt accept_config accept_commands)
         )
       end
     end
