@@ -64,6 +64,14 @@ class Chef
         )
       end
 
+      def socket_path(arg = nil)
+        set_or_return(
+          :socket_path, arg,
+          :kind_of => String,
+          :default => nil
+        )
+      end
+
       def table_prefix(arg = nil)
         set_or_return(
           :table_prefix, arg,
@@ -159,6 +167,7 @@ class Chef
                     :user => new_resource.user,
                     :password => new_resource.password,
                     :database => new_resource.database,
+                    :socket_path => new_resource.socket_path,
                     :table_prefix => new_resource.table_prefix,
                     :instance_name => new_resource.instance_name,
                     :instance_description => new_resource.instance_description,
