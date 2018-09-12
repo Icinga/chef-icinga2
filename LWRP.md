@@ -1370,9 +1370,6 @@ LWRP `apilistener` creates an icinga `ApiListener` object.
 
 ```ruby
 icinga2_apilistener 'master' do
-  cert_path 'SysconfDir + "/icinga2/pki/" + NodeName + ".crt"'
-  key_path 'SysconfDir + "/icinga2/pki/" + NodeName + ".key"'
-  ca_path 'SysconfDir + "/icinga2/pki/ca.crt"'
   bind_host 'host address'
   bind_port '5665'
   ticket_salt 'TicketSalt'

@@ -3,6 +3,13 @@ icinga2 CHANGELOG
 
 This file is used to list changes made in each version of the icinga2 cookbook.
 
+- Alberto Lorenzo - Workaround for VBox 5.2.8+ `Stderr: VBoxManage: error: The specified string / bytes buffer was to small` https://github.com/hashicorp/vagrant/issues/9524 
+- Alberto Lorenzo - Implement install monitoring plugins with boolean default['icinga2']['install_monitoring_plugins'] 
+- Alberto Lorenzo - Updated old notification scripts
+- Alberto Lorenzo - Fix deprecated fields on apilistener
+- Alberto Lorenzo - Fix service config file removing the `$` (https://github.com/Icinga/icinga2/issues/6434)
+
+
 4.0.0
 -----
 
