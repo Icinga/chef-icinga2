@@ -58,7 +58,7 @@ end
 node['icinga2']['monitoring_plugins_packages'].each do |pkg|
   package pkg do
     action :install
-    only_if node['icinga2']['install_monitoring_plugins']
+    only_if { node['icinga2']['install_monitoring_plugins'] }
   end
 end
 
