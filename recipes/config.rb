@@ -92,6 +92,7 @@ unless platform?('windows')
     variables(
       :log_dir => node['icinga2']['log_dir'],
       :conf_dir => node['icinga2']['conf_dir'],
+      :run_dir => node['icinga2']['run_dir'],
       :user => node['icinga2']['user'],
       :group => node['icinga2']['group'],
       :cmdgroup => node['icinga2']['cmdgroup']

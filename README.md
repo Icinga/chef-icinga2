@@ -355,9 +355,12 @@ See LWRP.md for icinga2 resources.
 
 
 
+
 ## Cookbook Core Attributes
 
 * `default['icinga2']['version']` (default: `2.8.0-X, calculated`): icinga2 package version
+
+* `default['icinga2']['install_monitoring_plugins']` (default: `false`): whether to install monitoring-plugins (install_monitoring_plugins) or not
 
 * `default['icinga2']['setup_epel']` (default: `true`): if set includes cookbook recipe `yum-epel::default` for rhel and fedora platform_family
 

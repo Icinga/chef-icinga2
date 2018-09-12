@@ -102,6 +102,8 @@ suites:
     verifier:
       inspec_tests:
         - test/smoke/server
+    attributes:
+      install_monitoring_plugins: true
     run_list:
       - recipe[icinga2::default]
       - recipe[icinga2-test::default]

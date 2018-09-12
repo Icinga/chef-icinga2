@@ -36,6 +36,9 @@ default['icinga2']['include_itl'] = if node['platform'] == 'windows'
                                       %w(itl plugins)
                                     end
 
+# Install monitoring-plugins
+default['icinga2']['install_monitoring_plugins'] = false
+
 # includes yum-epel cookbook to setup yum epel repository
 default['icinga2']['setup_epel'] = true
 
@@ -85,6 +88,7 @@ default['icinga2']['service_name'] = 'icinga2'
 
 case node['platform_family']
 when 'fedora', 'rhel', 'amazon'
+  default['icinga2']['monitoring_plugins_packages'] = [ 'nagios-plugins-all' ]
   default['icinga2']['user'] = 'icinga'
   default['icinga2']['group'] = 'icinga'
   default['icinga2']['cmdgroup'] = 'icingacmd'
@@ -97,6 +101,7 @@ when 'fedora', 'rhel', 'amazon'
                                       end
 
 when 'debian'
+  default['icinga2']['monitoring_plugins_packages'] = [ 'monitoring-plugins' ]
   default['icinga2']['user'] = 'nagios'
   default['icinga2']['group'] = 'nagios'
   default['icinga2']['cmdgroup'] = 'nagios'
