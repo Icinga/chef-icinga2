@@ -101,7 +101,11 @@ when 'fedora', 'rhel', 'amazon'
                                       end
 
 when 'debian'
-  default['icinga2']['monitoring_plugins_packages'] = [ 'monitoring-plugins' ]
+  if node['platform_version'].to_f <= 14.04 
+    default['icinga2']['monitoring_plugins_packages'] = [ 'nagios-plugins' ]
+  else
+    default['icinga2']['monitoring_plugins_packages'] = [ 'monitoring-plugins' ]
+  end
   default['icinga2']['user'] = 'nagios'
   default['icinga2']['group'] = 'nagios'
   default['icinga2']['cmdgroup'] = 'nagios'
