@@ -88,7 +88,7 @@ default['icinga2']['service_name'] = 'icinga2'
 
 case node['platform_family']
 when 'fedora', 'rhel', 'amazon'
-  default['icinga2']['monitoring_plugins_packages'] = [ 'nagios-plugins-all' ]
+  default['icinga2']['monitoring_plugins_packages'] = ['nagios-plugins-all']
   default['icinga2']['user'] = 'icinga'
   default['icinga2']['group'] = 'icinga'
   default['icinga2']['cmdgroup'] = 'icingacmd'
@@ -101,11 +101,11 @@ when 'fedora', 'rhel', 'amazon'
                                       end
 
 when 'debian'
-  if node['platform_version'].to_f <= 14.04 
-    default['icinga2']['monitoring_plugins_packages'] = [ 'nagios-plugins' ]
-  else
-    default['icinga2']['monitoring_plugins_packages'] = [ 'monitoring-plugins' ]
-  end
+  default['icinga2']['monitoring_plugins_packages'] = if node['platform_version'].to_f <= 14.04
+                                                        ['nagios-plugins']
+                                                      else
+                                                        ['monitoring-plugins']
+                                                      end
   default['icinga2']['user'] = 'nagios'
   default['icinga2']['group'] = 'nagios'
   default['icinga2']['cmdgroup'] = 'nagios'
