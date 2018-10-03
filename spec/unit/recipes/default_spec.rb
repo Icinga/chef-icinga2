@@ -20,8 +20,10 @@ describe 'icinga2::default' do
         expect(chef_run).to create_directory('/etc/icinga2/repository.d')
       end
 
-      it 'install package icinga2' do
-        expect(chef_run).to install_package('icinga2')
+      %w(icinga2 icinga2-bin icinga2-common icinga2-doc).each do |p|
+        it "install package #{p}" do
+          expect(chef_run).to install_package(p)
+        end
       end
 
       it 'configure logrotate for icinga2' do
@@ -171,6 +173,14 @@ describe 'icinga2::default' do
         mode: 0o640
       )
     end
+
+    it 'set proper ulimits' do
+      expect(chef_run).to create_user_ulimit('icinga').with(
+        filehandle_limit: 48_000,
+        process_limit:    'unlimited',
+        memory_limit:     'unlimited'
+      )
+    end
   end
 
   context 'rhel' do
@@ -193,7 +203,7 @@ describe 'icinga2::default' do
     include_context 'rhel_family'
   end
 
-  context 'ubuntu' do
+  shared_context 'ubuntu_family' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04') do |node|
         node.automatic['platform_family'] = 'debian'
@@ -220,7 +230,7 @@ describe 'icinga2::default' do
       expect(chef_run).to remove_apt_repository('icinga2-snapshot')
     end
 
-    %w(g++ mailutils build-essential).each do |p|
+    %w(g++ mailutils build-essential libicinga2).each do |p|
       it 'install packages' do
         expect(chef_run).to install_package(p)
       end
@@ -265,5 +275,46 @@ describe 'icinga2::default' do
         mode: 0o640
       )
     end
+
+    it 'set proper ulimits' do
+      expect(chef_run).to create_user_ulimit('nagios').with(
+        filehandle_limit: 48_000,
+        process_limit:    'unlimited',
+        memory_limit:     'unlimited'
+      )
+    end
+  end
+
+  context 'ubuntu 14.04' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04') do |node|
+        node.automatic['platform_family'] = 'debian'
+        node.automatic['lsb']['codename'] = 'trusty'
+      end.converge(described_recipe)
+    end
+
+    include_context 'ubuntu_family'
+  end
+
+  context 'ubuntu 16.04' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '16.04') do |node|
+        node.automatic['platform_family'] = 'debian'
+        node.automatic['lsb']['codename'] = 'xenial'
+      end.converge(described_recipe)
+    end
+
+    include_context 'ubuntu_family'
+  end
+
+  context 'ubuntu 18.04' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '18.04') do |node|
+        node.automatic['platform_family'] = 'debian'
+        node.automatic['lsb']['codename'] = 'bionic'
+      end.converge(described_recipe)
+    end
+
+    include_context 'ubuntu_family'
   end
 end

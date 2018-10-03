@@ -27,7 +27,13 @@ platforms:
   - name: ubuntu-16.04
     run_list:
       - recipe[apt::default]
+  - name: ubuntu-18.04
+    run_list:
+      - recipe[apt::default]
   - name: debian-8.5
+    run_list:
+      - recipe[apt::default]
+  - name: debian-9.5
     run_list:
       - recipe[apt::default]
 
