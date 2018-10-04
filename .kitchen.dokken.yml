@@ -25,7 +25,7 @@ provisioner:
       disable_conf_d: false
 
 platforms:
-  - name: ubuntu-14
+  - name: ubuntu-1404
     driver:
       image: ubuntu:14.04
       pid_one_command: /sbin/init
@@ -36,9 +36,17 @@ platforms:
       icinga2-test-mysql-instance:
         service_manager: sysvinit
 
-  - name: ubuntu-16
+  - name: ubuntu-1604
     driver:
       image: ubuntu:16.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update -qq
+        - RUN /usr/bin/apt-get install -y net-tools apt-transport-https initscripts procps lsb-release curl gnupg
+
+  - name: ubuntu-1804
+    driver:
+      image: ubuntu:18.04
       pid_one_command: /bin/systemd
       intermediate_instructions:
         - RUN /usr/bin/apt-get update -qq
