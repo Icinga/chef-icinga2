@@ -9,6 +9,8 @@
 service 'icinga2' do
   service_name node['icinga2']['service_name']
   supports :status => true, :reload => platform?('windows') ? false : true, :restart => true
+  retries     1
+  retry_delay 5
   action [:enable]
 end
 
