@@ -2,9 +2,9 @@
 # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/getting-started#getting-started
 
 default['icinga2']['version'] = value_for_platform(
-  %w(centos redhat fedora amazon) => { 'default' => '2.8.4-1' },
-  %w(debian ubuntu raspbian) => { 'default' => '2.8.4-1' },
-  %w(windows) => { 'default' => '2.8.4' }
+  %w(centos redhat fedora amazon) => { 'default' => '2.10.0-1' },
+  %w(debian ubuntu raspbian) => { 'default' => '2.10.0-1' },
+  %w(windows) => { 'default' => '2.10.0' }
 )
 default['icinga2']['ignore_version'] = false
 
