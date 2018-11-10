@@ -32,25 +32,17 @@ unless platform?('windows')
   end
 end
 
-case node['platform_family']
-when 'debian'
-  package 'libicinga2' do
-    version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
-    action :install
-  end
-end
-
 package 'icinga2-doc' do
   version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
   action :install
 end
 
-package 'icinga2-common' do
+package 'icinga2-bin' do
   version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
   action :install
 end
 
-package 'icinga2-bin' do
+package 'icinga2-common' do
   version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
   action :install
 end
