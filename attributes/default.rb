@@ -12,6 +12,9 @@ default['icinga2']['enable_env_pki'] = false
 default['icinga2']['enable_env_custom_pki'] = false
 default['icinga2']['cookbook'] = 'icinga2'
 
+# default option for package resource
+default['icinga2']['package_options'] = ''
+
 default['icinga2']['conf_dir'] = if node['platform'] == 'windows'
                                    'C:/ProgramData/icinga2/etc/icinga2'
                                  else
