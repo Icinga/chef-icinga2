@@ -37,6 +37,7 @@ end
 [
   node['icinga2']['log_dir'],
   node['icinga2']['run_dir'],
+  node['icinga2']['run_cmd_dir'],
   ::File.join(node['icinga2']['log_dir'], 'compat'),
   ::File.join(node['icinga2']['log_dir'], 'compat', 'archives'),
 ].each do |d|
