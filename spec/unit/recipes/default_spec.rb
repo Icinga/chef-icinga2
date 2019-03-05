@@ -230,7 +230,7 @@ describe 'icinga2::default' do
       expect(chef_run).to remove_apt_repository('icinga2-snapshot')
     end
 
-    %w(g++ mailutils build-essential libicinga2).each do |p|
+    %w(g++ mailutils build-essential).each do |p|
       it 'install packages' do
         expect(chef_run).to install_package(p)
       end
