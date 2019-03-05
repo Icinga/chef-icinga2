@@ -38,7 +38,7 @@ when 'debian'
     version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
     options node['icinga2']['package_options']
     action :install
-  end
+  end if Gem::Version.new(node['icinga2']['version']) < Gem::Version.new('2.10')
 end
 
 package 'icinga2-doc' do
