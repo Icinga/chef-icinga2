@@ -19,7 +19,7 @@
 #
 
 icinga2_notificationcommand 'mail-service-notification' do
-  command ['ConfigDir + "/icinga2/scripts/mail-service-notification.sh"']
+  command ['ConfigDir + "/scripts/mail-service-notification.sh"']
   env 'NOTIFICATIONTYPE' => '$notification.type$', \
       'SERVICEDESC' => '$service.name$',\
       'HOSTALIAS' => '$host.display_name$',\
@@ -35,7 +35,7 @@ icinga2_notificationcommand 'mail-service-notification' do
 end
 
 icinga2_notificationcommand 'mail-host-notification' do
-  command ['ConfigDir + "/icinga2/scripts/mail-host-notification.sh"']
+  command ['ConfigDir + "/scripts/mail-host-notification.sh"']
   env 'NOTIFICATIONTYPE' => '$notification.type$',
       'HOSTALIAS' => '$host.display_name$',
       'HOSTADDRESS' => '$address$',
