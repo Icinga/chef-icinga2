@@ -1329,7 +1329,7 @@ LWRP `notificationcommand` creates an icinga `NotificationCommand` object.
 
 ```ruby
 icinga2_notificationcommand 'mail-service-notification' do
-  command ['ConfigDir + "/icinga2/scripts/mail-service-notification.sh"']
+  command ['ConfigDir + "/scripts/mail-service-notification.sh"']
   env 'NOTIFICATIONTYPE' => '$notification.type$', \
     'SERVICEDESC' => '$service.name$',\
     'HOSTALIAS' => '$host.display_name$',\
@@ -1370,9 +1370,9 @@ LWRP `apilistener` creates an icinga `ApiListener` object.
 
 ```ruby
 icinga2_apilistener 'master' do
-  cert_path 'ConfigDir + "/icinga2/pki/" + NodeName + ".crt"'
-  key_path 'ConfigDir + "/icinga2/pki/" + NodeName + ".key"'
-  ca_path 'ConfigDir + "/icinga2/pki/ca.crt"'
+  cert_path 'ConfigDir + "/pki/" + NodeName + ".crt"'
+  key_path 'ConfigDir + "/pki/" + NodeName + ".key"'
+  ca_path 'ConfigDir + "/pki/ca.crt"'
   bind_host 'host address'
   bind_port '5665'
   ticket_salt 'TicketSalt'
