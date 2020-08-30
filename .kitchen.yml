@@ -21,13 +21,13 @@ provisioner:
 platforms:
   - name: centos-6.8
   - name: centos-7.2
-  - name: ubuntu-14.04
-    run_list:
-      - recipe[apt::default]
   - name: ubuntu-16.04
     run_list:
       - recipe[apt::default]
   - name: ubuntu-18.04
+    run_list:
+      - recipe[apt::default]
+  - name: ubuntu-20.04
     run_list:
       - recipe[apt::default]
   - name: debian-8.5
@@ -36,20 +36,42 @@ platforms:
   - name: debian-9.5
     run_list:
       - recipe[apt::default]
+  - name: debian-10
+    run_list:
+      - recipe[apt::default]
+
 
 suites:
-  - name: chef12server
+  - name: chef13server
     driver:
-      require_chef_omnibus: 12.21.4
+      require_chef_omnibus: 13.3.42
     verifier:
       inspec_tests:
         - test/smoke/server
     run_list:
       - recipe[icinga2::default]
       - recipe[icinga2-test::default]
-  - name: chef13server
+  - name: chef14server
     driver:
-      require_chef_omnibus: 13.3.42
+      require_chef_omnibus: 14
+      verifier:
+      inspec_tests:
+        - test/smoke/server
+    run_list:
+      - recipe[icinga2::default]
+      - recipe[icinga2-test::default]
+  - name: chef15server
+    driver:
+      require_chef_omnibus: 15
+    verifier:
+      inspec_tests:
+        - test/smoke/server
+    run_list:
+      - recipe[icinga2::default]
+      - recipe[icinga2-test::default]
+  - name: chef16server
+    driver:
+      require_chef_omnibus: 16
     verifier:
       inspec_tests:
         - test/smoke/server

@@ -3,7 +3,7 @@
 
 default['icinga2']['version'] = value_for_platform(
   %w(centos redhat fedora amazon) => { 'default' => '2.10.1-1' },
-  %w(debian ubuntu raspbian) => { 'default' => '2.10.1-1' },
+  %w(debian ubuntu raspbian) => { 'default' => '2.12.0-1' },
   %w(windows) => { 'default' => '2.10.1' }
 )
 default['icinga2']['ignore_version'] = false
@@ -52,8 +52,8 @@ default['icinga2']['user_defined_objects_dir'] = %w(user_defined_objects)
 default['icinga2']['features_enabled_dir'] = ::File.join(node['icinga2']['conf_dir'], 'features-enabled')
 default['icinga2']['features_available_dir'] = ::File.join(node['icinga2']['conf_dir'], 'features-available')
 
-default['icinga2']['cluster_attribute'] = nil
-default['icinga2']['application_attribute'] = nil
+default['icinga2']['cluster_attribute'] = '' # used to be nil
+default['icinga2']['application_attribute'] = '' # used to be nil
 default['icinga2']['enable_cluster_hostgroup'] = true
 default['icinga2']['enable_application_hostgroup'] = true
 default['icinga2']['enable_role_hostgroup'] = false
@@ -147,8 +147,8 @@ default['icinga2']['constants']['TicketSalt'] = 'ed25aed394c4bf7d236b347bb67df46
 default['icinga2']['object']['global-templates'] = false
 default['icinga2']['object']['host']['import'] = 'generic-host'
 default['icinga2']['object']['host']['max_check_attempts'] = 3
-default['icinga2']['object']['host']['check_period'] = nil
-default['icinga2']['object']['host']['notification_period'] = nil
+default['icinga2']['object']['host']['check_period'] = '' # used to be nil
+default['icinga2']['object']['host']['notification_period'] = '' # used to be nil
 default['icinga2']['object']['host']['check_interval'] = '1m'
 default['icinga2']['object']['host']['retry_interval'] = '30s'
 default['icinga2']['object']['host']['enable_notifications'] = true
@@ -157,9 +157,9 @@ default['icinga2']['object']['host']['enable_passive_checks'] = false
 default['icinga2']['object']['host']['enable_event_handler'] = true
 default['icinga2']['object']['host']['enable_flapping'] = true
 default['icinga2']['object']['host']['enable_perfdata'] = true
-default['icinga2']['object']['host']['event_command'] = nil
-default['icinga2']['object']['host']['flapping_threshold'] = nil
-default['icinga2']['object']['host']['volatile'] = nil
+default['icinga2']['object']['host']['event_command'] = '' # used to be nil
+default['icinga2']['object']['host']['flapping_threshold'] = '' # used to be nil
+default['icinga2']['object']['host']['volatile'] = '' # used to be nil
 default['icinga2']['object']['host']['check_command'] = 'hostalive'
-default['icinga2']['object']['host']['zone'] = nil
-default['icinga2']['object']['host']['command_endpoint'] = nil
+default['icinga2']['object']['host']['zone'] = '' # used to be nil
+default['icinga2']['object']['host']['command_endpoint'] = '' # used to be nil
