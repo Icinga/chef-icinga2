@@ -1,4 +1,9 @@
+
 provides :icinga2_instance if respond_to?(:provides)
+property :environment, String, name_property: true
+property :template_support, FalseClass, default: false
+
+property :resource_properties, Array
 
 def whyrun_supported?
   true
@@ -12,7 +17,11 @@ action :delete do
   object_template
 end
 
-# create object resource
-def object_template
-  process_icinga2_resources(new_resource.resource_name.to_s.gsub('icinga2_', ''), new_resource.resource_properties, new_resource.template_support)
+action_class do
+  def object_template
+    pp resource_name.inspect
+    pp resource_properties.inspect
+
+    process_icinga2_resources(new_resource.resource_name.to_s.gsub('icinga2_', ''), new_resource.resource_properties, new_resource.template_support)
+  end
 end

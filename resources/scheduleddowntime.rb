@@ -12,6 +12,6 @@ property :duration, String
 property :zone, String
 property :ranges, Hash
 
-property :template, [TrueClass, FalseClass], default: false
+property :icinga2_template, [TrueClass, FalseClass], default: false
 property :template_support, TrueClass, default: true
 property :resource_properties, Array, default: %w(host_name service_name author comment fixed duration zone ranges template)

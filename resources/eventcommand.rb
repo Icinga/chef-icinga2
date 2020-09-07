@@ -9,6 +9,6 @@ property :env, Hash
 property :timeout, [String, Integer]
 property :arguments, Hash
 property :custom_vars, Hash
-property :template, [TrueClass, FalseClass], default: false
+property :icinga2_template, [TrueClass, FalseClass], default: false
 property :template_support, TrueClass, default: true
 property :resource_properties, Array, default: %w(import command env timeout arguments custom_vars template)

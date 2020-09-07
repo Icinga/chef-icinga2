@@ -1,6 +1,5 @@
-
-
 def create_hostgroups(env_resources)
+
   env_hostgroups = []
 
   # environment hostgroups

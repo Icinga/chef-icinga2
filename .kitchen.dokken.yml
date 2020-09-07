@@ -2,6 +2,8 @@
 driver:
   name: dokken
   privileged: true
+  chef_version: 'current'
+  env: [CHEF_LICENSE=accept]
 
 transport:
   name: dokken
@@ -105,37 +107,6 @@ platforms:
       platform: amazon
       intermediate_instructions:
         - RUN yum install -y net-tools initscripts which
-
-suites:
-  - name: chef13server
-    driver:
-      chef_version: 13
-    verifier:
-      inspec_tests:
-        - test/smoke/server
-    run_list:
-      - recipe[icinga2::default]
-      - recipe[icinga2-test::default]
-      
-  - name: chef14server
-    driver:
-      chef_version: 14
-    verifier:
-      inspec_tests:
-        - test/smoke/server
-    run_list:
-      - recipe[icinga2::default]
-      - recipe[icinga2-test::default]
-
-  - name: chef15server
-    driver:
-      chef_version: 15
-    verifier:
-      inspec_tests:
-        - test/smoke/server
-    run_list:
-      - recipe[icinga2::default]
-      - recipe[icinga2-test::default]
 
   - name: chef16server
     driver:

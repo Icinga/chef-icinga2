@@ -17,6 +17,6 @@ property :types, Array
 property :states, Array
 property :custom_vars, Hash
 
-property :template, [TrueClass, FalseClass], default: false
+property :icinga2_template, [TrueClass, FalseClass], default: false
 property :template_support, TrueClass, default: true
 property :resource_properties, Array, default: %w(import host_name service_name users user_groups times command interval period zone types states custom_vars template)

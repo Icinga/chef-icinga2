@@ -23,36 +23,6 @@ services: docker
 
 env:
   matrix:
-    - INSTANCE=chef13server-ubuntu-1404
-    - INSTANCE=chef13server-ubuntu-1604
-    - INSTANCE=chef13server-ubuntu-1804
-    - INSTANCE=chef13server-debian-8
-    - INSTANCE=chef13server-debian-9
-    - INSTANCE=chef13server-centos-6
-    - INSTANCE=chef13server-centos-7
-    - INSTANCE=chef13server-fedora-26
-    - INSTANCE=chef13server-amazon
-    - INSTANCE=chef14server-ubuntu-1404
-    - INSTANCE=chef14server-ubuntu-1604
-    - INSTANCE=chef14server-ubuntu-1804
-    - INSTANCE=chef14server-debian-8
-    - INSTANCE=chef14server-debian-9
-    - INSTANCE=chef14server-centos-6
-    - INSTANCE=chef14server-centos-7
-    - INSTANCE=chef14server-fedora-26
-    - INSTANCE=chef14server-amazon
-    - INSTANCE=chef15server-ubuntu-1404
-    - INSTANCE=chef15server-ubuntu-1604
-    - INSTANCE=chef15server-ubuntu-1804
-    - INSTANCE=chef15server-ubuntu-2004
-    - INSTANCE=chef15server-debian-8
-    - INSTANCE=chef15server-debian-9
-    - INSTANCE=chef15server-debian-10
-    - INSTANCE=chef15server-centos-6
-    - INSTANCE=chef15server-centos-7
-    - INSTANCE=chef15server-fedora-26
-    - INSTANCE=chef15server-amazon
-    - INSTANCE=chef16server-ubuntu-1404
     - INSTANCE=chef16server-ubuntu-1604
     - INSTANCE=chef16server-ubuntu-1804
     - INSTANCE=chef16server-ubuntu-2004

@@ -30,32 +30,32 @@ action :delete do
   new_resource.updated_by_last_action(object_template)
 end
 
-
-
-def object_template
-  resource_name = new_resource.resource_name.to_s.gsub('icinga2_', '')
-  ot = template ::File.join(node['icinga2']['objects_dir'], "#{resource_name}.conf") do
-    source "object.#{resource_name}.conf.erb"
-    cookbook 'icinga2'
-    owner node['icinga2']['user']
-    group node['icinga2']['group']
-    mode 0o640
-    variables(object: new_resource.name,
-              library: new_resource.library,
-              host: new_resource.host,
-              port: new_resource.port,
-              user: new_resource.user,
-              password: new_resource.password,
-              database: new_resource.database,
-              socket_path: new_resource.socket_path,
-              table_prefix: new_resource.table_prefix,
-              instance_name: new_resource.instance_name,
-              instance_description: new_resource.instance_description,
-              enable_ha: new_resource.enable_ha,
-              failover_timeout: new_resource.failover_timeout,
-              cleanup: new_resource.cleanup,
-              categories: new_resource.categories)
-    notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
+action_class do
+  def object_template
+    resource_name = new_resource.resource_name.to_s.gsub('icinga2_', '')
+    ot = template ::File.join(node['icinga2']['objects_dir'], "#{resource_name}.conf") do
+      source "object.#{resource_name}.conf.erb"
+      cookbook 'icinga2'
+      owner node['icinga2']['user']
+      group node['icinga2']['group']
+      mode 0o640
+      variables(object: new_resource.name,
+                library: new_resource.library,
+                host: new_resource.host,
+                port: new_resource.port,
+                user: new_resource.user,
+                password: new_resource.password,
+                database: new_resource.database,
+                socket_path: new_resource.socket_path,
+                table_prefix: new_resource.table_prefix,
+                instance_name: new_resource.instance_name,
+                instance_description: new_resource.instance_description,
+                enable_ha: new_resource.enable_ha,
+                failover_timeout: new_resource.failover_timeout,
+                cleanup: new_resource.cleanup,
+                categories: new_resource.categories)
+      notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
+    end
+    ot.updated?
   end
-  ot.updated?
 end

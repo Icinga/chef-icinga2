@@ -8,6 +8,6 @@ property :import, String
 property :ranges, Hash
 property :zone, String
 
-property :template, [TrueClass, FalseClass], default: false
+property :icinga2_template, [TrueClass, FalseClass], default: false
 property :template_support, TrueClass, default: true
 property :resource_properties, Array, default: %w(display_name ranges zone import template)

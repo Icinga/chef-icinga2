@@ -12,6 +12,6 @@ property :zone, String
 property :arguments, Hash
 property :custom_vars, Hash
 
-property :template, [TrueClass, FalseClass], default: false
+property :icinga2_template, [TrueClass, FalseClass], default: false
 property :template_support, FalseClass, default: false
 property :resource_properties, Array, default: %w(import display_name host_name groups check_command max_check_attempts check_period notification_period check_interval retry_interval enable_notifications enable_active_checks enable_passive_checks enable_event_handler enable_flapping enable_perfdata event_command flapping_threshold volatile zone command_endpoint notes notes_url action_url icon_image icon_image_alt merge_vars custom_vars assign_where ignore_where set)

@@ -43,8 +43,9 @@ platforms:
 
 suites:
   - name: chef13server
-    driver:
-      require_chef_omnibus: 13.3.42
+    provisioner:
+      product_name: chef
+      product_version: 13
     verifier:
       inspec_tests:
         - test/smoke/server
@@ -52,17 +53,19 @@ suites:
       - recipe[icinga2::default]
       - recipe[icinga2-test::default]
   - name: chef14server
-    driver:
-      require_chef_omnibus: 14
-      verifier:
+    provisioner:
+      product_name: chef
+      product_version: 14
+    verifier:
       inspec_tests:
         - test/smoke/server
     run_list:
       - recipe[icinga2::default]
       - recipe[icinga2-test::default]
   - name: chef15server
-    driver:
-      require_chef_omnibus: 15
+    provisioner:
+      product_name: chef
+      product_version: 15
     verifier:
       inspec_tests:
         - test/smoke/server
@@ -70,8 +73,9 @@ suites:
       - recipe[icinga2::default]
       - recipe[icinga2-test::default]
   - name: chef16server
-    driver:
-      require_chef_omnibus: 16
+    provisioner:
+      product_name: chef
+      product_version: 16
     verifier:
       inspec_tests:
         - test/smoke/server

@@ -15,6 +15,6 @@ property :types, Array
 property :zone, String
 property :custom_vars, Hash
 property :enable_notifications, [TrueClass, FalseClass]
-property :template, [TrueClass, FalseClass], default: false
+property :icinga2_template, [TrueClass, FalseClass], default: false
 property :template_support, TrueClass, default: true
 property :resource_properties, Array, default: %w(import display_name groups email pager period states types zone custom_vars enable_notifications template)

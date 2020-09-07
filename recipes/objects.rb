@@ -14,7 +14,7 @@ end
 
 # user objects
 icinga2_user 'generic-user' do
-  template true
+  icinga2_template true
   zone node['icinga2']['object']['global-templates'] ? 'global-templates' : nil
 end
 
@@ -31,7 +31,7 @@ end
 
 # host objects
 icinga2_host 'generic-host' do
-  template true
+  icinga2_template true
   max_check_attempts node['icinga2']['object']['host']['max_check_attempts']
   check_interval node['icinga2']['object']['host']['check_interval']
   retry_interval node['icinga2']['object']['host']['retry_interval']
@@ -41,7 +41,7 @@ end
 
 # service objects
 icinga2_service 'generic-service' do
-  template true
+  icinga2_template true
   max_check_attempts node['icinga2']['object']['host']['max_check_attempts']
   check_interval node['icinga2']['object']['host']['check_interval']
   retry_interval node['icinga2']['object']['host']['retry_interval']
