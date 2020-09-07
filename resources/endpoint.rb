@@ -1,4 +1,4 @@
-resource_name :icinga2_endpoint if respond_to?(:resource_name)
+resource_name :icinga2_endpoint
 provides :icinga2_endpoint
 allowed_actions [:create, :delete, :nothing]
 

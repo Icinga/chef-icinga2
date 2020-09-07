@@ -1,15 +1,10 @@
-resource_name :icinga2_envhostgroup if respond_to?(:resource_name)
+resource_name :icinga2_envhostgroup
 provides :icinga2_envhostgroup
-allowed_actions [:create, :delete, :nothing]
 
 property :cookbook, String, default: 'icinga2'
 property :environment, String, name_property: true
 property :zone, String
 property :groups, Array
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   new_resource.updated_by_last_action(object_template)
@@ -48,7 +43,7 @@ action_class do
       cookbook 'icinga2'
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0640
+      mode '640'
       variables(environment: new_resource.environment,
                 groups: new_resource.groups)
       notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'

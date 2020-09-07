@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: icinga2_server
+# Cookbook:: icinga2_server
 # Recipe:: applyservice
 #
-# Copyright 2014, Virender Khatri
+# Copyright:: 2014, Virender Khatri
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,27 +23,27 @@
 icinga2_applyservice 'nrpe_check_load' do
   import 'generic-service'
   check_command 'nrpe'
-  custom_vars :nrpe_command => 'check_load'
+  custom_vars nrpe_command: 'check_load'
   assign_where ['host.vars.nrpe']
 end
 
 icinga2_applyservice 'nrpe_check_disk_mounts' do
   import 'generic-service'
   check_command 'nrpe'
-  custom_vars :nrpe_command => 'check_disk_mounts'
+  custom_vars nrpe_command: 'check_disk_mounts'
   assign_where ['host.vars.nrpe']
 end
 
 icinga2_applyservice 'nrpe_check_zombie_procs' do
   import 'generic-service'
   check_command 'nrpe'
-  custom_vars :nrpe_command => 'check_zombie_procs'
+  custom_vars nrpe_command: 'check_zombie_procs'
   assign_where ['host.vars.nrpe']
 end
 
 icinga2_applyservice 'nrpe_check_mem' do
   import 'generic-service'
   check_command 'nrpe'
-  custom_vars :nrpe_command => 'check_mem'
+  custom_vars nrpe_command: 'check_mem'
   assign_where ['host.vars.nrpe']
 end

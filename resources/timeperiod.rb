@@ -1,4 +1,4 @@
-resource_name :icinga2_timeperiod if respond_to?(:resource_name)
+resource_name :icinga2_timeperiod
 provides :icinga2_timeperiod
 allowed_actions [:create, :delete, :nothing]
 
@@ -8,6 +8,6 @@ property :import, String
 property :ranges, Hash
 property :zone, String
 
-property :icinga2_template, [TrueClass, FalseClass], default: false
+property :icinga2_template, [true, false], default: false
 property :template_support, TrueClass, default: true
 property :resource_properties, Array, default: %w(display_name ranges zone import template)

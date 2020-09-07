@@ -1,16 +1,11 @@
-resource_name :icinga2_statusdatawriter if respond_to?(:resource_name)
+resource_name :icinga2_statusdatawriter
 provides :icinga2_statusdatawriter
-allowed_actions [:create, :delete, :nothing]
 
 property :cookbook, String, default: 'icinga2'
 property :library, String, default: 'compat'
 property :status_path, String
 property :objects_path, String
 property :update_interval, [String, Integer]
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   new_resource.updated_by_last_action(object_template)
@@ -28,7 +23,7 @@ action_class do
       cookbook 'icinga2'
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0o640
+      mode '640'
       variables(object: new_resource.name,
                 library: new_resource.library,
                 status_path: new_resource.status_path,

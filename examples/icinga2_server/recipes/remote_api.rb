@@ -2,9 +2,9 @@
 ['icinga2']['recreate_server_certs'] = false
 
 pki_dir       = '/etc/icinga2/pki'
-client_key    = "#{pki_dir}/#{node.fqdn}.key"
-client_crt    = "#{pki_dir}/#{node.fqdn}.crt"
-client_csr    = "#{pki_dir}/#{node.fqdn}.csr"
+client_key    = "#{pki_dir}/#{node['fqdn']}.key"
+client_crt    = "#{pki_dir}/#{node['fqdn']}.crt"
+client_csr    = "#{pki_dir}/#{node['fqdn']}.csr"
 
 if node['icinga2']['recreate_server_certs']
   [
@@ -26,7 +26,7 @@ bash 'Generate self signed ca' do
 end
 
 bash 'Generate self signed crt/key' do
-  code "icinga2 pki new-cert --cn #{node.fqdn} " \
+  code "icinga2 pki new-cert --cn #{node['fqdn']} " \
        "--key #{client_key} " \
        "--csr #{client_csr}"
   not_if { ::File.exist?(client_csr) }
@@ -46,10 +46,10 @@ icinga2_apilistener 'master' do
   ticket_salt 'TicketSalt'
 end
 
-icinga2_endpoint node.fqdn do
-  host node.fqdn
+icinga2_endpoint node['fqdn'] do
+  host node['fqdn']
 end
 
 icinga2_zone 'master' do
-  endpoints [node.fqdn]
+  endpoints [node['fqdn']]
 end

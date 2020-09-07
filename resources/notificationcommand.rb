@@ -1,4 +1,4 @@
-resource_name :icinga2_notificationcommand if respond_to?(:resource_name)
+resource_name :icinga2_notificationcommand
 provides :icinga2_notificationcommand
 allowed_actions [:create, :delete, :nothing]
 
@@ -14,6 +14,6 @@ property :zone, String
 property :arguments, Hash
 property :custom_vars, Hash
 
-property :icinga2_template, [TrueClass, FalseClass], default: false
+property :icinga2_template, [true, false], default: false
 property :template_support, TrueClass, default: true
 property :resource_properties, Array, default: %w(import command env timeout zone arguments custom_vars template)

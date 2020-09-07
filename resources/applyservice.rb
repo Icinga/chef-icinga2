@@ -1,4 +1,4 @@
-resource_name :icinga2_applyservice if respond_to?(:resource_name)
+resource_name :icinga2_applyservice
 provides :icinga2_applyservice
 allowed_actions [:create, :delete, :nothing]
 
@@ -15,15 +15,15 @@ property :check_period, String
 property :notification_period, String
 property :check_interval, [String, Integer]
 property :retry_interval, [String, Integer]
-property :enable_notifications, [TrueClass, FalseClass]
-property :enable_active_checks, [TrueClass, FalseClass]
-property :enable_passive_checks, [TrueClass, FalseClass]
-property :enable_event_handler, [TrueClass, FalseClass]
-property :enable_flapping, [TrueClass, FalseClass]
-property :enable_perfdata, [TrueClass, FalseClass]
+property :enable_notifications, [true, false]
+property :enable_active_checks, [true, false]
+property :enable_passive_checks, [true, false]
+property :enable_event_handler, [true, false]
+property :enable_flapping, [true, false]
+property :enable_perfdata, [true, false]
 property :event_command, String
 property :flapping_threshold, String
-property :volatile, [TrueClass, FalseClass]
+property :volatile, [true, false]
 property :zone, String
 property :command_endpoint, String
 property :notes, String

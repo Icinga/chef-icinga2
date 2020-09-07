@@ -177,8 +177,8 @@ describe 'icinga2::default' do
     it 'set proper ulimits' do
       expect(chef_run).to create_user_ulimit('icinga').with(
         filehandle_limit: 48_000,
-        process_limit:    'unlimited',
-        memory_limit:     'unlimited'
+        process_limit: 'unlimited',
+        memory_limit: 'unlimited'
       )
     end
   end
@@ -279,8 +279,8 @@ describe 'icinga2::default' do
     it 'set proper ulimits' do
       expect(chef_run).to create_user_ulimit('nagios').with(
         filehandle_limit: 48_000,
-        process_limit:    'unlimited',
-        memory_limit:     'unlimited'
+        process_limit: 'unlimited',
+        memory_limit: 'unlimited'
       )
     end
   end

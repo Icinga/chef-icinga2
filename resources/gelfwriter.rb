@@ -1,16 +1,11 @@
-resource_name :icinga2_gelfwriter if respond_to?(:resource_name)
+resource_name :icinga2_gelfwriter
 provides :icinga2_gelfwriter
-allowed_actions [:create, :delete, :nothing]
 
 property :cookbook, String, default: 'icinga2'
 property :library, String, default: 'perfdata'
 property :host, String
 property :port, Integer
 property :source, String
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   new_resource.updated_by_last_action(object_template)
@@ -28,7 +23,7 @@ action_class do
       cookbook 'icinga2'
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0o640
+      mode '640'
       variables(object: new_resource.name,
                 library: new_resource.library,
                 host: new_resource.host,

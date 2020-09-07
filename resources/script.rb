@@ -1,14 +1,9 @@
-resource_name :icinga2_script if respond_to?(:resource_name)
+resource_name :icinga2_script
 provides :icinga2_script
-allowed_actions [:create, :delete, :nothing]
 
 property :cookbook, String, default: 'icinga2'
 property :source, String
 property :variables, Hash
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   new_resource.updated_by_last_action(object_template)
@@ -25,7 +20,7 @@ action_class do
       source new_resource.source
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0o755
+      mode '755'
       variables new_resource.variables if new_resource.variables
       action new_resource.action
     end

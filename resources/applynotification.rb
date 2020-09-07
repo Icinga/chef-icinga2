@@ -1,4 +1,4 @@
-resource_name :icinga2_applynotification if respond_to?(:resource_name)
+resource_name :icinga2_applynotification
 provides :icinga2_applynotification
 allowed_actions [:create, :delete, :nothing]
 

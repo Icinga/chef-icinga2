@@ -1,5 +1,4 @@
 def create_hostgroups(env_resources)
-
   env_hostgroups = []
 
   # environment hostgroups
@@ -77,13 +76,13 @@ def create_pki_tickets(env_resources)
           databag_item = Chef::DataBagItem.new
           databag_item.data_bag('icinga2')
           databag_item.raw_data = {
-            'id'      => "#{env}-pki-tickets",
+            'id' => "#{env}-pki-tickets",
             'tickets' => tickets,
-            'salt'    => salt,
+            'salt' => salt,
           }
           databag_item.save
         end
-        action :create
+        action :run
       end
     end
   end

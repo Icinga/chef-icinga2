@@ -1,6 +1,5 @@
-resource_name :icinga2_envzone if respond_to?(:resource_name)
+resource_name :icinga2_envzone
 provides :icinga2_envzone
-allowed_actions [:create, :delete, :nothing]
 
 property :instance_name, String, name_property: true
 property :cookbook, String, default: 'icinga2'
@@ -9,10 +8,6 @@ property :zone, String
 property :zones, Array
 property :log_duration, String
 property :parent, String
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   new_resource.updated_by_last_action(object_template)
@@ -44,7 +39,7 @@ action_class do
       cookbook 'icinga2'
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0o640
+      mode '640'
       variables(
         environment: new_resource.environment,
         zones: new_resource.zones,

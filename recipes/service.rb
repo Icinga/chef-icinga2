@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: icinga2
+# Cookbook:: icinga2
 # Recipe:: service
 #
-# Copyright 2014, Virender Khatri
+# Copyright:: 2014, Virender Khatri
 #
 
 service 'icinga2' do
   service_name node['icinga2']['service_name']
-  supports :status => true, :reload => platform?('windows') ? false : true, :restart => true
+  supports status: true, reload: platform?('windows') ? false : true, restart: true
   retries     2
   retry_delay 5
   action [:enable]

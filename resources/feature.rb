@@ -1,12 +1,7 @@
-resource_name :icinga2_feature if respond_to?(:resource_name)
+resource_name :icinga2_feature
 provides :icinga2_feature
-allowed_actions [:create, :delete, :nothing]
 
 property :cookbook, String, default: 'icinga2'
-
-def whyrun_supported?
-  true
-end
 action :enable do
   raise "feature not available - #{new_resource.name}" unless ::File.exist?(::File.join(node['icinga2']['features_available_dir'], "#{new_resource.name}.conf"))
   unless ::File.exist?(::File.join(node['icinga2']['features_enabled_dir'], "#{new_resource.name}.conf"))

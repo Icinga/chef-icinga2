@@ -1,4 +1,4 @@
-resource_name :icinga2_applydependency if respond_to?(:resource_name)
+resource_name :icinga2_applydependency
 provides :icinga2_applydependency
 allowed_actions [:create, :delete, :nothing]
 
@@ -8,8 +8,8 @@ property :object_type, String, required: true
 property :parent_host_name, String
 property :child_host_name, String
 property :child_service_name, String
-property :disable_checks, [TrueClass, FalseClass]
-property :disable_notifications, [TrueClass, FalseClass]
+property :disable_checks, [true, false]
+property :disable_notifications, [true, false]
 property :period, String
 property :states, Array
 property :zone, String

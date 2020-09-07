@@ -5,10 +5,6 @@ property :template_support, FalseClass, default: false
 
 property :resource_properties, Array
 
-def whyrun_supported?
-  true
-end
-
 action :create do
   object_template
 end

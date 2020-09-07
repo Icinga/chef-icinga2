@@ -1,6 +1,5 @@
-resource_name :icinga2_idopgsqlconnection if respond_to?(:resource_name)
+resource_name :icinga2_idopgsqlconnection
 provides :icinga2_idopgsqlconnection
-allowed_actions [:create, :delete, :nothing]
 
 property :cookbook, String, default: 'icinga2'
 property :library, String, default: 'perfdata'
@@ -11,10 +10,6 @@ property :service_temp_path, String
 property :host_format_template, String
 property :service_format_template, String
 property :rotation_interval, [String, Integer], regex: [/^\d+[smhd]$/]
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   new_resource.updated_by_last_action(object_template)
@@ -32,7 +27,7 @@ action_class do
       cookbook 'icinga2'
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0o640
+      mode '640'
       variables(object: new_resource.name,
                 library: new_resource.library,
                 host_perfdata_path: new_resource.host_perfdata_path,

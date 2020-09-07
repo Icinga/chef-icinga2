@@ -1,6 +1,5 @@
-resource_name :icinga2_envendpoint if respond_to?(:resource_name)
+resource_name :icinga2_envendpoint
 provides :icinga2_envendpoint if respond_to?(:provides)
-allowed_actions [:create, :delete, :nothing]
 
 property :instance_name, String, name_property: true
 property :cookbook, String, default: 'icinga2'
@@ -9,10 +8,6 @@ property :zone, String
 property :port, Integer, default: node['icinga2']['endpoint_port']
 property :log_duration, String
 property :endpoints, Array
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   new_resource.updated_by_last_action(object_template)
@@ -44,7 +39,7 @@ action_class do
       cookbook 'icinga2'
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0o640
+      mode '640'
       variables(
         environment: new_resource.environment,
         endpoints: new_resource.endpoints,

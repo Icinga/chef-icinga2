@@ -1,6 +1,5 @@
-resource_name :icinga2_influxdbwriter if respond_to?(:resource_name)
+resource_name :icinga2_influxdbwriter
 provides :icinga2_influxdbwriter
-allowed_actions [:create, :delete, :nothing]
 
 property :cookbook, String, default: 'icinga2'
 
@@ -12,7 +11,7 @@ property :password, String
 property :socket_path, String
 property :database, String, default: 'icinga2'
 
-property :ssl_enable, [TrueClass, FalseClass], default: false
+property :ssl_enable, [true, false], default: false
 property :ssl_ca_cert, String
 property :ssl_cert, String
 property :ssl_key, String
@@ -22,10 +21,6 @@ property :enable_send_tresholds, String
 property :enable_send_metadata, String
 property :flush_interval, String
 property :flush_threshold, String
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   new_resource.updated_by_last_action(object_template)
@@ -43,7 +38,7 @@ action_class do
       cookbook 'icinga2'
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0o640
+      mode '640'
       variables(object: new_resource.name,
                 library: new_resource.library,
                 host: new_resource.host,

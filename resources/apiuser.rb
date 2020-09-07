@@ -1,4 +1,4 @@
-resource_name :icinga2_apiuser if respond_to?(:resource_name)
+resource_name :icinga2_apiuser
 provides :icinga2_apiuser
 allowed_actions [:create, :delete, :nothing]
 

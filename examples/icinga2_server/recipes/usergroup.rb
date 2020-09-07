@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: icinga2_server
+# Cookbook:: icinga2_server
 # Recipe:: usergroup
 #
-# Copyright 2014, Virender Khatri
+# Copyright:: 2014, Virender Khatri
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

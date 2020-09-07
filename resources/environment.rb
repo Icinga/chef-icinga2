@@ -1,6 +1,5 @@
-resource_name :icinga2_environment if respond_to?(:resource_name)
+resource_name :icinga2_environment
 provides :icinga2_environment
-allowed_actions [:create, :delete, :nothing]
 
 unified_mode true
 
@@ -10,23 +9,23 @@ property :environment, String, name_property: true
 property :search_pattern, String
 
 property :env_resources, Hash
-property :enable_cluster_hostgroup, [TrueClass, FalseClass], default: node['icinga2']['enable_cluster_hostgroup']
+property :enable_cluster_hostgroup, [true, false], default: node['icinga2']['enable_cluster_hostgroup']
 property :cluster_attribute, String, default: node['icinga2']['cluster_attribute']
-property :enable_application_hostgroup, [TrueClass, FalseClass], default: node['icinga2']['enable_application_hostgroup']
+property :enable_application_hostgroup, [true, false], default: node['icinga2']['enable_application_hostgroup']
 property :application_attribute, String, default: node['icinga2']['application_attribute']
-property :enable_role_hostgroup, [TrueClass, FalseClass], default: node['icinga2']['enable_role_hostgroup']
-property :use_fqdn_resolv, [TrueClass, FalseClass], default: node['icinga2']['use_fqdn_resolv']
-property :failover_fqdn_address, [TrueClass, FalseClass], default: node['icinga2']['failover_fqdn_address']
-property :ignore_node_error, [TrueClass, FalseClass], default: node['icinga2']['ignore_node_error']
-property :ignore_resolv_error, [TrueClass, FalseClass], default: node['icinga2']['ignore_resolv_error']
+property :enable_role_hostgroup, [true, false], default: node['icinga2']['enable_role_hostgroup']
+property :use_fqdn_resolv, [true, false], default: node['icinga2']['use_fqdn_resolv']
+property :failover_fqdn_address, [true, false], default: node['icinga2']['failover_fqdn_address']
+property :ignore_node_error, [true, false], default: node['icinga2']['ignore_node_error']
+property :ignore_resolv_error, [true, false], default: node['icinga2']['ignore_resolv_error']
 property :exclude_recipes, Array
 property :exclude_roles, Array
 property :env_custom_vars, Hash
-property :limit_region, [TrueClass, FalseClass], default: node['icinga2']['limit_region']
+property :limit_region, [true, false], default: node['icinga2']['limit_region']
 property :server_region, String
 property :host_display_name_attr, String, equal_to: %w(fqdn hostname name), default: node['icinga2']['host_display_name_attr']
-property :add_cloud_custom_vars, [TrueClass, FalseClass], default: node['icinga2']['add_cloud_custom_vars']
-property :add_inet_custom_vars, [TrueClass, FalseClass], default: node['icinga2']['add_inet_custom_vars']
+property :add_cloud_custom_vars, [true, false], default: node['icinga2']['add_cloud_custom_vars']
+property :add_inet_custom_vars, [true, false], default: node['icinga2']['add_inet_custom_vars']
 property :add_node_vars, Hash
 property :env_filter_node_vars, Hash
 property :env_skip_node_vars, Hash
@@ -37,15 +36,15 @@ property :max_check_attempts, Integer
 property :notification_period, String
 property :check_interval, [String, Integer], regex: [/^\d+[smhd]$/]
 property :retry_interval, [String, Integer], regex: [/^\d+[smhd]$/]
-property :enable_notifications, [TrueClass, FalseClass]
-property :enable_active_checks, [TrueClass, FalseClass]
-property :enable_passive_checks, [TrueClass, FalseClass]
-property :enable_event_handler, [TrueClass, FalseClass]
-property :enable_flapping, [TrueClass, FalseClass]
-property :enable_perfdata, [TrueClass, FalseClass]
+property :enable_notifications, [true, false]
+property :enable_active_checks, [true, false]
+property :enable_passive_checks, [true, false]
+property :enable_event_handler, [true, false]
+property :enable_flapping, [true, false]
+property :enable_perfdata, [true, false]
 property :event_command, String
 property :flapping_threshold, String
-property :volatile, [TrueClass, FalseClass]
+property :volatile, [true, false]
 property :zone, String
 property :command_endpoint, String
 property :notes, String
@@ -61,10 +60,6 @@ property :pki_ticket_salt, String, default: node['icinga2']['constants']['Ticket
 property :icinga2_template, String, default: 'object.environment.conf.erb'
 property :template_support, FalseClass, default: false
 property :resource_properties, Array, default: %w(import display_name host_name groups check_command max_check_attempts check_period notification_period check_interval retry_interval enable_notifications enable_active_checks enable_passive_checks enable_event_handler enable_flapping enable_perfdata event_command flapping_threshold volatile zone command_endpoint notes notes_url action_url icon_image icon_image_alt merge_vars custom_vars assign_where ignore_where set)
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   object_template
@@ -124,7 +119,7 @@ action_class do
       cookbook new_resource.cookbook
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0640
+      mode '640'
       variables(environment: new_resource.environment,
                 hosts: env_hosts,
                 host_display_name_attr: new_resource.host_display_name_attr,

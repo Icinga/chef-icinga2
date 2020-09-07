@@ -1,4 +1,4 @@
-resource_name :icinga2_servicegroup if respond_to?(:resource_name)
+resource_name :icinga2_servicegroup
 provides :icinga2_servicegroup
 allowed_actions [:create, :delete, :nothing]
 

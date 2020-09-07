@@ -1,6 +1,5 @@
-resource_name :icinga2_idopgsqlconnection if respond_to?(:resource_name)
+resource_name :icinga2_idopgsqlconnection
 provides :icinga2_idopgsqlconnection
-allowed_actions [:create, :delete, :nothing]
 
 property :cookbook, String, default: 'icinga2'
 property :library, String, default: 'db_ido_pgsql'
@@ -13,14 +12,10 @@ property :database, String
 property :table_prefix, String
 property :instance_name, String
 property :instance_description, String
-property :enable_ha, [TrueClass, FalseClass]
+property :enable_ha, [true, false]
 property :failover_timeout, [String, Integer]
 property :cleanup, Hash
 property :categories, Array
-
-def whyrun_supported?
-  true
-end
 
 action :create do
   new_resource.updated_by_last_action(object_template)
@@ -38,7 +33,7 @@ action_class do
       cookbook 'icinga2'
       owner node['icinga2']['user']
       group node['icinga2']['group']
-      mode 0o640
+      mode '640'
       variables(object: new_resource.name,
                 library: new_resource.library,
                 host: new_resource.host,
