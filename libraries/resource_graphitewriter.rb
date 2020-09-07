@@ -6,53 +6,55 @@ class Chef
     class Icinga2Graphitewriter < Chef::Resource
       identity_attr :name
 
+      allowed_actions [:create, :delete, :nothing]
+
+      default_action :create
+
+      resource_name :icinga2_graphitewriter
+
       def initialize(name, run_context = nil)
         super
-        @resource_name = :icinga2_graphitewriter if respond_to?(:resource_name)
-        @provides = :icinga2_graphitewriter
         @provider = Chef::Provider::Icinga2Graphitewriter
-        @action = :create
-        @allowed_actions = [:create, :delete, :nothing]
         @name = name
       end
 
       def library(arg = nil)
         set_or_return(
           :library, arg,
-          :kind_of => String,
-          :default => 'perfdata'
+          kind_of: String,
+          default: 'perfdata'
         )
       end
 
       def host(arg = nil)
         set_or_return(
           :host, arg,
-          :kind_of => String,
-          :default => nil
+          kind_of: String,
+          default: nil
         )
       end
 
       def port(arg = nil)
         set_or_return(
           :port, arg,
-          :kind_of => Integer,
-          :default => nil
+          kind_of: Integer,
+          default: nil
         )
       end
 
       def host_name_template(arg = nil)
         set_or_return(
           :host_name_template, arg,
-          :kind_of => String,
-          :default => nil
+          kind_of: String,
+          default: nil
         )
       end
 
       def service_name_template(arg = nil)
         set_or_return(
           :service_name_template, arg,
-          :kind_of => String,
-          :default => nil
+          kind_of: String,
+          default: nil
         )
       end
     end
@@ -64,11 +66,7 @@ class Chef
   class Provider
     # provides icinga2_graphitewriter
     class Icinga2Graphitewriter < Chef::Provider::LWRPBase
-      provides :icinga2_graphitewriter if respond_to?(:provides)
-
-      def whyrun_supported?
-        true
-      end
+      provides :icinga2_graphitewriter
 
       action :create do
         new_resource.updated_by_last_action(object_template)
@@ -87,13 +85,13 @@ class Chef
           cookbook 'icinga2'
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0o640
-          variables(:object => new_resource.name,
-                    :library => new_resource.library,
-                    :host => new_resource.host,
-                    :port => new_resource.port,
-                    :host_name_template => new_resource.host_name_template,
-                    :service_name_template => new_resource.service_name_template)
+          mode '640'
+          variables(object: new_resource.name,
+                    library: new_resource.library,
+                    host: new_resource.host,
+                    port: new_resource.port,
+                    host_name_template: new_resource.host_name_template,
+                    service_name_template: new_resource.service_name_template)
           notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?

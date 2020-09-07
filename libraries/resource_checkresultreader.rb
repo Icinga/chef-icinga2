@@ -6,29 +6,31 @@ class Chef
     class Icinga2Checkresultreader < Chef::Resource
       identity_attr :name
 
+      allowed_actions [:create, :delete, :nothing]
+
+      default_action :create
+
+      resource_name :icinga2_checkresultreader
+
       def initialize(name, run_context = nil)
         super
-        @resource_name = :icinga2_checkresultreader if respond_to?(:resource_name)
-        @provides = :icinga2_checkresultreader
         @provider = Chef::Provider::Icinga2Checkresultreader
-        @action = :create
-        @allowed_actions = [:create, :delete, :nothing]
         @name = name
       end
 
       def library(arg = nil)
         set_or_return(
           :library, arg,
-          :kind_of => String,
-          :default => 'compat'
+          kind_of: String,
+          default: 'compat'
         )
       end
 
       def spool_dir(arg = nil)
         set_or_return(
           :spool_dir, arg,
-          :kind_of => String,
-          :default => nil
+          kind_of: String,
+          default: nil
         )
       end
     end
@@ -40,11 +42,7 @@ class Chef
   class Provider
     # provides icinga2_checkresultreader
     class Icinga2Checkresultreader < Chef::Provider::LWRPBase
-      provides :icinga2_checkresultreader if respond_to?(:provides)
-
-      def whyrun_supported?
-        true
-      end
+      provides :icinga2_checkresultreader
 
       action :create do
         new_resource.updated_by_last_action(object_template)
@@ -63,10 +61,10 @@ class Chef
           cookbook 'icinga2'
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0o640
-          variables(:object => new_resource.name,
-                    :spool_dir => new_resource.spool_dir,
-                    :library => new_resource.library)
+          mode '640'
+          variables(object: new_resource.name,
+                    spool_dir: new_resource.spool_dir,
+                    library: new_resource.library)
           notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?

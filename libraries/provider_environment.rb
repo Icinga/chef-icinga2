@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: icinga2
+# Cookbook:: icinga2
 # Provider:: environment
 #
-# Copyright 2014, Virender Khatri
+# Copyright:: 2014, Virender Khatri
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,11 +23,7 @@ class Chef
   class Provider
     # provides icinga2_environment
     class Icinga2Environment < Chef::Provider::LWRPBase
-      provides :icinga2_environment if respond_to?(:provides)
-
-      def whyrun_supported?
-        true
-      end
+      provides :icinga2_environment
 
       action :create do
         object_template
@@ -46,27 +42,27 @@ class Chef
         if new_resource.limit_region && !server_region
           server_region = node['ec2']['placement_availability_zone'].chop if node.key?('ec2')
         end
-        env_resources = new_resource.env_resources || Icinga2::Search.new(:environment => new_resource.environment,
-                                                                          :enable_cluster_hostgroup => new_resource.enable_cluster_hostgroup,
-                                                                          :cluster_attribute => new_resource.cluster_attribute,
-                                                                          :enable_application_hostgroup => new_resource.enable_application_hostgroup,
-                                                                          :application_attribute => new_resource.application_attribute,
-                                                                          :enable_role_hostgroup => new_resource.enable_role_hostgroup,
-                                                                          :ignore_node_error => new_resource.ignore_node_error,
-                                                                          :use_fqdn_resolv => new_resource.use_fqdn_resolv,
-                                                                          :failover_fqdn_address => new_resource.failover_fqdn_address,
-                                                                          :ignore_resolv_error => new_resource.ignore_resolv_error,
-                                                                          :exclude_recipes => new_resource.exclude_recipes,
-                                                                          :exclude_roles => new_resource.exclude_roles,
-                                                                          :env_custom_vars => new_resource.env_custom_vars,
-                                                                          :env_skip_node_vars => new_resource.env_skip_node_vars,
-                                                                          :env_filter_node_vars => new_resource.env_filter_node_vars,
-                                                                          :limit_region => new_resource.limit_region,
-                                                                          :server_region => server_region,
-                                                                          :search_pattern => search_pattern,
-                                                                          :add_node_vars => new_resource.add_node_vars,
-                                                                          :add_inet_custom_vars => new_resource.add_inet_custom_vars,
-                                                                          :add_cloud_custom_vars => new_resource.add_cloud_custom_vars).environment_resources
+        env_resources = new_resource.env_resources || Icinga2::Search.new(environment: new_resource.environment,
+                                                                          enable_cluster_hostgroup: new_resource.enable_cluster_hostgroup,
+                                                                          cluster_attribute: new_resource.cluster_attribute,
+                                                                          enable_application_hostgroup: new_resource.enable_application_hostgroup,
+                                                                          application_attribute: new_resource.application_attribute,
+                                                                          enable_role_hostgroup: new_resource.enable_role_hostgroup,
+                                                                          ignore_node_error: new_resource.ignore_node_error,
+                                                                          use_fqdn_resolv: new_resource.use_fqdn_resolv,
+                                                                          failover_fqdn_address: new_resource.failover_fqdn_address,
+                                                                          ignore_resolv_error: new_resource.ignore_resolv_error,
+                                                                          exclude_recipes: new_resource.exclude_recipes,
+                                                                          exclude_roles: new_resource.exclude_roles,
+                                                                          env_custom_vars: new_resource.env_custom_vars,
+                                                                          env_skip_node_vars: new_resource.env_skip_node_vars,
+                                                                          env_filter_node_vars: new_resource.env_filter_node_vars,
+                                                                          limit_region: new_resource.limit_region,
+                                                                          server_region: server_region,
+                                                                          search_pattern: search_pattern,
+                                                                          add_node_vars: new_resource.add_node_vars,
+                                                                          add_inet_custom_vars: new_resource.add_inet_custom_vars,
+                                                                          add_cloud_custom_vars: new_resource.add_cloud_custom_vars).environment_resources
 
         template_file_name = new_resource.zone ? "host_#{new_resource.environment}_#{new_resource.zone}_#{new_resource.name}.conf" : "host_#{new_resource.environment}_#{new_resource.name}.conf"
         env_hosts = {}
@@ -79,7 +75,7 @@ class Chef
             owner node['icinga2']['user']
             group node['icinga2']['group']
             action :create
-            only_if { !env_hosts.empty? }
+            not_if { env_hosts.empty? }
           end
         else
           env_resources_path = ::File.join(node['icinga2']['objects_dir'], template_file_name)
@@ -89,32 +85,32 @@ class Chef
           cookbook new_resource.cookbook
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0o640
-          variables(:environment => new_resource.environment,
-                    :hosts => env_hosts,
-                    :host_display_name_attr => new_resource.host_display_name_attr,
-                    :import => new_resource.import,
-                    :check_command => new_resource.check_command,
-                    :max_check_attempts => new_resource.max_check_attempts,
-                    :check_period => new_resource.check_period,
-                    :notification_period => new_resource.notification_period,
-                    :check_interval => new_resource.check_interval,
-                    :retry_interval => new_resource.retry_interval,
-                    :enable_notifications => new_resource.enable_notifications,
-                    :enable_active_checks => new_resource.enable_active_checks,
-                    :enable_passive_checks => new_resource.enable_passive_checks,
-                    :enable_event_handler => new_resource.enable_event_handler,
-                    :enable_flapping => new_resource.enable_flapping,
-                    :enable_perfdata => new_resource.enable_perfdata,
-                    :event_command => new_resource.event_command,
-                    :flapping_threshold => new_resource.flapping_threshold,
-                    :volatile => new_resource.volatile,
-                    :command_endpoint => new_resource.command_endpoint,
-                    :notes => new_resource.notes,
-                    :notes_url => new_resource.notes_url,
-                    :action_url => new_resource.action_url,
-                    :icon_image => new_resource.icon_image,
-                    :icon_image_alt => new_resource.icon_image_alt)
+          mode '640'
+          variables(environment: new_resource.environment,
+                    hosts: env_hosts,
+                    host_display_name_attr: new_resource.host_display_name_attr,
+                    import: new_resource.import,
+                    check_command: new_resource.check_command,
+                    max_check_attempts: new_resource.max_check_attempts,
+                    check_period: new_resource.check_period,
+                    notification_period: new_resource.notification_period,
+                    check_interval: new_resource.check_interval,
+                    retry_interval: new_resource.retry_interval,
+                    enable_notifications: new_resource.enable_notifications,
+                    enable_active_checks: new_resource.enable_active_checks,
+                    enable_passive_checks: new_resource.enable_passive_checks,
+                    enable_event_handler: new_resource.enable_event_handler,
+                    enable_flapping: new_resource.enable_flapping,
+                    enable_perfdata: new_resource.enable_perfdata,
+                    event_command: new_resource.event_command,
+                    flapping_threshold: new_resource.flapping_threshold,
+                    volatile: new_resource.volatile,
+                    command_endpoint: new_resource.command_endpoint,
+                    notes: new_resource.notes,
+                    notes_url: new_resource.notes_url,
+                    action_url: new_resource.action_url,
+                    icon_image: new_resource.icon_image,
+                    icon_image_alt: new_resource.icon_image_alt)
           notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         return true if hosts_template.updated? || create_hostgroups(env_resources)
@@ -211,7 +207,7 @@ class Chef
                 }
                 databag_item.save
               end
-              action :create
+              action :run
             end
           end
         end

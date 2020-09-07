@@ -6,11 +6,7 @@ class Chef
   class Provider
     # provides icinga2_instance
     class Icinga2Instance < Chef::Provider::LWRPBase
-      provides :icinga2_instance if respond_to?(:provides)
-
-      def whyrun_supported?
-        true
-      end
+      provides :icinga2_instance
 
       action :create do
         object_template
@@ -135,9 +131,9 @@ class Chef
           source "object.#{resource_name}.conf.erb"
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          variables :objects => icinga2_objects_dict['object']
+          variables objects: icinga2_objects_dict['object']
           notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
-          only_if { !icinga2_objects_dict['object'].empty? }
+          not_if { icinga2_objects_dict['object'].empty? }
         end
 
         te = template "object_template_#{resource_name}_#{new_resource.name}" do
@@ -146,10 +142,10 @@ class Chef
           cookbook new_resource.cookbook
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0o640
-          variables :objects => icinga2_objects_dict['template']
+          mode '640'
+          variables objects: icinga2_objects_dict['template']
           notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
-          only_if { !icinga2_objects_dict['template'].empty? }
+          not_if { icinga2_objects_dict['template'].empty? }
         end
 
         zoned_objects_updated = false
@@ -159,7 +155,7 @@ class Chef
             path ::File.join(node['icinga2']['zones_dir'], zone)
             owner node['icinga2']['user']
             group node['icinga2']['group']
-            only_if { !zone_objects.empty? }
+            not_if { zone_objects.empty? }
           end
           zone_dir.run_action :create
 
@@ -171,10 +167,10 @@ class Chef
             cookbook new_resource.cookbook
             owner node['icinga2']['user']
             group node['icinga2']['group']
-            mode 0o640
-            variables :objects => zoned_objects
+            mode '640'
+            variables objects: zoned_objects
             notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
-            only_if { !zoned_objects.empty? }
+            not_if { zoned_objects.empty? }
           end
 
           zoned_te = template "zone_template_#{resource_name}_#{zone}_#{new_resource.name}" do
@@ -183,10 +179,10 @@ class Chef
             cookbook new_resource.cookbook
             owner node['icinga2']['user']
             group node['icinga2']['group']
-            mode 0o640
-            variables :objects => zoned_templates
+            mode '640'
+            variables objects: zoned_templates
             notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
-            only_if { !zoned_templates.empty? }
+            not_if { zoned_templates.empty? }
           end
 
           zoned_objects_updated = true if zoned_ot.updated? || zoned_te.updated?

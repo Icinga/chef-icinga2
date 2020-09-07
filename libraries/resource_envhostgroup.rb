@@ -6,37 +6,39 @@ class Chef
     class Icinga2Envhostgroup < Chef::Resource
       identity_attr :name
 
+      allowed_actions [:create, :delete, :nothing]
+
+      default_action :create
+
+      resource_name :icinga2_envhostgroup
+
       def initialize(name, run_context = nil)
         super
-        @resource_name = :icinga2_envhostgroup if respond_to?(:resource_name)
-        @provides = :icinga2_envhostgroup
         @provider = Chef::Provider::Icinga2Envhostgroup
-        @action = :create
-        @allowed_actions = [:create, :delete, :nothing]
         @name = name
       end
 
       def environment(arg = nil)
         set_or_return(
           :environment, arg,
-          :kind_of => String,
-          :default => @name
+          kind_of: String,
+          default: @name
         )
       end
 
       def zone(arg = nil)
         set_or_return(
           :zone, arg,
-          :kind_of => String,
-          :default => nil
+          kind_of: String,
+          default: nil
         )
       end
 
       def groups(arg = nil)
         set_or_return(
           :groups, arg,
-          :kind_of => Array,
-          :default => []
+          kind_of: Array,
+          default: []
         )
       end
     end
@@ -48,11 +50,7 @@ class Chef
   class Provider
     # provides icinga2_envhostgroup
     class Icinga2Envhostgroup < Chef::Provider::LWRPBase
-      provides :icinga2_envhostgroup if respond_to?(:provides)
-
-      def whyrun_supported?
-        true
-      end
+      provides :icinga2_envhostgroup
 
       action :create do
         new_resource.updated_by_last_action(object_template)
@@ -85,8 +83,8 @@ class Chef
           cookbook 'icinga2'
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0o640
-          variables(:environment => new_resource.environment, :groups => new_resource.groups)
+          mode '640'
+          variables(environment: new_resource.environment, groups: new_resource.groups)
           notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?

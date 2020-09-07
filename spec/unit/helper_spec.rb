@@ -7,7 +7,7 @@ describe '#icinga_format' do
   subject { icinga_format }
 
   it 'handles hashes' do
-    expect(icinga_format(:foo => :bar)).to eq('{ "foo" = "bar" }')
+    expect(icinga_format(foo: :bar)).to eq('{ "foo" = "bar" }')
   end
 
   it 'handles arrays' do
@@ -31,7 +31,7 @@ describe '#icinga_format' do
   end
 
   it 'handles nesting' do
-    expect(icinga_format(:foo => [:bar, { 1 => 2 }, { 1 => [:a, :b, :c] }])).to eq('{ "foo" = [ "bar", { 1 = 2 }, { 1 = [ "a", "b", "c" ] } ] }')
+    expect(icinga_format(foo: [:bar, { 1 => 2 }, { 1 => [:a, :b, :c] }])).to eq('{ "foo" = [ "bar", { 1 = 2 }, { 1 = [ "a", "b", "c" ] } ] }')
   end
 
   it 'handles arbitrary objects by stringifying them' do

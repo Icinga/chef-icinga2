@@ -6,21 +6,23 @@ class Chef
     class Icinga2Sysloglogger < Chef::Resource
       identity_attr :name
 
+      allowed_actions [:create, :delete, :nothing]
+
+      default_action :create
+
+      resource_name :icinga2_sysloglogger
+
       def initialize(name, run_context = nil)
         super
-        @resource_name = :icinga2_sysloglogger if respond_to?(:resource_name)
-        @provides = :icinga2_sysloglogger
         @provider = Chef::Provider::Icinga2Sysloglogger
-        @action = :create
-        @allowed_actions = [:create, :delete, :nothing]
         @name = name
       end
 
       def severity(arg = nil)
         set_or_return(
           :severity, arg,
-          :kind_of => String,
-          :default => nil
+          kind_of: String,
+          default: nil
         )
       end
     end
@@ -32,11 +34,7 @@ class Chef
   class Provider
     # provides icinga2_sysloglogger
     class Icinga2Sysloglogger < Chef::Provider::LWRPBase
-      provides :icinga2_sysloglogger if respond_to?(:provides)
-
-      def whyrun_supported?
-        true
-      end
+      provides :icinga2_sysloglogger
 
       action :create do
         new_resource.updated_by_last_action(object_template)
@@ -55,9 +53,9 @@ class Chef
           cookbook 'icinga2'
           owner node['icinga2']['user']
           group node['icinga2']['group']
-          mode 0o640
-          variables(:object => new_resource.name,
-                    :severity => new_resource.severity)
+          mode '640'
+          variables(object: new_resource.name,
+                    severity: new_resource.severity)
           notifies platform?('windows') ? :restart : :reload, 'service[icinga2]'
         end
         ot.updated?
