@@ -57,7 +57,7 @@ property :endpoint_log_duration, String
 property :zone_parent, String
 property :pki_ticket_salt, String, default: node['icinga2']['constants']['TicketSalt']
 
-property :icinga2_template, String, default: 'object.environment.conf.erb'
+property :template, String, default: 'object.environment.conf.erb'
 property :template_support, FalseClass, default: false
 property :resource_properties, Array, default: %w(import display_name host_name groups check_command max_check_attempts check_period notification_period check_interval retry_interval enable_notifications enable_active_checks enable_passive_checks enable_event_handler enable_flapping enable_perfdata event_command flapping_threshold volatile zone command_endpoint notes notes_url action_url icon_image icon_image_alt merge_vars custom_vars assign_where ignore_where set)
 
@@ -115,7 +115,7 @@ action_class do
       env_resources_path = ::File.join(node['icinga2']['objects_dir'], template_file_name)
     end
     hosts_template = template env_resources_path do
-      source new_resource.icinga2_template
+      source new_resource.template
       cookbook new_resource.cookbook
       owner node['icinga2']['user']
       group node['icinga2']['group']

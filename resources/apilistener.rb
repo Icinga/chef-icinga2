@@ -16,3 +16,20 @@ property :accept_commands, [true, false]
 
 property :template_support, FalseClass, default: false
 property :resource_properties, Array, default: %w(cert_path key_path ca_path crl_path bind_host bind_port ticket_salt accept_config accept_commands)
+
+action :create do
+  object_template
+end
+
+action :delete do
+  object_template
+end
+
+action_class do
+  include Icinga2::Cookbook::Instances
+  def object_template
+    object_resources = []
+    object_resources << @new_resource
+    process_icinga2_resources(new_resource.resource_name.to_s.gsub('icinga2_', ''), new_resource.resource_properties, new_resource.template_support, object_resources)
+  end
+end

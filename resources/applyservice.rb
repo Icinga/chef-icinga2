@@ -40,3 +40,20 @@ property :set, String, regex: [ /^([a-z|_]+\s=>\s)?[a-z|_]+\sin\s\S+$/ ]
 
 property :template_support, FalseClass, default: false
 property :resource_properties, Array, default: %w(import display_name host_name groups check_command max_check_attempts check_period notification_period check_interval retry_interval enable_notifications enable_active_checks enable_passive_checks enable_event_handler enable_flapping enable_perfdata event_command flapping_threshold volatile zone command_endpoint notes notes_url action_url icon_image icon_image_alt merge_vars custom_vars assign_where ignore_where set)
+
+action :create do
+  object_template
+end
+
+action :delete do
+  object_template
+end
+
+action_class do
+  include Icinga2::Cookbook::Instances
+  def object_template
+    object_resources = []
+    object_resources << @new_resource
+    process_icinga2_resources(new_resource.resource_name.to_s.gsub('icinga2_', ''), new_resource.resource_properties, new_resource.template_support, object_resources)
+  end
+end
