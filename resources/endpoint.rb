@@ -22,6 +22,6 @@ action_class do
   def object_template
     object_resources = []
     object_resources << @new_resource
-    process_icinga2_resources(new_resource.resource_name.to_s.gsub('icinga2_', ''), new_resource.resource_properties, new_resource.template_support, object_resources)
+    process_icinga2_resources(new_resource.resource_name.to_s.gsub('icinga2_', ''), new_resource.resource_properties, new_resource.template_support)
   end
 end

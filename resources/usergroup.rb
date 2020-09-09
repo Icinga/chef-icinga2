@@ -25,8 +25,17 @@ end
 action_class do
   include Icinga2::Cookbook::Instances
   def object_template
-    object_resources = []
-    object_resources << @new_resource
-    process_icinga2_resources(new_resource.resource_name.to_s.gsub('icinga2_', ''), new_resource.resource_properties, new_resource.template_support, object_resources)
+    # with_run_context :root do
+    #   check_property = new_resource
+    #     edit_resource(:icinga2_usergroup, check_property.check_name) do
+    #     instances(instances + check_property.instances)
+    #     init_config(init_config.merge(check_property.init_config))
+    #     use_integration_template(check_property.generic)
+    #     action :nothing
+    #     delayed_action :add
+    #   end
+    # end
+
+    process_icinga2_resources(new_resource.resource_name.to_s.gsub('icinga2_', ''), new_resource.resource_properties, new_resource.template_support)
   end
 end

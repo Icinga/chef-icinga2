@@ -1,54 +1,57 @@
 module Icinga2
   module Cookbook
     module Instances
-      # # collect object defined resources
-      # def object_resources
-      #   Chef.run_context.resource_collection.select do |resource|
-      #     # raise "#{new_resource.resource_name}.inspect"
-      #     case new_resource.resource_name
-      #     when :icinga2_apilistener
-      #       resource.is_a?(Chef::Resource::Icinga2Apilistener)
-      #     when :icinga2_apiuser
-      #       resource.is_a?(Chef::Resource::Icinga2Apiuser)
-      #     when :icinga2_applydependency
-      #       resource.is_a?(Chef::Resource::Icinga2Applydependency)
-      #     when :icinga2_applynotification
-      #       resource.is_a?(Chef::Resource::Icinga2Applynotification)
-      #     when :icinga2_applyservice
-      #       resource.is_a?(Chef::Resource::Icinga2Applyservice)
-      #     when :icinga2_checkcommand
-      #       resource.is_a?(Chef::Resource::Icinga2Checkcommand)
-      #     when :icinga2_endpoint
-      #       resource.is_a?(Chef::Resource::Icinga2Endpoint)
-      #     when :icinga2_eventcommand
-      #       resource.is_a?(Chef::Resource::Icinga2Eventcommand)
-      #     when :icinga2_host
-      #       resource.is_a?(Chef::Resource::Icinga2Host)
-      #     when :icinga2_hostgroup
-      #       resource.is_a?(Chef::Resource::Icinga2Hostgroup)
-      #     when :icinga2_notification
-      #       resource.is_a?(Chef::Resource::Icinga2Notification)
-      #     when :icinga2_notificationcommand
-      #       resource.is_a?(Chef::Resource::Icinga2Notificationcommand)
-      #     when :icinga2_scheduleddowntime
-      #       resource.is_a?(Chef::Resource::Icinga2Scheduleddowntime)
-      #     when :icinga2_service
-      #       resource.is_a?(Chef::Resource::Icinga2Service)
-      #     when :icinga2_servicegroup
-      #       resource.is_a?(Chef::Resource::Icinga2Servicegroup)
-      #     when :icinga2_timeperiod
-      #       resource.is_a?(Chef::Resource::Icinga2Timeperiod)
-      #     when :icinga2_user
-      #       resource.is_a?(Chef::Resource::Icinga2User)
-      #     when :icinga2_usergroup
-      #       resource.is_a?(Chef::Resource::Icinga2Usergroup)
-      #     when :icinga2_zone
-      #       resource.is_a?(Chef::Resource::Icinga2Zone)
-      #     else
-      #       raise "unknown resource type #{new_resource.resource_name}, submit a bug"
-      #     end
-      #   end
-      # end
+      def object_resources
+        Chef.run_context.resource_collection.select do |resource|
+          case new_resource.resource_name
+          when :icinga2_apilistener
+            resource.is_a?(Chef::Resource::Icinga2Apilistener)
+          when :icinga2_apiuser
+            resource.is_a?(Chef::Resource::Icinga2Apiuser)
+          when :icinga2_applydependency
+            resource.is_a?(Chef::Resource::Icinga2Applydependency)
+          when :icinga2_applynotification
+            resource.is_a?(Chef::Resource::Icinga2Applynotification)
+          when :icinga2_applyservice
+            resource.is_a?(Chef::Resource::Icinga2Applyservice)
+          when :icinga2_checkcommand
+            resource.is_a?(Chef::Resource::Icinga2Checkcommand)
+          when :icinga2_endpoint
+            resource.is_a?(Chef::Resource::Icinga2Endpoint)
+          when :icinga2_eventcommand
+            resource.is_a?(Chef::Resource::Icinga2Eventcommand)
+          when :icinga2_host
+            resource.is_a?(Chef::Resource::Icinga2Host)
+          when :icinga2_hostgroup
+            resource.is_a?(Chef::Resource::Icinga2Hostgroup)
+          when :icinga2_notification
+            resource.is_a?(Chef::Resource::Icinga2Notification)
+          when :icinga2_notificationcommand
+            resource.is_a?(Chef::Resource::Icinga2Notificationcommand)
+          when :icinga2_scheduleddowntime
+            resource.is_a?(Chef::Resource::Icinga2Scheduleddowntime)
+          when :icinga2_service
+            resource.is_a?(Chef::Resource::Icinga2Service)
+          when :icinga2_servicegroup
+            resource.is_a?(Chef::Resource::Icinga2Servicegroup)
+          when :icinga2_timeperiod
+            resource.is_a?(Chef::Resource::Icinga2Timeperiod)
+          when :icinga2_user
+            resource.is_a?(Chef::Resource::Icinga2User)
+          when :icinga2_usergroup
+            pp "incinga2_usergroup: #{resource.class}"
+            # return resource if obj.class == Nagios::Timeperiod
+
+            #   resource
+            # end
+            # resource ? :icinga2_usergroup : error
+          when :icinga2_zone
+            resource.is_a?(Chef::Resource::Icinga2Zone)
+          else
+            raise "unknown resource type #{new_resource.resource_name}, submit a bug"
+          end
+        end
+      end
 
       # the template icinga definition should be placed to a separate file with '_template' suffix in the filename
       # in order to do that for objects assigned to a zone, this function separate the object into two hashes
@@ -69,11 +72,13 @@ module Icinga2
         [object_resources, template_resources]
       end
 
-      def process_icinga2_resources(resource_name, resource_properties, template_support, object_resources)
+      def process_icinga2_resources(resource_name, resource_properties, template_support)
         icinga2_objects = {}
         # default value for a new key in the hash is an empty hash
         # key is a zone name, the hash for the key keeps an object definitions, each unique, each is a hash again
         icinga2_zoned_objects = Hash.new { |h, k| h[k] = {} }
+
+        pp "hier: #{object_resources.inspect}"
 
         object_resources.reduce({}) do |_hash, resource|
           next nil if !icinga2_resource_create?(resource.action) || icinga2_objects.key?(resource.name)
@@ -96,7 +101,7 @@ module Icinga2
           end
         end
 
-        # separate object and teplate icinga definitions
+        # separate object and template icinga definitions
         icinga2_objects_grouped = icinga2_objects.group_by { |_k, v| v['object_class'] }
         # now, this might be better refactored into a simple function with a simple loop, because I don't think I'll be
         # able to understand immediatelly after a halt year or so
