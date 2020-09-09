@@ -23,24 +23,16 @@ services: docker
 
 env:
   matrix:
-    - INSTANCE=chef12server-ubuntu-1404
-    - INSTANCE=chef12server-ubuntu-1604
-    - INSTANCE=chef12server-ubuntu-1804
-    - INSTANCE=chef12server-debian-8
-    - INSTANCE=chef12server-debian-9
-    - INSTANCE=chef12server-centos-6
-    - INSTANCE=chef12server-centos-7
-    - INSTANCE=chef12server-fedora-26
-    - INSTANCE=chef12server-amazon
-    - INSTANCE=chef13server-ubuntu-1404
-    - INSTANCE=chef13server-ubuntu-1604
-    - INSTANCE=chef13server-ubuntu-1804
-    - INSTANCE=chef13server-debian-8
-    - INSTANCE=chef13server-debian-9
-    - INSTANCE=chef13server-centos-6
-    - INSTANCE=chef13server-centos-7
-    - INSTANCE=chef13server-fedora-26
-    - INSTANCE=chef13server-amazon
+    - INSTANCE=chef16server-ubuntu-1604
+    - INSTANCE=chef16server-ubuntu-1804
+    - INSTANCE=chef16server-ubuntu-2004
+    - INSTANCE=chef16server-debian-8
+    - INSTANCE=chef16server-debian-9
+    - INSTANCE=chef16server-debian-10
+    - INSTANCE=chef16server-centos-6
+    - INSTANCE=chef16server-centos-7
+    - INSTANCE=chef16server-fedora-26
+    - INSTANCE=chef16server-amazon
 
 script:
   - KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}

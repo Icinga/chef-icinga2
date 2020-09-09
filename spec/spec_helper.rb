@@ -21,5 +21,3 @@ RSpec.configure do |config|
     stub_command('which php').and_return(true)
   end
 end
-
-at_exit { ChefSpec::Coverage.report! }

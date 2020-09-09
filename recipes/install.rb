@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: icinga2
+# Cookbook:: icinga2
 # Recipe:: core_install
 #
-# Copyright 2014, Virender Khatri
+# Copyright:: 2014, Virender Khatri
 #
 
 if platform?('windows')
@@ -21,10 +21,9 @@ unless platform?('windows')
   case node['platform_family']
   when 'debian'
     os_packages = %w(g++ mailutils build-essential)
-    include_recipe 'apt'
   when 'fedora', 'rhel', 'amazon'
     os_packages = %w(gcc gcc-c++ glibc glibc-common mailx)
-    include_recipe 'yum-epel' if node['platform'] != 'amazon' && node['icinga2']['setup_epel']
+    include_recipe 'yum-epel' if !platform?('amazon') && node['icinga2']['setup_epel']
   end
 
   os_packages.each do |p|
@@ -32,25 +31,12 @@ unless platform?('windows')
   end
 end
 
-case node['platform_family']
-when 'debian'
+if platform_family?('debian')
   package 'libicinga2' do
     version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
     options node['icinga2']['package_options']
     action :install
-  end
-end
-
-package 'icinga2-doc' do
-  version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
-  options node['icinga2']['package_options']
-  action :install
-end
-
-package 'icinga2-common' do
-  version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
-  options node['icinga2']['package_options']
-  action :install
+  end if Gem::Version.new(node['icinga2']['version']) < Gem::Version.new('2.10')
 end
 
 package 'icinga2-bin' do
@@ -63,4 +49,16 @@ package 'icinga2' do
   version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
   options node['icinga2']['package_options']
   notifies :restart, 'service[icinga2]', :delayed
+end
+
+package 'icinga2-doc' do
+  version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
+  options node['icinga2']['package_options']
+  action :install
+end
+
+package 'icinga2-common' do
+  version node['icinga2']['version'] + node['icinga2']['version_suffix'] unless node['icinga2']['ignore_version']
+  options node['icinga2']['package_options']
+  action :install
 end

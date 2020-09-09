@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 #
-# Cookbook Name:: icinga2
+# Cookbook:: icinga2
 # Recipe:: config
 #
-# Copyright 2014, Virender Khatri
+# Copyright:: 2014, Virender Khatri
 #
 
 # core config
@@ -22,7 +22,7 @@
   directory d do
     owner node['icinga2']['user']
     group node['icinga2']['group']
-    mode 0o750
+    mode '750'
   end
 end
 
@@ -30,7 +30,7 @@ node['icinga2']['user_defined_objects_dir'].each do |d|
   directory ::File.join(node['icinga2']['conf_dir'], d) do
     owner node['icinga2']['user']
     group node['icinga2']['group']
-    mode 0o750
+    mode '750'
   end
 end
 
@@ -45,7 +45,7 @@ end
     owner node['icinga2']['user']
     group node['icinga2']['cmdgroup']
     recursive true if platform?('windows')
-    mode 0o750
+    mode '750'
   end
 end
 
@@ -53,7 +53,7 @@ directory node['icinga2']['cache_dir'] do
   owner node['icinga2']['user']
   group node['icinga2']['user']
   recursive true if platform?('windows')
-  mode 0o750
+  mode '750'
 end
 
 unless platform?('windows')
@@ -62,8 +62,8 @@ unless platform?('windows')
     source 'icinga2.logrotate.erb'
     owner 'root'
     group 'root'
-    mode 0o644
-    variables(:log_dir => node['icinga2']['log_dir'], :user => node['icinga2']['user'], :group => node['icinga2']['group'])
+    mode '644'
+    variables(log_dir: node['icinga2']['log_dir'], user: node['icinga2']['user'], group: node['icinga2']['group'])
   end
 end
 
@@ -72,13 +72,13 @@ template ::File.join(node['icinga2']['conf_dir'], 'icinga2.conf') do
   source 'icinga2.conf.erb'
   owner node['icinga2']['user']
   group node['icinga2']['group']
-  mode 0o640
+  mode '640'
   variables(
-    :include_itl => node['icinga2']['include_itl'],
-    :disable_repository_d => node['icinga2']['disable_repository_d'],
-    :disable_conf_d => node['icinga2']['disable_conf_d'],
-    :objects_d => node['icinga2']['objects_d'],
-    :user_defined_objects_dir => node['icinga2']['user_defined_objects_dir']
+    include_itl: node['icinga2']['include_itl'],
+    disable_repository_d: node['icinga2']['disable_repository_d'],
+    disable_conf_d: node['icinga2']['disable_conf_d'],
+    objects_d: node['icinga2']['objects_d'],
+    user_defined_objects_dir: node['icinga2']['user_defined_objects_dir']
   )
   notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
 end
@@ -89,13 +89,13 @@ unless platform?('windows')
     source 'icinga2.service.config.erb'
     owner 'root'
     group 'root'
-    mode 0o640
+    mode '640'
     variables(
-      :log_dir => node['icinga2']['log_dir'],
-      :conf_dir => node['icinga2']['conf_dir'],
-      :user => node['icinga2']['user'],
-      :group => node['icinga2']['group'],
-      :cmdgroup => node['icinga2']['cmdgroup']
+      log_dir: node['icinga2']['log_dir'],
+      conf_dir: node['icinga2']['conf_dir'],
+      user: node['icinga2']['user'],
+      group: node['icinga2']['group'],
+      cmdgroup: node['icinga2']['cmdgroup']
     )
     notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
   end
@@ -105,10 +105,10 @@ unless platform?('windows')
     source 'icinga2.init.conf.erb'
     owner node['icinga2']['user']
     group node['icinga2']['group']
-    mode 0o640
+    mode '640'
     variables(
-      :user => node['icinga2']['user'],
-      :group => node['icinga2']['group']
+      user: node['icinga2']['user'],
+      group: node['icinga2']['group']
     )
     notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
   end
@@ -119,9 +119,9 @@ template ::File.join(node['icinga2']['conf_dir'], 'constants.conf') do
   source 'icinga2.constants.conf.erb'
   owner node['icinga2']['user']
   group node['icinga2']['group']
-  mode 0o640
+  mode '640'
   variables(
-    :options => node['icinga2']['constants']
+    options: node['icinga2']['constants']
   )
   notifies platform?('windows') ? :restart : :reload, 'service[icinga2]', :delayed
 end
@@ -134,7 +134,7 @@ template ::File.join(node['icinga2']['scripts_dir'], 'mail-service-notification.
   source 'mail-service-notification.sh.erb'
   owner node['icinga2']['user']
   group node['icinga2']['group']
-  mode 0o755
+  mode '755'
 end
 
 # mail-host-notification command
@@ -143,7 +143,7 @@ template ::File.join(node['icinga2']['scripts_dir'], 'mail-host-notification.sh'
   source 'mail-host-notification.sh.erb'
   owner node['icinga2']['user']
   group node['icinga2']['group']
-  mode 0o755
+  mode '755'
 end
 
 # icinga2 service user limit
